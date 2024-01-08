@@ -8,5 +8,5 @@
 > 管理者端為管理使用者及開發商的後台，須審核各廠商最新上架的遊戲，管理被檢舉的使用者以及遊戲，並可以發出特價活動消息。 可以加入談論管理、好友管理。
 
 > [!NOTE]
-> GitHub README.md這塊有自己的語法，有興趣的人可以點連結去學一下~
+> GitHub README.md這塊有自己的語法，有興趣的人可以點連結去學一下~  
 > [README.md語法](https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
