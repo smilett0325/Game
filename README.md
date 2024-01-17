@@ -13,3 +13,11 @@
 > [!NOTE]
 > GitHub README.md這塊有自己的語法，有興趣的人可以點連結去學一下~  
 > [README.md語法](https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
+
+> [!TIP]
+> 2024/01/18 更新SQL資料庫，新增一個BounsBillDetails，已建好關聯性
+> p.s. 資料庫中"Bonus"有筆誤，寫成"Bonus"最終版前請協助修正
+> 錯誤資料表有：
+>  >BounsBillDetails
+>  >BounsProducts
+>請知悉
