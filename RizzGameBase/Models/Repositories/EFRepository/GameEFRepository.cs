@@ -43,20 +43,7 @@ namespace RizzGameBase.Models.Repositories.EFRepository
 		{
 			return db.Games.AsNoTracking()
 				.Where(d => d.Id == id)
-				.Select(d => new GameEntity
-				{
-					Id = d.Id,
-					Name = d.Name,
-					Introduction = d.Introduction,
-					Description = d.Description,
-					ReleaseDate = d.ReleaseDate,
-					Price = d.Price,
-					Image = d.Image,
-					DeveloperId = d.DeveloperId,
-					GameTagId = d.GameTagId,
-					DiscountId = d.DiscountId,
-					MaxPersent = d.MaxPersent
-				})
+				.Select(d => d.EFToEntity())
 				.Single();
 		}
 

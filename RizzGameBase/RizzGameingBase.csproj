@@ -221,10 +221,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-<<<<<<< HEAD
+
     <Folder Include="Models\Repositories\DpRepository\" />
-=======
->>>>>>> 7655b91be3a0ba7241fad9a1c8d96d13b11e63ba
+
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
