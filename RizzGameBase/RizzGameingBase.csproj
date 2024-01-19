@@ -177,12 +177,22 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Dtos\Dto.txt" />
+    <Content Include="Models\EFModels\EFModels.txt" />
+    <Content Include="Models\Entities\Entities.txt" />
+    <Content Include="Models\Exts\Exts.txt" />
+    <Content Include="Models\Infra\Infra.txt" />
+    <Content Include="Models\IRepositories\IRepositories.txt" />
+    <Content Include="Models\Repositories\Repositories.txt" />
+    <Content Include="Models\Services\Services.txt" />
+    <Content Include="Models\ViewModels\ViewModels.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Models\IServices\IServices.tst" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -211,7 +221,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+<<<<<<< HEAD
     <Folder Include="Models\Repositories\DpRepository\" />
+=======
+>>>>>>> 7655b91be3a0ba7241fad9a1c8d96d13b11e63ba
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
