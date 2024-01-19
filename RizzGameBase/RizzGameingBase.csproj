@@ -193,7 +193,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Models\Dtos\" />
+    <Folder Include="Models\EFModels\" />
+    <Folder Include="Models\Entities\" />
+    <Folder Include="Models\Exts\" />
+    <Folder Include="Models\IRepositories\" />
+    <Folder Include="Models\Repositories\" />
+    <Folder Include="Models\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
