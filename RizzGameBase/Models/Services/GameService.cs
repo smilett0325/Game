@@ -12,6 +12,7 @@ namespace RizzGameBase.Models.Services
 	public class GameService : IGameService
 	{
 		private IGameRepository _repo;
+
 		public GameService(IGameRepository repo)
 		{
 			_repo = repo;

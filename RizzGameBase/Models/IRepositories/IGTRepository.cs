@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace RizzGameBase.Models.IRepositories
 {
-	public interface IGameRepository
+	public interface IGTRepository
 	{
-		void Create(GameEntity entity);
+		void Create(GTEntity entity);
 
-		GameEntity Search(int id);
+		GTEntity Search(int id);
 
-		List<GameEntity> Filter(Func<Game, bool> filterCondition = null);
+		List<GTEntity> Filter(Func<GameTag, bool> filterCondition = null);
 
-		void Update(GameEntity entity);
-		
+		void Update(GTEntity entity);
+
 		void Delete(int id);
 	}
 }
