@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="Models\Dtos\GameDto.cs" />
     <Compile Include="Models\Dtos\GTDto.cs" />
+    <Compile Include="Models\Dtos\TagDto.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\DLC.cs" />
     <Compile Include="Models\EFModels\Game.cs" />
@@ -155,18 +156,24 @@
     <Compile Include="Models\EFModels\Tag.cs" />
     <Compile Include="Models\Entities\GameEntity.cs" />
     <Compile Include="Models\Entities\GTEntity.cs" />
+    <Compile Include="Models\Entities\TagEntity.cs" />
     <Compile Include="Models\Exts\GameExts.cs" />
     <Compile Include="Models\Exts\GTExts.cs" />
+    <Compile Include="Models\Exts\TagExts.cs" />
     <Compile Include="Models\Infra\DAHelper.cs" />
     <Compile Include="Models\Infra\Pagination.cs" />
     <Compile Include="Models\IRepositories\IGameRepository.cs" />
     <Compile Include="Models\IRepositories\IGTRepository.cs" />
+    <Compile Include="Models\IRepositories\ITagRepository.cs" />
     <Compile Include="Models\IServices\IGameService.cs" />
     <Compile Include="Models\IServices\IGTService.cs" />
+    <Compile Include="Models\IServices\ITagService.cs" />
     <Compile Include="Models\Repositories\EFRepository\GameEFRepository.cs" />
     <Compile Include="Models\Repositories\EFRepository\GTEFRepository.cs" />
+    <Compile Include="Models\Repositories\EFRepository\TagEFRepository.cs" />
     <Compile Include="Models\Services\GameService.cs" />
     <Compile Include="Models\Services\GTService.cs" />
+    <Compile Include="Models\Services\TagService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

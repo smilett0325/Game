@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace RizzGameBase.Models.IRepositories
 {
-	public interface IGTRepository
+	public interface ITagRepository
 	{
-		void Create(GTEntity entity);
+		void Create(TagEntity entity);
 
-		GTEntity Search(int id);
+		TagEntity Search(int id);
 
-		List<GTEntity> Filter(Func<GameTag, bool> condition = null);
+		List<TagEntity> Filter(Func<Tag, bool> condition = null);
 
-		void Update(GTEntity entity);
+		void Update(TagEntity entity);
 
 		void Delete(int id);
 	}

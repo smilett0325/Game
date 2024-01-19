@@ -14,7 +14,7 @@ namespace RizzGameBase.Models.IRepositories
 
 		GameEntity Search(int id);
 
-		List<GameEntity> Filter(Func<Game, bool> filterCondition = null);
+		List<GameEntity> Filter(Func<Game, bool> condition = null);
 
 		void Update(GameEntity entity);
 		
