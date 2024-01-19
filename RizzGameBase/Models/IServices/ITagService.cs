@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RizzGameBase.Models.IServices
 {
-	internal interface ITagService
+	public interface ITagService
 	{
 	}
 }
