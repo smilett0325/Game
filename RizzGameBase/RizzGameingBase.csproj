@@ -157,7 +157,9 @@
     <Compile Include="Models\Infra\DAHelper.cs" />
     <Compile Include="Models\Infra\Pagination.cs" />
     <Compile Include="Models\IRepositories\IGameRepository.cs" />
+    <Compile Include="Models\IServices\IGameService.cs" />
     <Compile Include="Models\Repositories\EFRepository\GameEFRepository.cs" />
+    <Compile Include="Models\Services\GameService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
