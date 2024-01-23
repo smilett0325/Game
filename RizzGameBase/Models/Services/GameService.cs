@@ -1,5 +1,7 @@
-﻿using RizzGameBase.Models.EFModels;
+﻿using RizzGameBase.Models.Dtos;
+using RizzGameBase.Models.EFModels;
 using RizzGameBase.Models.Entities;
+using RizzGameBase.Models.Exts;
 using RizzGameBase.Models.IRepositories;
 using RizzGameBase.Models.IServices;
 using System;
@@ -18,24 +20,62 @@ namespace RizzGameBase.Models.Services
 			_repo = repo;
 		}
 
-		public List<GameEntity> Filter(Func<Game, bool> condition = null)
+		
+		public List<GameDto> Filter(Func<Game, bool> condition = null)
 		{
-			return _repo.Filter(condition);
+			return _repo.Filter().EntityToDto();
+			//         var data = _repo.Filter();
+
+			//         var result = new List<GameDto>();
+
+			//         foreach (var item in data)
+			//{
+			//	result.Add(item.EntityToDto());
+			//         }
+
+			//         return result;
 		}
 
-		public List<GameEntity> FilterByDeveloper(int developerId)
+		public List<GameDto> FilterByDeveloper(int developerId)
 		{
-			return _repo.Filter(g => g.DeveloperId == developerId);
-		}
+			var data = _repo.Filter(g => g.DeveloperId == developerId);
 
-		public List<GameEntity> FilterByDiscount(int discountId)
-		{
-			return _repo.Filter(g => g.DiscountId == discountId);
-		}
+            var result = new List<GameDto>();
 
-		public List<GameEntity> FilterByTag(int tagId)
+            foreach (var item in data)
+            {
+                result.Add(item.EntityToDto());
+            }
+
+            return result;
+        }
+
+		public List<GameDto> FilterByDiscount(int discountId)
 		{
-			return _repo.Filter(g => g.GameTagId == tagId);
-		}
+            var data = _repo.Filter(g => g.DiscountId == discountId);
+
+            var result = new List<GameDto>();
+
+            foreach (var item in data)
+            {
+                result.Add(item.EntityToDto());
+            }
+
+            return result;
+        }
+
+		public List<GameDto> FilterByTag(int tagId)
+		{
+            var data = _repo.Filter(g => g.GameTagId == tagId);
+
+            var result = new List<GameDto>();
+
+            foreach (var item in data)
+            {
+                result.Add(item.EntityToDto());
+            }
+
+            return result;
+        }
 	}
 }

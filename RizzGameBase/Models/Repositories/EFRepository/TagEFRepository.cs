@@ -11,7 +11,7 @@ namespace RizzGameBase.Models.Repositories.EFRepository
 {
 	public class TagEFRepository : ITagRepository
 	{
-		AppDbContext db;
+		AppDbContext db = new AppDbContext();
 		public void Create(TagEntity entity)
 		{
 			Tag model = entity.EntityToEF();

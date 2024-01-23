@@ -11,7 +11,7 @@ namespace RizzGameBase.Models.Repositories.EFRepository
 {
 	public class GTEFRepository : IGTRepository
 	{
-		AppDbContext db;
+		AppDbContext db = new AppDbContext();
 		public void Create(GTEntity entity)
 		{
 			GameTag model = entity.EntityToEF();

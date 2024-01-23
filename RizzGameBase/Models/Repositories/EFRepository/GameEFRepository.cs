@@ -11,7 +11,7 @@ namespace RizzGameBase.Models.Repositories.EFRepository
 {
 	public class GameEFRepository : IGameRepository
 	{
-		AppDbContext db;
+		AppDbContext db = new AppDbContext();
 
 		public List<GameEntity> Filter(Func<Game, bool> condition = null)
 		{

@@ -1,4 +1,5 @@
-﻿using RizzGameBase.Models.EFModels;
+﻿using RizzGameBase.Models.Dtos;
+using RizzGameBase.Models.EFModels;
 using RizzGameBase.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,13 @@ namespace RizzGameBase.Models.IServices
 {
 	public interface IGameService
 	{
-		List<GameEntity> Filter(Func<Game, bool> condition = null);
+		List<GameDto> Filter(Func<Game, bool> condition = null);
 
-		List<GameEntity> FilterByDeveloper(int developerId);
+		List<GameDto> FilterByDeveloper(int developerId);
 
-		List<GameEntity> FilterByDiscount(int discountId);
+		List<GameDto> FilterByDiscount(int discountId);
 
-		List<GameEntity> FilterByTag(int tagId);
+		List<GameDto> FilterByTag(int tagId);
 
 	}
 }

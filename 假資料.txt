@@ -1,0 +1,19 @@
+-- 插入守望先鋒的資料
+INSERT INTO Games (Name, Introduction, Description, ReleaseDate, Price, Image, DeveloperId, GameTagId, DiscountId)
+VALUES ('守望先鋒', '多人戰略遊戲，英雄對決與團隊合作', '以未來科技背景，多元文化的戰場，豐富多樣的地圖設計。', '2016-05-24', 999, '111.jpg', '1', '1', '1');
+
+-- 插入荒野大镖客2的資料
+INSERT INTO Games (Name, Introduction, Description, ReleaseDate, Price, Image, DeveloperId, GameTagId)
+VALUES ('荒野大镖客2', '開放世界的西部冒險遊戲', '極具細緻和真實感，深刻的敘事、精湛的設計和壯麗的畫面。', '2018-10-26', 1999, '222.jpg', '2', '2');
+
+-- 插入絕地求生：大逃殺的資料
+INSERT INTO Games (Name, Introduction, Description, ReleaseDate, Price, Image, DeveloperId, GameTagId)
+VALUES ('絕地求生：大逃殺', '沉浸式的生存競技遊戲', '以緊張刺激的玩法著稱，玩家在縮小的戰場中爭奪生存。', '2017-12-20', 599, '333.jpg', '3', '3');
+
+-- 插入動物森友會的資料
+INSERT INTO Games (Name, Introduction, Description, ReleaseDate, Price, Image, DeveloperId, GameTagId ,DiscountId,MaxPersent)
+VALUES ('動物森友會', '建立夢幻島嶼的社交模擬遊戲', '融合創意、種植花草、打造家園，與可愛的動物居民互動。', '2020-03-20', 1299, '444.jpg', '4', '4','2','80');
+
+-- 插入英雄聯盟的資料
+INSERT INTO Games (Name, Introduction, Description, ReleaseDate, Price, Image, DeveloperId, GameTagId)
+VALUES ('英雄聯盟', '多人線上戰術射擊遊戲', '豐富的遊戲性和獨特的英雄角色，不斷更新和平衡調整，全球數百萬玩家參與。', '2020-07-14', 0, '555.jpg', '5', '5');

@@ -1,6 +1,7 @@
 ﻿using RizzGameBase.Models.Dtos;
 using RizzGameBase.Models.EFModels;
 using RizzGameBase.Models.Entities;
+using RizzGameBase.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +65,26 @@ namespace RizzGameBase.Models.Exts
 			};
 		}
 
-		public static GameEntity DtoToEntity(this GameDto model)
+        public static List<GameDto> EntityToDto(this List<GameEntity> model)
+        {
+			return model.Select(x => x.EntityToDto()).ToList();
+			//return new GameDto
+			//{
+			//    Id = model.Id,
+			//    Name = model.Name,
+			//    Introduction = model.Introduction,
+			//    Description = model.Description,
+			//    ReleaseDate = model.ReleaseDate,
+			//    Price = model.Price,
+			//    Image = model.Image,
+			//    DeveloperId = model.DeveloperId,
+			//    GameTagId = model.GameTagId,
+			//    DiscountId = model.DiscountId,
+			//    MaxPersent = model.MaxPersent,
+			//};
+		}
+
+        public static GameEntity DtoToEntity(this GameDto model)
 		{
 			return new GameEntity
 			{
@@ -80,6 +100,22 @@ namespace RizzGameBase.Models.Exts
 				DiscountId = model.DiscountId,
 				MaxPersent = model.MaxPersent,
 			};
+		}
+
+		public static GameIndexVm ToGameVm(this GameDto model)
+		{
+			return new GameIndexVm
+			{
+				Id = model.Id,
+				Name = model.Name,
+				Price = model.Price,
+				Image = model.Image,
+			};
+		}
+
+		public static List<GameIndexVm> ToGameVm(this List<GameDto> model)
+		{
+			return model.Select(x => x.ToGameVm()).ToList();
 		}
 	}
 }

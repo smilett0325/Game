@@ -12,9 +12,9 @@ namespace RizzGameBase.Models.IRepositories
 	{
 		void Create(TagEntity entity);
 
-		TagEntity Search(int id);
+		TagEntity SearchById(int id);
 
-		List<TagEntity> Filter(Func<Tag, bool> condition = null);
+		TagEntity SearchByName(string name);
 
 		void Update(TagEntity entity);
 

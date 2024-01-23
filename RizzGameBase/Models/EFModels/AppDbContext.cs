@@ -17,6 +17,7 @@ namespace RizzGameBase.Models.EFModels
 		public virtual DbSet<GameTag> GameTags { get; set; }
 		public virtual DbSet<Image> Images { get; set; }
 		public virtual DbSet<Tag> Tags { get; set; }
+		public virtual DbSet<Video> Videos { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
