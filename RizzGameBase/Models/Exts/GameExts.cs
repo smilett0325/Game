@@ -23,8 +23,6 @@ namespace RizzGameBase.Models.Exts
 				Price = model.Price,
 				Image = model.Image,
 				DeveloperId = model.DeveloperId,
-				GameTagId = model.GameTagId,
-				DiscountId = model.DiscountId,
 				MaxPersent = model.MaxPersent,
 			};
 		}
@@ -41,8 +39,6 @@ namespace RizzGameBase.Models.Exts
 				Price = model.Price,
 				Image = model.Image,
 				DeveloperId = model.DeveloperId,
-				GameTagId = model.GameTagId,
-				DiscountId = model.DiscountId,
 				MaxPersent = model.MaxPersent,
 			};
 		}
@@ -59,8 +55,6 @@ namespace RizzGameBase.Models.Exts
 				Price = model.Price,
 				Image = model.Image,
 				DeveloperId = model.DeveloperId,
-				GameTagId = model.GameTagId,
-				DiscountId = model.DiscountId,
 				MaxPersent = model.MaxPersent,
 			};
 		}
@@ -96,8 +90,6 @@ namespace RizzGameBase.Models.Exts
 				Price = model.Price,
 				Image = model.Image,
 				DeveloperId = model.DeveloperId,
-				GameTagId = model.GameTagId,
-				DiscountId = model.DiscountId,
 				MaxPersent = model.MaxPersent,
 			};
 		}

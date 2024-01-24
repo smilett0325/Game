@@ -25,10 +25,6 @@ namespace RizzGameBase.Models.Dtos
 
 		public int DeveloperId { get; set; }
 
-		public int GameTagId { get; set; }
-
-		public int? DiscountId { get; set; }
-
 		public int? MaxPersent { get; set; }
 	}
 }

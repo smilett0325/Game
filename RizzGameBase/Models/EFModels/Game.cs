@@ -11,10 +11,13 @@ namespace RizzGameBase.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Game()
         {
+            Comments = new HashSet<Comment>();
+            DiscountItems = new HashSet<DiscountItem>();
             DLCs = new HashSet<DLC>();
             DLCs1 = new HashSet<DLC>();
             GameTags = new HashSet<GameTag>();
             Images = new HashSet<Image>();
+            Videos = new HashSet<Video>();
         }
 
         public int Id { get; set; }
@@ -42,11 +45,15 @@ namespace RizzGameBase.Models.EFModels
 
         public int DeveloperId { get; set; }
 
-        public int GameTagId { get; set; }
-
-        public int? DiscountId { get; set; }
-
         public int? MaxPersent { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
+
+        public virtual Developer Developer { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DiscountItem> DiscountItems { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DLC> DLCs { get; set; }
@@ -54,10 +61,17 @@ namespace RizzGameBase.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DLC> DLCs1 { get; set; }
 
+        public virtual Game Games1 { get; set; }
+
+        public virtual Game Game1 { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GameTag> GameTags { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Image> Images { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Video> Videos { get; set; }
     }
 }

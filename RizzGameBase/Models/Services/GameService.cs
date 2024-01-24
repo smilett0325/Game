@@ -4,10 +4,12 @@ using RizzGameBase.Models.Entities;
 using RizzGameBase.Models.Exts;
 using RizzGameBase.Models.IRepositories;
 using RizzGameBase.Models.IServices;
+using RizzGameBase.Models.Repositories.EFRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity; // Include
 
 namespace RizzGameBase.Models.Services
 {
@@ -52,30 +54,47 @@ namespace RizzGameBase.Models.Services
 
 		public List<GameDto> FilterByDiscount(int discountId)
 		{
-            var data = _repo.Filter(g => g.DiscountId == discountId);
+			var db = new AppDbContext();
 
-            var result = new List<GameDto>();
-
-            foreach (var item in data)
-            {
-                result.Add(item.EntityToDto());
-            }
-
-            return result;
-        }
+			return db.DiscountItems.AsNoTracking()
+				.Include(g => g.Game)
+				.Where(g => g.DiscountId == discountId)
+				.Select(g => new GameDto
+				{
+					Id = g.GameId,
+					Name = g.Game.Name,
+					Introduction = g.Game.Introduction,
+					Description = g.Game.Description,
+					ReleaseDate = g.Game.ReleaseDate,
+					Price = g.Game.Price,
+					Image = g.Game.Image,
+					DeveloperId = g.Game.DeveloperId,
+					MaxPersent = g.Game.MaxPersent,
+				})
+				.ToList();
+		}
 
 		public List<GameDto> FilterByTag(int tagId)
 		{
-            var data = _repo.Filter(g => g.GameTagId == tagId);
-
-            var result = new List<GameDto>();
-
-            foreach (var item in data)
-            {
-                result.Add(item.EntityToDto());
-            }
-
-            return result;
-        }
+			//tagid => gt gameid => game
+			var db = new AppDbContext();
+			
+			return db.GameTags.AsNoTracking()
+				.Include(g => g.Game)
+				.Where(g => g.TagId == tagId)
+				.Select(g => new GameDto
+				{
+					Id = g.GameId,
+					Name = g.Game.Name,
+					Introduction = g.Game.Introduction,
+					Description = g.Game.Description,
+					ReleaseDate = g.Game.ReleaseDate,
+					Price = g.Game.Price,
+					Image = g.Game.Image,
+					DeveloperId = g.Game.DeveloperId,
+					MaxPersent = g.Game.MaxPersent,
+				})
+				.ToList();
+		}
 	}
 }

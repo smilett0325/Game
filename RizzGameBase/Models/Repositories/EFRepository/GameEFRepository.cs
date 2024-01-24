@@ -51,10 +51,8 @@ namespace RizzGameBase.Models.Repositories.EFRepository
 			entity.Price = model.Price;
 			entity.Image = model.Image;
 			entity.DeveloperId = model.DeveloperId;
-			entity.DiscountId = model.DiscountId;
 			entity.ReleaseDate = model.ReleaseDate;
 			entity.Introduction = model.Introduction;
-			entity.GameTagId = model.GameTagId;
 			entity.MaxPersent = model.MaxPersent;
 			entity.Description = model.Description;
 

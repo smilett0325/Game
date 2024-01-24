@@ -23,5 +23,31 @@ namespace RizzGameBase.Controllers
             List<GameIndexVm> vm = service.Filter().ToGameVm();
 			return View(vm);
         }
+
+		[Authorize]
+		public ActionResult Edit(int id)
+		{
+			return View();
+		}
+
+		[Authorize]
+		[HttpPost]
+		public ActionResult Edit(DeveloperGameEditVm vm)
+		{
+			return RedirectToAction("Index");
+		}
+
+		[Authorize]
+		public ActionResult Create() 
+		{ 
+			return View(); 
+		}
+
+		[Authorize]
+		[HttpPost]
+		public ActionResult Create(DeveloperGameEditVm vm)
+		{
+			return RedirectToAction("Index");
+		}
 	}
 }

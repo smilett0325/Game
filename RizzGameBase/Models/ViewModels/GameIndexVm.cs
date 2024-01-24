@@ -15,5 +15,7 @@ namespace RizzGameBase.Models.ViewModels
 
 		public string Image { get; set; }
 
+		//public int Percent {get; set; }
+
 	}
 }

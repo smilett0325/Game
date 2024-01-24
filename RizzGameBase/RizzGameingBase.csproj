@@ -150,10 +150,15 @@
     <Compile Include="Models\Dtos\GTDto.cs" />
     <Compile Include="Models\Dtos\TagDto.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
+    <Compile Include="Models\EFModels\Comment.cs" />
+    <Compile Include="Models\EFModels\Developer.cs" />
+    <Compile Include="Models\EFModels\Discount.cs" />
+    <Compile Include="Models\EFModels\DiscountItem.cs" />
     <Compile Include="Models\EFModels\DLC.cs" />
     <Compile Include="Models\EFModels\Game.cs" />
     <Compile Include="Models\EFModels\GameTag.cs" />
     <Compile Include="Models\EFModels\Image.cs" />
+    <Compile Include="Models\EFModels\Member.cs" />
     <Compile Include="Models\EFModels\Tag.cs" />
     <Compile Include="Models\EFModels\Video.cs" />
     <Compile Include="Models\Entities\GameEntity.cs" />
@@ -176,6 +181,7 @@
     <Compile Include="Models\Services\GameService.cs" />
     <Compile Include="Models\Services\GTService.cs" />
     <Compile Include="Models\Services\TagService.cs" />
+    <Compile Include="Models\ViewModels\DeveloperGameEditVm.cs" />
     <Compile Include="Models\ViewModels\GameIndexVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
