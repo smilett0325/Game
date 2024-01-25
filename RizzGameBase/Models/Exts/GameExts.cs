@@ -132,7 +132,10 @@ namespace RizzGameBase.Models.Exts
 
 			var dlc = db.DLCs.AsNoTracking()
 					.Where(x => x.AttachmentGameId == model.Id)
+					.Include(x => x.Game)
 					.ToList();
+
+			List<Game> dlcGames = dlc.Select(x => x.Game).ToList();
 
 			var vm = db.Games.AsNoTracking()
 				.Include(x => x.Videos)
@@ -153,16 +156,16 @@ namespace RizzGameBase.Models.Exts
 					Tags = tags,
 					MaxPercent = x.MaxPercent,
 					Discounts = discounts,
-					DLCs = dlc,
+					DLCs = dlcGames,
 				})
 				.FirstOrDefault();
 
 			return vm;
 		}
 
-		public static List<DeveloperGameEditVm> ToDGVm(this List<GameDto> model)
-		{
-			return model.Select(x => x.ToDGVm()).ToList();
-		}
+		//public static List<DeveloperGameEditVm> ToDGVm(this List<GameDto> model)
+		//{
+		//	return model.Select(x => x.ToDGVm()).ToList();
+		//}
 	}
 }
