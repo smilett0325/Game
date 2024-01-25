@@ -53,7 +53,7 @@ namespace RizzGameBase.Models.Repositories.EFRepository
 			entity.DeveloperId = model.DeveloperId;
 			entity.ReleaseDate = model.ReleaseDate;
 			entity.Introduction = model.Introduction;
-			entity.MaxPersent = model.MaxPersent;
+			entity.MaxPercent = model.MaxPercent;
 			entity.Description = model.Description;
 
 			db.SaveChanges();

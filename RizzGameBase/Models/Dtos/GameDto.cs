@@ -25,6 +25,6 @@ namespace RizzGameBase.Models.Dtos
 
 		public int DeveloperId { get; set; }
 
-		public int? MaxPersent { get; set; }
+		public int? MaxPercent { get; set; }
 	}
 }

@@ -9,7 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Data.Entity; // Include
+using System.Data.Entity;
+using RizzGameBase.Models.ViewModels; // Include
 
 namespace RizzGameBase.Models.Services
 {
@@ -21,7 +22,6 @@ namespace RizzGameBase.Models.Services
 		{
 			_repo = repo;
 		}
-
 		
 		public List<GameDto> Filter(Func<Game, bool> condition = null)
 		{
@@ -57,8 +57,8 @@ namespace RizzGameBase.Models.Services
 			var db = new AppDbContext();
 
 			return db.DiscountItems.AsNoTracking()
-				.Include(g => g.Game)
 				.Where(g => g.DiscountId == discountId)
+				.Include(g => g.Game)
 				.Select(g => new GameDto
 				{
 					Id = g.GameId,
@@ -69,7 +69,7 @@ namespace RizzGameBase.Models.Services
 					Price = g.Game.Price,
 					Image = g.Game.Image,
 					DeveloperId = g.Game.DeveloperId,
-					MaxPersent = g.Game.MaxPersent,
+					MaxPercent = g.Game.MaxPercent,
 				})
 				.ToList();
 		}
@@ -80,8 +80,8 @@ namespace RizzGameBase.Models.Services
 			var db = new AppDbContext();
 			
 			return db.GameTags.AsNoTracking()
-				.Include(g => g.Game)
 				.Where(g => g.TagId == tagId)
+				.Include(g => g.Game)
 				.Select(g => new GameDto
 				{
 					Id = g.GameId,
@@ -92,7 +92,7 @@ namespace RizzGameBase.Models.Services
 					Price = g.Game.Price,
 					Image = g.Game.Image,
 					DeveloperId = g.Game.DeveloperId,
-					MaxPersent = g.Game.MaxPersent,
+					MaxPercent = g.Game.MaxPercent,
 				})
 				.ToList();
 		}

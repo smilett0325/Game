@@ -45,7 +45,7 @@ namespace RizzGameBase.Models.EFModels
 
         public int DeveloperId { get; set; }
 
-        public int? MaxPersent { get; set; }
+        public int? MaxPercent { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }

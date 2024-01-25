@@ -36,7 +36,7 @@ namespace RizzGameBase.Models.Entities
 
 		public int DeveloperId { get; set; }
 
-		public int? MaxPersent { get; set; }
+		public int? MaxPercent { get; set; }
 
 		//public int? SeasonDiscountId { get; set; }
 		//public int? CustomerDiscountId { get; set; }
