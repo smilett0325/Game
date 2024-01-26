@@ -22,7 +22,12 @@ namespace RizzGameBase.Models.Services
 		{
 			_repo = repo;
 		}
-		
+
+		public GameDto Search(int id)
+		{
+			return _repo.Search(id).EntityToDto();
+		}
+
 		public List<GameDto> Filter(Func<Game, bool> condition = null)
 		{
 			return _repo.Filter().EntityToDto();

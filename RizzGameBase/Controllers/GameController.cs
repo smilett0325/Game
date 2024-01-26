@@ -12,25 +12,30 @@ using System.Web.Mvc;
 
 namespace RizzGameBase.Controllers
 {
-    public class GameController : Controller
-    {
+	public class GameController : Controller
+	{
+		
 		// GET: Game
 		public ActionResult Index()
-        {
-            var repo = new GameEFRepository();
-			var service = new GameService(repo);
-
-            List<GameIndexVm> vm = service.Filter().ToGameVm();
-			return View(vm);
-        }
-
-		[Authorize]
-		public ActionResult Edit(int id)
 		{
-			return View();
+			IGameRepository repo = new GameEFRepository();
+			GameService service = new GameService(repo);
+			List<GameIndexVm> vm = service.Filter().ToGameVm(); //顯示全部
+			return View(vm);
 		}
 
-		[Authorize]
+		//[Authorize]
+		public ActionResult Edit(int id)
+		{
+			IGameRepository repo = new GameEFRepository();
+			GameService service = new GameService(repo);
+			
+			var game = service.Search(id);
+			DeveloperGameEditVm vm = game.ToDGVm();
+			return View(vm);
+		}
+
+		//[Authorize]
 		[HttpPost]
 		public ActionResult Edit(DeveloperGameEditVm vm)
 		{
@@ -38,9 +43,9 @@ namespace RizzGameBase.Controllers
 		}
 
 		[Authorize]
-		public ActionResult Create() 
-		{ 
-			return View(); 
+		public ActionResult Create()
+		{
+			return View();
 		}
 
 		[Authorize]
