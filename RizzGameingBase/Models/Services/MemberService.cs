@@ -1,6 +1,8 @@
 ﻿using Microsoft.Ajax.Utilities;
 using RizzGameingBase.Models.Dtos;
-using RizzGameingBase.Models.IServices;
+using RizzGameingBase.Models.EFModels;
+using RizzGameingBase.Models.Entities;
+using RizzGameingBase.Models.IRepositories;
 using RizzGameingBase.Models.Repositories.EFRepositories;
 using System;
 using System.Collections.Generic;
@@ -9,46 +11,103 @@ using System.Web;
 
 namespace RizzGameingBase.Models.Services
 {
-    // MemberService 类实现了 IMemberService 接口，用于处理会员相关的业务逻辑
-    public class MemberService : IMemberService
+    public class MemberService 
     {
-        // 使用 MemberEFRepository 对象处理与 Entity Framework 相关的数据库操作
-        private readonly MemberEFRepository _memberEFRepository;
 
+        // 。
 
-        // 构造函数，接收 MemberEFRepository 作为依赖注入的方式
-        public MemberService(MemberEFRepository memberEFRepository)
+        private readonly IRepository _repo;
+
+        //// 
+        public MemberService(IRepository repo)
         {
-            //轉換
-            _memberEFRepository = memberEFRepository;
+            // 。
+
+            _repo = repo;
         }
 
-
-
-        //todo  寫商業邏輯判斷
+        
+        //將資料從 MemberDto 轉換為 MemberEntity 並創建。
         public void CreateMember(MemberDto memberDto)
         {
-            throw new NotImplementedException();
+            if (memberDto == null) throw new NotImplementedException();
+
+            //還要再寫其他判斷
+            var member = new MemberEntity();
+            member.Account= memberDto.Account;
+            member.Password= memberDto.Password;
+            member.Mail= memberDto.Mail;
+            member.AvatarURL= memberDto.AvatarURL;
+            member.Birthday= memberDto.Birthday;
+            member.NickName= memberDto.NickName;
+
+            _repo.Create(member);
+
         }
 
-        public void DeleteMember(int id)
+        //刪除
+        public void DeleteMember(int memberId)
         {
-            throw new NotImplementedException();
+            _repo.Delete(memberId);
         }
 
-        public List<MemberDto> GetAllMember()
+
+        public List<MemberDto> GetAllMembers()
         {
-            throw new NotImplementedException();
+            var data = _repo.GetAll();
+            var members = data.Select(x => new MemberDto
+            {
+                Id = x.Id,
+                Account = x.Account,
+                Password = x.Password,
+                Mail = x.Mail,
+                AvatarURL = x.AvatarURL,
+                Birthday = x.Birthday,
+                NickName = x.NickName,
+                RegistrationDate = x.RegistrationDate,
+                BanTime = x.BanTime,
+                LastLoginDate = x.LastLoginDate,
+            })
+                .ToList();
+                return members;
+
         }
 
-        public MemberDto GetGMemberById(int id)
+
+        public MemberDto GetMemberById(int memberId)
         {
-            throw new NotImplementedException();
+            var member = _repo.Find(memberId);
+            return new MemberDto
+            {
+                Id= member.Id,
+                Account= member.Account,
+                Password= member.Password,
+                Mail= member.Mail,
+                AvatarURL= member.AvatarURL,
+                Birthday= member.Birthday,
+                NickName= member.NickName,
+                RegistrationDate= member.RegistrationDate,
+                BanTime= member.BanTime,
+                LastLoginDate= member.LastLoginDate,
+            };
         }
 
         public void UpdateMember(MemberDto memberDto)
         {
-            throw new NotImplementedException();
+            if (memberDto == null) throw new NotImplementedException();
+
+            //還要再寫其他判斷
+            //不確定是不是每個都要?
+
+            var member = new MemberEntity();
+            member.Account = memberDto.Account;
+            member.Password = memberDto.Password;
+            member.Mail = memberDto.Mail;
+            member.AvatarURL = memberDto.AvatarURL;
+            member.Birthday = memberDto.Birthday;
+            member.NickName = memberDto.NickName;
+
+            _repo.Update(member);
         }
     }
 }

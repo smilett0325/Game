@@ -1,4 +1,6 @@
-﻿using RizzGameingBase.Models.ViewModels;
+﻿using RizzGameingBase.Models.Repositories.EFRepositories;
+using RizzGameingBase.Models.Services;
+using RizzGameingBase.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +16,42 @@ namespace RizzGameingBase.Controllers
         public ActionResult Index()
         {
             List<MemberIndexVm> data = GetAll();
-            return View();
+            return View(data);
         }
 
-		private List<MemberIndexVm> GetAll()
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public ActionResult Edit()
+        {
+            //要在新增一個 VIEWMODEL  
+            //
+            List<MemberIndexVm> data = GetAll();
+            return View(data);
+        }
+
+        private List<MemberIndexVm> GetAll()
+        {
+            var repo = new MemberEFRepository();
+            var servicer = new MemberService(repo);
+            var dto = servicer.GetAllMembers();
+            var data = new List<MemberIndexVm>();
+            foreach (var item in dto)
+            {
+                var modle = new MemberIndexVm
+                {
+                    Id = item.Id,
+                    Account = item.Account,
+                    Password = item.Password,
+                    Mail = item.Mail,
+                    AvatarURL = item.AvatarURL,
+                    Birthday = item.Birthday,
+                    NickName=item.NickName,
+                    RegistrationDate = item.RegistrationDate,
+                    BanTime = item.BanTime,
+                    LastLoginDate = item.LastLoginDate,
+
+                };
+                data.Add(modle);
+            }
+            return data;
+        }
+    }
 }

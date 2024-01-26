@@ -10,7 +10,7 @@ namespace RizzGameingBase.Models.Entities
 	//							repository				service					controller
 	public class MemberEntity
 	{
-
+		//最後的防線
 		//這裡要給欄位驗證           !!EFModel建置的不要動!!
 		public int Id { get; set; }
 

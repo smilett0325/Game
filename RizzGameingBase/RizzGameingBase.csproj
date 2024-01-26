@@ -133,11 +133,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Dtos\MemberDto.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Member.cs" />
     <Compile Include="Models\Entities\MemberEntity.cs" />
     <Compile Include="Models\IRepositories\IRepository.cs" />
     <Compile Include="Models\Repositories\EFRepositories\MemberEFRepository.cs" />
+    <Compile Include="Models\IServices\IMemberServices.cs" />
+    <Compile Include="Models\Services\MemberService.cs" />
     <Compile Include="Models\ViewModels\MemberIndexVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -192,15 +195,12 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Members\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Dtos\" />
     <Folder Include="Models\Exts\" />
-    <Folder Include="Models\IServices\" />
     <Folder Include="Models\Repositories\DpRepositories\" />
-    <Folder Include="Models\Services\" />
-    <Folder Include="Views\Members\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

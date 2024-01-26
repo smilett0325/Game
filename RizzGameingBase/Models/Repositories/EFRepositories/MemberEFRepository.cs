@@ -48,13 +48,13 @@ namespace RizzGameingBase.Models.Repositories.EFRepositories
 			var member = members.Single(x => x.Id == memberId);
 			members.Remove(member);
 
-			Save(members);
-		}
+            _dbContext.SaveChanges();
+        }
 
-		private void Save(List<MemberEntity> members)
-		{
-			//還不確定要不要做
-		}
+		//private void Save(List<MemberEntity> members)
+		//{
+		//	//還不確定要不要做
+		//}
 
 		public MemberEntity Find(int memberId)
 		{
@@ -114,39 +114,81 @@ namespace RizzGameingBase.Models.Repositories.EFRepositories
 
         }
 
-        List<MemberEntity> IRepository.Search(string name)
+        public List<MemberEntity> Search(string name)
         {
 			var memberList = _dbContext.Members
 				.Where(m => m.NickName.Contains(name))
-				.Select(m => new MemberEntity {
-					Id=m.Id,
-					Account=m.Account,
-					Mail=m.Mail,
-					AvatarURL=m.AvatarURL,
-					RegistrationDate=m.RegistrationDate,
+				.Select(m => new MemberEntity
+				{
+					Id = m.Id,
+					Account = m.Account,
+					Mail = m.Mail,
+					AvatarURL = m.AvatarURL,
+					RegistrationDate = m.RegistrationDate,
 					BanTime = m.BanTime,
-					Bonus=m.Bonus,
-					LastLoginDate=m.LastLoginDate,
-					Birthday=m.Birthday,
-					NickName=m.NickName,
+					Bonus = m.Bonus,
+					LastLoginDate = m.LastLoginDate,
+					Birthday = m.Birthday,
+					NickName = m.NickName,
 				})
 				.ToList();
 			return memberList;
-				
-        }
+		}
 
-        void IRepository.Edit(MemberEntity entity)
+        public void Edit(MemberEntity entity)
         {
 			var member = _dbContext.Members.Find(entity.Id);
 			if (member != null)
 			{
-				member.Password= entity.Password;
-				member.Mail= entity.Mail;
-				member.AvatarURL= entity.AvatarURL;
-				member.Birthday=entity.Birthday;
-				member.NickName= entity.NickName;
+				member.Password = entity.Password;
+				member.Mail = entity.Mail;
+				member.AvatarURL = entity.AvatarURL;
+				member.Birthday = entity.Birthday;
+				member.NickName = entity.NickName;
 			}
 			_dbContext.SaveChanges();
-        }
+		}
+
+
+
+
+
+		//以下是明確實做(X)  用實作就好!!!  
+
+
+        //     List<MemberEntity> IRepository.Search(string name)
+        //     {
+        //var memberList = _dbContext.Members
+        //	.Where(m => m.NickName.Contains(name))
+        //	.Select(m => new MemberEntity {
+        //		Id=m.Id,
+        //		Account=m.Account,
+        //		Mail=m.Mail,
+        //		AvatarURL=m.AvatarURL,
+        //		RegistrationDate=m.RegistrationDate,
+        //		BanTime = m.BanTime,
+        //		Bonus=m.Bonus,
+        //		LastLoginDate=m.LastLoginDate,
+        //		Birthday=m.Birthday,
+        //		NickName=m.NickName,
+        //	})
+        //	.ToList();
+        //return memberList;
+
+        //     }
+
+        //     void IRepository.Edit(MemberEntity entity)
+        //     {
+        //var member = _dbContext.Members.Find(entity.Id);
+        //if (member != null)
+        //{
+        //	member.Password= entity.Password;
+        //	member.Mail= entity.Mail;
+        //	member.AvatarURL= entity.AvatarURL;
+        //	member.Birthday=entity.Birthday;
+        //	member.NickName= entity.NickName;
+        //}
+        //_dbContext.SaveChanges();
+        //     }
     }
 }
