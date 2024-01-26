@@ -97,6 +97,7 @@ namespace RizzGameingBase.Models.Repositories.EFRepositories
 			if (existingMembersEntity != null)
 			{
 				//不確定是不是全部要做
+				existingMembersEntity.Id = entity.Id;
 				existingMembersEntity.Account= entity.Account;
 				existingMembersEntity.Password= entity.Password;
 				existingMembersEntity.Mail= entity.Mail;

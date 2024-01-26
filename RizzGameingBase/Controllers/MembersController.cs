@@ -23,8 +23,42 @@ namespace RizzGameingBase.Controllers
         {
             //要在新增一個 VIEWMODEL  
             //
-            List<MemberIndexVm> data = GetAll();
-            return View(data);
+            
+            return View();
+        }
+
+        //撈一筆ID的資料
+        public ActionResult Details(int id)
+        {
+            var getId = GetById(id);
+            return View(getId);
+        }
+
+
+        //view model 記得要創一個轉型的
+        //  MemberIndexVm  (要自己創一個新的 dto 轉成 VM)
+        private MemberIndexVm GetById(int id) //找到編輯欄位
+        {
+            var repo = new MemberEFRepository();
+            var servicer = new MemberService(repo);
+            var dto = servicer.GetMemberById(id);
+            var data = new MemberIndexVm
+            {
+                Id = dto.Id,
+                Account=dto.Account,
+                Password=dto.Password,
+                Mail=dto.Mail,
+                AvatarURL=dto.AvatarURL,
+                BanTime=dto.BanTime,
+                Birthday=dto.Birthday,
+                NickName=dto.NickName,
+                RegistrationDate=dto.RegistrationDate,
+                LastLoginDate=dto.LastLoginDate,
+               
+                
+            };
+            return data;
+
         }
 
         private List<MemberIndexVm> GetAll()
