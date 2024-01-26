@@ -54,7 +54,7 @@ namespace RizzGameingBase.Models.Services
 
         public List<MemberDto> GetAllMembers()
         {
-            var data = _repo.GetAll();
+            var data = _repo.GetAll();//
             var members = data.Select(x => new MemberDto
             {
                 Id = x.Id,
@@ -72,7 +72,7 @@ namespace RizzGameingBase.Models.Services
                 return members;
 
         }
-
+        
 
         public MemberDto GetMemberById(int memberId)
         {
