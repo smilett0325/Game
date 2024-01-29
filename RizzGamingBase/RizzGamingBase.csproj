@@ -45,10 +45,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -155,11 +162,49 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\BonusProductsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Dtos\BonusProductsDto.cs" />
+    <Compile Include="Models\EFModels\Admin.cs" />
+    <Compile Include="Models\EFModels\AppDbContext.cs" />
+    <Compile Include="Models\EFModels\BanGame.cs" />
+    <Compile Include="Models\EFModels\BanMember.cs" />
+    <Compile Include="Models\EFModels\BillDetail.cs" />
+    <Compile Include="Models\EFModels\Board.cs" />
+    <Compile Include="Models\EFModels\BonusProduct.cs" />
+    <Compile Include="Models\EFModels\BonusProductType.cs" />
+    <Compile Include="Models\EFModels\Cart.cs" />
+    <Compile Include="Models\EFModels\Collection.cs" />
+    <Compile Include="Models\EFModels\Comment.cs" />
+    <Compile Include="Models\EFModels\Developer.cs" />
+    <Compile Include="Models\EFModels\Discount.cs" />
+    <Compile Include="Models\EFModels\DLC.cs" />
+    <Compile Include="Models\EFModels\Friend.cs" />
+    <Compile Include="Models\EFModels\Game.cs" />
+    <Compile Include="Models\EFModels\GameTag.cs" />
+    <Compile Include="Models\EFModels\Image.cs" />
+    <Compile Include="Models\EFModels\Item.cs" />
+    <Compile Include="Models\EFModels\Member.cs" />
+    <Compile Include="Models\EFModels\MemberTag.cs" />
+    <Compile Include="Models\EFModels\Message.cs" />
+    <Compile Include="Models\EFModels\Picture.cs" />
+    <Compile Include="Models\EFModels\SeasonDiscount.cs" />
+    <Compile Include="Models\EFModels\sysdiagram.cs" />
+    <Compile Include="Models\EFModels\Tag.cs" />
+    <Compile Include="Models\EFModels\WishListe.cs" />
+    <Compile Include="Models\Entities\BonusProductsEntity.cs" />
+    <Compile Include="Models\Exts\BonusProductExts.cs" />
+    <Compile Include="Models\Interfaces\IBonusProductsRepository.cs" />
+    <Compile Include="Models\Interfaces\IBonusProductsServices.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\BonusProductsEFRepository.cs" />
+    <Compile Include="Models\Services\BonusProductsServices.cs" />
+    <Compile Include="Models\ViewModels\BonusProductsCreateVm.cs" />
+    <Compile Include="Models\ViewModels\BonusProductsIndexVm.cs" />
+    <Compile Include="Models\ViewModels\BonusProductsVm.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -255,6 +300,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\BonusProducts\Index.cshtml" />
+    <Content Include="Views\BonusProducts\Create.cshtml" />
+    <Content Include="Views\BonusProducts\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

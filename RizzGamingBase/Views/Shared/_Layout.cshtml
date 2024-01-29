@@ -9,7 +9,6 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
             @Html.ActionLink("應用程式名稱", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -20,7 +19,10 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("首頁", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("關於", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("連絡人", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("BonusProductsCreate", "Create", "BonusProducts", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("BonusProductsIndex", "Index", "BonusProducts", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
         </div>
