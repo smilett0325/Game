@@ -38,12 +38,16 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 			return db.GameTags.AsNoTracking()
 				.Where(d => d.GameId == id)
 				.Join(
-				db.Tags,
-				d => d.TagId,
-				t => t.Id,
+				db.Tags, //輸出 EFModle Tag
+				d => d.TagId, //TagId 抓關聯欄位
+				t => t.Id, //Id => PrimaryKey
 				(d, t) => t
 				)
-				.Select(d => d.EFToEntity())
+				.Select(d => new TagEntity
+				{
+					Id = d.Id,
+					Name = d.Name
+				})
 				.ToList();
 		}
 
