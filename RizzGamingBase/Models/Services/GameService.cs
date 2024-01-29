@@ -29,7 +29,6 @@ namespace RizzGamingBase.Models.Services
 			//var discount = new List<DiscountDto>();
 
 			//todo 實作儲存
-
 			//update gmae
 
 			game.Name = vm.Name;

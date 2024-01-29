@@ -39,6 +39,7 @@ namespace RizzGamingBase.Controllers
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
+
 			service.DGSave(vm);
 			return RedirectToAction("Index");
 		}

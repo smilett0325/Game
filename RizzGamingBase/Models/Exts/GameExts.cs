@@ -124,6 +124,10 @@ namespace RizzGamingBase.Models.Exts
 
 			var displayImage = iR.GetAll(model.Id);
 			var displayVideo = vR.GetAll(model.Id);
+			//Game => gametag <= tag
+			//member => collection <= game
+			//collection (id,memberId, gameId)
+
 			var tag = tR.GetAll(model.Id);
 			var dlc = dlcR.GetGameDLC(model.Id);
 			//var discount =
