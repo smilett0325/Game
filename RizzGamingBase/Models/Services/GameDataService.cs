@@ -19,9 +19,17 @@ namespace RizzGamingBase.Models.Services
 			_repository = repository;
 		}
 
-		public List<decimal> Search(string name)
+		public List<decimal> SearchGameName(string name)
 		{
-			List<GameDataEntity> entity = _repository.SearchGameNameToBI(name);
+			string gameName = name;
+			if (string.IsNullOrEmpty(gameName))
+			{
+				//todo
+				gameName = "遊戲1";
+			}
+
+
+			List<GameDataEntity> entity = _repository.SearchGameNameToBI(gameName);
 
 			var initialdto = GameDataExts.EntityToDto(entity);
 
@@ -45,6 +53,7 @@ namespace RizzGamingBase.Models.Services
 				{
 					s4 += item.Price;
 				}
+				
 			}
 
 			List<decimal> dto = new List<decimal> {s1,s2,s3,s4};
