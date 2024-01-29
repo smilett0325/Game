@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Chart";
+}
+
+<h2>2023</h2>
+
+<!-- 引入Chart.js库 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
+<!-- 在页面中添加图表容器 -->
+<h2>季度營收</h2>
+<canvas id="myChart" width="100" height="100"></canvas>
+
+<!-- 在页面底部初始化图表 -->
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    // 将从Controller传递的数据绑定到图表
+    var bardata = [@(ViewBag.BarChartData)]; 
+    
+
+
+    // 创建图表
+
+    var myChart = new Chart(ctx, {
+        type: 'bar', // 替换为所需的图表类型
+        data: {
+            labels: ['第一季度', '第二季度', '第三季度', '第四季度'],
+            datasets: [{
+                label: '元',
+                data: bardata,
+                backgroundColor: 'blue',
+                borderColor: 'black',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
