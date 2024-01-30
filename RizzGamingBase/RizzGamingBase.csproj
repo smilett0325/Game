@@ -45,10 +45,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -155,11 +162,50 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\DiscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Dtos\DiscountDto.cs" />
+    <Compile Include="Models\EFModels\Admin.cs" />
+    <Compile Include="Models\EFModels\AppDbContext.cs" />
+    <Compile Include="Models\EFModels\BanGame.cs" />
+    <Compile Include="Models\EFModels\BanMember.cs" />
+    <Compile Include="Models\EFModels\BillDetail.cs" />
+    <Compile Include="Models\EFModels\Board.cs" />
+    <Compile Include="Models\EFModels\BonusProductType.cs" />
+    <Compile Include="Models\EFModels\BounsProduct.cs" />
+    <Compile Include="Models\EFModels\Cart.cs" />
+    <Compile Include="Models\EFModels\Collection.cs" />
+    <Compile Include="Models\EFModels\Comment.cs" />
+    <Compile Include="Models\EFModels\Developer.cs" />
+    <Compile Include="Models\EFModels\Discount.cs" />
+    <Compile Include="Models\EFModels\DiscountItem.cs" />
+    <Compile Include="Models\EFModels\DLC.cs" />
+    <Compile Include="Models\EFModels\Friend.cs" />
+    <Compile Include="Models\EFModels\Game.cs" />
+    <Compile Include="Models\EFModels\GameTag.cs" />
+    <Compile Include="Models\EFModels\Image.cs" />
+    <Compile Include="Models\EFModels\Item.cs" />
+    <Compile Include="Models\EFModels\Member.cs" />
+    <Compile Include="Models\EFModels\MemberTag.cs" />
+    <Compile Include="Models\EFModels\Message.cs" />
+    <Compile Include="Models\EFModels\Picture.cs" />
+    <Compile Include="Models\EFModels\sysdiagram.cs" />
+    <Compile Include="Models\EFModels\Tag.cs" />
+    <Compile Include="Models\EFModels\WishListe.cs" />
+    <Compile Include="Models\Entities\DiscountEntity.cs" />
+    <Compile Include="Models\Exts\DiscountActionExts.cs" />
+    <Compile Include="Models\Exts\DiscountExts.cs" />
+    <Compile Include="Models\Interfaces\IDiscountRepository.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\DiscountEFRepository.cs" />
+    <Compile Include="Models\Services\DiscountService.cs" />
+    <Compile Include="Models\ViewModels\DiscountCreateVm.cs" />
+    <Compile Include="Models\ViewModels\DiscountVm.cs" />
+    <Compile Include="Models\ViewModels\DiscountGameVm.cs" />
+    <Compile Include="Models\ViewModels\DiscountIndexVm.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -197,6 +243,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="DiscountPictures\寶可夢朱.jpg" />
+    <Content Include="DiscountPictures\寶可夢紫.jpg" />
+    <Content Include="DiscountPictures\測試封面1.jpg" />
+    <Content Include="DiscountPictures\測試封面2.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Models\Dtos\Dto.txt" />
@@ -204,7 +254,7 @@
     <Content Include="Models\Entities\Entities.txt" />
     <Content Include="Models\Exts\Exts.txt" />
     <Content Include="Models\Infra\Infra.txt" />
-    <Content Include="Models\IRepositories\IRepositories.txt" />
+    <Content Include="Models\Interfaces\Interface.txt" />
     <Content Include="Models\Repositories\DpRepositories\DpRepository.txt" />
     <Content Include="Models\Repositories\EFRepositories\EFRepository.txt" />
     <Content Include="Models\Repositories\Repositories.txt" />
@@ -255,6 +305,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Discount\Index.cshtml" />
+    <Content Include="Views\Discount\Edit.cshtml" />
+    <Content Include="Views\Discount\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
