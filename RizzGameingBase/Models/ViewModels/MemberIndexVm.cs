@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace RizzGameingBase.Models.ViewModels
+namespace RizzGamingBase.Models.ViewModels
 {
 	public class MemberIndexVm
 	{

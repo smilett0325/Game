@@ -1,14 +1,14 @@
 ﻿using Microsoft.Ajax.Utilities;
-using RizzGameingBase.Models.EFModels;
-using RizzGameingBase.Models.Entities;
-using RizzGameingBase.Models.IRepositories;
+using RizzGamingBase.Models.EFModels;
+using RizzGamingBase.Models.Entities;
+using RizzGamingBase.Models.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Member = RizzGameingBase.Models.EFModels.Member;
+using Member = RizzGamingBase.Models.EFModels.Member;
 
-namespace RizzGameingBase.Models.Repositories.EFRepositories
+namespace RizzGamingBase.Models.Repositories.EFRepositories
 {
 
 
@@ -94,18 +94,24 @@ namespace RizzGameingBase.Models.Repositories.EFRepositories
 		public void Update(MemberEntity entity)
 		{
             var existingMembersEntity = _dbContext.Members.Find(entity.Id);
-			if (existingMembersEntity != null)
+			
+			//var ab = existingMembersEntity.RegistrationDate=DateTime.Now;
+
+            if (existingMembersEntity != null)
 			{
-				//不確定是不是全部要做
-				existingMembersEntity.Id = entity.Id;
-				existingMembersEntity.Account= entity.Account;
-				existingMembersEntity.Password= entity.Password;
-				existingMembersEntity.Mail= entity.Mail;
-				existingMembersEntity.AvatarURL = entity.AvatarURL;
-				existingMembersEntity.RegistrationDate= entity.RegistrationDate;
+                //不確定是不是全部要做
+                //最後驗證看要什麼值給做更改
+
+                existingMembersEntity.Id = entity.Id;
+
+                //給判斷 如果密碼不是null的話  就給他改值
+                if (entity.Password != null) {
+                    existingMembersEntity.Password = entity.Password;
+                }
+                existingMembersEntity.Mail = entity.Mail;
+                existingMembersEntity.AvatarURL = entity.AvatarURL;
 				existingMembersEntity.BanTime= entity.BanTime;
 				existingMembersEntity.Bonus= entity.Bonus;
-				existingMembersEntity.LastLoginDate= entity.LastLoginDate;
 				existingMembersEntity.Birthday= entity.Birthday;
 				existingMembersEntity.NickName= entity.NickName;
 
@@ -136,6 +142,7 @@ namespace RizzGameingBase.Models.Repositories.EFRepositories
 			return memberList;
 		}
 
+		
         public void Edit(MemberEntity entity)
         {
 			var member = _dbContext.Members.Find(entity.Id);

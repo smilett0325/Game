@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace RizzGameingBase.Models.Dtos
+namespace RizzGamingBase.Models.Dtos
 {
     public class MemberDto
     {

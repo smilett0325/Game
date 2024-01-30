@@ -1,33 +1,31 @@
 ﻿using Microsoft.Ajax.Utilities;
-using RizzGameingBase.Models.Dtos;
-using RizzGameingBase.Models.EFModels;
-using RizzGameingBase.Models.Entities;
-using RizzGameingBase.Models.IRepositories;
-using RizzGameingBase.Models.Repositories.EFRepositories;
+using RizzGamingBase.Models.Dtos;
+using RizzGamingBase.Models.EFModels;
+using RizzGamingBase.Models.Entities;
+using RizzGamingBase.Models.IRepositories;
+using RizzGamingBase.Models.Repositories.EFRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace RizzGameingBase.Models.Services
+namespace RizzGamingBase.Models.Services
 {
     public class MemberService 
     {
 
-        // 。
-
         private readonly IRepository _repo;
 
-        //// 
         public MemberService(IRepository repo)
-        {
-            // 。
-
+        {       
             _repo = repo;
         }
 
         
         //將資料從 MemberDto 轉換為 MemberEntity 並創建。
+
+
+        //todo 進行必要的業務邏輯
         public void CreateMember(MemberDto memberDto)
         {
             if (memberDto == null) throw new NotImplementedException();
@@ -40,7 +38,7 @@ namespace RizzGameingBase.Models.Services
             member.AvatarURL= memberDto.AvatarURL;
             member.Birthday= memberDto.Birthday;
             member.NickName= memberDto.NickName;
-
+            member.RegistrationDate =DateTime.Now;
             _repo.Create(member);
 
         }
@@ -100,12 +98,16 @@ namespace RizzGameingBase.Models.Services
             //不確定是不是每個都要?
 
             var member = new MemberEntity();
+            member.Id = memberDto.Id;  
             member.Account = memberDto.Account;
             member.Password = memberDto.Password;
             member.Mail = memberDto.Mail;
             member.AvatarURL = memberDto.AvatarURL;
             member.Birthday = memberDto.Birthday;
             member.NickName = memberDto.NickName;
+            member.RegistrationDate = memberDto.RegistrationDate;
+            member.BanTime = memberDto.BanTime;
+            member.LastLoginDate = memberDto.LastLoginDate;
 
             _repo.Update(member);
         }

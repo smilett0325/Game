@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 
-namespace RizzGameingBase.Models.EFModels
+namespace RizzGamingBase.Models.EFModels
 {
 	public partial class AppDbContext : DbContext
 	{

@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace RizzGameingBase
+namespace RizzGamingBase
 {
 	public class BundleConfig
 	{

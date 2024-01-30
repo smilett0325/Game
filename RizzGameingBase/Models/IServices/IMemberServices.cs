@@ -1,11 +1,11 @@
-﻿using RizzGameingBase.Models.Dtos;
+﻿using RizzGamingBase.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RizzGameingBase.Models.Services
+namespace RizzGamingBase.Models.Services
 {
     //決定不使用!!!
     public interface IMemberServices

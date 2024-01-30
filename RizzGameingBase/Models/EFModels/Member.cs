@@ -1,4 +1,4 @@
-namespace RizzGameingBase.Models.EFModels
+namespace RizzGamingBase.Models.EFModels
 {
     using System;
     using System.Collections.Generic;

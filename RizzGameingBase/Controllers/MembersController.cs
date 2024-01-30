@@ -1,13 +1,14 @@
-﻿using RizzGameingBase.Models.Repositories.EFRepositories;
-using RizzGameingBase.Models.Services;
-using RizzGameingBase.Models.ViewModels;
+﻿using RizzGamingBase.Models.Dtos;
+using RizzGamingBase.Models.Repositories.EFRepositories;
+using RizzGamingBase.Models.Services;
+using RizzGamingBase.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace RizzGameingBase.Controllers
+namespace RizzGamingBase.Controllers
 {
     public class MembersController : Controller
     {
@@ -19,12 +20,37 @@ namespace RizzGameingBase.Controllers
             return View(data);
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
             //要在新增一個 VIEWMODEL  
-            //
+            var getId = GetById(id);
+            return View(getId);
+        }
+        [HttpPost] //進去網頁後的動作
+        public ActionResult Edit(MemberIndexVm member)
+        {
+            //要在新增一個 VIEWMODEL  
             
-            return View();
+            Update(member);
+            return RedirectToAction("Index");
+        }
+        //更新資料 轉型
+        private void Update(MemberIndexVm member)
+        {
+            var repo = new MemberEFRepository();
+            var servicer = new MemberService(repo);
+            MemberDto dto = new MemberDto {
+            Id = member.Id,
+                Account = member.Account,
+                Password = member.Password,
+                Mail = member.Mail,
+                AvatarURL = member.AvatarURL,
+                BanTime = member.BanTime,
+                Birthday = member.Birthday,
+                NickName = member.NickName,
+               
+            };
+            servicer.UpdateMember(dto);
         }
 
         //撈一筆ID的資料
@@ -37,7 +63,7 @@ namespace RizzGameingBase.Controllers
 
         //view model 記得要創一個轉型的
         //  MemberIndexVm  (要自己創一個新的 dto 轉成 VM)
-        private MemberIndexVm GetById(int id) //找到編輯欄位
+        private MemberIndexVm GetById(int id) //先找到編輯欄位
         {
             var repo = new MemberEFRepository();
             var servicer = new MemberService(repo);

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace RizzGameingBase.Models.Entities
+namespace RizzGamingBase.Models.Entities
 {   //                                                                          挑需要的欄位
 	// DataBase => EFModels => Entities(新增欄位驗證) => Dtos(資料轉換銜接用) => ViewModels(For單一網頁用，抓要的就好)
 	//							repository				service					controller

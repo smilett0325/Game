@@ -1,11 +1,11 @@
-﻿using RizzGameingBase.Models.Entities;
+﻿using RizzGamingBase.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RizzGameingBase.Models.IRepositories
+namespace RizzGamingBase.Models.IRepositories
 {
 	public interface IRepository
 	{
