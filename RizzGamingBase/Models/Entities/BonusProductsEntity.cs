@@ -11,7 +11,7 @@ namespace RizzGamingBase.Models.Entities
 
         public int ProductTypeid { get; set; }
 
-        public string TypeName { get; set; }
+        public string ProductTypeName { get; set; }
         public int Price { get; set; }
 
         public string URL { get; set; }

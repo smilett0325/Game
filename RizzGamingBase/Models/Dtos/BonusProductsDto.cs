@@ -11,7 +11,7 @@ namespace RizzGamingBase.Models.Dtos
 
         public int ProductTypeid { get; set; }
 
-        public string TypeName { get; set; }
+        public string ProductTypeName { get; set; }
 
         public int Price { get; set; }
 

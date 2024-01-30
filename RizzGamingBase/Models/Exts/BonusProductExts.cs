@@ -23,7 +23,7 @@ namespace RizzGamingBase.Models.Exts
                 {
                     Id = item.Id,
                     ProductTypeid = item.ProductTypeid,
-                    TypeName = item.TypeName,
+                    ProductTypeName = item.ProductTypeName,
                     Price = item.Price,
                     URL = item.URL,
                     Name = item.Name
@@ -49,20 +49,9 @@ namespace RizzGamingBase.Models.Exts
             service.Create(dto);
         }
 
-
-        public static void UpdateProduct(this BonusProductsVm model)
+        public static void Edit(this BonusProductsVm modle)
         {
             var repo = new BonusProductsEFRepository();
-            var service = new BonusProductsServices(repo);
-            BonusProductsDto dto = new BonusProductsDto
-            {
-                Id = model.Id,
-                ProductTypeid = model.ProductTypeid,
-                Price = model.Price,
-                URL = model.URL,
-                Name = model.Name
-            };
-            service.Update(dto);
         }
     }
 }

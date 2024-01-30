@@ -15,7 +15,7 @@ namespace RizzGamingBase.Models.ViewModels
         public int ProductTypeid { get; set; }
 
         [Display(Name = "類型名稱")]
-        public string ProductType { get; set; }
+        public string ProductTypeName { get; set; }
 
         [Display(Name = "價格")]
         [Required(ErrorMessage = "{0}為必填項目")]

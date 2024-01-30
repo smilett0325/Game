@@ -44,7 +44,7 @@ namespace RizzGamingBase.Models.Services
                 {
                     Id = dtoitem.Id,
                     ProductTypeid = dtoitem.ProductTypeid,
-                    TypeName = dtoitem.TypeName,
+                    ProductTypeName = dtoitem.ProductTypeName,
                     Price = dtoitem.Price,
                     URL = dtoitem.URL,
                     Name = dtoitem.Name
@@ -67,7 +67,7 @@ namespace RizzGamingBase.Models.Services
             {
                 Id = entity.Id,
                 ProductTypeid = entity.ProductTypeid,
-                TypeName = entity.TypeName,
+                ProductTypeName = entity.ProductTypeName,
                 Price = entity.Price,
                 URL = entity.URL,
                 Name = entity.Name
@@ -75,18 +75,18 @@ namespace RizzGamingBase.Models.Services
             return dto;
         }
 
-        public void Update(BonusProductsDto dto)
+        public void Edit(BonusProductsDto dto)
         {
             BonusProductsEntity entity = new BonusProductsEntity
             {
                 Id = dto.Id,
                 ProductTypeid = dto.ProductTypeid,
                 Price = dto.Price,
-                TypeName = dto.TypeName,
+                ProductTypeName = dto.ProductTypeName,
                 URL = dto.URL,
                 Name = dto.Name
             };
-            _repo.Update(entity);
+            _repo.Edit(entity);
         }
     }
 }

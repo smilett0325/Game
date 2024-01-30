@@ -12,7 +12,7 @@ namespace RizzGamingBase.Models.Interfaces
         void Create(BonusProductsEntity entity);
         BonusProductsEntity SearchByName(string bonusName);
         BonusProductsEntity SearchById(int id);
-        void Update(BonusProductsEntity entity);
+        void Edit(BonusProductsEntity entity);
         void Delete(BonusProductsEntity entity);
         List<BonusProductsEntity> GetAll();
     }

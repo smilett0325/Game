@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebSockets;
 
 namespace RizzGamingBase.Controllers
 {
@@ -22,6 +23,17 @@ namespace RizzGamingBase.Controllers
             // todo 圖片字串 插入HTML
         }
 
+        // todo 關鍵字查詢
+        //private List<BonusProductsIndexVm> GetKeyword(string keyword)
+        //{
+        //    List<BonusProductsIndexVm> searchResults = BonusProductExts.
+        //}
+        public ActionResult Search(string keyword)
+        {
+            // Add code here to search for items based on the keyword
+            // and return the search results
+            return View();
+        }
         public ActionResult Create()//實作顯示
         {
             return View();
@@ -45,6 +57,64 @@ namespace RizzGamingBase.Controllers
             }
         }
 
+        #region 單層編輯
+        public ActionResult Edit(int id)//編輯
+        {
+            BonusProductsVm model = LoadProdct(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(BonusProductsVm model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            try
+            {
+                UpdateProduct(model);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(String.Empty, ex.Message);
+            }
+            return View(model);
+        }
+
+        public BonusProductsVm LoadProdct(int id)//找到編輯欄位
+        {
+            var model = new AppDbContext().BonusProducts.Find(id);
+            return new BonusProductsVm
+            {
+                Id = model.Id,
+                ProductTypeid = model.ProductTypeId,
+                ProductTypeName = model.BonusProductType.Name,
+                Price = model.Price,
+                URL = model.URL,
+                Name = model.Name
+            };
+        }
+
+        private void UpdateProduct(BonusProductsVm model)//修改
+        {
+            var db = new AppDbContext();
+
+            var findproduct = db.BonusProducts.Find(model.Id);
+            findproduct.Id = model.Id;
+            findproduct.ProductTypeId = model.ProductTypeid;
+            findproduct.Price = model.Price;
+            findproduct.URL = model.URL;
+            findproduct.Name = model.Name;
+
+            db.SaveChanges();
+        }
+        #endregion
+
+        #region 三層編輯
+        //todo 三程式架構編輯
+        /*
         public ActionResult Edit(int id)//編輯
         {
             BonusProductsVm model = LoadProdct(id);
@@ -75,37 +145,50 @@ namespace RizzGamingBase.Controllers
 
         public BonusProductsVm LoadProdct(int id)//找到編輯欄位
         {
-            var repo = new BonusProductsEFRepository();
-            var service = new BonusProductsServices(repo);
-            var dto = service.LoadProdct(id);
-            var model = new BonusProductsVm
-            {
-                Id = dto.Id,
-                ProductTypeid = dto.ProductTypeid,
-                Price = dto.Price,
-                URL = dto.URL,
-                Name = dto.Name
-            };
-            return model;
+            throw new NotImplementedException();
         }
 
         private void UpdateProduct(BonusProductsVm model)//修改
         {
-            var repo = new BonusProductsEFRepository();
-            var service = new BonusProductsServices(repo);
+            throw new NotImplementedException();
+        }
+        */
+        #endregion
 
-            BonusProductsDto dto = new BonusProductsDto
+        #region 單層刪除
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            var db = new AppDbContext();
+
+            if (id == null)
             {
-                Id = model.Id,
-                ProductTypeid = model.ProductTypeid,
-                TypeName = model.ProductType,
-                Price = model.Price,
-                URL = model.URL,
-                Name = model.Name
-            };
-            service.Update(dto);
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);//400錯誤回應
+            }
+            BonusProduct bonusProduct = db.BonusProducts.Find(id);
+            if (bonusProduct == null)
+            {
+                return HttpNotFound();//找不到頁面
+            }
+            return View(bonusProduct);//回傳資料
         }
 
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var db = new AppDbContext();
+
+            BonusProduct bonusProduct = db.BonusProducts.Find(id);
+            db.BonusProducts.Remove(bonusProduct);
+            db.SaveChanges();
+            return RedirectToAction("Index");//返回
+        }
+        #endregion
+
+        #region 三層刪除
+        // todo 三程式架構刪除
+        /*
         [HttpPost]
         [ValidateAntiForgeryToken]//驗證，避免偽造網頁刪除
         public ActionResult Delete(int id)
@@ -122,5 +205,7 @@ namespace RizzGamingBase.Controllers
             db.BonusProducts.Remove(entity);
             db.SaveChanges();
         }
+        */
+        #endregion
     }
 }

@@ -303,6 +303,7 @@
     <Content Include="Views\BonusProducts\Index.cshtml" />
     <Content Include="Views\BonusProducts\Create.cshtml" />
     <Content Include="Views\BonusProducts\Edit.cshtml" />
+    <Content Include="Views\BonusProducts\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

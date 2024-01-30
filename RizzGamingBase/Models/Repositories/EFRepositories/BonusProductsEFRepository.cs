@@ -61,7 +61,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
                 {
                     Id = bp.Id,
                     ProductTypeid = bp.BonusProductType.Type,
-                    TypeName = bp.BonusProductType.Name,
+                    ProductTypeName = bp.BonusProductType.Name,
                     Price = bp.Price,
                     URL = bp.URL,
                     Name = bp.Name
@@ -70,15 +70,30 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             return BonusProducts;
         }
 
-        public void Update(BonusProductsEntity entity)
+        public void Edit(BonusProductsEntity entity)
         {
             var db = new AppDbContext();
 
             var BonusProduct = db.BonusProducts.Find(entity.Id);
-
+            BonusProduct.ProductTypeId = entity.ProductTypeid;
+            BonusProduct.Price = entity.Price;
+            BonusProduct.URL = entity.URL;
+            BonusProduct.Name = entity.Name;
+            db.SaveChanges();
 
         }
 
+        //public void Update(BonusProductsEntity entity)
+        //{
+        //    var db = new AppDbContext();
+
+        //    var BonusProduct = db.BonusProducts.Find(entity.Id);
+
+
+        //}
+
+
+        // todo 關鍵字搜尋
         public BonusProductsEntity SearchByName(string bonusName)
         {
             throw new NotImplementedException();
