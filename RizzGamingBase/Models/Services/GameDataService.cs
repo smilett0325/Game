@@ -19,9 +19,10 @@ namespace RizzGamingBase.Models.Services
 			_repository = repository;
 		}
 
-		public List<decimal> SearchGameName(string name)
+		public List<decimal> SearchGameName(string name,int Year)
 		{
 			string gameName = name;
+			int year =Year;
 			if (string.IsNullOrEmpty(gameName))
 			{
 				//todo
@@ -37,19 +38,19 @@ namespace RizzGamingBase.Models.Services
 			decimal s1=0,s2=0,s3=0,s4=0;
 			foreach (var item in initialdto)
 			{
-				if (item.TransactionDate > new DateTime(2022, 12, 31) && item.TransactionDate < new DateTime(2023, 04, 01))
+				if (item.TransactionDate > new DateTime((year-1), 12, 31) && item.TransactionDate < new DateTime(year, 04, 01))
 				{
 					s1 += item.Price;
 				}
-				else if (item.TransactionDate > new DateTime(2023, 03, 31) && item.TransactionDate < new DateTime(2023, 07, 01))
+				else if (item.TransactionDate > new DateTime(year, 03, 31) && item.TransactionDate < new DateTime(year, 07, 01))
 				{
 					s2 += item.Price;
 				}
-				else if (item.TransactionDate > new DateTime(2023, 06, 30) && item.TransactionDate < new DateTime(2023, 10, 01))
+				else if (item.TransactionDate > new DateTime(year, 06, 30) && item.TransactionDate < new DateTime(year, 10, 01))
 				{
 					s3 += item.Price;
 				}
-				else if (item.TransactionDate > new DateTime(2023, 09, 30) && item.TransactionDate < new DateTime(2024, 1, 01))
+				else if (item.TransactionDate > new DateTime(year, 09, 30) && item.TransactionDate < new DateTime((year + 1), 1, 01))
 				{
 					s4 += item.Price;
 				}
