@@ -18,7 +18,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             BonusProduct entity = new BonusProduct
             {
                 Id = model.Id,
-                ProductTypeId = model.ProductTypeid,
+                ProductTypeId = model.ProductTypeId,
                 Price = model.Price,
                 URL = model.URL,
                 Name = model.Name
@@ -42,7 +42,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             .Select(bp => new BonusProductsEntity
             {
                 Id = bp.Id,
-                ProductTypeid = bp.BonusProductType.Type,
+                ProductTypeId = bp.BonusProductType.Type,
                 Price = bp.Price,
                 URL = bp.URL,
                 Name = bp.Name
@@ -60,7 +60,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
                 .Select(bp => new BonusProductsEntity
                 {
                     Id = bp.Id,
-                    ProductTypeid = bp.BonusProductType.Type,
+                    ProductTypeId = bp.BonusProductType.Type,
                     ProductTypeName = bp.BonusProductType.Name,
                     Price = bp.Price,
                     URL = bp.URL,
@@ -75,7 +75,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             var db = new AppDbContext();
 
             var BonusProduct = db.BonusProducts.Find(entity.Id);
-            BonusProduct.ProductTypeId = entity.ProductTypeid;
+            BonusProduct.ProductTypeId = entity.ProductTypeId;
             BonusProduct.Price = entity.Price;
             BonusProduct.URL = entity.URL;
             BonusProduct.Name = entity.Name;
@@ -106,7 +106,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             var data = new BonusProductsEntity
             {
                 Id = model.Id,
-                ProductTypeid = model.ProductTypeId,
+                ProductTypeId = model.ProductTypeId,
                 Price = model.Price,
                 URL = model.URL,
                 Name = model.Name

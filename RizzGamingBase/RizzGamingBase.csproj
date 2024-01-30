@@ -203,6 +203,7 @@
     <Compile Include="Models\Repositories\EFRepositories\BonusProductsEFRepository.cs" />
     <Compile Include="Models\Services\BonusProductsServices.cs" />
     <Compile Include="Models\ViewModels\BonusProductsCreateVm.cs" />
+    <Compile Include="Models\ViewModels\BonusProductsEditVm.cs" />
     <Compile Include="Models\ViewModels\BonusProductsIndexVm.cs" />
     <Compile Include="Models\ViewModels\BonusProductsVm.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />

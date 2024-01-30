@@ -21,7 +21,7 @@ namespace RizzGamingBase.Models.Services
             BonusProductsEntity entity = new BonusProductsEntity
             {
                 Id = dto.Id,
-                ProductTypeid = dto.ProductTypeid,
+                ProductTypeId = dto.ProductTypeId,
                 Price = dto.Price,
                 URL = dto.URL,
                 Name = dto.Name
@@ -43,7 +43,7 @@ namespace RizzGamingBase.Models.Services
                 var dto = new BonusProductsDto
                 {
                     Id = dtoitem.Id,
-                    ProductTypeid = dtoitem.ProductTypeid,
+                    ProductTypeId = dtoitem.ProductTypeId,
                     ProductTypeName = dtoitem.ProductTypeName,
                     Price = dtoitem.Price,
                     URL = dtoitem.URL,
@@ -66,7 +66,7 @@ namespace RizzGamingBase.Models.Services
             var dto = new BonusProductsDto
             {
                 Id = entity.Id,
-                ProductTypeid = entity.ProductTypeid,
+                ProductTypeId = entity.ProductTypeId,
                 ProductTypeName = entity.ProductTypeName,
                 Price = entity.Price,
                 URL = entity.URL,
@@ -80,7 +80,7 @@ namespace RizzGamingBase.Models.Services
             BonusProductsEntity entity = new BonusProductsEntity
             {
                 Id = dto.Id,
-                ProductTypeid = dto.ProductTypeid,
+                ProductTypeId = dto.ProductTypeId,
                 Price = dto.Price,
                 ProductTypeName = dto.ProductTypeName,
                 URL = dto.URL,

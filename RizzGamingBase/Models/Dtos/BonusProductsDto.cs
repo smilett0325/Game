@@ -9,7 +9,7 @@ namespace RizzGamingBase.Models.Dtos
     {
         public int Id { get; set; }
 
-        public int ProductTypeid { get; set; }
+        public int ProductTypeId { get; set; }
 
         public string ProductTypeName { get; set; }
 

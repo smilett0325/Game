@@ -22,7 +22,7 @@ namespace RizzGamingBase.Models.Exts
                 var model = new BonusProductsIndexVm
                 {
                     Id = item.Id,
-                    ProductTypeid = item.ProductTypeid,
+                    ProductTypeId = item.ProductTypeId,
                     ProductTypeName = item.ProductTypeName,
                     Price = item.Price,
                     URL = item.URL,
@@ -41,7 +41,7 @@ namespace RizzGamingBase.Models.Exts
             BonusProductsDto dto = new BonusProductsDto
             {
                 Id = model.Id,
-                ProductTypeid = model.ProductTypeid,
+                ProductTypeId = model.ProductTypeId,
                 Price = model.Price,
                 URL = model.URL,
                 Name = model.Name

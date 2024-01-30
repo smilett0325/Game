@@ -10,9 +10,10 @@ namespace RizzGamingBase.Models.ViewModels
     {
         public int Id { get; set; }
 
-        public int ProductTypeid { get; set; }
+        [Display(Name = "類型")]
+        [Required(ErrorMessage = "{0}為必填項目ID")]
+        public int ProductTypeId { get; set; }
 
-        [Display(Name = "類型名稱")]
         public string ProductTypeName { get; set; }
 
         [Display(Name = "價格")]

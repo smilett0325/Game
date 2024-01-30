@@ -6,15 +6,12 @@ using System.Web;
 
 namespace RizzGamingBase.Models.ViewModels
 {
-    public class BonusProductsVm
+    public class BonusProductsEditVm
     {
         public int Id { get; set; }
 
-        [Display(Name = "類型名稱")]
-        [Required(ErrorMessage = "{0}為必填項目")]
         public int ProductTypeId { get; set; }
 
-        [Display(Name = "類型名稱")]
         public string ProductTypeName { get; set; }
 
         [Display(Name = "價格")]

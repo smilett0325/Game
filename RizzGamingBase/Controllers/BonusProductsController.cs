@@ -60,12 +60,12 @@ namespace RizzGamingBase.Controllers
         #region 單層編輯
         public ActionResult Edit(int id)//編輯
         {
-            BonusProductsVm model = LoadProdct(id);
+            BonusProductsEditVm model = LoadProdct(id);
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(BonusProductsVm model)
+        public ActionResult Edit(BonusProductsEditVm model)
         {
             if (!ModelState.IsValid)
             {
@@ -83,13 +83,13 @@ namespace RizzGamingBase.Controllers
             return View(model);
         }
 
-        public BonusProductsVm LoadProdct(int id)//找到編輯欄位
+        public BonusProductsEditVm LoadProdct(int id)//找到編輯欄位
         {
             var model = new AppDbContext().BonusProducts.Find(id);
-            return new BonusProductsVm
+            return new BonusProductsEditVm
             {
                 Id = model.Id,
-                ProductTypeid = model.ProductTypeId,
+                ProductTypeId = model.ProductTypeId,
                 ProductTypeName = model.BonusProductType.Name,
                 Price = model.Price,
                 URL = model.URL,
@@ -97,13 +97,13 @@ namespace RizzGamingBase.Controllers
             };
         }
 
-        private void UpdateProduct(BonusProductsVm model)//修改
+        private void UpdateProduct(BonusProductsEditVm model)//修改
         {
             var db = new AppDbContext();
 
             var findproduct = db.BonusProducts.Find(model.Id);
             findproduct.Id = model.Id;
-            findproduct.ProductTypeId = model.ProductTypeid;
+            findproduct.ProductTypeId = model.ProductTypeId;
             findproduct.Price = model.Price;
             findproduct.URL = model.URL;
             findproduct.Name = model.Name;
