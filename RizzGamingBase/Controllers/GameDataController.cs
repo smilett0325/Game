@@ -10,6 +10,7 @@ using RizzGamingBase.Models.Services;
 using RizzGamingBase.Models.Repositories;
 using RizzGamingBase.Models.InterFaces;
 using System.Web.Http;
+using RizzGamingBase.Models.ViewModels;
 
 namespace RizzGamingBase.Controllers
 {
@@ -23,9 +24,11 @@ namespace RizzGamingBase.Controllers
 		public ActionResult Chart()
 		{
 			// 获取数据（示例数据）
-			List<decimal> data = GetLineDataFromDatabase();
+			List<decimal> Linedata = GetLineDataFromDatabase();
+			List<GameDataVm> Piedata = GetPieDataFromDatabase();
 			// 转换数据格式
-			ViewBag.BarChartData = string.Join(",", data);
+			ViewBag.LineChartData = string.Join(",", Linedata);
+			ViewBag.PieChartData = Piedata;
 
 			return View();
 		}
@@ -33,9 +36,19 @@ namespace RizzGamingBase.Controllers
 		public ActionResult LineChart()
 		{
 			// 获取数据（示例数据）
-			List<decimal> data = GetLineDataFromDatabase();
+			List<decimal> Linedata = GetLineDataFromDatabase();
 			// 转换数据格式
-			ViewBag.BarChartData = string.Join(",", data);
+			ViewBag.LineChartData = string.Join(",", Linedata);
+
+			return View();
+		}
+
+		public ActionResult PieChart()
+		{
+			// 获取数据（示例数据）
+			List<GameDataVm> Piedata = GetPieDataFromDatabase();
+			// 转换数据格式
+			ViewBag.PieChartData = Piedata;
 
 			return View();
 		}
@@ -47,10 +60,24 @@ namespace RizzGamingBase.Controllers
 			
 			var dataList = service.SearchGameName(gameName,year);
 
-
 			// 返回示例数据
 			return dataList;
 		}
+
+		public List<GameDataVm> GetPieDataFromDatabase()
+		{
+			// 使用ADO.NET从数据库中检索数据的逻辑
+			var service = new GameDataService(GetRepository());
+
+			var id = 1;
+			var dataList = service.SearchGames(id);
+
+			var data = GameDataExts.DtoToIndexVm(dataList);
+			// 返回示例数据
+			return data;
+		}
+
+
 
 		[System.Web.Mvc.HttpPost]
 		public ActionResult GetLineDataFromDatabase(int year)
@@ -64,7 +91,18 @@ namespace RizzGamingBase.Controllers
 			return Json(dataList);
 		}
 
+		[System.Web.Mvc.HttpPost]
+		public List<GameDataVm> GetPieDataFromDatabase(int id = 1)
+		{
+			// 使用ADO.NET从数据库中检索数据的逻辑
+			var service = new GameDataService(GetRepository());
 
+			var dataList = service.SearchGames(id);
+
+			var data = GameDataExts.DtoToIndexVm(dataList);
+			// 返回示例数据
+			return data;
+		}
 
 
 		private IGameDataRepository GetRepository()

@@ -32,7 +32,7 @@
 
     var divLine = document.getElementById('Line');
     // 将从Controller传递的数据绑定到图表
-    var bardata = [@(ViewBag.BarChartData)];
+    var Linedata = [@(ViewBag.LineChartData)];
 
     const theYear = document.querySelector("#Year");
 
@@ -45,7 +45,7 @@
             labels: ['第一季度', '第二季度', '第三季度', '第四季度'],
             datasets: [{
                 label: '元',
-                data: bardata,
+                data: Linedata,
                 backgroundColor: 'blue',
                 borderColor: 'black',
                 borderWidth: 1,

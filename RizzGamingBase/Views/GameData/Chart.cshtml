@@ -9,31 +9,60 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
 <!-- 在页面中添加图表容器 -->
+<div style="display:flex;justify-content:space-between;align-items:center">
+    <div id="Line" style="height:25%;width:25%">
+        <h2>2023</h2>
+        <h2>季度營收</h2>
+        <canvas id="myLineChart" width="100" height="100"></canvas>
+    </div>
 
-<div id="Line" style="height:25%;width:25%">
-    <h2>2023</h2>
-    <h2>季度營收</h2>
-    <canvas id="myChart" width="100" height="100"></canvas>
+    <div id="pie" style="height:25%;width:25%">
+        <canvas id="myPieChart" width="100" height="100"></canvas>
+    </div>
+
 </div>
 <!-- 在页面底部初始化图表 -->
 <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
+    var ctx = document.getElementById('myLineChart').getContext('2d');
+    var pie = document.getElementById('myPieChart').getContext('2d');
 
     var divLine = document.getElementById('Line');
+    var divPie = document.getElementById('pie');
+
     // 将从Controller传递的数据绑定到图表
-    var bardata = [@(ViewBag.BarChartData)];
+    var Linedata = [@(ViewBag.LineChartData)];
+    var Piedata = [@Html.Raw(Json.Encode(ViewBag.PieChartData))];
+
+
+    // 使用 map 函數處理每個元素，獲取對應的值
+    //var pieLabels = Piedata.map(function (item) {
+
+    //    return item.GameName; // 替換為您的 List<vm> 中的屬性名稱
+    //});
+
+    var pieLabels = Piedata.flatMap(function (item) {
+        return item.map(function (innerItem) {
+            return innerItem.GameName;
+        });
+    });
+
+    var pieValues = Piedata.flatMap(function (item) {
+        return item.map(function (innerItem) {
+            return innerItem.Amount;
+        });
+    });
 
 
 
     // 创建图表
 
-    var myChart = new Chart(ctx, {
+    var myLineChart = new Chart(ctx, {
         type: 'line', // 替换为所需的图表类型
         data: {
             labels: ['第一季度', '第二季度', '第三季度', '第四季度'],
             datasets: [{
                 label: '元',
-                data: bardata,
+                data: Linedata,
                 backgroundColor: 'blue',
                 borderColor: 'black',
                 borderWidth: 1 ,
@@ -48,9 +77,40 @@
             }
         }
     });
+    //['第一季度', '第二季度', '第三季度']
+    //[15, 10, 8]
+    var myPieChart = new Chart(pie, {
+        type: 'pie', // 替换为所需的图表类型
+        data: {
+            labels: pieLabels,
+            datasets: [{
+                label: '元',
+                data:  pieValues,
+                backgroundColor: ['blue','orange','red'],
+                borderColor: 'black',
+                borderWidth: 1,
+          
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+
+
+
 
     divLine.addEventListener('click', function () {
         window.location.href = '/GameData/LineChart';
     });
 
+    divPie.addEventListener('click', function () {
+        window.location.href = '/GameData/PieChart';
+    });
 </script>

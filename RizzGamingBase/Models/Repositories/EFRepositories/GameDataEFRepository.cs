@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace RizzGamingBase.Models.Repositories
 {
@@ -50,7 +51,8 @@ namespace RizzGamingBase.Models.Repositories
 				})
 				.Distinct()
 				.ToList();
-			return game;
+			var queryList = SearchGameIdToBI(game);
+			return queryList;
 		}
 
 		private List<GameDataEntity> SearchGameIdToBI(int gameId, string name = "")
@@ -76,7 +78,7 @@ namespace RizzGamingBase.Models.Repositories
 			return query.ToList();
 		}
 
-		private List<GameDataEntity> SearchGameIdToBI(List<GameDataEntity> game, string name = "")
+		private List<GameDataEntity> SearchGameIdToBI(List<GameDataEntity> game)
 		{
 			var db = new AppDbContext();
 
@@ -88,18 +90,15 @@ namespace RizzGamingBase.Models.Repositories
 			                            .Include(bi => bi.BillDetail)
 			                            .Include(bi => bi.Game)
 			                            .Where(bi => bi.GameId == item.Id)
-			                            .Select(bi => new GameDataEntity
+										.OrderBy(bi => bi.Game.Name) // 按 GameName 排序
+				                        .GroupBy(bi => bi.Game.Name) // 按 GameName 分組
+										.Select(group => new GameDataEntity
 			                 {
-				                      Id = bi.Id,
-				                      GameName = bi.Game.Name,
-				                      TransactionDate = bi.BillDetail.TransactionDate,
-				                      Amount = bi.Price
+											GameName = group.Key,
+				                            Amount = group.Sum(bi=>bi.Price)
 			                  });
-				if (!string.IsNullOrWhiteSpace(name))
-				{
-					query = query.Where(bi => bi.GameName.Contains(name));
-				}
-				queryList.Add((GameDataEntity)query);
+
+				queryList.AddRange(query);
 			}
 
 			return queryList;

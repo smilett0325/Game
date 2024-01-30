@@ -61,5 +61,18 @@ namespace RizzGamingBase.Models.Services
 
 			return dto;
 		}
+
+
+		public List<GameDataDto> SearchGames(int id)
+		{
+			List<GameDataEntity> entity = _repository.SearchDeveloperIdToGame(id);
+
+			var initialdto = GameDataExts.EntityToDto(entity);
+
+
+
+
+			return initialdto;
+		}
 	}
 }
