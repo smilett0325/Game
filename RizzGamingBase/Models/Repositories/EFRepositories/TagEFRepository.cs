@@ -29,6 +29,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 		public List<TagEntity> GetAll()
 		{
 			return db.Tags.AsNoTracking()
+				.AsEnumerable()
 				.Select(d => d.EFToEntity())
 				.ToList();
 		}

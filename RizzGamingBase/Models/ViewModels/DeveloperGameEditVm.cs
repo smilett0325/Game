@@ -11,6 +11,7 @@ namespace RizzGamingBase.Models.ViewModels
 	public class DeveloperGameEditVm
 	{
 		public int Id { get; set; }
+		public int DeveloperId { get; set; }
 
 		[Display(Name = "名稱")]
 		[Required]

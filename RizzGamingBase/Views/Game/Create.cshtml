@@ -1,0 +1,161 @@
+﻿@model RizzGamingBase.Models.ViewModels.DeveloperGameEditVm
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "fileForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>DeveloperGameEditVm</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div>
+            <input type="file" name="files" id="fileInput" multiple />
+            <input type="submit" value="Upload" style="display: none;" />
+        </div>
+
+        <div id="imageContainer">
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+
+
+
+        @*封面圖片
+            <div>
+               @Html.Image(imagePath, "圖片描述", new { width = 300, height = 200, @class = "img-responsive", alt = "示例圖片", style = "border: 1px solid #ccc;" })
+            </div>*@
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaxPercent, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            @Html.EditorFor(model => model.MaxPercent, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MaxPercent, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Delect" class="btn btn-primary" id="delete" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script>
+    $(document).ready(function () {
+        $("#fileInput").change(function () {
+            // 当文件选择框内容改变时，立即触发上传
+            $("#fileForm").submit();
+        });
+
+        $("#fileForm").submit(function (e) {
+            e.preventDefault(); // 阻止默认的表单提交行为
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("coverscratchasync", "Game")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+
+                        // 在这里处理返回的文件信息
+                        var images = response.images;
+                        for (var i = 0; i < images.length; i++) {
+                            var imageUrl = images[i].Name;
+                            console.log(imageUrl);
+                            /*<img src="~/DiscountPictures/" width="100" height="50" class="img-fluid" />*/
+                            // 在页面上显示上传的图片，可以根据需要进行处理
+                            $("#imageContainer").append("<img id='"+ imageUrl +"' src='../Image/Scratch/" + imageUrl + "' alt='Uploaded Image' height='200' class='inlineblock'/>");
+
+                        }
+                    } else {
+                        /* alert(response.message);*/
+                        // 在这里添加处理失败后的逻辑
+                    }
+                },
+                //error: function (xhr, status, error) {
+                //    alert("Error: " + error);
+                //    /* 在这里添加处理错误的逻辑*/
+                //}
+            });
+        });
+
+        $("#delete").click(function () {
+
+            var imageNameToDelete = "view1.jpg";  // 这里替换成实际的图片信息获取逻辑
+
+            // 构造要发送的数据
+            var dataToSend = {
+                fileNames: [imageNameToDelete]
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteCoverScratchAsync", "Game")',
+                data: JSON.stringify(dataToSend),
+                contentType: 'application/json',
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+
+                        // 在页面上移除被删除的图片
+                        console.log("Removing element with id: " + imageNameToDelete);
+                        $("#" + imageNameToDelete).remove();
+                    } else {
+                        // 在这里添加处理失败后的逻辑
+                        console.log("Failed to delete image. Error: " + response.message);
+                    }
+                },
+            });
+        });
+    });
+    </script>
+}

@@ -159,6 +159,7 @@ namespace RizzGamingBase.Models.Exts
 			var vm = new DeveloperGameEditVm
 			{
 				Id = model.Id,
+				DeveloperId = model.DeveloperId,
 				Name = model.Name,
 				Price = model.Price,
 				Image = model.Image,

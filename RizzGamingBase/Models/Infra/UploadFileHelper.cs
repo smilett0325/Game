@@ -40,5 +40,217 @@ namespace RizzGamingBase.Models.Infra
 
 			return newFileName;
 		}
+
+		//GPT參考
+		public string UploadCoverFile(HttpPostedFileBase file, string path, int developerId, int gameId)
+		{
+			// 判断是否有上传文件，若没有，抛出异常
+			if (file == null || file.ContentLength == 0)
+				throw new ArgumentNullException("file");
+
+			// 获取文件的扩展名，并检查是否为允许的文件类型
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+			string ext = Path.GetExtension(file.FileName).ToLower();
+			if (!allowedExtensions.Contains(ext))
+				throw new ArgumentException($"不允許上傳此類檔案({ext})");
+
+
+			// 使用开发商的ID创建文件夹路径
+			string developerFolderPath = Path.Combine(path, $"{developerId}");
+
+			// 检查文件夹是否存在，如果不存在则创建
+			if (!Directory.Exists(developerFolderPath))
+			{
+				Directory.CreateDirectory(developerFolderPath);
+			}
+
+			//檢查developerGameFolderPath是否存在，不存在則創建
+			string developerGameFolderPath = Path.Combine(path, $"{developerId}", $"{gameId}");
+
+			if (!Directory.Exists(developerGameFolderPath))
+			{
+				Directory.CreateDirectory(developerGameFolderPath);
+			}
+
+			// 合并文件名和路径生成完整的文件路径
+			string fileName = file.FileName;
+			string fullPath = Path.Combine(developerGameFolderPath, fileName);
+
+			// 将上传的文件保存到指定路径
+			file.SaveAs(fullPath);
+
+			// 返回新的文件名，可以用于记录到数据库或其他用途
+			return fullPath;
+		}
+
+		public void DeleteScratchFile(HttpPostedFileBase file, string path)
+		{
+			string scratchPath = path;
+
+			// 合并文件名和路径生成完整的文件路径
+			string fileName = file.FileName;
+			string fullPath = Path.Combine(scratchPath, fileName);
+
+			// 将上传的文件保存到指定路径
+			File.Delete(fullPath);
+		}
+
+		public void DeleteScratchFile(dynamic fileName, string path)
+		{
+			string scratchPath = path;
+
+			//foreach (var fileName in fileNames)
+			//{
+				// 合并文件名和路径生成完整的文件路径
+				string fn = Convert.ToString(fileName);
+			string fullPath = Path.Combine(scratchPath, fn);
+
+				// 将上传的文件保存到指定路径
+				File.Delete(fullPath);
+			//}
+		}
+
+		public object ScratchFile(HttpPostedFileBase file, string path)
+		{
+			// 判断是否有上传文件，若没有，抛出异常
+			if (file == null || file.ContentLength == 0)
+				throw new ArgumentNullException("file");
+
+			// 获取文件的扩展名，并检查是否为允许的文件类型
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+			string ext = Path.GetExtension(file.FileName).ToLower();
+			if (!allowedExtensions.Contains(ext))
+				throw new ArgumentException($"不允許上傳此類檔案({ext})");
+
+			string scratchPath = path;
+
+			// 合并文件名和路径生成完整的文件路径
+			string fileName = file.FileName;
+			string fullPath = Path.Combine(scratchPath, fileName);
+
+			// 将上传的文件保存到指定路径
+			file.SaveAs(fullPath);
+			var scratchObjects = new { Path = fullPath, Name = fileName };
+
+			return scratchObjects;
+		}
+
+		public List<object> ScratchFile(IEnumerable<HttpPostedFileBase> files, string path)
+		{
+			var scratchObjects = new List<object>();
+
+			foreach (var file in files)
+			{
+				// 判断是否有上传文件，若没有，抛出异常
+				if (file == null || file.ContentLength == 0)
+					throw new ArgumentNullException("file");
+
+				// 获取文件的扩展名，并检查是否为允许的文件类型
+				string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+				string ext = Path.GetExtension(file.FileName).ToLower();
+				if (!allowedExtensions.Contains(ext))
+					throw new ArgumentException($"不允許上傳此類檔案({ext})");
+
+				string scratchPath = path;
+
+				// 合并文件名和路径生成完整的文件路径
+				string fileName = file.FileName;
+				string fullPath = Path.Combine(scratchPath, fileName);
+
+				// 将上传的文件保存到指定路径
+				file.SaveAs(fullPath);
+				scratchObjects.Add(new { Path = fullPath, Name = fileName });
+			}
+
+			return scratchObjects;
+		}
+
+		public List<object> UploadDisplayImageFile(IEnumerable<HttpPostedFileBase> files, string path, int developerId, int gameId)
+		{
+			var imageObjects = new List<object>();
+
+			foreach (var file in files)
+			{
+				// 判断是否有上传文件，若没有，抛出异常
+				if (file == null || file.ContentLength == 0)
+					throw new ArgumentNullException("file");
+
+				// 获取文件的扩展名，并检查是否为允许的文件类型
+				string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+				string ext = Path.GetExtension(file.FileName).ToLower();
+				if (!allowedExtensions.Contains(ext))
+					throw new ArgumentException($"不允許上傳此類檔案({ext})");
+
+				// 使用开发商的ID创建文件夹路径
+				string developerFolderPath = Path.Combine(path, $"{developerId}");
+
+				// 检查文件夹是否存在，如果不存在则创建
+				if (!Directory.Exists(developerFolderPath))
+				{
+					Directory.CreateDirectory(developerFolderPath);
+				}
+
+				//檢查developerGameFolderPath是否存在，不存在則創建
+				string developerGameFolderPath = Path.Combine(path, $"{developerId}", $"{gameId}");
+
+				if (!Directory.Exists(developerGameFolderPath))
+				{
+					Directory.CreateDirectory(developerGameFolderPath);
+				}
+
+				// 合并文件名和路径生成完整的文件路径
+				string fileName = file.FileName;
+				string fullPath = Path.Combine(developerGameFolderPath, fileName);
+
+				// 将上传的文件保存到指定路径
+				file.SaveAs(fullPath);
+				imageObjects.Add(new { GameId = gameId, DisplayIamge = fullPath });
+			}
+
+			// 返回新的文件名，可以用于记录到数据库或其他用途
+			return imageObjects;
+		}
+
+		public string UploadDisplayVideoFile(IEnumerable<HttpPostedFileBase> file, string path, int developerId, int gameId)
+		{
+			//// 判断是否有上传文件，若没有，抛出异常
+			//if (file == null || file.ContentLength == 0)
+			//	throw new ArgumentNullException("file");
+
+			//// 获取文件的扩展名，并检查是否为允许的文件类型
+			//string[] allowedExtensions = { ".mp4", ".webm"};
+			//string ext = Path.GetExtension(file.FileName).ToLower();
+			//if (!allowedExtensions.Contains(ext))
+			//	throw new ArgumentException($"不允許上傳此類檔案({ext})");
+
+
+			//// 使用开发商的ID创建文件夹路径
+			//string developerFolderPath = Path.Combine(path, $"{developerId}");
+
+			//// 检查文件夹是否存在，如果不存在则创建
+			//if (!Directory.Exists(developerFolderPath))
+			//{
+			//	Directory.CreateDirectory(developerFolderPath);
+			//}
+
+			////檢查developerGameFolderPath是否存在，不存在則創建
+			//string developerGameFolderPath = Path.Combine(path, $"{developerId}", $"{gameId}");
+
+			//if (!Directory.Exists(developerGameFolderPath))
+			//{
+			//	Directory.CreateDirectory(developerGameFolderPath);
+			//}
+
+			//// 合并文件名和路径生成完整的文件路径
+
+			//string fullPath = Path.Combine(developerGameFolderPath, fileName);
+
+			//// 将上传的文件保存到指定路径
+			//file.SaveAs(fullPath);
+
+			//// 返回新的文件名，可以用于记录到数据库或其他用途
+			var fullPath = "";
+			return fullPath;
+		}
 	}
 }
