@@ -10,71 +10,72 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>DiscountEditVm</h4>
+    <div class="row">
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+        <div class="form-horizontal col-4">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
 
-        <div class="mb-3">
-            @Html.LabelFor(model => model.DiscountName, htmlAttributes: new { @class = "form-label col-md-2" })
+            <div class="mb-3">
+                @Html.LabelFor(model => model.DiscountName, htmlAttributes: new { @class = "form-label col-md-2" })
 
-            @Html.EditorFor(model => model.DiscountName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DiscountName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.DiscountName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiscountName, "", new { @class = "text-danger" })
 
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.DiscountType, htmlAttributes: new { @class = "form-label col-md-2" })
+
+                @Html.EditorFor(model => model.DiscountType, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiscountType, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.DiscountImage, htmlAttributes: new { @class = "form-label col-md-2" })
+
+                @Html.EditorFor(model => model.DiscountImage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiscountImage, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "form-label col-md-2" })
+
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "form-label col-md-2" })
+
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.Percent, htmlAttributes: new { @class = "form-label col-md-2" })
+
+                @Html.EditorFor(model => model.Percent, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Percent, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label col-md-2" })
+
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
         </div>
 
-        <div class="mb-3">
-            @Html.LabelFor(model => model.DiscountType, htmlAttributes: new { @class = "form-label col-md-2" })
 
-            @Html.EditorFor(model => model.DiscountType, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DiscountType, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.DiscountImage, htmlAttributes: new { @class = "form-label col-md-2" })
-
-            @Html.EditorFor(model => model.DiscountImage, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DiscountImage, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "form-label col-md-2" })
-
-            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "form-label col-md-2" })
-
-            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.Percent, htmlAttributes: new { @class = "form-label col-md-2" })
-
-            @Html.EditorFor(model => model.Percent, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Percent, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label col-md-2" })
-
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
-
-
-        <div class="mb-3">
-            <table class="table table-bordered">
+        <div class="mb-3 col-8">
+            <hr />
+            <table class="table table-bordered" id="discountTable">
                 <thead>
                     <tr>
                         <th scope="col">圖片</th>
@@ -83,146 +84,201 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.DiscountItem)
-                    {
-                        <tr>
-                            <td>
-                                <img src="~/DiscountPictures/@Html.DisplayFor(modelItem => item.Game.Image)" width="100" height="50" class="img-fluid" />
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Game.Name, new { htmlAttributes = new { @class = "form-control" } })
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-primary remove" data-id="@item.Game.Id">移除</button>
-                            </td>
-                        </tr>
-                    }
                 </tbody>
             </table>
-        </div>
 
 
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#gameModal">新增</button>
 
-        <!-- 模態框 -->
-        <div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="gameModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="gameModalLabel">遊戲選擇</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <!-- 未加入的遊戲列表 -->
-                            <div class="col-md-6">
-                                <h5>未加入的遊戲</h5>
-                                <ul id="availableGames" class="list-group">
-                                    @foreach (var game in Model.DiscountItem)
-                                    {
-                                        <li class="list-group-item" data-id="@game.Id">@game.Game.Name <button type="button" class="btn btn-primary btn-sm float-right" onclick="selectGame(@game.Id, '@game.Game.Name')">選擇</button></li>
-                                    }
-                                </ul>
-                            </div>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#gameModal">編輯內容</button>
 
-                            <!-- 已加入的遊戲列表 -->
-                            <div class="col-md-6">
-                                <h5>已加入的遊戲</h5>
-                                <ul id="selectedGames" class="list-group">
-                                    @foreach (var item in Model.DiscountItem)
-                                    {
-                                        <li class="list-group-item" data-id="@item.Game.Id">@item.Game.Name <button type="button" class="btn btn-danger btn-sm float-right" onclick="removeSelectedGame(@item.Game.Id)">移除</button></li>
-                                    }
-                                </ul>
+            <!-- 模態框 -->
+            <div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="gameModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="gameModalLabel">遊戲選擇</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <!-- 未加入的遊戲列表 -->
+                                <div class="col-md-6">
+                                    <h5>未加入的遊戲</h5>
+                                    <ul id="availableGames" class="list-group">
+                                    </ul>
+                                </div>
+
+                                <!-- 已加入的遊戲列表 -->
+                                <div class="col-md-6">
+                                    <h5>已加入的遊戲</h5>
+                                    <ul id="selectedGames" class="list-group">
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                        <button type="button" class="btn btn-primary" onclick="addSelectedGames()">確定</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                            <button type="button" class="btn btn-primary" onclick="addSelectedGames()" data-dismiss="modal">確定</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
 
-        <div class="mb-3">
+            <div class="mb-3">
 
-            <input type="submit" value="儲存" class="btn btn-primary" />
+                <input type="submit" value="儲存" class="btn btn-primary" />
 
+            </div>
         </div>
     </div>
+
 }
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
     <script>
-    $('#gameModal').on('show.bs.modal', function () {
-        // 這裡動態生成未加入的遊戲列表
-        var availableGames = [
-            { Id: 1, Name: 'Game 1' },
-            { Id: 2, Name: 'Game 2' },
-            // 其他未加入的遊戲
-        ];
+        var availableGames = [];
+        var discountGames = [];
+        var id = @Html.DisplayFor(modelItem => Model.Id);
 
-        // 清空未加入的遊戲列表
-        $('#availableGames').empty();
 
-        // 將未加入的遊戲動態添加到列表中
-        availableGames.forEach(function (game) {
-            $('#availableGames').append('<li data-id="' + game.Id + '">' + game.Name + ' <button type="button" class="btn btn-primary btn-sm" onclick="selectGame(' + game.Id + ', \'' + game.Name + '\')">選擇</button></li>');
-        });
 
-        // 清空已加入的遊戲列表
-        $('#selectedGames').empty();
 
-        // 將已加入的遊戲動態添加到列表中
-        @foreach (var item in Model.DiscountItem)
-        {
-            <text>
-                $('#selectedGames').append('<li data-id="@item.Game.Id">@item.Game.Name <button type="button" class="btn btn-danger btn-sm" onclick="removeSelectedGame(@item.Game.Id)">移除</button></li>');
-            </text>
+
+
+    function loadGame() {
+    $.ajax({
+        url: '@Url.Action("GetGames", "Discount")',
+        type: 'GET',
+        data: { id: id },
+        dataType: 'json',
+        success: function (data) {
+            availableGames = data;
         }
     });
+}
+
+    function generateTable(discountItems) {
+    var tableBody = $('#discountTable tbody');
+    tableBody.empty();
+
+    discountItems.forEach(function (item) {
+        var row = $('<tr>');
+        row.append('<td><img src="/DiscountPictures/' + item.Image + '" width="100" height="50" class="img-fluid" /></td>');
+        row.append('<td>' + item.Name + '</td>');
+        row.append('<td><button type="button" class="btn btn-primary remove" data-id="' + item.Id + '">移除</button></td>');
+
+        tableBody.append(row);
+    });
+}
+
+// 用于加载初始数据的函数
+function loadInitialData() {
+    $.ajax({
+        url: '@Url.Action("GetDiscountGames", "Discount")',
+        type: 'GET',
+        data: { id: id },
+        dataType: 'json',
+        success: function (data) {
+            discountGames = data;
+            generateTable(data);
+            loadGame();
+        }
+    });
+}
+
+// 初始化加载数据
+loadInitialData();
+
+// 移除按钮的点击事件
+$(document).on('click', '.remove', function () {
+    var gameId = $(this).data('id');
+    $.ajax({
+        url: '@Url.Action("DelItem", "Discount")',
+        type: 'GET',
+        data: { id: id, gameId: gameId },
+        success: function () {
+            loadInitialData();
+        }
+    });
+});
+
+
+    $('#gameModal').on('show.bs.modal', function () {
+
+        loadModal();
+    });
+
+
+        function loadModal() {
+            // 清空未加入的遊戲列表
+            $('#availableGames').empty();
+
+            // 將未加入的遊戲動態添加到列表中
+            availableGames.forEach(function (game) {
+                $('#availableGames').append('<li data-id="' + game.Id + '">' + game.Name + ' <button type="button" data-id="' + game.Id + '" class="btn btn-primary btn-sm additem"  onclick="selectGame(' + game.Id + ', \'' + game.Name + '\')">選擇</button></li>');
+            });
+
+            // 清空已加入的遊戲列表
+            $('#selectedGames').empty();
+
+            // 將已加入的遊戲動態添加到列表中
+            discountGames.forEach(function (game) {
+
+                $('#selectedGames').append('<li data-id="' + game.Id + '">' + game.Name + ' <button type="button" data-id="' + game.Id + '" class="btn btn-danger btn-sm delitem" onclick="removeSelectedGame(' + game.Id + ')">移除</button></li>');
+
+            });
+        }
 
     // 選擇遊戲
     function selectGame(gameId, gameName) {
-        // 將選擇的遊戲動態添加到已加入的遊戲列表中
-        $('#selectedGames').append('<li data-id="' + gameId + '">' + gameName + ' <button type="button" class="btn btn-danger btn-sm" onclick="removeSelectedGame(' + gameId + ')">移除</button></li>');
-
-        // TODO: 根據實際情況處理選擇遊戲的邏輯
-
-        // 移除未加入的遊戲列表中的對應項目
+        $('#selectedGames').append('<li data-id="' + gameId + '">' + gameName + ' <button type="button" data-id="' + gameId + '" class="btn btn-danger btn-sm"  onclick="removeSelectedGame(' + gameId + ')">移除</button></li>');
         $('#availableGames li[data-id="' + gameId + '"]').remove();
+
+
+        $.ajax({
+            url: '/Discount/AddItem',
+            type: 'GET',
+            data: { id: id, gameId: gameId },
+            success: function (result) {
+            
+            }
+        });
+
     }
 
     // 移除已加入的遊戲
     function removeSelectedGame(gameId) {
-        // TODO: 根據實際情況處理移除已加入的遊戲的邏輯
 
-        // 將遊戲重新添加到未加入的遊戲列表中
         var gameName = $('#selectedGames li[data-id="' + gameId + '"]').text().trim().split(' ')[0];
-        $('#availableGames').append('<li data-id="' + gameId + '">' + gameName + ' <button type="button" class="btn btn-primary btn-sm" onclick="selectGame(' + gameId + ', \'' + gameName + '\')">選擇</button></li>');
+        $('#availableGames').append('<li data-id="' + gameId + '">' + gameName + ' <button type="button" data-id="' + gameId + '" class="btn btn-primary btn-sm"  onclick="selectGame(' + gameId + ', \'' + gameName + '\')">選擇</button></li>');
 
-        // 移除已加入的遊戲列表中的對應項目
         $('#selectedGames li[data-id="' + gameId + '"]').remove();
+
+
+        $.ajax({
+            url: '/Discount/DelItem',
+            type: 'GET',
+            data: { id: id, gameId: gameId },
+            success: function (result) {
+            
+            }
+        });
     }
 
-    // 新增選擇的遊戲
-    function addSelectedGames() {
-        // TODO: 根據實際情況處理確定選擇的遊戲的邏輯
-        // ...
+    //確定後加載
+        function addSelectedGames() {
+            loadInitialData();
 
-        // 關閉模態框
-        $('#gameModal').modal('hide');
-    }
+        }
     </script>
 
 }

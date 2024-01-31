@@ -183,7 +183,6 @@
     <Compile Include="Models\EFModels\Developer.cs" />
     <Compile Include="Models\EFModels\Discount.cs" />
     <Compile Include="Models\EFModels\DiscountItem.cs" />
-    <Compile Include="Models\EFModels\DLC.cs" />
     <Compile Include="Models\EFModels\Friend.cs" />
     <Compile Include="Models\EFModels\Game.cs" />
     <Compile Include="Models\EFModels\GameTag.cs" />
@@ -250,7 +249,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Models\Dtos\Dto.txt" />
-    <Content Include="Models\EFModels\EFModels.txt" />
     <Content Include="Models\Entities\Entities.txt" />
     <Content Include="Models\Exts\Exts.txt" />
     <Content Include="Models\Infra\Infra.txt" />

@@ -1,10 +1,13 @@
-﻿using RizzGamingBase.Models.Exts;
+﻿using RizzGamingBase.Models.EFModels;
+using RizzGamingBase.Models.Exts;
 using RizzGamingBase.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.Security.Cryptography;
 
 namespace RizzGamingBase.Controllers
 {
@@ -64,6 +67,160 @@ namespace RizzGamingBase.Controllers
             return RedirectToAction("Index");
         }
 
-       
+
+
+
+
+
+
+
+
+
+
+     
+        public ActionResult AddItem(int id, int gameId)
+        {
+            var db = new AppDbContext();
+
+            var item = db.DiscountItems.FirstOrDefault(x => x.DiscountId == id  && x.GameId == gameId );
+            if( item == null)
+            {
+                var newItem = new DiscountItem
+                {
+                    DiscountId = id,
+                    GameId = gameId,
+                };
+                db.DiscountItems.Add(newItem);
+                db.SaveChanges();
+                return new EmptyResult();
+            }
+
+            
+            return new EmptyResult();
+        }
+
+        public JsonResult AddNewItem(int gameId)
+        {
+            var db = new AppDbContext();
+
+            var item = db.Games.FirstOrDefault(d => d.Id == gameId);
+
+            if(item != null)
+            {
+                var game = new DiscountGameVm
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Developer = item.Developer.Name,
+                    Price = item.Price,
+                    Image = item.Image,
+                    MaxPercent = item.MaxPersent
+
+                };
+                return Json(game, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult DelNewItem(int gameId)
+        {
+            var db = new AppDbContext();
+
+
+            var item = db.Games.FirstOrDefault(x => x.Id == gameId);
+            if (item != null)
+            {
+                var game = new DiscountGameVm
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Developer = item.Developer.Name,
+                    Price = item.Price,
+                    Image = item.Image,
+                    MaxPercent = item.MaxPersent
+
+                };
+                return Json(game, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult DelItem(int id, int gameId)
+        {
+            var db = new AppDbContext();
+
+
+            var item = db.DiscountItems.FirstOrDefault(x => x.DiscountId == id && x.GameId == gameId);
+            if (item != null)
+            {          
+                db.DiscountItems.Remove(item);
+                db.SaveChanges();
+                return new EmptyResult();
+            }
+
+
+            return new EmptyResult();
+        }
+
+
+
+        public JsonResult GetDiscountGames(int id)
+        {
+            var db = new AppDbContext();
+
+            var discountgames = db.DiscountItems
+                                  .Include(d => d.Game)
+                                  .Where(d => d.DiscountId == id)
+                                  .Select(d => new DiscountGameVm
+                                  {
+                                      Id = d.GameId,
+                                      Name = d.Game.Name,
+                                      Developer = d.Game.Developer.Name,
+                                      Price = d.Game.Price,
+                                      Image = d.Game.Image,
+                                      MaxPercent = d.Game.MaxPersent
+                                  }).ToList();
+
+            return Json(discountgames, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult GetGames(int id)
+        {
+            var db = new AppDbContext();
+
+            var allgames = db.Games.AsNoTracking()
+                                .Include(d => d.DiscountItems)
+                                .Select(d => new DiscountGameVm
+                                {
+                                    Id = d.Id,
+                                    Name = d.Name,
+                                    Developer = d.Developer.Name,
+                                    Price = d.Price,
+                                    Image = d.Image,
+                                    MaxPercent = d.MaxPersent
+                                }).ToList();
+
+            var discountgames = db.DiscountItems
+                                  .Include(d => d.Game)
+                                  .Where(d => d.DiscountId == id)
+                                  .Select(d => new DiscountGameVm
+                                  {
+                                      Id = d.GameId,
+                                      Name = d.Game.Name,
+                                      Developer = d.Game.Developer.Name,
+                                      Price = d.Game.Price,
+                                      Image = d.Game.Image,
+                                      MaxPercent = d.Game.MaxPersent
+                                  }).ToList();
+
+            var games = allgames.Except(discountgames).ToList();
+
+            return Json(games, JsonRequestBehavior.AllowGet);
+        }
+
+        
     }
 }

@@ -14,12 +14,9 @@ namespace RizzGamingBase.Models.EFModels
             BanGames = new HashSet<BanGame>();
             BillDetails = new HashSet<BillDetail>();
             Carts = new HashSet<Cart>();
-            Carts1 = new HashSet<Cart>();
             Collections = new HashSet<Collection>();
             Comments = new HashSet<Comment>();
             DiscountItems = new HashSet<DiscountItem>();
-            DLCs = new HashSet<DLC>();
-            DLCs1 = new HashSet<DLC>();
             GameTags = new HashSet<GameTag>();
             Images = new HashSet<Image>();
             MemberTags = new HashSet<MemberTag>();
@@ -59,9 +56,6 @@ namespace RizzGamingBase.Models.EFModels
         public virtual ICollection<Cart> Carts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Carts1 { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Collection> Collections { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -71,16 +65,6 @@ namespace RizzGamingBase.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DiscountItem> DiscountItems { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DLC> DLCs { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DLC> DLCs1 { get; set; }
-
-        public virtual Game Games1 { get; set; }
-
-        public virtual Game Game1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GameTag> GameTags { get; set; }
