@@ -97,7 +97,7 @@
     var DeveloperId = 0;
 
     theDeveloper.addEventListener('change', async event  => {
-
+        if (theDeveloper.options[theDeveloper.selectedIndex].value != 0) {
         DeveloperId = theDeveloper.value;
         theH2.innerHTML = theDeveloper.options[theDeveloper.selectedIndex].text;
             await loadDatas();
@@ -107,18 +107,21 @@
         myPieChart.data.datasets[0].data = datas.map(item => item.Price);
 
         // 更新圖表
-        myPieChart.update();
+         myPieChart.update();
+        }
     });
 
     const loadDatas = async () => {
-        const response = await fetch(`@Url.Content("~/GameData/GetPieDataFromDatabase")?id=${DeveloperId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
+        
+            const response = await fetch(`@Url.Content("~/GameData/GetPieDataFromDatabase")?id=${DeveloperId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
 
-        datas = await response.json();
+            datas = await response.json();
+        
     }
 
 </script>

@@ -161,7 +161,7 @@
         newSelect.addEventListener('change', async event => {
             if (newSelect.options[newSelect.selectedIndex].value != 0) {
                 GameName = newSelect.options[newSelect.selectedIndex].text;
-                theH21.innerHTML = newSelect.options[newSelect.selectedIndex].text + "季度營收";
+                theH21.innerHTML = newSelect.options[newSelect.selectedIndex].text +" "+ "季度營收";
 
                 await loadGameDatas();
 
