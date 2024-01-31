@@ -8,20 +8,11 @@ namespace RizzGamingBase.Models.EFModels
 
     public partial class GameTag
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public GameTag()
-        {
-            Games = new HashSet<Game>();
-        }
-
         public int Id { get; set; }
 
         public int GameId { get; set; }
 
         public int TagId { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game> Games { get; set; }
 
         public virtual Game Game { get; set; }
 

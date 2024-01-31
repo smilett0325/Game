@@ -1,117 +1,127 @@
-﻿using RizzGamingBase.Models.Dtos;
-using RizzGamingBase.Models.EFModels;
-using RizzGamingBase.Models.Entities;
-using RizzGamingBase.Models.Repositories.EFRepositories;
-using RizzGamingBase.Models.Services;
-using RizzGamingBase.Models.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
+using RizzGamingBase.Models.EFModels;
 
 namespace RizzGamingBase.Controllers
 {
     public class DeveloperController : Controller
     {
-        private readonly AppDbContext _dbContext;
+        private APPDbContext db = new APPDbContext();
 
-        public DeveloperController()
-        {
-            _dbContext = new AppDbContext();
-        }
-
+        // GET: Developer
         public ActionResult Index()
         {
-            List<DeveloperIndexVm> data = GetAll();
-            return View(data);
+            return View(db.Developers.ToList());
         }
 
-        public ActionResult Login()
+        // GET: Developer/Details/5
+        public ActionResult Details(int? id)
         {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(DeveloperLoginVm loginvm)
-        {
-            bool developerExist = _dbContext.Developers.Any(
-                d => d.Name == loginvm.Name &&
-                     d.Account == loginvm.Account &&
-                     d.Password == loginvm.Password &&
-                     d.Mail == loginvm.Mail);
-
-            if (developerExist)
+            if (id == null)
             {
-                FormsAuthentication.SetAuthCookie(loginvm.Name, false);
-                return RedirectToAction("Index", "Home");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            ModelState.AddModelError("", "帳號密碼錯誤");
-            return View(loginvm);
+            Developer developer = db.Developers.Find(id);
+            if (developer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(developer);
         }
 
+        // GET: Developer/Create
         public ActionResult Signup()
         {
-       
             return View();
         }
 
+        // POST: Developer/Create
+        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
+        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
-        public ActionResult Signup(DeveloperDto developerdto)
+        [ValidateAntiForgeryToken]
+        public ActionResult Signup([Bind(Include = "Id,Name,Account,Password,Mail,Number")] Developer developer)
         {
-            // 檢查 ModelState 是否有效
             if (ModelState.IsValid)
             {
-                // 在這裡執行註冊邏輯，使用 developerdto 中的數據
-                var repo = new DeveloperRepository(); // 替換成實際的 Repository 類型
-                var service = new DeveloperService(repo);
-                service.CreateDevelopers(developerdto); // 替換成實際的服務類型
-
-                // 注冊成功後，導向到其他頁面（這裡可能是登入頁面或首頁等）
+                db.Developers.Add(developer);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            // 如果 ModelState 無效，表示有驗證錯誤，重新顯示註冊表單
-            return View(developerdto);
+            return View(developer);
         }
 
-
-
-        public ActionResult Signout()
+        // GET: Developer/Edit/5
+        public ActionResult Edit(int? id)
         {
-            FormsAuthentication.SignOut();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Developer developer = db.Developers.Find(id);
+            if (developer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(developer);
+        }
+
+        // POST: Developer/Edit/5
+        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
+        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,Name,Account,Password,Mail,Number,BanTime,IsBaned")] Developer developer)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(developer).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(developer);
+        }
+
+        // GET: Developer/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Developer developer = db.Developers.Find(id);
+            if (developer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(developer);
+        }
+
+        // POST: Developer/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Developer developer = db.Developers.Find(id);
+            db.Developers.Remove(developer);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        public List<DeveloperIndexVm> GetAll()
+        protected override void Dispose(bool disposing)
         {
-            var repo = new DeveloperRepository();
-            var service = new DeveloperService(repo);
-            var dto = service.GetAllDevelopers();
-            var data = new List<DeveloperIndexVm>();
-
-            foreach (var item in dto)
+            if (disposing)
             {
-                var model = new DeveloperIndexVm
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Account = item.Account,
-                    Password = item.Password,
-                    Mail = item.Mail,
-                    Number = item.Number
-                };
-                data.Add(model);
+                db.Dispose();
             }
-
-            return data;
+            base.Dispose(disposing);
         }
     }
-
 }

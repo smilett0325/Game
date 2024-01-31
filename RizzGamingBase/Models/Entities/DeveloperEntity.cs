@@ -36,5 +36,7 @@ namespace RizzGamingBase.Models.Entities
         [Display(Name = "電話號碼")]
         [StringLength(10, ErrorMessage = "電話號碼長度不能超過10個字")]
         public string Number { get; set; }
+
+        public DateTime? BanTime { get; set; }
     }
 }

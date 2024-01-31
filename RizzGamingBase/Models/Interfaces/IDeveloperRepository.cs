@@ -1,5 +1,4 @@
-﻿using RizzGamingBase.Models.EFModels;
-using RizzGamingBase.Models.Entities;
+﻿using RizzGamingBase.Models.Entities;
 using System.Collections.Generic;
 using System.Data.Entity;
 

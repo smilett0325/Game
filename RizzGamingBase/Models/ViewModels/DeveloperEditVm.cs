@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace RizzGamingBase.Models.Dtos
+namespace RizzGamingBase.Models.ViewModels
 {
-    public class DeveloperDto
+    public class DeveloperEditVm
     {
-        [Required(ErrorMessage = DAHelper.Required)]
+      
         public int Id { get; set; }
 
         [Display(Name = "開發商名稱")]
@@ -17,10 +17,6 @@ namespace RizzGamingBase.Models.Dtos
         [StringLength(30, ErrorMessage = DAHelper.StringLength)]
         public string Name { get; set; }
 
-        [Display(Name = "帳號")]
-        [Required(ErrorMessage = DAHelper.Required)]
-        [StringLength(200, ErrorMessage = DAHelper.StringLength)]
-        public string Account { get; set; }
 
         [Display(Name = "密碼")]
         [Required(ErrorMessage = DAHelper.Required)] // 設置必填錯誤訊息
@@ -37,8 +33,7 @@ namespace RizzGamingBase.Models.Dtos
         [StringLength(10, ErrorMessage = "電話號碼長度不能超過10個字")]
         public string Number { get; set; }
 
-        public DateTime? BanTime { get; set; }
+        public bool IsBaned { get; set; }
 
-        public bool? IsBaned { get; set; }
     }
 }

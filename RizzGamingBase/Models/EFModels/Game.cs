@@ -35,7 +35,7 @@ namespace RizzGamingBase.Models.EFModels
 
         [Required]
         [StringLength(1000)]
-        public string Description { get; set; }
+        public string Desciption { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime ReleaseDate { get; set; }
@@ -47,8 +47,6 @@ namespace RizzGamingBase.Models.EFModels
         public string Image { get; set; }
 
         public int DeveloperId { get; set; }
-
-        public int? GameTagId { get; set; }
 
         public int? DiscountId { get; set; }
 
@@ -84,8 +82,6 @@ namespace RizzGamingBase.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DLC> DLCs1 { get; set; }
-
-        public virtual GameTag GameTag { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GameTag> GameTags { get; set; }

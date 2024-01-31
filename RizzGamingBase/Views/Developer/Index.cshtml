@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RizzGamingBase.Models.ViewModels.DeveloperIndexVm>
+﻿@model IEnumerable<RizzGamingBase.Models.EFModels.Developer>
 
 @{
     ViewBag.Title = "Index";
@@ -26,6 +26,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Number)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BanTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsBaned)
+        </th>
         <th></th>
     </tr>
 
@@ -45,6 +51,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BanTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsBaned)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

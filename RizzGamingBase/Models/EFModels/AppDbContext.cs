@@ -5,10 +5,10 @@ using System.Linq;
 
 namespace RizzGamingBase.Models.EFModels
 {
-    public partial class AppDbContext : DbContext
+    public partial class APPDbContext : DbContext
     {
-        public AppDbContext()
-            : base("name=AppDbContext")
+        public APPDbContext()
+            : base("name=APPDbContext")
         {
         }
 
@@ -162,7 +162,6 @@ namespace RizzGamingBase.Models.EFModels
             modelBuilder.Entity<Game>()
                 .HasMany(e => e.GameTags)
                 .WithRequired(e => e.Game)
-                .HasForeignKey(e => e.GameId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Game>()
@@ -184,11 +183,6 @@ namespace RizzGamingBase.Models.EFModels
                 .HasMany(e => e.WishListes)
                 .WithRequired(e => e.Game)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<GameTag>()
-                .HasMany(e => e.Games)
-                .WithOptional(e => e.GameTag)
-                .HasForeignKey(e => e.GameTagId);
 
             modelBuilder.Entity<Member>()
                 .HasMany(e => e.BanGames)

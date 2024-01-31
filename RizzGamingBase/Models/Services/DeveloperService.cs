@@ -48,8 +48,30 @@ namespace RizzGamingBase.Models.Services
 
         }
 
-        // 使用更安全的雜湊算法，例如 SHA256
+       
+
         
+
+        public void Update(DeveloperDto dto)
+        {
+            // todo 進行必要的業務邏輯檢查
+
+            // 叫用 repository 存檔
+            DeveloperEntity entity = new DeveloperEntity
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Account = dto.Account,
+                Password = dto.Password,
+                Mail = dto.Mail,
+                Number = dto.Number,
+                BanTime= dto.BanTime
+
+            };
+
+            _repo.Create(entity);
+        }
+
 
 
 
