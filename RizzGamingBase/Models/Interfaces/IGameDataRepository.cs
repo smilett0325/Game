@@ -16,6 +16,8 @@ namespace RizzGamingBase.Models.InterFaces
 		int SearchGameNameToId(string name);
 		List<GameDataEntity> SearchDeveloperIdToGame(int id);
 
+		List<GameDataEntity> SearchDeveloperIdToGameNoGroup(int id);
+
 		List<GameDataEntity> SearchAllDevelopersGames();
 
 		IEnumerable<GameDataEntity> SearchAllDeveloper();

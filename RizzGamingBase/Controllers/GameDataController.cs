@@ -99,10 +99,9 @@ namespace RizzGamingBase.Controllers
 		[System.Web.Mvc.HttpPost]
 		public ActionResult GetLineDataFromDatabaseDeveloperId(int year, int developerId)
 		{
-			var gameName = "";
 			// 使用 model.GameName 進行處理
 			var service = new GameDataService(GetRepository());
-			var dataList = service.SearchGameName(gameName, year);
+			var dataList = service.SearchDeveloperBi(developerId, year);
 
 			// 返回示例數據，這裡你可以返回JSON結果或者視圖
 			return Json(dataList);

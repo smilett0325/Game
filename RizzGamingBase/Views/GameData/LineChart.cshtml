@@ -113,26 +113,7 @@
 
         datas = await response.json();
     }
-    const loadDatas1 = async () => {
-        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabase")?year=${year}&`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
 
-        datas = await response.json();
-    }
-    const loadDatas2 = async () => {
-        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabase")?year=${year}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-
-        datas = await response.json();
-    }
 
         // 在這裡處理伺服器的回應結果，例如更新UI
         // result 是從控制器返回的數據，可以用於更新視圖
@@ -140,9 +121,19 @@
     theDeveloper.addEventListener('change', async event => {
 
         DeveloperId = theDeveloper.value;
-        theH2.innerHTML = year +theDeveloper.options[theDeveloper.selectedIndex].text;
+        theH2.innerHTML = year + " " + theDeveloper.options[theDeveloper.selectedIndex].text;
+        theH21.innerHTML =  "季度營收";
         await loadDeveloperDatas();
+        await loadDeveloperBiDatas();
 
+        myChart.data.datasets[0].data[0] = DeveloperBidatas[0];
+        myChart.data.datasets[0].data[1] = DeveloperBidatas[1];
+        myChart.data.datasets[0].data[2] = DeveloperBidatas[2];
+        myChart.data.datasets[0].data[3] = DeveloperBidatas[3];
+
+        myChart.update();
+
+        //console.log(DeveloperBidatas);
         // 获取包含下拉列表的父容器
         var parentContainer = document.querySelector('.mb-2');
 
@@ -168,17 +159,21 @@
 
         // 你可能还需要触发新的下拉列表的change事件，以便更新相关的数据
         newSelect.addEventListener('change', async event => {
-            GameName = newSelect.options[newSelect.selectedIndex].text;
-            theH21.innerHTML = newSelect.options[newSelect.selectedIndex].text + "季度營收";
-            console.log(GameName)
-            await loadGameDatas();
-            console.log(Gamedatas)
-            myChart.data.datasets[0].data[0] = Gamedatas[0];
-            myChart.data.datasets[0].data[1] = Gamedatas[1];
-            myChart.data.datasets[0].data[2] = Gamedatas[2];
-            myChart.data.datasets[0].data[3] = Gamedatas[3];
+            if (newSelect.options[newSelect.selectedIndex].value != 0) {
+                GameName = newSelect.options[newSelect.selectedIndex].text;
+                theH21.innerHTML = newSelect.options[newSelect.selectedIndex].text + "季度營收";
 
-            myChart.update();
+                await loadGameDatas();
+
+                myChart.data.datasets[0].data[0] = Gamedatas[0];
+                myChart.data.datasets[0].data[1] = Gamedatas[1];
+                myChart.data.datasets[0].data[2] = Gamedatas[2];
+                myChart.data.datasets[0].data[3] = Gamedatas[3];
+
+                myChart.update();
+            }
+            
+
         });
 
     });
@@ -194,6 +189,16 @@
         Developerdatas = await response.json();
     }
 
+    const loadDeveloperBiDatas = async () => {
+        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabaseDeveloperId")?year=${year}&developerId=${DeveloperId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        DeveloperBidatas = await response.json();
+    }
 
 
 

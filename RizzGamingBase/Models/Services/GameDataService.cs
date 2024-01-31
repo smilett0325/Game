@@ -64,6 +64,45 @@ namespace RizzGamingBase.Models.Services
 			return dto;
 		}
 
+		public List<decimal> SearchDeveloperBi(int DeveloperId, int Year)
+		{
+			int id = DeveloperId;
+			int year = Year;
+
+
+
+			List<GameDataEntity> entity = _repository.SearchDeveloperIdToGameNoGroup(id);
+
+			var initialdto = GameDataExts.EntityToDto(entity);
+
+
+			decimal s1 = 0, s2 = 0, s3 = 0, s4 = 0;
+			foreach (var item in initialdto)
+			{
+				if (item.TransactionDate > new DateTime((year - 1), 12, 31) && item.TransactionDate < new DateTime(year, 04, 01))
+				{
+					s1 += item.Price;
+				}
+				else if (item.TransactionDate > new DateTime(year, 03, 31) && item.TransactionDate < new DateTime(year, 07, 01))
+				{
+					s2 += item.Price;
+				}
+				else if (item.TransactionDate > new DateTime(year, 06, 30) && item.TransactionDate < new DateTime(year, 10, 01))
+				{
+					s3 += item.Price;
+				}
+				else if (item.TransactionDate > new DateTime(year, 09, 30) && item.TransactionDate < new DateTime((year + 1), 1, 01))
+				{
+					s4 += item.Price;
+				}
+
+			}
+
+			List<decimal> dto = new List<decimal> { s1, s2, s3, s4 };
+
+			return dto;
+		}
+
 
 		public List<GameDataDto> SearchGames(int id)
 		{

@@ -55,6 +55,23 @@ namespace RizzGamingBase.Models.Repositories
 			return queryList;
 		}
 
+		public List<GameDataEntity> SearchDeveloperIdToGameNoGroup(int id)
+		{
+			var db = new AppDbContext();
+
+			var game = db.Games.AsNoTracking()
+				.Where(g => g.DeveloperId == id)
+				.Select(g => new GameDataEntity
+				{
+					Id = g.Id,
+					GameName = g.Name
+				})
+				.Distinct()
+				.ToList();
+			var queryList = SearchGameIdToBINoGroup(game);
+			return queryList;
+		}
+
 
 		//
 		public List<GameDataEntity> SearchAllDevelopersGames()
@@ -117,6 +134,32 @@ namespace RizzGamingBase.Models.Repositories
 											GameName = group.Key,
 				                            Amount = group.Sum(bi=>bi.Price)
 			                  });
+
+				queryList.AddRange(query);
+			}
+
+			return queryList;
+		}
+
+		private List<GameDataEntity> SearchGameIdToBINoGroup(List<GameDataEntity> game)
+		{
+			var db = new AppDbContext();
+
+			var queryList = new List<GameDataEntity>();
+
+			foreach (var item in game)
+			{
+				var query = db.BillItems.AsNoTracking()
+										.Include(bi => bi.BillDetail)
+										.Include(bi => bi.Game)
+										.Where(bi => bi.GameId == item.Id)
+										.Select(bi=> new GameDataEntity
+										{
+											Id = bi.Id,
+											GameName = bi.Game.Name,
+											TransactionDate = bi.BillDetail.TransactionDate,
+											Amount = bi.Price
+										});
 
 				queryList.AddRange(query);
 			}
