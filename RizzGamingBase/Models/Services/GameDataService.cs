@@ -74,5 +74,37 @@ namespace RizzGamingBase.Models.Services
 
 			return initialdto;
 		}
+
+		public List<GameDataDto> SearchDevelopers()
+		{
+			List<GameDataEntity> entity = _repository.SearchAllDevelopersGames();
+
+
+			var initialdto = GameDataExts.EntityToDto(entity);
+
+
+
+			//相同開發商資料合併
+			Dictionary<string, decimal> mergedValues = new Dictionary<string, decimal>();
+
+			foreach (GameDataDto dto in initialdto)
+			{
+				if (mergedValues.ContainsKey(dto.GameName))
+				{
+					mergedValues[dto.GameName] += dto.Price;
+				}
+				else
+				{
+					mergedValues[dto.GameName] = dto.Price;
+				}
+			}
+
+			// 將字典轉換回 List<Entity>
+			List<GameDataDto> dtos = mergedValues.Select(kv => new GameDataDto { GameName = kv.Key, Price = kv.Value }).ToList();
+
+
+
+			return dtos;
+		}
 	}
 }

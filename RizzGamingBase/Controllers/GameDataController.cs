@@ -69,8 +69,10 @@ namespace RizzGamingBase.Controllers
 			// 使用ADO.NET从数据库中检索数据的逻辑
 			var service = new GameDataService(GetRepository());
 
-			var id = 1;
-			var dataList = service.SearchGames(id);
+			//var id = 1;
+			//var dataList = service.SearchGames(id);
+
+			var dataList = service.SearchDevelopers();
 
 			var data = GameDataExts.DtoToIndexVm(dataList);
 			// 返回示例数据

@@ -303,6 +303,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\GameData\Chart.cshtml" />
     <Content Include="Views\GameData\LineChart.cshtml" />
+    <Content Include="Views\GameData\PieChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

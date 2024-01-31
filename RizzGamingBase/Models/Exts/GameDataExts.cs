@@ -23,6 +23,7 @@ namespace RizzGamingBase.Models.Exts
 				{
 					Id = item.Id,
 					GameName = item.GameName,
+					DeveloperName = item.DeveloperName,
 					TransactionDate = item.TransactionDate,
 					Price = item.Amount
 				};
@@ -41,6 +42,7 @@ namespace RizzGamingBase.Models.Exts
 				{
 					Id = dto.Id,
 					GameName = dto.GameName,
+					DeveloperName = dto.DeveloperName,
 					TransactionDate = dto.TransactionDate,
 					Amount = dto.Price
 				};

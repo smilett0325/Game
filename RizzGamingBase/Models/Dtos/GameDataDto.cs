@@ -9,6 +9,7 @@ namespace RizzGamingBase.Models.Dtos
 	{
 		public int Id { get; set; }
 		public string GameName { get; set; }
+		public string DeveloperName { get; set; }
 		public DateTime TransactionDate { get; set; }
 		public decimal Price { get; set; }
 	}

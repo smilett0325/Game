@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "PieChart";
+}
+
+<!-- 引入Chart.js库 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
+<!-- 在页面中添加图表容器 -->
+<h2 id="h2"></h2>
+<h2>銷售佔比</h2>
+
+
+<div id="pie" style="height:65%;width:65%">
+    <canvas id="myPieChart" width="100" height="100"></canvas>
+</div>
+<!-- 在页面底部初始化图表 -->
+<script>
+    var datas = [];
+    var pie = document.getElementById('myPieChart').getContext('2d');
+    var divPie = document.getElementById('pie');
+    var Piedata = [@Html.Raw(Json.Encode(ViewBag.PieChartData))];
+
+    var pieLabels = Piedata.flatMap(function (item) {
+        return item.map(function (innerItem) {
+            return innerItem.GameName;
+        });
+    });
+
+    var pieValues = Piedata.flatMap(function (item) {
+        return item.map(function (innerItem) {
+            return innerItem.Amount;
+        });
+    });
+
+    var myPieChart = new Chart(pie, {
+        type: 'pie', // 替换为所需的图表类型
+        data: {
+            labels: pieLabels,
+            datasets: [{
+                label: '元',
+                data: pieValues,
+                backgroundColor: ['blue', 'orange', 'red'],
+                borderColor: 'black',
+                borderWidth: 1,
+
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+</script>

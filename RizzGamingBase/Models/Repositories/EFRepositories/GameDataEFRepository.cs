@@ -55,6 +55,26 @@ namespace RizzGamingBase.Models.Repositories
 			return queryList;
 		}
 
+
+		//
+		public List<GameDataEntity> SearchAllDevelopersGames()
+		{
+			var db = new AppDbContext();
+
+			var game = db.Games.AsNoTracking()
+				.Select(g => new GameDataEntity
+				{
+					Id = g.Id,
+					GameName = g.Name
+				})
+				.Distinct()
+				.ToList();
+			var queryList = SearchAllDeveloperGamesToBI(game);
+			return queryList;
+		}
+
+
+
 		private List<GameDataEntity> SearchGameIdToBI(int gameId, string name = "")
 		{
 			var db = new AppDbContext();
@@ -103,5 +123,34 @@ namespace RizzGamingBase.Models.Repositories
 
 			return queryList;
 		}
+
+		private List<GameDataEntity> SearchAllDeveloperGamesToBI(List<GameDataEntity> game)
+		{
+			var db = new AppDbContext();
+
+			var queryList = new List<GameDataEntity>();
+
+			foreach (var item in game)
+			{
+				var query = db.BillItems.AsNoTracking()
+										.Include(bi => bi.BillDetail)
+										.Include(bi => bi.Game)
+										.Include(bi => bi.Game.Developer)
+										.Where(bi => bi.GameId == item.Id)
+										.OrderBy(bi => bi.Game.Developer.Name) // 按 DeveloperName 排序
+										.GroupBy(bi => bi.Game.Developer.Name) // 按 DeveloperName 分組
+										.ToList()
+										.Select(group => new GameDataEntity
+										{
+											GameName = group.Key,
+											Amount = group.Sum(bi => bi.Price)
+										});
+										
+				queryList.AddRange(query);
+			}
+
+			return queryList;
+		}
+		
 	}
 }
