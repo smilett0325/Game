@@ -45,14 +45,33 @@ namespace RizzGamingBase.Controllers
         }
         public ActionResult Create() 
         {
-            return View();
+            var model = new DiscountCreateVm
+            {
+                DiscountTypeList = GetDiscountTypeList(),
+            };
+            return View(model);
+        }
+
+
+        private IEnumerable<SelectListItem> GetDiscountTypeList()
+        {
+            return new List<SelectListItem>
+            {
+            new SelectListItem { Value = "季度特價", Text = "季度特價" },
+            new SelectListItem { Value = "自訂特價", Text = "自訂特價" },
+            
+            };
         }
 
         [HttpPost]
         public ActionResult Create(DiscountCreateVm vm) 
         {
 
-            if (!ModelState.IsValid) return View(vm);
+            if (!ModelState.IsValid) 
+            {
+                vm.DiscountTypeList = GetDiscountTypeList();
+                return View(vm); 
+            }
 
             try
             {
@@ -60,8 +79,14 @@ namespace RizzGamingBase.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", ex.Message);
-                return View(vm);
+                if (vm.StartDate.Date < DateTime.Now.Date)
+                {
+                    ModelState.AddModelError("StartDate", "开始日期不能选择已经过了的日期");
+                    vm.DiscountTypeList = GetDiscountTypeList();
+                    ModelState.AddModelError("", ex.Message);
+                    return View(vm);
+                }
+        
             }
 
             return RedirectToAction("Index");

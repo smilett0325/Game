@@ -33,7 +33,7 @@ namespace RizzGamingBase.Models.Exts
         {
             var repo = new DiscountEFRepository();
             var service = new DiscountService(repo);
-            var dto = DiscountExts.VmToDto(vm);
+            var dto = DiscountExts.CreateVmToDto(vm);
             service.Create(dto);
         }
 

@@ -21,9 +21,9 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             return DiscountExts.GetDbToEntity();
         }
 
-        public void Create(DiscountEntity entity)
+        public void Create(DiscountCreateEntity entity)
         {
-            DiscountExts.EntityToDb(entity);
+            DiscountExts.CreateEntityToDb(entity);
         }
 
         public void Edit(DiscountEntity entity)

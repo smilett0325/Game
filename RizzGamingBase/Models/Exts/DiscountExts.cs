@@ -175,9 +175,11 @@ namespace RizzGamingBase.Models.Exts
             return vm;
         }
 
-        public static DiscountDto VmToDto(this DiscountCreateVm vm)
+
+
+        public static DiscountCreateDto CreateVmToDto(this DiscountCreateVm vm)
         {
-            var dto = new DiscountDto
+            var dto = new DiscountCreateDto
             {
                 Name = vm.DiscountName,
                 Type = vm.DiscountType,
@@ -186,7 +188,7 @@ namespace RizzGamingBase.Models.Exts
                 EndDate = vm.EndDate,
                 Percent = vm.Percent,
                 Desciption = vm.Description,
-                DiscountItem = vm.Game
+                GameId = vm.Game               
             };
 
             return dto;
@@ -223,9 +225,9 @@ namespace RizzGamingBase.Models.Exts
             return dto;
         }
 
-        public static DiscountEntity DtoToEntity(this DiscountDto vm)
+        public static DiscountCreateEntity CreateDtoToEntity(this DiscountCreateDto vm)
         {
-            var entity = new DiscountEntity
+            var entity = new DiscountCreateEntity
             {
                 Name = vm.Name,
                 Type = vm.Type,
@@ -234,7 +236,7 @@ namespace RizzGamingBase.Models.Exts
                 EndDate = vm.EndDate,
                 Percent = vm.Percent,
                 Desciption = vm.Desciption,
-                DiscountItem = vm.DiscountItem
+                GameId = vm.GameId
             };
 
             return entity;
@@ -258,7 +260,7 @@ namespace RizzGamingBase.Models.Exts
             return entity;
         }
 
-        public static void EntityToDb(this DiscountEntity entity)
+        public static void CreateEntityToDb(this DiscountCreateEntity entity)
         {
             var db = new AppDbContext();
 
@@ -275,15 +277,22 @@ namespace RizzGamingBase.Models.Exts
             db.Discounts.Add(discount);
             db.SaveChanges();
 
-            foreach (var item in entity.DiscountItem)
+
+            string[] gameIdArray = entity.GameId.Trim('[', ']')
+                                   .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var item in gameIdArray)
             {
-                var discountItem = new DiscountItem
+                if (int.TryParse(item, out int gameId))
                 {
-                    DiscountId = discount.Id,
-                    GameId = item.GameID
-                };
-                db.DiscountItems.Add(discountItem);
-                db.SaveChanges();
+                    var discountItem = new DiscountItem
+                    {
+                        DiscountId = discount.Id,
+                        GameId = gameId
+                    };
+                    db.DiscountItems.Add(discountItem);
+                    db.SaveChanges();
+                }
             }
         }
 

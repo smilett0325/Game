@@ -30,9 +30,9 @@ namespace RizzGamingBase.Models.Services
             return DiscountExts.GetEntityToDto(entity);
         }
 
-        public void Create(DiscountDto dto) 
+        public void Create(DiscountCreateDto dto) 
         {
-            var entity = DiscountExts.DtoToEntity(dto);
+            var entity = DiscountExts.CreateDtoToEntity(dto);
             _repo.Create(entity);
         }
 

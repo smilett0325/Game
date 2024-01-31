@@ -11,7 +11,7 @@ namespace RizzGamingBase.Models.Interfaces
     {
         List<DiscountEntity> GetAllEvent();
         DiscountEntity GetEvent(int id);
-        void Create(DiscountEntity entity);
+        void Create(DiscountCreateEntity entity);
         void Edit(DiscountEntity entity);
         
     }
