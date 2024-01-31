@@ -134,8 +134,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Dtos\MemberDto.cs" />
+    <Compile Include="Models\EFModels\Admin.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Member.cs" />
+    <Compile Include="Models\EFModels\Permission.cs" />
+    <Compile Include="Models\EFModels\Position.cs" />
     <Compile Include="Models\Entities\MemberEntity.cs" />
     <Compile Include="Models\IRepositories\IRepository.cs" />
     <Compile Include="Models\Repositories\EFRepositories\MemberEFRepository.cs" />

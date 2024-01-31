@@ -41,10 +41,10 @@ namespace RizzGamingBase.Controllers
             var servicer = new MemberService(repo);
             MemberDto dto = new MemberDto {
             Id = member.Id,
-                Account = member.Account,
+                
                 Password = member.Password,
                 Mail = member.Mail,
-                AvatarURL = member.AvatarURL,
+                //AvatarURL = member.AvatarURL,
                 BanTime = member.BanTime,
                 Birthday = member.Birthday,
                 NickName = member.NickName,
@@ -75,7 +75,8 @@ namespace RizzGamingBase.Controllers
                 Password=dto.Password,
                 Mail=dto.Mail,
                 AvatarURL=dto.AvatarURL,
-                BanTime=dto.BanTime,
+                Bonus = dto.Bonus,
+                BanTime =dto.BanTime,
                 Birthday=dto.Birthday,
                 NickName=dto.NickName,
                 RegistrationDate=dto.RegistrationDate,
@@ -103,7 +104,8 @@ namespace RizzGamingBase.Controllers
                     Mail = item.Mail,
                     AvatarURL = item.AvatarURL,
                     Birthday = item.Birthday,
-                    NickName=item.NickName,
+                    Bonus = item.Bonus,
+                    NickName =item.NickName,
                     RegistrationDate = item.RegistrationDate,
                     BanTime = item.BanTime,
                     LastLoginDate = item.LastLoginDate,

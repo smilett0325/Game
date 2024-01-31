@@ -1,6 +1,5 @@
 ﻿using Microsoft.Ajax.Utilities;
 using RizzGamingBase.Models.Dtos;
-using RizzGamingBase.Models.EFModels;
 using RizzGamingBase.Models.Entities;
 using RizzGamingBase.Models.IRepositories;
 using RizzGamingBase.Models.Repositories.EFRepositories;
@@ -18,7 +17,7 @@ namespace RizzGamingBase.Models.Services
 
         public MemberService(IRepository repo)
         {       
-            _repo = repo;
+            _repo = repo; //
         }
 
         
@@ -62,6 +61,7 @@ namespace RizzGamingBase.Models.Services
                 AvatarURL = x.AvatarURL,
                 Birthday = x.Birthday,
                 NickName = x.NickName,
+                Bonus = x.Bonus,
                 RegistrationDate = x.RegistrationDate,
                 BanTime = x.BanTime,
                 LastLoginDate = x.LastLoginDate,
@@ -84,7 +84,8 @@ namespace RizzGamingBase.Models.Services
                 AvatarURL= member.AvatarURL,
                 Birthday= member.Birthday,
                 NickName= member.NickName,
-                RegistrationDate= member.RegistrationDate,
+                Bonus = member.Bonus,   
+                RegistrationDate = member.RegistrationDate,
                 BanTime= member.BanTime,
                 LastLoginDate= member.LastLoginDate,
             };
@@ -102,6 +103,7 @@ namespace RizzGamingBase.Models.Services
             member.Account = memberDto.Account;
             member.Password = memberDto.Password;
             member.Mail = memberDto.Mail;
+            member.Bonus = memberDto.Bonus; 
             member.AvatarURL = memberDto.AvatarURL;
             member.Birthday = memberDto.Birthday;
             member.NickName = memberDto.NickName;

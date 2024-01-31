@@ -18,16 +18,13 @@
             @Html.DisplayNameFor(model => model.Password)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Mail)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.AvatarURL)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NickName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Birthday)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Mail)
+            @Html.DisplayNameFor(model => model.RegistrationDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.BanTime)
@@ -36,10 +33,13 @@
             @Html.DisplayNameFor(model => model.Bonus)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RegistrationDate)
+            @Html.DisplayNameFor(model => model.LastLoginDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastLoginDate)
+            @Html.DisplayNameFor(model => model.Birthday)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NickName)
         </th>
         <th></th>
     </tr>
@@ -53,16 +53,13 @@
             @Html.DisplayFor(modelItem => item.Password)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Mail)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.AvatarURL)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NickName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Birthday)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mail)
+            @Html.DisplayFor(modelItem => item.RegistrationDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.BanTime)
@@ -71,10 +68,13 @@
             @Html.DisplayFor(modelItem => item.Bonus)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RegistrationDate)
+            @Html.DisplayFor(modelItem => item.LastLoginDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LastLoginDate)
+            @Html.DisplayFor(modelItem => item.Birthday)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NickName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

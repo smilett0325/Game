@@ -6,7 +6,7 @@ namespace RizzGameingBase.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Member
+    public partial class Admin
     {
         public int Id { get; set; }
 
@@ -20,24 +20,21 @@ namespace RizzGameingBase.Models.EFModels
 
         [Required]
         [StringLength(50)]
-        public string Mail { get; set; }
-
-        [StringLength(200)]
-        public string AvatarURL { get; set; }
-
-        public DateTime? RegistrationDate { get; set; }
-
-        public DateTime? BanTime { get; set; }
-
-        public int? Bonus { get; set; }
-
-        public DateTime? LastLoginDate { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime? Birthday { get; set; }
+        public string CinfrimPassword { get; set; }
 
         [Required]
         [StringLength(50)]
         public string NickName { get; set; }
+
+        [StringLength(200)]
+        public string AvatarURL { get; set; }
+
+        public int? PositionId { get; set; }
+
+        public int? PermissionId { get; set; }
+
+        public virtual Permission Permission { get; set; }
+
+        public virtual Position Position { get; set; }
     }
 }

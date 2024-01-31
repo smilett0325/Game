@@ -1,12 +1,12 @@
 ﻿using Microsoft.Ajax.Utilities;
-using RizzGamingBase.Models.EFModels;
+using RizzGameingBase.Models.EFModels;
 using RizzGamingBase.Models.Entities;
 using RizzGamingBase.Models.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Member = RizzGamingBase.Models.EFModels.Member;
+using Member = RizzGameingBase.Models.EFModels.Member;
 
 namespace RizzGamingBase.Models.Repositories.EFRepositories
 {
@@ -109,10 +109,10 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
                     existingMembersEntity.Password = entity.Password;
                 }
                 existingMembersEntity.Mail = entity.Mail;
-                existingMembersEntity.AvatarURL = entity.AvatarURL;
+                //existingMembersEntity.AvatarURL = entity.AvatarURL;
 				existingMembersEntity.BanTime= entity.BanTime;
-				existingMembersEntity.Bonus= entity.Bonus;
-				existingMembersEntity.Birthday= entity.Birthday;
+				//existingMembersEntity.Bonus= entity.Bonus;
+				//existingMembersEntity.Birthday= entity.Birthday;
 				existingMembersEntity.NickName= entity.NickName;
 
 			}
@@ -150,7 +150,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 			{
 				member.Password = entity.Password;
 				member.Mail = entity.Mail;
-				member.AvatarURL = entity.AvatarURL;
+				//member.AvatarURL = entity.AvatarURL;
 				member.Birthday = entity.Birthday;
 				member.NickName = entity.NickName;
 			}
