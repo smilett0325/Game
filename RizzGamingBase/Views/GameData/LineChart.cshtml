@@ -16,8 +16,17 @@
 
 <!-- 在页面中添加图表容器 -->
 <h2 id="h2">2023</h2>
-<h2>季度營收</h2>
+<h2 id="h21">季度營收</h2>
 
+<div class="mb-2">
+    <label for="developerList">選擇開發商:</label>
+    <select id="developerList">
+        @foreach (var developer in ViewBag.DeveloperList)
+        {
+            <option value="@developer.Value">@developer.Text</option>
+        }
+    </select>
+</div>
 
 <div id="Line" style="height:65%;width:65%">
     <canvas id="myChart" width="100" height="100"></canvas>
@@ -28,15 +37,24 @@
 
     var theH2 = document.getElementById('h2');
 
+    var theH21 = document.getElementById('h21');
+
     var ctx = document.getElementById('myChart').getContext('2d');
 
     var divLine = document.getElementById('Line');
+
+    var theDeveloper = document.getElementById('developerList');
     // 将从Controller传递的数据绑定到图表
     var Linedata = [@(ViewBag.LineChartData)];
 
+     var list = [@Html.Raw(Json.Encode(ViewBag.DeveloperList))];
+
     const theYear = document.querySelector("#Year");
 
-
+    var year = 2023;
+    var DeveloperId = 0;
+    var check = false;
+    var GameName = "";
     // 创建图表
 
     var myChart = new Chart(ctx, {
@@ -69,14 +87,13 @@
         }
     });
 
-    var year = 0;
+
     theYear.addEventListener('keydown', async event  => {
 
         if (event.which === 13) {
             year = theYear.value;
             theH2.innerHTML = year;
-            await loadDatas();
-
+            await loadDatas();;
             myChart.data.datasets[0].data[0] = datas[0];
             myChart.data.datasets[0].data[1] = datas[1];
             myChart.data.datasets[0].data[2] = datas[2];
@@ -96,13 +113,101 @@
 
         datas = await response.json();
     }
+    const loadDatas1 = async () => {
+        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabase")?year=${year}&`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        datas = await response.json();
+    }
+    const loadDatas2 = async () => {
+        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabase")?year=${year}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        datas = await response.json();
+    }
 
         // 在這裡處理伺服器的回應結果，例如更新UI
         // result 是從控制器返回的數據，可以用於更新視圖
-            
-		
+
+    theDeveloper.addEventListener('change', async event => {
+
+        DeveloperId = theDeveloper.value;
+        theH2.innerHTML = year +theDeveloper.options[theDeveloper.selectedIndex].text;
+        await loadDeveloperDatas();
+
+        // 获取包含下拉列表的父容器
+        var parentContainer = document.querySelector('.mb-2');
+
+
+        // 创建新的下拉列表
+        if (check == true) {
+            var oldSelect = document.getElementById('gamesList');
+            parentContainer.removeChild(oldSelect);
+        }
+        var newSelect = document.createElement('select');
+        newSelect.id = 'gamesList';
+        check = true;
+        // 添加新的选项
+        for (var i = 0; i < Developerdatas.length; i++) {
+            var option = document.createElement('option');
+            option.value = Developerdatas[i].Value;
+            option.text = Developerdatas[i].Text;
+            newSelect.add(option);
+        }
+
+        // 将新的下拉列表添加到父容器
+        parentContainer.appendChild(newSelect);
+
+        // 你可能还需要触发新的下拉列表的change事件，以便更新相关的数据
+        newSelect.addEventListener('change', async event => {
+            GameName = newSelect.options[newSelect.selectedIndex].text;
+            theH21.innerHTML = newSelect.options[newSelect.selectedIndex].text + "季度營收";
+            console.log(GameName)
+            await loadGameDatas();
+            console.log(Gamedatas)
+            myChart.data.datasets[0].data[0] = Gamedatas[0];
+            myChart.data.datasets[0].data[1] = Gamedatas[1];
+            myChart.data.datasets[0].data[2] = Gamedatas[2];
+            myChart.data.datasets[0].data[3] = Gamedatas[3];
+
+            myChart.update();
+        });
+
+    });
+
+    const loadDeveloperDatas = async () => {
+        const response = await fetch(`@Url.Content("~/GameData/loadDeveloperDatas")?id=${DeveloperId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        Developerdatas = await response.json();
+    }
 
 
 
+
+
+
+    const loadGameDatas = async () => {
+        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabaseGameName")?year=${year}&gameName=${GameName}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        Gamedatas = await response.json();
+    }
 
 </script>

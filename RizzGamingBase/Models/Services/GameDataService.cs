@@ -114,5 +114,10 @@ namespace RizzGamingBase.Models.Services
 		{
 			return _repository.SearchAllDeveloper();
 		}
+
+		public IEnumerable<ISelectListItem> GetSelectListItemsDeveloper(int id)
+		{
+			return _repository.SearchAllDevelopersGame(id);
+		}
 	}
 }

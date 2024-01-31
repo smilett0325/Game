@@ -163,5 +163,19 @@ namespace RizzGamingBase.Models.Repositories
 				})
 				.ToList();
 		}
+
+		public IEnumerable<GameDataEntity> SearchAllDevelopersGame(int id)
+		{
+			var db = new AppDbContext();
+			return db.Games
+				.Include(bi => bi.Developer)
+				.Where(g => g.DeveloperId == id)
+				.Select(d => new GameDataEntity
+				{
+					Id = d.Id,
+					GameName = d.Name
+				})
+				.ToList();
+		}
 	}
 }

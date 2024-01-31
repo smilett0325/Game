@@ -10,5 +10,7 @@ namespace RizzGamingBase.Models.Interfaces
 	{
 		int Id { get; set; }
 		string DeveloperName { get; set; }
+
+		string GameName { get; set; }
 	}
 }

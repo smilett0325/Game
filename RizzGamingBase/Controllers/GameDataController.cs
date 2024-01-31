@@ -11,6 +11,7 @@ using RizzGamingBase.Models.Repositories;
 using RizzGamingBase.Models.InterFaces;
 using System.Web.Http;
 using RizzGamingBase.Models.ViewModels;
+using RizzGamingBase.Models.EFModels;
 
 namespace RizzGamingBase.Controllers
 {
@@ -35,11 +36,12 @@ namespace RizzGamingBase.Controllers
 
 		public ActionResult LineChart()
 		{
+			var service = new GameDataService(GetRepository());
 			// 获取数据（示例数据）
 			List<decimal> Linedata = GetLineDataFromDatabase();
 			// 转换数据格式
 			ViewBag.LineChartData = string.Join(",", Linedata);
-
+			ViewBag.DeveloperList = SelectListExts.GetSelectListItems(service);
 			return View();
 		}
 
@@ -94,6 +96,29 @@ namespace RizzGamingBase.Controllers
 			// 返回示例數據，這裡你可以返回JSON結果或者視圖
 			return Json(dataList);
 		}
+		[System.Web.Mvc.HttpPost]
+		public ActionResult GetLineDataFromDatabaseDeveloperId(int year, int developerId)
+		{
+			var gameName = "";
+			// 使用 model.GameName 進行處理
+			var service = new GameDataService(GetRepository());
+			var dataList = service.SearchGameName(gameName, year);
+
+			// 返回示例數據，這裡你可以返回JSON結果或者視圖
+			return Json(dataList);
+		}
+		[System.Web.Mvc.HttpPost]
+		public ActionResult GetLineDataFromDatabaseGameName(int year, string gameName)
+		{
+			var GameName = gameName;
+			
+			// 使用 model.GameName 進行處理
+			var service = new GameDataService(GetRepository());
+			var dataList = service.SearchGameName(GameName, year);
+
+			// 返回示例數據，這裡你可以返回JSON結果或者視圖
+			return Json(dataList);
+		}
 
 		[System.Web.Mvc.HttpPost]
 		public ActionResult GetPieDataFromDatabase(int id)
@@ -103,10 +128,22 @@ namespace RizzGamingBase.Controllers
 
 			var dataList = service.SearchGames(id);
 
-			//var data = GameDataExts.DtoToIndexVm(dataList);
 			// 返回示例数据
 			return Json(dataList);
 		}
+
+		[System.Web.Mvc.HttpPost]
+		public ActionResult loadDeveloperDatas(int id)
+		{
+			// 使用ADO.NET从数据库中检索数据的逻辑
+			var service = new GameDataService(GetRepository());
+
+			var dataList = SelectListExts.GetSelectListItemsDeveloper(service,id);
+
+			// 返回示例数据
+			return Json(dataList);
+		}
+
 
 
 		private IGameDataRepository GetRepository()

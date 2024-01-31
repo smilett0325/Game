@@ -10,5 +10,7 @@ namespace RizzGamingBase.Models.Interfaces
 	public interface ISelectListService
 	{
 		IEnumerable<ISelectListItem> GetSelectListItems();
+
+		IEnumerable<ISelectListItem> GetSelectListItemsDeveloper(int id);
 	}
 }

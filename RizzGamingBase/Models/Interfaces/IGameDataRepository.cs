@@ -19,5 +19,7 @@ namespace RizzGamingBase.Models.InterFaces
 		List<GameDataEntity> SearchAllDevelopersGames();
 
 		IEnumerable<GameDataEntity> SearchAllDeveloper();
+
+		IEnumerable<GameDataEntity> SearchAllDevelopersGame(int id);
 	}
 }

@@ -23,9 +23,25 @@ namespace RizzGamingBase.Models.Exts
 			return result.Prepend(new SelectListItem { Value = "0", Text = "請選擇..." });
 		}
 
+		public static IEnumerable<SelectListItem> GetSelectListItemsDeveloper(this ISelectListService service,int id)
+		{
+			var list = service.GetSelectListItemsDeveloper(id);
+
+			var result = new List<SelectListItem>();
+
+			foreach (var item in list)
+			{
+				result.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.GameName });
+			}
+
+			return result.Prepend(new SelectListItem { Value = "0", Text = "請選擇..." });
+		}
+
 		public static SelectList GetSelectList(this ISelectListService service, int id)
 		{
 			return new SelectList(service.GetSelectListItems(), "Id", "Name", id);
 		}
+
+
 	}
 }
