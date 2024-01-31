@@ -1,5 +1,6 @@
 ﻿using RizzGamingBase.Models.Dtos;
 using RizzGamingBase.Models.EFModels;
+using RizzGamingBase.Models.Entities;
 using RizzGamingBase.Models.Exts;
 using RizzGamingBase.Models.Infra;
 using RizzGamingBase.Models.Interfaces;
@@ -23,12 +24,19 @@ namespace RizzGamingBase.Models.Services
 		}
 		public void DGSave(DeveloperGameEditVm vm, string displayImagePath, string coverPath, string displayVideoPath)
 		{
+			var vRepo = new VideoEFRepository();
+			var iRepo = new ImageEFRepository();
+			var gRepo = new GTEFRepository();
+			var dlcRepo = new DLCEFRepository();
+			var dicepo = new DiscountEFRepository();
+
+
 			var game = new GameDto();
 			var video = new List<VideoDto>();
 			var image = new List<ImageDto>();
 			var gt = new List<TagDto>();
 			var dlc = new List<GameDto>();
-			//var discount = new List<DiscountDto>();
+			var discount = new List<DiscountDto>();
 
 			//todo 實作儲存
 			//update gmae
@@ -82,16 +90,23 @@ namespace RizzGamingBase.Models.Services
 
 		public void Create(DeveloperGameEditVm vm, string displayImagePath, string coverPath, string displayVideoPath, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImage, IEnumerable<HttpPostedFileBase> displayVideo)
 		{
+			var vRepo = new VideoEFRepository();
+			var iRepo = new ImageEFRepository();
+			var gtRepo = new GTEFRepository();
+			var dlcRepo = new DLCEFRepository();
+			//var disepo = new DiscountItemEFRepository();
+
 			var game = new GameDto();
-			var video = new List<VideoDto>();
-			var image = new List<ImageDto>();
-			var gt = new List<TagDto>();
-			var dlc = new List<GameDto>();
+			//var videos = new List<VideoDto>();
+			//var video = new VideoDto();
+			//var images = new List<ImageDto>();
+			//var gts = new List<TagDto>();
+			//var dlcs = new List<GameDto>();
 			//var discount = new List<DiscountDto>();
 
 			//todo 實作儲存
 			//update gmae
-			game.Id = vm.Id;
+			//game.Id = vm.Id;
 			game.Name = vm.Name;
 			game.Introduction = vm.Introduction;
 			game.Description = vm.Description;
@@ -100,22 +115,71 @@ namespace RizzGamingBase.Models.Services
 			game.DeveloperId = vm.DeveloperId;
 			game.MaxPercent = vm.MaxPercent;
 			//game.Image = vm.Image;
-			string coverName = new UploadFileHelper().UploadCoverFile(cover, coverPath, vm.DeveloperId, vm.Id);
+			string coverName = "view.jpg";
 			game.Image = coverName;
+			_repo.Create(game.DtoToEntity());
 
 			//Create video
 
-
+			foreach (var item in vm.DisplayVideos)
+			{
+				var video = new VideoEntity
+				{
+					GameId = game.Id,
+					DisplayVideo = item.DisplayVideo,
+				};
+				
+				vRepo.Create(video);
+			};
 
 			//Create image
 
+			foreach (var item in vm.DisplayImages)
+			{
+				var image = new ImageEntity
+				{
+					GameId = game.Id,
+					DisplayImage = item.DisplayImage,
+				};
+
+				iRepo.Create(image);
+			};
+
 			//Update or Create gt
+
+			foreach (var item in vm.Tags)
+			{
+				var gt = new GTEntity
+				{
+					GameId = game.Id,
+					TagId = item.Id,
+				};
+				gtRepo.Create(gt);
+			};
 
 			//Update or Create dlc
 
+			foreach (var item in vm.DLCs)
+			{
+				var dlc = new DLCEntity
+				{
+					GameId = item.Id,
+					AttachmentGameId = game.Id,
+				};
+				dlcRepo.Create(dlc);
+			};
+
 			//Update or Create discount
 
-			_repo.Create(game.DtoToEntity());
+			//foreach (var item in vm.Discounts)
+			//{
+			//	var discount = new DiscountItem
+			//	{
+			//		DiscountId = item.Id,
+			//		GameId = game.Id,
+			//	};
+			//	disRepo.Create(discount);
+			//};
 		}
 
 

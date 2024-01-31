@@ -11,71 +11,99 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>DeveloperGameEditVm</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div>
+<div class="form-horizontal">
+    <h4>DeveloperGameEditVm</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div>
+    <input type="file" name="cover" id="fileInput" onchange="coverFileChange()" />
+    <button type="button" class="btn btn-primary delete-cover btn-sm" disabled>重新上傳</button>
+</div>
+    <div id="coverContainer"></div>
+
+    <div>
+        <input type="file" name="displayImages" id="fileInputImg" onchange="imageFileChange()" multiple />
+        <button type="button" class="btn btn-primary delete-img btn-sm" disabled>重新上傳</button>
+    </div>
+    <div id="imageContainer"></div>
+
+    <div>
+        <input type="file" name="displayVideo" id="fileInputVdo" onchange="videoFileChange()" multiple />
+        <button type="button" class="btn btn-primary delete-vdo btn-sm" disabled>重新上傳</button>
+    </div>
+    <div id="videoContainer"></div>
+
+
+
+    @*<div>
             <input type="file" name="files" id="fileInput" multiple />
             <input type="submit" value="Upload" style="display: none;" />
         </div>
 
         <div id="imageContainer">
+        </div>*@
+
+    @*<div>
+            <input type="file" name="files" id="fileInput" multiple />
+            <input type="submit" value="Upload" style="display: none;" />
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-        </div>
+        <div id="imageContainer">
+        </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
-        </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
-        </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-        </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+    </div>
 
-
-
-        @*封面圖片
-            <div>
-               @Html.Image(imagePath, "圖片描述", new { width = 300, height = 200, @class = "img-responsive", alt = "示例圖片", style = "border: 1px solid #ccc;" })
-            </div>*@
+    <div class="form-group">
+        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+    </div>
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaxPercent, htmlAttributes: new { @class = "control-label col-md-2" })
 
-            @Html.EditorFor(model => model.MaxPercent, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.MaxPercent, "", new { @class = "text-danger" })
+    @*封面圖片
+        <div>
+           @Html.Image(imagePath, "圖片描述", new { width = 300, height = 200, @class = "img-responsive", alt = "示例圖片", style = "border: 1px solid #ccc;" })
+        </div>*@
 
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <input type="submit" value="Delect" class="btn btn-primary" id="delete" />
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.MaxPercent, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        @Html.EditorFor(model => model.MaxPercent, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.MaxPercent, "", new { @class = "text-danger" })
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-primary" id="submit"/>
         </div>
     </div>
+</div>
 }
 
 <div>
@@ -84,78 +112,357 @@
 
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@
-    <script>
-    $(document).ready(function () {
-        $("#fileInput").change(function () {
-            // 当文件选择框内容改变时，立即触发上传
-            $("#fileForm").submit();
+<script>
+        //帶修正 用記錄檔案名之陣列來判斷length
+    var reader = new FileReader();
+
+    var formData = new FormData();
+
+    function coverFileChange() {
+        // 获取文件输入框
+        var fileInput = document.getElementById("fileInput");
+
+        //var validFiles = [];  // 用來保存合格的檔案，如有需追蹤做使用
+
+        for (var i = 0; i < fileInput.files.length; i++) {
+            var file = fileInput.files[i];
+
+            // 提取文件名
+            var fileName = file.name;
+            var fileNameParts = fileName.split('.');
+            var mainFileName = fileNameParts.slice(0, -1).join('.');  // 除了最后一个之外的所有部分
+            var fileExtension = fileNameParts.slice(-1)[0];  // 最后一个部分
+            var allowedExtensions = ['jpg', 'jpeg', 'png'];
+
+            var imgUrl = URL.createObjectURL(file);
+
+            // 判斷附檔名是否符合要求
+            if (allowedExtensions.includes(fileExtension.toLowerCase())) {
+                // 符合要求的處理邏輯
+                //validFiles.push(file);
+                formData.append('cover', file);
+                //console.log(file);
+                //console.log(formData);
+
+                // 顯示圖片
+                $("#coverContainer").append(`
+<div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
+    <img src="${imgUrl}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <p class="card-text">${mainFileName}</p>
+    </div>
+</div>
+`);
+                $('.delete-cover').prop('disabled', false);
+            } else {
+                // 不符合要求的處理邏輯，例如發出警告
+                alert("不符合要求的檔案：" + fileName);
+            }
+        }
+
+        if (fileInput.files.length >= 1) {
+            fileInput.disabled = true;
+            console.log("File input disabled");
+        }
+
+        $('.delete-cover').click(function () {
+            $('#coverContainer').html("");
+            document.getElementById('fileInput').value = '';
+
+            $('.delete-cover').prop('disabled', true);
+            fileInput.disabled = false;
+
+            formData.delete('cover');
         });
+    }
 
-        $("#fileForm").submit(function (e) {
-            e.preventDefault(); // 阻止默认的表单提交行为
+    function imageFileChange() {
+        // 获取文件输入框
+        var fileInputImg = document.getElementById("fileInputImg");
 
-            var formData = new FormData(this);
+        //var validFiles = [];  // 用來保存合格的檔案，如有需追蹤做使用
 
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("coverscratchasync", "Game")',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    if (response.success) {
-                        alert(response.message);
+        for (var i = 0; i < fileInputImg.files.length; i++) {
+            var file = fileInputImg.files[i];
 
-                        // 在这里处理返回的文件信息
-                        var images = response.images;
-                        for (var i = 0; i < images.length; i++) {
-                            var imageUrl = images[i].Name;
-                            console.log(imageUrl);
-                            /*<img src="~/DiscountPictures/" width="100" height="50" class="img-fluid" />*/
-                            // 在页面上显示上传的图片，可以根据需要进行处理
-                            $("#imageContainer").append("<img id='"+ imageUrl +"' src='../Image/Scratch/" + imageUrl + "' alt='Uploaded Image' height='200' class='inlineblock'/>");
+            // 提取文件名
+            var fileName = file.name;
+            var fileNameParts = fileName.split('.');
+            var mainFileName = fileNameParts.slice(0, -1).join('.');  // 除了最后一个之外的所有部分
+            var fileExtension = fileNameParts.slice(-1)[0];  // 最后一个部分
+            var allowedExtensions = ['jpg', 'jpeg', 'png'];
 
+            var imgUrl = URL.createObjectURL(file);
+
+            // 判斷附檔名是否符合要求
+            if (allowedExtensions.includes(fileExtension.toLowerCase())) {
+                // 符合要求的處理邏輯
+                //validFiles.push(file);
+                formData.append('displayImage', file);
+
+                // 顯示圖片
+                $("#imageContainer").append(`
+<div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
+    <img src="${imgUrl}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <p class="card-text">${mainFileName}</p>
+    </div>
+</div>
+`);
+                $('.delete-img').prop('disabled', false);
+            } else {
+                // 不符合要求的處理邏輯，例如發出警告
+                alert("不符合要求的檔案：" + fileName);
+            }
+        }
+
+        if (fileInputImg.files.length >= 5) {
+            fileInputImg.disabled = true;
+            console.log("File input disabled");
+        }
+
+        $('.delete-img').click(function () {
+            $('#imageContainer').html("");
+            document.getElementById('fileInputImg').value = '';
+
+            $('.delete-img').prop('disabled', true);
+            fileInputImg.disabled = false;
+
+            formData.delete('displayImage');
+        });
+    }
+
+    function videoFileChange() {
+        // 获取文件输入框
+        var fileInputVdo = document.getElementById("fileInputVdo");
+
+        //var validFiles = [];  // 用來保存合格的檔案，如有需追蹤做使用
+
+        for (var i = 0; i < fileInputVdo.files.length; i++) {
+            var file = fileInputVdo.files[i];
+
+            // 提取文件名
+            var fileName = file.name;
+            var fileNameParts = fileName.split('.');
+            var mainFileName = fileNameParts.slice(0, -1).join('.');  // 除了最后一个之外的所有部分
+            var fileExtension = fileNameParts.slice(-1)[0];  // 最后一个部分
+            var allowedExtensions = ['mp4', 'webm'];
+
+            var vdoUrl = URL.createObjectURL(file);
+
+            console.log(fileName);
+            console.log(mainFileName);
+            console.log(fileExtension);
+            console.log(vdoUrl);
+
+            // 判斷附檔名是否符合要求
+            if (allowedExtensions.includes(fileExtension.toLowerCase())) {
+                // 符合要求的處理邏輯
+                //validFiles.push(file);
+                formData.append('displayVideo', file);
+
+                // 顯示圖片
+                $("#videoContainer").append(`
+<div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
+    <video controls class="card-img-top">
+        <source src="${vdoUrl}" type="video/mp4">
+    </video>
+    <div class="card-body">
+        <p class="card-text">${mainFileName}</p>
+    </div>
+</div>
+`);
+                $('.delete-vdo').prop('disabled', false);
+
+            } else {
+                // 不符合要求的處理邏輯，例如發出警告
+                alert("不符合要求的檔案：" + fileName);
+            }
+        }
+
+        if (fileInputVdo.files.length >= 2) {
+            fileInputVdo.disabled = true;
+            console.log("File input disabled");
+        }
+
+        $('.delete-vdo').click(function () {
+            $('#videoContainer').html("");
+            document.getElementById('fileInputVdo').value = '';
+
+            $('.delete-vdo').prop('disabled', true);
+            fileInputVdo.disabled = false;
+
+            formData.delete('displayVideo');
+        });
+    }
+
+    $('#submit').click(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("", "Game")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success) {
+                      // 在页面上移除被删除的图片
+                    console.log("Removing element with id: " + imageNameToDelete);
+                    $('.delete-btn').closest('.card').remove();
+                } else {
+                    // 在这里添加处理失败后的逻辑
+                    console.log("Failed to delete image. Error: " + response.message);
+                }
+            },
+     });
+
+});
+
+        @*$(document).ready(function () {
+            $("#fileInput").change(function () {
+                // 当文件选择框内容改变时，立即触发上传
+                $("#fileForm").submit();
+            });
+
+            $("#fileForm").submit(function (e) {
+                e.preventDefault(); // 阻止默认的表单提交行为
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("coverscratchasync", "Game")',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.success) {
+                            //alert(response.message);
+
+                            // 在这里处理返回的文件信息
+                            var images = response.images;
+                            for (var i = 0; i < images.length; i++) {
+                                var imageUrl = images[i].Name;
+                                var imageId = images[i].NameForId;
+                                console.log(imageId);
+
+                                //$("#coverContainer").append("<img id='" + imageId +"' src='../Image/Scratch/" + imageUrl + "' alt='Uploaded Image' height='200' class='inlineblock imgs'/>");
+
+                                $("#coverContainer").append(`
+    <div class="card d-inline-block" style="width: 18rem;" id="cover${i}">
+      <img src="../Image/Scratch/${imageUrl}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text">${imageUrl}</p>
+        <a href="#" class="btn btn-primary delete-btn btn-sm">Delete</a>
+      </div>
+    </div>
+    `);
+                                cover.push(imageUrl);
+
+                                $('.delete-btn').click(function () {
+                                    var imageNameToDelete = "view1";  // 这里替换成实际的图片信息获取逻辑
+                                    var imageNameToDelete1 = "view1.jpg";
+                                    // 构造要发送的数据
+                                    var dataToSend = {
+                                        files: [imageNameToDelete1]
+                                    };
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '@Url.Action("DeleteCoverScratchAsync", "Game")',
+                                        data: dataToSend,
+                                        success: function (response) {
+                                            if (response.success) {
+                                                  // 在页面上移除被删除的图片
+                                                console.log("Removing element with id: " + imageNameToDelete);
+                                                $('.delete-btn').closest('.card').remove();
+                                            } else {
+                                                // 在这里添加处理失败后的逻辑
+                                                console.log("Failed to delete image. Error: " + response.message);
+                                            }
+                                        },
+                                    });
+
+                                    //cover = cover.filter(item => item !== "data2");
+                                    cover.shift();
+
+                                    // 创建一个新的文件输入框
+                                    var oldInput = document.getElementById("fileInput");
+                                    var newInput = oldInput.cloneNode(true);
+
+                                    // 替换旧的文件输入框
+                                    oldInput.parentNode.replaceChild(newInput, oldInput);
+                                });
+                            }
+                        } else {
+                            /* alert(response.message);*/
+                            // 在这里添加处理失败后的逻辑
                         }
-                    } else {
-                        /* alert(response.message);*/
-                        // 在这里添加处理失败后的逻辑
-                    }
-                },
-                //error: function (xhr, status, error) {
-                //    alert("Error: " + error);
-                //    /* 在这里添加处理错误的逻辑*/
-                //}
-            });
-        });
+                    },
+                    //error: function (xhr, status, error) {
+                    //    alert("Error: " + error);
+                    //    /* 在这里添加处理错误的逻辑*/
+                    //}
+                });
 
-        $("#delete").click(function () {
+            });*@
 
-            var imageNameToDelete = "view1.jpg";  // 这里替换成实际的图片信息获取逻辑
 
-            // 构造要发送的数据
-            var dataToSend = {
-                fileNames: [imageNameToDelete]
-            };
 
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("DeleteCoverScratchAsync", "Game")',
-                data: JSON.stringify(dataToSend),
-                contentType: 'application/json',
-                success: function (response) {
-                    if (response.success) {
-                        alert(response.message);
+            //todo創建一確認送出的上傳資料名單
+            //
 
-                        // 在页面上移除被删除的图片
-                        console.log("Removing element with id: " + imageNameToDelete);
-                        $("#" + imageNameToDelete).remove();
-                    } else {
-                        // 在这里添加处理失败后的逻辑
-                        console.log("Failed to delete image. Error: " + response.message);
-                    }
-                },
-            });
-        });
-    });
-    </script>
+
+            //todo 建立刪除整個input下image按鈕
+
+            //todo tag selecter
+
+            //todo discount selecter
+
+            //todo dlc selecter
+
+            //todo submit button
+
+
+
+
+
+</script>
+}
+@*<    video width="320" height="240" controls>
+        <source src="movie.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>*@
+
+@section styles {
+    <style>
+        .aspect-ratio-container {
+            position: relative;
+            width: calc(200px * 16 / 9); /* 使用calc计算宽度，保持16:9宽高比 */
+            height: 200px; /* 固定的像素值，根据需要调整 */
+            overflow: hidden;
+        }
+
+        .aspect-ratio-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 保持比例并填充容器，不裁剪图像 */
+            max-width: 100%; /* 图像宽度不超过容器宽度 */
+            max-height: 100%; /* 图像高度不超过容器高度 */
+        }
+
+        .card-size {
+            width: calc(150px * 16 / 9);
+            height: 150px;
+            object-fit: contain;
+        }
+
+        .www {
+            width: calc(150px * 16 / 9);
+        }
+    </style>
 }

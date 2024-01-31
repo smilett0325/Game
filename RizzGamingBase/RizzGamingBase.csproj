@@ -232,6 +232,7 @@
     <Compile Include="Models\Services\GameService.cs" />
     <Compile Include="Models\Services\GTService.cs" />
     <Compile Include="Models\Services\TagService.cs" />
+    <Compile Include="Models\Services\VideoRepository.cs" />
     <Compile Include="Models\ViewModels\DeveloperGameEditVm.cs" />
     <Compile Include="Models\ViewModels\DiscountEditVm.cs" />
     <Compile Include="Models\ViewModels\DiscountEventVm.cs" />

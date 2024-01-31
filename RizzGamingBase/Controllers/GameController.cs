@@ -1,4 +1,5 @@
-﻿using RizzGamingBase.Models.Exts;
+﻿using RizzGamingBase.Models.EFModels;
+using RizzGamingBase.Models.Exts;
 using RizzGamingBase.Models.Infra;
 using RizzGamingBase.Models.Interfaces;
 using RizzGamingBase.Models.Repositories.EFRepositories;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
 using static System.Net.WebRequestMethods;
@@ -57,8 +59,11 @@ namespace RizzGamingBase.Controllers
 		//[Authorize]
 		public ActionResult Create()
 		{
+			//var db = new AppDbContext();
+			//var game = db.Games.Where(x=> x.Id == 5 ).FirstOrDefault();
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
+
 
 			var tagList = service.GetAllTag();
 
@@ -87,46 +92,34 @@ namespace RizzGamingBase.Controllers
 			
 
 				service.Create(vm, displayImagePath, coverPath, displayVideoPath, cover , displayImage, displayVideo);
+				//service.ScratchMove(vm, displayImagePath, coverPath, displayVideoPath, cover , displayImage, displayVideo);
 				return RedirectToAction("Index");
 			}
 			catch (Exception ex) 
 			{
 				ModelState.AddModelError(string.Empty, ex.Message); 
 			}
-			//public ActionResult Create(ProductVm model, HttpPostedFileBase file1)
-			//{
-			//	//判斷ModelState.IsVaild
-			//	if (!ModelState.IsValid) { return View(model); }
-
-			//	string path = Server.MapPath("/UploadFile");
-
-			//	try
-			//	{
-			//		string newFileName = new UploadFileHelper().UploadImageFile(file1, path);
-			//		model.FileName = newFileName;
-
-			//		//todo 新增紀錄
-
-			//		return RedirectToAction("Index");
-			//	}
-			//	catch (Exception ex)
-			//	{
-			//		ModelState.AddModelError(string.Empty, ex.Message);
-			//	}
-
-			//	return View();
-			//}
+			
 			return RedirectToAction("Index");
 		}
 
+
+		public ActionResult MoveOrCreateFile()
+		{
+			//todo 把個別資料搬到對應資料夾
+			//todo 確認資料搬移資料後清空scratch資料
+			
+			return View();
+		}
+
 		[HttpPost]
-		public ActionResult CoverScratchAsync(IEnumerable<HttpPostedFileBase> files)
+		public ActionResult CoverScratchAsync(IEnumerable<HttpPostedFileBase> cover)
 		{
 			string scratchPath = Server.MapPath("~/Image/Scratch");
 			var uploadFileHelper = new UploadFileHelper();
 			try
 			{
-				var result = uploadFileHelper.ScratchFile(files, scratchPath);
+				var result = uploadFileHelper.ScratchFile(cover, scratchPath);
 
 				return Json(new { success = true, message = "File uploaded successfully.", images = result });
 			}
@@ -137,15 +130,14 @@ namespace RizzGamingBase.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult DeleteCoverScratchAsync(dynamic files)
+		public ActionResult DeleteCoverScratchAsync(string[] files)
 		{
 			string scratchPath = Server.MapPath("~/Image/Scratch");
 			var uploadFileHelper = new UploadFileHelper();
 		
-			uploadFileHelper.DeleteScratchFile(files, scratchPath);
+			//uploadFileHelper.DeleteScratchFile(files, scratchPath);
 
 			return Json(new { success = true, message = "Files deleted successfully." });
-			//return View();
 
 		}
 	}
