@@ -151,6 +151,17 @@ namespace RizzGamingBase.Models.Repositories
 
 			return queryList;
 		}
-		
+
+		public IEnumerable<GameDataEntity> SearchAllDeveloper()
+		{
+			var db = new AppDbContext();
+			return db.Developers
+				.Select(d => new GameDataEntity
+				{
+					Id = d.Id,
+					DeveloperName = d.Name
+				})
+				.ToList();
+		}
 	}
 }

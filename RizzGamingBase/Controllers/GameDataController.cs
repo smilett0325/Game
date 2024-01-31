@@ -45,10 +45,12 @@ namespace RizzGamingBase.Controllers
 
 		public ActionResult PieChart()
 		{
+			var service = new GameDataService(GetRepository());
 			// 获取数据（示例数据）
 			List<GameDataVm> Piedata = GetPieDataFromDatabase();
 			// 转换数据格式
 			ViewBag.PieChartData = Piedata;
+			ViewBag.DeveloperList = SelectListExts.GetSelectListItems(service);
 
 			return View();
 		}
@@ -94,16 +96,16 @@ namespace RizzGamingBase.Controllers
 		}
 
 		[System.Web.Mvc.HttpPost]
-		public List<GameDataVm> GetPieDataFromDatabase(int id = 1)
+		public ActionResult GetPieDataFromDatabase(int id)
 		{
 			// 使用ADO.NET从数据库中检索数据的逻辑
 			var service = new GameDataService(GetRepository());
 
 			var dataList = service.SearchGames(id);
 
-			var data = GameDataExts.DtoToIndexVm(dataList);
+			//var data = GameDataExts.DtoToIndexVm(dataList);
 			// 返回示例数据
-			return data;
+			return Json(dataList);
 		}
 
 

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using RizzGamingBase.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace RizzGamingBase.Models.Dtos
 {
-	public class GameDataDto
+	public class GameDataDto : ISelectListItem
 	{
 		public int Id { get; set; }
 		public string GameName { get; set; }

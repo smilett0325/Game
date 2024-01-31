@@ -1,16 +1,18 @@
 ﻿using RizzGamingBase.Models.Dtos;
 using RizzGamingBase.Models.Entity;
 using RizzGamingBase.Models.Exts;
+using RizzGamingBase.Models.Interfaces;
 using RizzGamingBase.Models.InterFaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.UI.WebControls;
 
 namespace RizzGamingBase.Models.Services
 {
-	public class GameDataService
+	public class GameDataService : ISelectListService
 	{
 		private IGameDataRepository _repository;
 
@@ -105,6 +107,12 @@ namespace RizzGamingBase.Models.Services
 
 
 			return dtos;
+		}
+
+		//
+		public IEnumerable<ISelectListItem> GetSelectListItems()
+		{
+			return _repository.SearchAllDeveloper();
 		}
 	}
 }
