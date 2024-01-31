@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RizzGamingBase.Models.EFModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace RizzGamingBase.Models.ViewModels
     {
         public int Id { get; set; }
 
+        [Display(Name = "類型")]
+        [Required(ErrorMessage = "{0}為必填項目ID")]
         public int ProductTypeId { get; set; }
 
         public string ProductTypeName { get; set; }
@@ -25,5 +28,7 @@ namespace RizzGamingBase.Models.ViewModels
         [Display(Name = "名稱")]
         [Required(ErrorMessage = "{0}為必填項目")]
         public string Name { get; set; }
+
+        public List<BonusProductType> ProductTypes;
     }
 }

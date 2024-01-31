@@ -83,16 +83,6 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 
         }
 
-        //public void Update(BonusProductsEntity entity)
-        //{
-        //    var db = new AppDbContext();
-
-        //    var BonusProduct = db.BonusProducts.Find(entity.Id);
-
-
-        //}
-
-
         // todo 關鍵字搜尋
         public BonusProductsEntity SearchByName(string bonusName)
         {

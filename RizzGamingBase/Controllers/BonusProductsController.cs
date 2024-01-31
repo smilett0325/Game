@@ -15,6 +15,14 @@ namespace RizzGamingBase.Controllers
 {
     public class BonusProductsController : Controller
     {
+        private readonly AppDbContext _context;
+
+        public BonusProductsController()
+        {
+            _context = new AppDbContext();
+        }
+
+
         // GET: Items
         public ActionResult Index()
         {
@@ -30,8 +38,6 @@ namespace RizzGamingBase.Controllers
         //}
         public ActionResult Search(string keyword)
         {
-            // Add code here to search for items based on the keyword
-            // and return the search results
             return View();
         }
         public ActionResult Create()//實作顯示
@@ -57,14 +63,23 @@ namespace RizzGamingBase.Controllers
             }
         }
 
+
         #region 單層編輯
         public ActionResult Edit(int id)//編輯
         {
+
             BonusProductsEditVm model = LoadProdct(id);
+            var productTypes = _context.BonusProductTypes.Select(t => new SelectListItem
+            {
+                Value = t.Id.ToString(),
+                Text = t.Name
+            }).ToList();
+            ViewBag.ProductTypes = productTypes; // 将 productTypes 设置到 ViewBag 中
             return View(model);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(BonusProductsEditVm model)
         {
             if (!ModelState.IsValid)
@@ -85,31 +100,49 @@ namespace RizzGamingBase.Controllers
 
         public BonusProductsEditVm LoadProdct(int id)//找到編輯欄位
         {
-            var model = new AppDbContext().BonusProducts.Find(id);
-            return new BonusProductsEditVm
+            //var model = new AppDbContext().BonusProducts.Find(id);
+            using (var db = new AppDbContext())//using會在連線字串完後自然釋放比上面更省效能也不用擔心資料外洩
             {
-                Id = model.Id,
-                ProductTypeId = model.ProductTypeId,
-                ProductTypeName = model.BonusProductType.Name,
-                Price = model.Price,
-                URL = model.URL,
-                Name = model.Name
-            };
+                var model = db.BonusProducts.Find(id);
+                return new BonusProductsEditVm
+                {
+                    Id = model.Id,
+                    ProductTypeId = model.ProductTypeId,
+                    ProductTypeName = model.BonusProductType.Name,
+                    Price = model.Price,
+                    URL = model.URL,
+                    Name = model.Name
+                };
+            }
         }
-
         private void UpdateProduct(BonusProductsEditVm model)//修改
         {
-            var db = new AppDbContext();
+            using (var db = new AppDbContext())
+            {
+                var findProduct = db.BonusProducts.Find(model.Id);
+                if (findProduct != null)
+                {
+                    findProduct.ProductTypeId = model.ProductTypeId;
+                    findProduct.Price = model.Price;
+                    findProduct.URL = model.URL;
+                    findProduct.Name = model.Name;
 
-            var findproduct = db.BonusProducts.Find(model.Id);
-            findproduct.Id = model.Id;
-            findproduct.ProductTypeId = model.ProductTypeId;
-            findproduct.Price = model.Price;
-            findproduct.URL = model.URL;
-            findproduct.Name = model.Name;
-
-            db.SaveChanges();
+                    db.SaveChanges();
+                }
+                else
+                {
+                    throw new InvalidOperationException("Product not found.");
+                }
+            }
         }
+
+        //private List<BonusProductType> GetProductTypes()
+        //{
+        //    using (var db = new AppDbContext())
+        //    {
+        //        return db.BonusProductTypes.ToList();
+        //    }
+        //}
         #endregion
 
         #region 三層編輯
@@ -159,18 +192,19 @@ namespace RizzGamingBase.Controllers
         [HttpGet]
         public ActionResult Delete(int? id)
         {
-            var db = new AppDbContext();
-
-            if (id == null)
+            using (var db = new AppDbContext())
             {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);//400錯誤回應
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);//400錯誤回應
+                }
+                BonusProduct bonusProduct = db.BonusProducts.Find(id);
+                if (bonusProduct == null)
+                {
+                    return HttpNotFound();//找不到頁面
+                }
+                return View(bonusProduct);//回傳資料
             }
-            BonusProduct bonusProduct = db.BonusProducts.Find(id);
-            if (bonusProduct == null)
-            {
-                return HttpNotFound();//找不到頁面
-            }
-            return View(bonusProduct);//回傳資料
         }
 
         [HttpPost, ActionName("Delete")]
