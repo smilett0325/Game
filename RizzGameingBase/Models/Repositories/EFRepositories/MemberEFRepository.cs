@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using Member = RizzGameingBase.Models.EFModels.Member;
 
+
 namespace RizzGamingBase.Models.Repositories.EFRepositories
 {
 
@@ -120,13 +121,13 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 
 
         }
-
+		// m.Game.Name
         public List<MemberEntity> Search(string name)
         {
-			var memberList = _dbContext.Members
-				.Where(m => m.NickName.Contains(name))
+			var memberList = _dbContext.Members				
+                .Where(m => m.NickName.Contains(name))
 				.Select(m => new MemberEntity
-				{
+				{				
 					Id = m.Id,
 					Account = m.Account,
 					Mail = m.Mail,
