@@ -6,7 +6,7 @@
 
 
 <div>
-    <label for="Yearbtn" class="form-label">請選擇年份：</label>
+    <label for="Year" class="form-label">請選擇年份：</label>
     <input type="text" class="form-control" id="Year" name="Year">
 </div>
 
@@ -14,11 +14,19 @@
 <!-- 引入Chart.js库 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
 <!-- 在页面中添加图表容器 -->
 <h2 id="h2">2023</h2>
 <h2 id="h21">季度營收</h2>
 
-<div class="mb-2">
+<div class="mb-2" id="dev">
     <label for="developerList">選擇開發商:</label>
     <select id="developerList">
         @foreach (var developer in ViewBag.DeveloperList)
@@ -55,6 +63,24 @@
     var DeveloperId = 0;
     var check = false;
     var GameName = "";
+
+    // 日期控件
+    $(function () {
+        $("#Year").datepicker({
+            changeMonth: false,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: 'yy',
+            yearRange: '2020:2024', // 設置可選的年份範圍
+            onClose: function (dateText, inst) {
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                $(this).datepicker('setDate', new Date(year, 0, 1));
+            }
+        });
+    });
+
+
+
     // 创建图表
 
     var myChart = new Chart(ctx, {
@@ -120,7 +146,7 @@
         // result 是從控制器返回的數據，可以用於更新視圖
 
     theDeveloper.addEventListener('change', async event => {
-        if (theDeveloper.options[theDeveloper.selectedIndex].value != 0) { 
+        if (theDeveloper.options[theDeveloper.selectedIndex].value != 0) {
         DeveloperId = theDeveloper.value;
         theH2.innerHTML = year + " " + theDeveloper.options[theDeveloper.selectedIndex].text;
         theH21.innerHTML =  "季度營收";
@@ -136,7 +162,7 @@
 
         //console.log(DeveloperBidatas);
         // 获取包含下拉列表的父容器
-        var parentContainer = document.querySelector('.mb-2');
+        var parentContainer = document.querySelector('#dev');
 
 
         // 创建新的下拉列表
@@ -173,7 +199,7 @@
 
                 myChart.update();
             }
-            
+
 
         });
       }
