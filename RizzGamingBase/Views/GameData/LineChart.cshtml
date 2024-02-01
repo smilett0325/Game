@@ -14,12 +14,7 @@
 <!-- 引入Chart.js库 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- jQuery UI -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
 <!-- 在页面中添加图表容器 -->
@@ -65,19 +60,18 @@
     var GameName = "";
 
     // 日期控件
-    $(function () {
-        $("#Year").datepicker({
-            changeMonth: false,
-            changeYear: true,
-            showButtonPanel: true,
-            dateFormat: 'yy',
-            yearRange: '2020:2024', // 設置可選的年份範圍
-            onClose: function (dateText, inst) {
-                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                $(this).datepicker('setDate', new Date(year, 0, 1));
-            }
-        });
-    });
+    //$(document).ready(function () {
+    //    $("#Year").datepicker({
+    //        changeMonth: false,
+    //        changeYear: true,
+    //        showButtonPanel: true,
+    //        dateFormat: 'yy',
+    //        onClose: function (dateText, inst) {
+    //            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+    //            $(this).datepicker('setDate', new Date(year, 0, 1));
+    //        }
+    //    });
+    //});
 
 
 
