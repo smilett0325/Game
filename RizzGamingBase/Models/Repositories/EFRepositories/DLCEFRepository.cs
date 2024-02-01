@@ -55,7 +55,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 			db.SaveChanges();
 		}
 
-		public List<GameEntity> GetGameDLC(int id)
+		public List<GameEntity> GetDLCGame(int id)
 		{
 			return db.DLCs.AsNoTracking()
 				.Where(x => x.AttachmentGameId == id)

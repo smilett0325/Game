@@ -24,7 +24,6 @@ namespace RizzGamingBase.Models.Services
 		}
 		public void DGSave(DeveloperGameEditVm vm, string displayImagePath, string coverPath, string displayVideoPath)
 		{
-			var vRepo = new VideoEFRepository();
 			var iRepo = new ImageEFRepository();
 			var gRepo = new GTEFRepository();
 			var dlcRepo = new DLCEFRepository();
@@ -32,7 +31,6 @@ namespace RizzGamingBase.Models.Services
 
 
 			var game = new GameDto();
-			var video = new List<VideoDto>();
 			var image = new List<ImageDto>();
 			var gt = new List<TagDto>();
 			var dlc = new List<GameDto>();
@@ -49,10 +47,10 @@ namespace RizzGamingBase.Models.Services
 			game.DeveloperId = vm.DeveloperId;
 			game.MaxPercent = vm.MaxPercent;
 			//game.Image = vm.Image;
+			//game.Video = vm.Video;
 
 			_repo.Update(game.DtoToEntity());
 			//Create video
-
 
 
 			//Create image
@@ -90,7 +88,6 @@ namespace RizzGamingBase.Models.Services
 
 		public void Create(DeveloperGameEditVm vm, int developerId, string displayImagePath, string coverPath, string displayVideoPath, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImage, HttpPostedFileBase displayVideo)
 		{
-			var vRepo = new VideoEFRepository();
 			var iRepo = new ImageEFRepository();
 			var gtRepo = new GTEFRepository();
 			var dlcRepo = new DLCEFRepository();
@@ -116,22 +113,10 @@ namespace RizzGamingBase.Models.Services
 			game.DeveloperId = vm.DeveloperId;
 			game.MaxPercent = vm.MaxPercent;
 			game.Image = uploadFileHelper.UploadCoverFile(cover, coverPath,developerId); //todo 
-
-
+			game.Video = uploadFileHelper.UploadDisplayVideoFile(displayVideo, displayVideoPath, developerId);
+			
 			_repo.Create(game.DtoToEntity());
 
-			//Create video
-
-			foreach (var item in vm.DisplayVideos)
-			{
-				var video = new VideoEntity
-				{
-					GameId = game.Id,
-					DisplayVideo = item.DisplayVideo,
-				};
-				
-				vRepo.Create(video);
-			};
 
 			//Create image
 
@@ -171,7 +156,6 @@ namespace RizzGamingBase.Models.Services
 			};
 
 			//Update or Create discount
-
 			//foreach (var item in vm.Discounts)
 			//{
 			//	var discount = new DiscountItem

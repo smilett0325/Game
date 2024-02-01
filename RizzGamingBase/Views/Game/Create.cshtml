@@ -11,99 +11,124 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>DeveloperGameEditVm</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>DeveloperGameEditVm</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-<div>
-    <input type="file" name="cover" id="fileInput" onchange="coverFileChange()" />
-    <button type="button" class="btn btn-primary delete-cover btn-sm" disabled>重新上傳</button>
-</div>
-    <div id="coverContainer"></div>
-
-    <div>
-        <input type="file" name="displayImages" id="fileInputImg" onchange="imageFileChange()" multiple />
-        <button type="button" class="btn btn-primary delete-img btn-sm" disabled>重新上傳</button>
-    </div>
-    <div id="imageContainer"></div>
-
-    <div>
-        <input type="file" name="displayVideo" id="fileInputVdo" onchange="videoFileChange()" multiple />
-        <button type="button" class="btn btn-primary delete-vdo btn-sm" disabled>重新上傳</button>
-    </div>
-    <div id="videoContainer"></div>
-
-
-
-    @*<div>
-            <input type="file" name="files" id="fileInput" multiple />
-            <input type="submit" value="Upload" style="display: none;" />
-        </div>
-
-        <div id="imageContainer">
-        </div>*@
-
-    @*<div>
-            <input type="file" name="files" id="fileInput" multiple />
-            <input type="submit" value="Upload" style="display: none;" />
-        </div>
-
-        <div id="imageContainer">
-        </div>*@
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-    </div>
-
-
-
-    @*封面圖片
         <div>
-           @Html.Image(imagePath, "圖片描述", new { width = 300, height = 200, @class = "img-responsive", alt = "示例圖片", style = "border: 1px solid #ccc;" })
-        </div>*@
+            <div class="mb-1"><p class="">新增標籤</p><button type="button" class="btn btn-light" onclick="showTagModal()" onclose="uploadTags()">+</button></div>
+            <div id="selectedTagsContainer"></div>
+        </div>
+
+        <div id="tagModal" class="modal" tabindex="-1" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="activeAddTag">
+                                //生成已選tag
+                            </div>
+                            <hr/>
+                            //列出全部tag
+                            @foreach (var tag in ViewBag.TagList)
+                    {
+                        <button type="button" class="btn btn-primary btn-sm m-1" onclick="addTag()" data-Id=`@tag.Id`>@tag.Name</button>
+                    }
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="mb-3">
+            <input type="file" name="cover" id="fileInputCov" onchange="coverFileChange()" />
+            <button type="button" class="btn btn-primary delete-cover btn-sm" disabled>重新上傳</button>
+        </div>
+        <div id="coverContainer" class="mb-3"></div>
+
+        <div class="mb-3">
+            <input type="file" name="displayImages" id="fileInputImg" onchange="imageFileChange()" multiple />
+            <button type="button" class="btn btn-primary delete-img btn-sm" disabled>重新上傳</button>
+        </div>
+        <div id="imageContainer" class="mb-3"></div>
+
+        <div class="mb-3">
+            <input type="file" name="displayVideo" id="fileInputVdo" onchange="videoFileChange()" multiple />
+            <button type="button" class="btn btn-primary delete-vdo btn-sm" disabled>重新上傳</button>
+        </div>
+        <div id="videoContainer" class="mb-3"></div>
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.MaxPercent, htmlAttributes: new { @class = "control-label col-md-2" })
 
-        @Html.EditorFor(model => model.MaxPercent, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.MaxPercent, "", new { @class = "text-danger" })
+        @*<div>
+                <input type="file" name="files" id="fileInput" multiple />
+                <input type="submit" value="Upload" style="display: none;" />
+            </div>
 
-    </div>
+            <div id="imageContainer">
+            </div>*@
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-primary" id="submit"/>
+        @*<div>
+                <input type="file" name="files" id="fileInput" multiple />
+                <input type="submit" value="Upload" style="display: none;" />
+            </div>
+
+            <div id="imageContainer">
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaxPercent, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            @Html.EditorFor(model => model.MaxPercent, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MaxPercent, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" id="submit" />
+                <input type="button" value="test" class="btn btn-success" id="test" />
+            </div>
         </div>
     </div>
-</div>
 }
 
 <div>
@@ -112,39 +137,37 @@
 
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@
-<script>
+    <script>
     //var reader = new FileReader();
 
-    var formData = new FormData();
+        var formData = new FormData();
 
-    function coverFileChange() {
-        // 获取文件输入框
-        var fileInput = document.getElementById("fileInput");
+        function coverFileChange() {
+            // 获取文件输入框
+            var fileInputCov = document.getElementById("fileInputCov");
 
-        //var validFiles = [];  // 用來保存合格的檔案，如有需追蹤做使用
+            //var validFiles = [];  // 用來保存合格的檔案，如有需追蹤做使用
 
-        for (var i = 0; i < fileInput.files.length; i++) {
-            var file = fileInput.files[i];
+            for (var i = 0; i < fileInputCov.files.length; i++) {
+                var file = fileInputCov.files[i];
 
-            // 提取文件名
-            var fileName = file.name;
-            var fileNameParts = fileName.split('.');
-            var mainFileName = fileNameParts.slice(0, -1).join('.');  // 除了最后一个之外的所有部分
-            var fileExtension = fileNameParts.slice(-1)[0];  // 最后一个部分
-            var allowedExtensions = ['jpg', 'jpeg', 'png'];
+                // 提取文件名
+                var fileName = file.name;
+                var fileNameParts = fileName.split('.');
+                var mainFileName = fileNameParts.slice(0, -1).join('.');  // 除了最后一个之外的所有部分
+                var fileExtension = fileNameParts.slice(-1)[0];  // 最后一个部分
+                var allowedExtensions = ['jpg', 'jpeg', 'png'];
 
-            var imgUrl = URL.createObjectURL(file);
+                var imgUrl = URL.createObjectURL(file);
 
-            // 判斷附檔名是否符合要求
-            if (allowedExtensions.includes(fileExtension.toLowerCase())) {
-                // 符合要求的處理邏輯
-                //validFiles.push(file);
-                formData.append('cover', file);
-                //console.log(file);
-                //console.log(formData);
+                // 判斷附檔名是否符合要求
+                if (allowedExtensions.includes(fileExtension.toLowerCase())) {
+                    // 符合要求的處理邏輯
+                    //validFiles.push(file);
+                    formData.append('cover', file);
 
-                // 顯示圖片
-                $("#coverContainer").append(`
+                    // 顯示圖片
+                    $("#coverContainer").append(`
 <div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
     <img src="${imgUrl}" class="card-img-top" alt="...">
     <div class="card-body">
@@ -152,55 +175,56 @@
     </div>
 </div>
 `);
-                $('.delete-cover').prop('disabled', false);
-            } else {
-                // 不符合要求的處理邏輯，例如發出警告
-                alert("不符合要求的檔案：" + fileName);
+                    $('.delete-cover').prop('disabled', false);
+                } else {
+                    // 不符合要求的處理邏輯，例如發出警告
+                    alert("不符合要求的檔案：" + fileName);
+                    document.getElementById('fileInputCov').value = '';
+                }
             }
+
+            if (fileInputCov.files.length >= 1) {
+                fileInputCov.disabled = true;
+                console.log("File input disabled");
+            }
+
+            $('.delete-cover').click(function () {
+                $('#coverContainer').html("");
+                document.getElementById('fileInputCov').value = '';
+
+                $('.delete-cover').prop('disabled', true);
+                fileInputCov.disabled = false;
+
+                formData.delete('cover');
+            });
         }
 
-        if (fileInput.files.length >= 1) {
-            fileInput.disabled = true;
-            console.log("File input disabled");
-        }
+        function imageFileChange() {
+            // 获取文件输入框
+            var fileInputImg = document.getElementById("fileInputImg");
 
-        $('.delete-cover').click(function () {
-            $('#coverContainer').html("");
-            document.getElementById('fileInput').value = '';
+            //var validFiles = [];  // 用來保存合格的檔案，如有需追蹤做使用
 
-            $('.delete-cover').prop('disabled', true);
-            fileInput.disabled = false;
+            for (var i = 0; i < fileInputImg.files.length; i++) {
+                var file = fileInputImg.files[i];
 
-            formData.delete('cover');
-        });
-    }
+                // 提取文件名
+                var fileName = file.name;
+                var fileNameParts = fileName.split('.');
+                var mainFileName = fileNameParts.slice(0, -1).join('.');  // 除了最后一个之外的所有部分
+                var fileExtension = fileNameParts.slice(-1)[0];  // 最后一个部分
+                var allowedExtensions = ['jpg', 'jpeg', 'png'];
 
-    function imageFileChange() {
-        // 获取文件输入框
-        var fileInputImg = document.getElementById("fileInputImg");
+                var imgUrl = URL.createObjectURL(file);
 
-        //var validFiles = [];  // 用來保存合格的檔案，如有需追蹤做使用
+                // 判斷附檔名是否符合要求
+                if (allowedExtensions.includes(fileExtension.toLowerCase())) {
+                    // 符合要求的處理邏輯
+                    //validFiles.push(file);
+                    formData.append('displayImage', file);
 
-        for (var i = 0; i < fileInputImg.files.length; i++) {
-            var file = fileInputImg.files[i];
-
-            // 提取文件名
-            var fileName = file.name;
-            var fileNameParts = fileName.split('.');
-            var mainFileName = fileNameParts.slice(0, -1).join('.');  // 除了最后一个之外的所有部分
-            var fileExtension = fileNameParts.slice(-1)[0];  // 最后一个部分
-            var allowedExtensions = ['jpg', 'jpeg', 'png'];
-
-            var imgUrl = URL.createObjectURL(file);
-
-            // 判斷附檔名是否符合要求
-            if (allowedExtensions.includes(fileExtension.toLowerCase())) {
-                // 符合要求的處理邏輯
-                //validFiles.push(file);
-                formData.append('displayImage', file);
-
-                // 顯示圖片
-                $("#imageContainer").append(`
+                    // 顯示圖片
+                    $("#imageContainer").append(`
 <div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
     <img src="${imgUrl}" class="card-img-top" alt="...">
     <div class="card-body">
@@ -208,60 +232,61 @@
     </div>
 </div>
 `);
-                $('.delete-img').prop('disabled', false);
-            } else {
-                // 不符合要求的處理邏輯，例如發出警告
-                alert("不符合要求的檔案：" + fileName);
+                    $('.delete-img').prop('disabled', false);
+                } else {
+                    // 不符合要求的處理邏輯，例如發出警告
+                    alert("不符合要求的檔案：" + fileName);
+                    document.getElementById('fileInput').value = '';
+                }
             }
+
+            if (fileInputImg.files.length >= 5) {
+                fileInputImg.disabled = true;
+                console.log("File input disabled");
+            }
+
+            $('.delete-img').click(function () {
+                $('#imageContainer').html("");
+                document.getElementById('fileInputImg').value = '';
+
+                $('.delete-img').prop('disabled', true);
+                fileInputImg.disabled = false;
+
+                formData.delete('displayImage');
+            });
         }
 
-        if (fileInputImg.files.length >= 5) {
-            fileInputImg.disabled = true;
-            console.log("File input disabled");
-        }
+        function videoFileChange() {
+            // 获取文件输入框
+            var fileInputVdo = document.getElementById("fileInputVdo");
 
-        $('.delete-img').click(function () {
-            $('#imageContainer').html("");
-            document.getElementById('fileInputImg').value = '';
+            //var validFiles = [];  // 用來保存合格的檔案，如有需追蹤做使用
 
-            $('.delete-img').prop('disabled', true);
-            fileInputImg.disabled = false;
+            for (var i = 0; i < fileInputVdo.files.length; i++) {
+                var file = fileInputVdo.files[i];
 
-            formData.delete('displayImage');
-        });
-    }
+                // 提取文件名
+                var fileName = file.name;
+                var fileNameParts = fileName.split('.');
+                var mainFileName = fileNameParts.slice(0, -1).join('.');  // 除了最后一个之外的所有部分
+                var fileExtension = fileNameParts.slice(-1)[0];  // 最后一个部分
+                var allowedExtensions = ['mp4', 'webm'];
 
-    function videoFileChange() {
-        // 获取文件输入框
-        var fileInputVdo = document.getElementById("fileInputVdo");
+                var vdoUrl = URL.createObjectURL(file);
 
-        //var validFiles = [];  // 用來保存合格的檔案，如有需追蹤做使用
+                console.log(fileName);
+                console.log(mainFileName);
+                console.log(fileExtension);
+                console.log(vdoUrl);
 
-        for (var i = 0; i < fileInputVdo.files.length; i++) {
-            var file = fileInputVdo.files[i];
+                // 判斷附檔名是否符合要求
+                if (allowedExtensions.includes(fileExtension.toLowerCase())) {
+                    // 符合要求的處理邏輯
+                    //validFiles.push(file);
+                    formData.append('displayVideo', file);
 
-            // 提取文件名
-            var fileName = file.name;
-            var fileNameParts = fileName.split('.');
-            var mainFileName = fileNameParts.slice(0, -1).join('.');  // 除了最后一个之外的所有部分
-            var fileExtension = fileNameParts.slice(-1)[0];  // 最后一个部分
-            var allowedExtensions = ['mp4', 'webm'];
-
-            var vdoUrl = URL.createObjectURL(file);
-
-            console.log(fileName);
-            console.log(mainFileName);
-            console.log(fileExtension);
-            console.log(vdoUrl);
-
-            // 判斷附檔名是否符合要求
-            if (allowedExtensions.includes(fileExtension.toLowerCase())) {
-                // 符合要求的處理邏輯
-                //validFiles.push(file);
-                formData.append('displayVideo', file);
-
-                // 顯示圖片
-                $("#videoContainer").append(`
+                    // 顯示圖片
+                    $("#videoContainer").append(`
 <div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
     <video controls class="card-img-top">
         <source src="${vdoUrl}" type="video/mp4">
@@ -271,30 +296,53 @@
     </div>
 </div>
 `);
-                $('.delete-vdo').prop('disabled', false);
+                    $('.delete-vdo').prop('disabled', false);
 
-            } else {
-                // 不符合要求的處理邏輯，例如發出警告
-                alert("不符合要求的檔案：" + fileName);
+                } else {
+                    // 不符合要求的處理邏輯，例如發出警告
+                    alert("不符合要求的檔案：" + fileName);
+                    document.getElementById('fileInput').value = '';
+                }
+            }
+
+            if (fileInputVdo.files.length >= 2) {
+                fileInputVdo.disabled = true;
+                console.log("File input disabled");
+            }
+
+            $('.delete-vdo').click(function () {
+                $('#videoContainer').html("");
+                document.getElementById('fileInputVdo').value = '';
+
+                $('.delete-vdo').prop('disabled', true);
+                fileInputVdo.disabled = false;
+
+                formData.delete('displayVideo');
+            });
+
+            if (fileInputVdo.files.length >= 1) {
+                fileInputVdo.disabled = true;
+                console.log("File input disabled");
             }
         }
 
-        if (fileInputVdo.files.length >= 2) {
-            fileInputVdo.disabled = true;
-            console.log("File input disabled");
+        function showTagModal() {
+            $('#tagModal').modal('show');
         }
 
-        $('.delete-vdo').click(function () {
-            $('#videoContainer').html("");
-            document.getElementById('fileInputVdo').value = '';
+        function uploadTags() { }
 
-            $('.delete-vdo').prop('disabled', true);
-            fileInputVdo.disabled = false;
+        $('#test').click(function () {
+            for (var i = 0; i < ViewBag.TagList.length; i++) {
+                var tag = ViewBag.TagList[i];
 
-            formData.delete('displayVideo');
+                console.log(tag.TagName);
+                console.log(tag.TagId);
+            }
+           
         });
-    }
 
+    
     $('#submit').click(function () {
         //e.preventDefault();
 
@@ -408,7 +456,7 @@
 
 
 
-           
+
             //todo tag selecter
 
             //todo discount selecter
@@ -421,7 +469,7 @@
 
 
 
-</script>
+    </script>
 }
 
 

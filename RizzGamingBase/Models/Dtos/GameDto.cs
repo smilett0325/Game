@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -24,5 +25,7 @@ namespace RizzGamingBase.Models.Dtos
 		public int DeveloperId { get; set; }
 
 		public int? MaxPercent { get; set; }
+
+		public string Video { get; set; }
 	}
 }

@@ -66,14 +66,14 @@ namespace RizzGamingBase.Controllers
 
 
 			var tagList = service.GetAllTag();
-
+			ViewBag.TagList = tagList;
 
 			return View();
 		}
 
 		//[Authorize]
 		[HttpPost]
-		public ActionResult Create(DeveloperGameEditVm vm, IEnumerable<HttpPostedFileBase> cover, IEnumerable<HttpPostedFileBase> displayImage, IEnumerable<HttpPostedFileBase> displayVideos)
+		public ActionResult Create(DeveloperGameEditVm vm, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImage, HttpPostedFileBase displayVideos)
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
@@ -84,6 +84,9 @@ namespace RizzGamingBase.Controllers
 				string coverPath = Server.MapPath("/Images/Covers");
 				string displayVideoPath = Server.MapPath("/Images/DisplayVideos");
 
+			//getDeveloperId， 尚未實作
+			int developerId = 1; 
+
 			try
 			{
 				//string coverName = new UploadFileHelper().UploadCoverFile(cover ,coverPath , vm.DeveloperId, vm.Id);
@@ -91,7 +94,7 @@ namespace RizzGamingBase.Controllers
 				//string displayVideoName = new UploadFileHelper().UploadDisplayVideoFile(displayVideo, displayVideoPath, vm.DeveloperId, vm.Id);
 			
 
-				service.Create(vm, displayImagePath, coverPath, displayVideoPath, cover , displayImage, displayVideos);
+				service.Create(vm, developerId, displayImagePath, coverPath, displayVideoPath, cover , displayImage, displayVideos);
 				//service.ScratchMove(vm, displayImagePath, coverPath, displayVideoPath, cover , displayImage, displayVideo);
 				return RedirectToAction("Index");
 			}

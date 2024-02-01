@@ -36,6 +36,10 @@ namespace RizzGamingBase.Models.Entities
 
 		public int? MaxPercent { get; set; }
 
+		[Required]
+		[StringLength(200)]
+		public string Video { get; set; }
+
 		//public int? SeasonDiscountId { get; set; }
 		//public int? CustomerDiscountId { get; set; }
 	}

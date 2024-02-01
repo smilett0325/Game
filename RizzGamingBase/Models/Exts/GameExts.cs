@@ -25,6 +25,7 @@ namespace RizzGamingBase.Models.Exts
 				Image = model.Image,
 				DeveloperId = model.DeveloperId,
 				MaxPercent = model.MaxPercent,
+				Video = model.Video,
 			};
 		}
 
@@ -41,6 +42,7 @@ namespace RizzGamingBase.Models.Exts
 				Image = model.Image,
 				DeveloperId = model.DeveloperId,
 				MaxPercent = model.MaxPercent,
+				Video = model.Video,
 			};
 		}
 
@@ -57,6 +59,7 @@ namespace RizzGamingBase.Models.Exts
 				Image = model.Image,
 				DeveloperId = model.DeveloperId,
 				MaxPercent = model.MaxPercent,
+				Video = model.Video,
 			};
 		}
 
@@ -92,6 +95,7 @@ namespace RizzGamingBase.Models.Exts
 				Image = model.Image,
 				DeveloperId = model.DeveloperId,
 				MaxPercent = model.MaxPercent,
+				Video = model.Video,
 			};
 		}
 
@@ -116,32 +120,24 @@ namespace RizzGamingBase.Models.Exts
 			var db = new AppDbContext();
 
 			var iR = new ImageEFRepository();
-			var vR = new VideoEFRepository();
 			var dlcR = new DLCEFRepository();
 			var tR = new TagEFRepository();
-			var dR = new DiscountEFRepository();
-			var gR = new GameEFRepository();
+			//var dR = new DiscountEFRepository();
+			//var gR = new GameEFRepository();
 
 			var displayImage = iR.GetAll(model.Id);
-			var displayVideo = vR.GetAll(model.Id);
 			//Game => gametag <= tag
 			//member => collection <= game
 			//collection (id,memberId, gameId)
 
 			var tag = tR.GetAll(model.Id);
-			var dlc = dlcR.GetGameDLC(model.Id);
+			var dlc = dlcR.GetDLCGame(model.Id);
 			//var discount =
 
 			var imageList = new List<ImageDto>();
 			foreach (var item in displayImage)
 			{
 				imageList.Add(item.EntityToDto());
-			};
-
-			var videoList = new List<VideoDto>();
-			foreach (var item in displayVideo)
-			{
-				videoList.Add(item.EntityToDto());
 			};
 
 			var tagList = new List<TagDto>();
@@ -169,10 +165,10 @@ namespace RizzGamingBase.Models.Exts
 				//DeveloperId = model.DeveloperId, //是否需要?
 				MaxPercent = model.MaxPercent,
 				DisplayImages = imageList,
-				DisplayVideos = videoList,
+				Video = model.Video,
 				Tags = tagList,
 				DLCs = dlcList,
-				Discounts = new List<DiscountDto>(),
+				//Discounts = new List<DiscountDto>(),
 			};
 
 			//var gts = db.GameTags.AsNoTracking()

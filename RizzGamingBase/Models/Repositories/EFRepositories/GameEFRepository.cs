@@ -57,6 +57,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 			model.Introduction = entity.Introduction;
 			model.MaxPercent = entity.MaxPercent;
 			model.Description = entity.Description;
+			model.Video = entity.Video;
 
 			db.SaveChanges();
 		}

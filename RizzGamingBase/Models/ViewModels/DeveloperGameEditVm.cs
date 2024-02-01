@@ -48,21 +48,22 @@ namespace RizzGamingBase.Models.ViewModels
 		[StringLength(200)]
 		public List<ImageDto> DisplayImages { get; set; }
 
-		[Display(Name = "輪播影")]
-		[Required]
-		[StringLength(200)]
-		public List<VideoDto> DisplayVideos { get; set; }
 
-		[Display(Name = "特價活動")]
-		[Required]
-		[StringLength(200)]
-		public List<DiscountDto> Discounts { get; set; }
+		//[Display(Name = "特價活動")]
+		//[Required]
+		//[StringLength(200)]
+		//public List<DiscountDto> Discounts { get; set; }
 
 		[Display(Name = "標籤")]
 		public List<TagDto> Tags { get; set; }
 
 		[Display(Name = "DLC")]
 		public List<GameDto> DLCs { get; set; }
+
+		[Display(Name = "預告片")]
+		[Required]
+		[StringLength(200)]
+		public string Video { get; set; }
 
 
 
