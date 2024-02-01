@@ -17,7 +17,6 @@ namespace RizzGamingBase.Models.EFModels
             DLCs1 = new HashSet<DLC>();
             GameTags = new HashSet<GameTag>();
             Images = new HashSet<Image>();
-            Videos = new HashSet<Video>();
         }
 
         public int Id { get; set; }
@@ -47,6 +46,10 @@ namespace RizzGamingBase.Models.EFModels
 
         public int? MaxPercent { get; set; }
 
+        [Required]
+        [StringLength(200)]
+        public string Video { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
 
@@ -70,8 +73,5 @@ namespace RizzGamingBase.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Image> Images { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Video> Videos { get; set; }
     }
 }

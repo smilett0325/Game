@@ -113,8 +113,7 @@
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@
 <script>
-        //帶修正 用記錄檔案名之陣列來判斷length
-    var reader = new FileReader();
+    //var reader = new FileReader();
 
     var formData = new FormData();
 
@@ -296,10 +295,10 @@
         });
     }
 
-    $('#submit').click(function (e) {
-        e.preventDefault();
+    $('#submit').click(function () {
+        //e.preventDefault();
 
-        $.ajax({
+        @*$.ajax({
             type: 'POST',
             url: '@Url.Action("", "Game")',
             data: formData,
@@ -315,9 +314,8 @@
                     console.log("Failed to delete image. Error: " + response.message);
                 }
             },
-     });
-
-});
+        });*@
+    });
 
         @*$(document).ready(function () {
             $("#fileInput").change(function () {
@@ -410,12 +408,7 @@
 
 
 
-            //todo創建一確認送出的上傳資料名單
-            //
-
-
-            //todo 建立刪除整個input下image按鈕
-
+           
             //todo tag selecter
 
             //todo discount selecter
@@ -430,10 +423,7 @@
 
 </script>
 }
-@*<    video width="320" height="240" controls>
-        <source src="movie.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>*@
+
 
 @section styles {
     <style>

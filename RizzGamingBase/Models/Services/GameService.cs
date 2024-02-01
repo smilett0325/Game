@@ -88,12 +88,13 @@ namespace RizzGamingBase.Models.Services
 			//}
 		}
 
-		public void Create(DeveloperGameEditVm vm, string displayImagePath, string coverPath, string displayVideoPath, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImage, IEnumerable<HttpPostedFileBase> displayVideo)
+		public void Create(DeveloperGameEditVm vm, int developerId, string displayImagePath, string coverPath, string displayVideoPath, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImage, HttpPostedFileBase displayVideo)
 		{
 			var vRepo = new VideoEFRepository();
 			var iRepo = new ImageEFRepository();
 			var gtRepo = new GTEFRepository();
 			var dlcRepo = new DLCEFRepository();
+			var uploadFileHelper = new UploadFileHelper();
 			//var disepo = new DiscountItemEFRepository();
 
 			var game = new GameDto();
@@ -114,9 +115,9 @@ namespace RizzGamingBase.Models.Services
 			game.Price = vm.Price;
 			game.DeveloperId = vm.DeveloperId;
 			game.MaxPercent = vm.MaxPercent;
-			//game.Image = vm.Image;
-			string coverName = "view.jpg";
-			game.Image = coverName;
+			game.Image = uploadFileHelper.UploadCoverFile(cover, coverPath,developerId); //todo 
+
+
 			_repo.Create(game.DtoToEntity());
 
 			//Create video

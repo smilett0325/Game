@@ -24,7 +24,6 @@ namespace RizzGamingBase.Models.EFModels
 		public virtual DbSet<Member> Members { get; set; }
 		public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 		public virtual DbSet<Tag> Tags { get; set; }
-		public virtual DbSet<Video> Videos { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
@@ -74,11 +73,6 @@ namespace RizzGamingBase.Models.EFModels
 				.WithRequired(e => e.Game)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Game>()
-				.HasMany(e => e.Videos)
-				.WithRequired(e => e.Game)
-				.WillCascadeOnDelete(false);
-
 			modelBuilder.Entity<Member>()
 				.HasMany(e => e.Comments)
 				.WithRequired(e => e.Member)
@@ -93,9 +87,5 @@ namespace RizzGamingBase.Models.EFModels
 				.WithRequired(e => e.Tag)
 				.WillCascadeOnDelete(false);
 		}
-
-        public System.Data.Entity.DbSet<RizzGamingBase.Models.ViewModels.DeveloperGameEditVm> DeveloperGameEditVms { get; set; }
-
-        public System.Data.Entity.DbSet<RizzGamingBase.Models.ViewModels.GameIndexVm> GameIndexVms { get; set; }
-    }
+	}
 }

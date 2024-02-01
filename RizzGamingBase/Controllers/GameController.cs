@@ -73,16 +73,16 @@ namespace RizzGamingBase.Controllers
 
 		//[Authorize]
 		[HttpPost]
-		public ActionResult Create(DeveloperGameEditVm vm, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImage, IEnumerable<HttpPostedFileBase> displayVideo)
+		public ActionResult Create(DeveloperGameEditVm vm, IEnumerable<HttpPostedFileBase> cover, IEnumerable<HttpPostedFileBase> displayImage, IEnumerable<HttpPostedFileBase> displayVideos)
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
 
 			if (!ModelState.IsValid) { return View(vm); };
 
-				string displayImagePath = Server.MapPath("/Image/DisplayImage");
-				string coverPath = Server.MapPath("/Image/Cover");
-				string displayVideoPath = Server.MapPath("/Image/DisplayVideo");
+				string displayImagePath = Server.MapPath("/Images/DisplayImages");
+				string coverPath = Server.MapPath("/Images/Covers");
+				string displayVideoPath = Server.MapPath("/Images/DisplayVideos");
 
 			try
 			{
@@ -91,7 +91,7 @@ namespace RizzGamingBase.Controllers
 				//string displayVideoName = new UploadFileHelper().UploadDisplayVideoFile(displayVideo, displayVideoPath, vm.DeveloperId, vm.Id);
 			
 
-				service.Create(vm, displayImagePath, coverPath, displayVideoPath, cover , displayImage, displayVideo);
+				service.Create(vm, displayImagePath, coverPath, displayVideoPath, cover , displayImage, displayVideos);
 				//service.ScratchMove(vm, displayImagePath, coverPath, displayVideoPath, cover , displayImage, displayVideo);
 				return RedirectToAction("Index");
 			}
@@ -104,41 +104,40 @@ namespace RizzGamingBase.Controllers
 		}
 
 
-		public ActionResult MoveOrCreateFile()
+		public ActionResult UploadFile(IEnumerable<HttpPostedFileBase> cover, IEnumerable<HttpPostedFileBase> images, IEnumerable<HttpPostedFileBase> videos)
 		{
-			//todo 把個別資料搬到對應資料夾
-			//todo 確認資料搬移資料後清空scratch資料
+
 			
 			return View();
 		}
 
-		[HttpPost]
-		public ActionResult CoverScratchAsync(IEnumerable<HttpPostedFileBase> cover)
-		{
-			string scratchPath = Server.MapPath("~/Image/Scratch");
-			var uploadFileHelper = new UploadFileHelper();
-			try
-			{
-				var result = uploadFileHelper.ScratchFile(cover, scratchPath);
+		//[HttpPost]
+		//public ActionResult CoverScratchAsync(IEnumerable<HttpPostedFileBase> cover)
+		//{
+		//	string scratchPath = Server.MapPath("~/Image/Scratch");
+		//	var uploadFileHelper = new UploadFileHelper();
+		//	try
+		//	{
+		//		var result = uploadFileHelper.ScratchFile(cover, scratchPath);
 
-				return Json(new { success = true, message = "File uploaded successfully.", images = result });
-			}
-			catch (Exception ex)
-			{
-				return Json(new { success = false, message = ex.Message });
-			}
-		}
+		//		eturn Json(new { success = true, message = "File uploaded successfully.", images = result });
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		return Json(new { success = false, message = ex.Message });
+		//	}
+		//}
 
-		[HttpPost]
-		public ActionResult DeleteCoverScratchAsync(string[] files)
-		{
-			string scratchPath = Server.MapPath("~/Image/Scratch");
-			var uploadFileHelper = new UploadFileHelper();
+		//[HttpPost]
+		//public ActionResult DeleteCoverScratchAsync(string[] files)
+		//{
+		//	string scratchPath = Server.MapPath("~/Image/Scratch");
+		//	var uploadFileHelper = new UploadFileHelper();
 		
-			//uploadFileHelper.DeleteScratchFile(files, scratchPath);
+		//	//uploadFileHelper.DeleteScratchFile(files, scratchPath);
 
-			return Json(new { success = true, message = "Files deleted successfully." });
+		//	return Json(new { success = true, message = "Files deleted successfully." });
 
-		}
+		//}
 	}
 }

@@ -18,32 +18,86 @@ namespace RizzGamingBase.Models.Infra
 		/// <exception cref="ArgumentNullException">若沒上傳檔案，丟出此例外</exception>
 		/// <exception cref="ArgumentException">上傳非圖片，丟出此例外</exception>
 		/// <exception cref="Exception">指定檔案資料夾不存在，丟出此例外</exception>
-		public string UploadImageFile(HttpPostedFileBase file, string path)
-		{
-			//判斷有沒有上傳檔案,若沒有,丟出例外
-			if (file == null || file.ContentLength == 0) throw new ArgumentNullException("file");
+		//public string UploadImageFile(HttpPostedFileBase file, string path)
+		//{
+		//	//判斷有沒有上傳檔案,若沒有,丟出例外
+		//	if (file == null || file.ContentLength == 0) throw new ArgumentNullException("file");
 
-			//取得副檔名並判斷是否為允許的檔案類型
-			//可用委派來增加擴展性
-			string[] allowExts = { ".jpg", ".jpeg", ".png" };
-			string ext = Path.GetExtension(file.FileName).ToLower();
-			if (!allowExts.Contains(ext)) throw new ArgumentException($"不允許上傳此類檔案({ext})");
+		//	//取得副檔名並判斷是否為允許的檔案類型
+		//	//可用委派來增加擴展性
+		//	string[] allowExts = { ".jpg", ".jpeg", ".png" };
+		//	string ext = Path.GetExtension(file.FileName).ToLower();
+		//	if (!allowExts.Contains(ext)) throw new ArgumentException($"不允許上傳此類檔案({ext})");
 
-			//為避免不同時間上傳相同檔名,造成覆蓋,所以每次都要取一格唯一檔名
-			string fileName = Path.GetRandomFileName();
+		//	//為避免不同時間上傳相同檔名,造成覆蓋,所以每次都要取一格唯一檔名
+		//	string fileName = Path.GetRandomFileName();
 
-			//與附檔名合併成一個正常檔名
-			string newFileName = fileName + ext;
-			string fullName = Path.Combine(path, newFileName);
+		//	//與附檔名合併成一個正常檔名
+		//	string newFileName = fileName + ext;
+		//	string fullName = Path.Combine(path, newFileName);
 
-			//將上傳檔案存放並取得檔名
-			file.SaveAs(fullName);
+		//	//將上傳檔案存放並取得檔名
+		//	file.SaveAs(fullName);
 
-			return newFileName;
-		}
+		//	return newFileName;
+		//}
 
-		//GPT參考
-		public string UploadCoverFile(HttpPostedFileBase cover, string path, int developerId, int gameId)
+		//public void DeleteScratchFile(HttpPostedFileBase file, string path)
+		//{
+		//	string scratchPath = path;
+
+		//	// 合并文件名和路径生成完整的文件路径
+		//	string fileName = file.FileName;
+		//	string fullPath = Path.Combine(scratchPath, fileName);
+
+		//	// 将上传的文件保存到指定路径
+		//	File.Delete(fullPath);
+		//}
+
+		//public void DeleteScratchFile(string[] fileNames, string path)
+		//{
+		//	string scratchPath = path;
+
+		//	foreach (var fileName in fileNames)
+		//	{
+		//		string fullPath = Path.Combine(scratchPath, fileName);
+		//		File.Delete(fullPath);
+		//	}
+		//}
+
+
+		//public List<object> ScratchFile(IEnumerable<HttpPostedFileBase> cover, string path)
+		//{
+		//	var scratchObjects = new List<object>();
+
+		//	foreach (var file in cover)
+		//	{
+		//		// 判断是否有上传文件，若没有，抛出异常
+		//		if (file == null || file.ContentLength == 0)
+		//			throw new ArgumentNullException("file");
+
+		//		// 获取文件的扩展名，并检查是否为允许的文件类型
+		//		string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+		//		string ext = Path.GetExtension(file.FileName).ToLower();
+		//		if (!allowedExtensions.Contains(ext))
+		//			throw new ArgumentException($"不允許上傳此類檔案({ext})");
+
+		//		string scratchPath = path;
+		//		string idName = Path.GetFileNameWithoutExtension(file.FileName).ToLower();
+
+		//		// 合并文件名和路径生成完整的文件路径
+		//		string fileName = file.FileName;
+		//		string fullPath = Path.Combine(scratchPath, fileName);
+
+		//		// 将上传的文件保存到指定路径
+		//		file.SaveAs(fullPath);
+		//		scratchObjects.Add(new { Name = fileName, NameForId = idName });
+		//	}
+
+		//	return scratchObjects;
+		//}
+
+		public string UploadCoverFile(HttpPostedFileBase cover, string path, int developerId)
 		{
 			// 判断是否有上传文件，若没有，抛出异常
 			if (cover == null || cover.ContentLength == 0)
@@ -66,77 +120,22 @@ namespace RizzGamingBase.Models.Infra
 			}
 
 			//檢查developerGameFolderPath是否存在，不存在則創建
-			string developerGameFolderPath = Path.Combine(path, $"{developerId}", $"{gameId}");
+			//string developerGameFolderPath = Path.Combine(path, $"{developerId}", $"{gameId}");
 
-			if (!Directory.Exists(developerGameFolderPath))
-			{
-				Directory.CreateDirectory(developerGameFolderPath);
-			}
+			//if (!Directory.Exists(developerGameFolderPath))
+			//{
+			//	Directory.CreateDirectory(developerGameFolderPath);
+			//}
 
 			// 合并文件名和路径生成完整的文件路径
 			string fileName = cover.FileName;
-			string fullPath = Path.Combine(developerGameFolderPath, fileName);
+			string fullPath = Path.Combine(developerFolderPath, fileName);
 
 			// 将上传的文件保存到指定路径
 			cover.SaveAs(fullPath);
 
 			// 返回新的文件名，可以用于记录到数据库或其他用途
 			return fullPath;
-		}
-
-		public void DeleteScratchFile(HttpPostedFileBase file, string path)
-		{
-			string scratchPath = path;
-
-			// 合并文件名和路径生成完整的文件路径
-			string fileName = file.FileName;
-			string fullPath = Path.Combine(scratchPath, fileName);
-
-			// 将上传的文件保存到指定路径
-			File.Delete(fullPath);
-		}
-
-		//public void DeleteScratchFile(string[] fileNames, string path)
-		//{
-		//	string scratchPath = path;
-
-		//	foreach (var fileName in fileNames)
-		//	{
-		//		string fullPath = Path.Combine(scratchPath, fileName);
-		//		File.Delete(fullPath);
-		//	}
-		//}
-
-
-		public List<object> ScratchFile(IEnumerable<HttpPostedFileBase> cover, string path)
-		{
-			var scratchObjects = new List<object>();
-
-			foreach (var file in cover)
-			{
-				// 判断是否有上传文件，若没有，抛出异常
-				if (file == null || file.ContentLength == 0)
-					throw new ArgumentNullException("file");
-
-				// 获取文件的扩展名，并检查是否为允许的文件类型
-				string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
-				string ext = Path.GetExtension(file.FileName).ToLower();
-				if (!allowedExtensions.Contains(ext))
-					throw new ArgumentException($"不允許上傳此類檔案({ext})");
-
-				string scratchPath = path;
-				string idName = Path.GetFileNameWithoutExtension(file.FileName).ToLower();
-
-				// 合并文件名和路径生成完整的文件路径
-				string fileName = file.FileName;
-				string fullPath = Path.Combine(scratchPath, fileName);
-
-				// 将上传的文件保存到指定路径
-				file.SaveAs(fullPath);
-				scratchObjects.Add(new { Name = fileName, NameForId = idName });
-			}
-
-			return scratchObjects;
 		}
 
 		public List<object> UploadDisplayImageFile(IEnumerable<HttpPostedFileBase> files, string path, int developerId, int gameId)
