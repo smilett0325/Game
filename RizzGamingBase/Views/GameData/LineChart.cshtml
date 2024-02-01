@@ -94,6 +94,7 @@
             year = theYear.value;
             theH2.innerHTML = year;
             await loadDatas();;
+
             myChart.data.datasets[0].data[0] = datas[0];
             myChart.data.datasets[0].data[1] = datas[1];
             myChart.data.datasets[0].data[2] = datas[2];
@@ -104,7 +105,7 @@
     });
 
     const loadDatas = async () => {
-        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabase")?year=${year}`, {
+        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabaseYear")?year=${year}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -119,7 +120,7 @@
         // result 是從控制器返回的數據，可以用於更新視圖
 
     theDeveloper.addEventListener('change', async event => {
-
+        if (theDeveloper.options[theDeveloper.selectedIndex].value != 0) { 
         DeveloperId = theDeveloper.value;
         theH2.innerHTML = year + " " + theDeveloper.options[theDeveloper.selectedIndex].text;
         theH21.innerHTML =  "季度營收";
@@ -175,7 +176,7 @@
             
 
         });
-
+      }
     });
 
     const loadDeveloperDatas = async () => {

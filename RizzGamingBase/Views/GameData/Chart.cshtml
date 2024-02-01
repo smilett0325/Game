@@ -9,18 +9,44 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
 <!-- 在页面中添加图表容器 -->
-<div style="display:flex;justify-content:space-between;align-items:center">
-    <div id="Line" style="height:25%;width:25%">
-        <h2>2023</h2>
-        <h2>季度營收</h2>
-        <canvas id="myLineChart" width="100" height="100"></canvas>
-    </div>
+<div style="display:flex;flex-direction:column;">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+            <h2>近7日交易次數</h2>
+            <h2 id="7DayOfTimes"></h2>
+        </div>
+        <div>
+            <h2>近7日交易金額</h2>
+            <h2 id="7DayOfAmounts"></h2>
+        </div>
+        <div>
+            <h2>近30日交易次數</h2>
+            <h2 id="30DayOfTimes"></h2>
+        </div>
+        <div>
+            <h2>近30日交易金額</h2>
+            <h2 id="30DayOfAmounts"></h2>
+        </div>
 
-    <div id="pie" style="height:25%;width:25%">
-        <canvas id="myPieChart" width="100" height="100"></canvas>
     </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+        <div id="Line" style="height:25%;width:25%">
+            <h2>2023</h2>
+            <h2>季度營收</h2>
+            <canvas id="myLineChart" width="100" height="100"></canvas>
+        </div>
 
+        <div id="pie" style="height:25%;width:25%">
+            <h2>全體開發商</h2>
+            <h2>銷售佔比</h2>
+            <canvas id="myPieChart" width="100" height="100"></canvas>
+        </div>
+
+    </div>
 </div>
+
+
+
 <!-- 在页面底部初始化图表 -->
 <script>
     var ctx = document.getElementById('myLineChart').getContext('2d');
@@ -28,18 +54,29 @@
 
     var divLine = document.getElementById('Line');
     var divPie = document.getElementById('pie');
+    var p7T = document.getElementById('7DayOfTimes');
+    var p7A = document.getElementById('7DayOfAmounts');
+    var p30T = document.getElementById('30DayOfTimes');
+    var p30A = document.getElementById('30DayOfAmounts');
+
 
     // 将从Controller传递的数据绑定到图表
     var Linedata = [@(ViewBag.LineChartData)];
     var Piedata = [@Html.Raw(Json.Encode(ViewBag.PieChartData))];
 
+    var Data7T = [@(ViewBag.Data7T)];
+    var Data7A = [@(ViewBag.Data7A)];
+    var Data30T = [@(ViewBag.Data30T)];
+    var Data30A =[@(ViewBag.Data30A)];
+
+    //顯示數值
+    p7T.innerHTML = Data7T;
+    p7A.innerHTML = Data7A;
+    p30T.innerHTML = Data30T;
+    p30A.innerHTML = Data30A;
+
 
     // 使用 map 函數處理每個元素，獲取對應的值
-    //var pieLabels = Piedata.map(function (item) {
-
-    //    return item.GameName; // 替換為您的 List<vm> 中的屬性名稱
-    //});
-
     var pieLabels = Piedata.flatMap(function (item) {
         return item.map(function (innerItem) {
             return innerItem.GameName;
@@ -89,7 +126,7 @@
                 backgroundColor: ['blue','orange','red'],
                 borderColor: 'black',
                 borderWidth: 1,
-          
+
             }]
         },
         options: {

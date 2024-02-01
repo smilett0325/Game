@@ -90,7 +90,53 @@ namespace RizzGamingBase.Models.Repositories
 			return queryList;
 		}
 
+		public List<GameDataEntity> SearchAllGamesBi()
+		{
+			var db = new AppDbContext();
 
+			var game = db.Games.AsNoTracking()
+	              .Select(g => new GameDataEntity
+	              {
+		                   Id = g.Id,
+		                   GameName = g.Name
+	              })
+	             .Distinct()
+	             .ToList();
+			var queryList = SearchGameIdToBINoGroup(game);
+			return queryList;
+		}
+
+		public List<GameDataEntity> SearchNoDeveloperGamesBi()
+		{
+			var db = new AppDbContext();
+
+			var game = db.Games.AsNoTracking()
+							.Select(g => new GameDataEntity
+							{
+								Id = g.Id,
+								GameName = g.Name
+							})
+							.Distinct()
+							.ToList();
+			var queryList = SearchGameIdToBINoGroup(game);
+			return queryList;
+		}
+		public List<GameDataEntity> SearchDeveloperGamesBi(int id)
+		{
+			var db = new AppDbContext();
+
+			var game = db.Games.AsNoTracking()
+                            .Where(g => g.DeveloperId == id)
+							.Select(g => new GameDataEntity
+							{
+								Id = g.Id,
+								GameName = g.Name
+							})
+							.Distinct()
+							.ToList();
+			var queryList = SearchGameIdToBINoGroup(game);
+			return queryList;
+		}
 
 		private List<GameDataEntity> SearchGameIdToBI(int gameId, string name = "")
 		{

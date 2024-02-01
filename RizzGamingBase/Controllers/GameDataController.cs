@@ -12,6 +12,8 @@ using RizzGamingBase.Models.InterFaces;
 using System.Web.Http;
 using RizzGamingBase.Models.ViewModels;
 using RizzGamingBase.Models.EFModels;
+using System.Data;
+using System.Web.UI.WebControls;
 
 namespace RizzGamingBase.Controllers
 {
@@ -27,9 +29,20 @@ namespace RizzGamingBase.Controllers
 			// 获取数据（示例数据）
 			List<decimal> Linedata = GetLineDataFromDatabase();
 			List<GameDataVm> Piedata = GetPieDataFromDatabase();
+
+			int Data7T = GetData7T();
+			decimal Data7A = GetData7A();
+			int Data30T = GetData30T();
+			decimal Data30A = GetData30A();
 			// 转换数据格式
 			ViewBag.LineChartData = string.Join(",", Linedata);
 			ViewBag.PieChartData = Piedata;
+
+			ViewBag.Data7T = Data7T;
+			ViewBag.Data7A = Data7A;
+			ViewBag.Data30T = Data30T;
+			ViewBag.Data30A = Data30A;
+
 
 			return View();
 		}
@@ -57,15 +70,54 @@ namespace RizzGamingBase.Controllers
 			return View();
 		}
 
-		public List<decimal> GetLineDataFromDatabase(string gameName ="",int year =2023)
+		public List<decimal> GetLineDataFromDatabase(int year =2023)
 		{
 			// 使用ADO.NET从数据库中检索数据的逻辑
 			var service = new GameDataService(GetRepository());
 			
-			var dataList = service.SearchGameName(gameName,year);
+			var dataList = service.SearchAllGameBi(year);
 
 			// 返回示例数据
 			return dataList;
+		}
+
+		public int GetData7T(int id = 0)
+		{
+			var service = new GameDataService(GetRepository());
+			int days = 7;
+
+			var data = service.SearchBisToTimes(id, days);
+
+			return data;
+		}
+
+		public decimal GetData7A(int id = 0)
+		{
+			var service = new GameDataService(GetRepository());
+			int days = 7;
+
+			var data = service.SearchBisToAmouts(id,days);
+
+			return data;
+		}
+		public int GetData30T(int id = 0)
+		{
+			var service = new GameDataService(GetRepository());
+			int days = 30;
+
+			var data = service.SearchBisToTimes(id, days);
+
+			return data;
+		}
+
+		public decimal GetData30A(int id = 0)
+		{
+			var service = new GameDataService(GetRepository());
+			int days = 30;
+
+			var data = service.SearchBisToAmouts(id, days);
+
+			return data;
 		}
 
 		public List<GameDataVm> GetPieDataFromDatabase()
@@ -86,15 +138,17 @@ namespace RizzGamingBase.Controllers
 
 
 		[System.Web.Mvc.HttpPost]
-		public ActionResult GetLineDataFromDatabase(int year)
+		public ActionResult GetLineDataFromDatabaseYear(int year)
 		{
-			var gameName = "";
+
 			// 使用 model.GameName 進行處理
 			var service = new GameDataService(GetRepository());
-			var dataList = service.SearchGameName(gameName, year);
+			var dataList = service.SearchAllGameBi(year);
+			//var dataList = service.SearchGameName(gameName, year);
 
 			// 返回示例數據，這裡你可以返回JSON結果或者視圖
 			return Json(dataList);
+
 		}
 		[System.Web.Mvc.HttpPost]
 		public ActionResult GetLineDataFromDatabaseDeveloperId(int year, int developerId)
