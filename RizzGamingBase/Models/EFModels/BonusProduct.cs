@@ -6,12 +6,12 @@ namespace RizzGamingBase.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class BounsProduct
+    public partial class BonusProduct
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BounsProduct()
+        public BonusProduct()
         {
-            Items = new HashSet<Item>();
+            BonusItems = new HashSet<BonusItem>();
         }
 
         public int Id { get; set; }
@@ -28,9 +28,9 @@ namespace RizzGamingBase.Models.EFModels
         [StringLength(50)]
         public string Name { get; set; }
 
-        public virtual BonusProductType BonusProductType { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<BonusItem> BonusItems { get; set; }
+
+        public virtual BonusProductType BonusProductType { get; set; }
     }
 }

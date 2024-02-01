@@ -16,12 +16,12 @@ namespace RizzGamingBase.Models.EFModels
             BanMembers1 = new HashSet<BanMember>();
             BillDetails = new HashSet<BillDetail>();
             Boards = new HashSet<Board>();
+            BonusItems = new HashSet<BonusItem>();
             Carts = new HashSet<Cart>();
             Collections = new HashSet<Collection>();
             Comments = new HashSet<Comment>();
             Friends = new HashSet<Friend>();
             Friends1 = new HashSet<Friend>();
-            Items = new HashSet<Item>();
             MemberTags = new HashSet<MemberTag>();
             Messages = new HashSet<Message>();
             Pictures = new HashSet<Picture>();
@@ -36,7 +36,7 @@ namespace RizzGamingBase.Models.EFModels
 
         [Required]
         [StringLength(50)]
-        public string Password { get; set; }
+        public string EncryptedPassword { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -58,6 +58,11 @@ namespace RizzGamingBase.Models.EFModels
         [StringLength(50)]
         public string NickName { get; set; }
 
+        public bool IsConfirmed { get; set; }
+
+        [StringLength(500)]
+        public string ConfirmCode { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BanGame> BanGames { get; set; }
 
@@ -74,6 +79,9 @@ namespace RizzGamingBase.Models.EFModels
         public virtual ICollection<Board> Boards { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BonusItem> BonusItems { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -87,9 +95,6 @@ namespace RizzGamingBase.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Friend> Friends1 { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberTag> MemberTags { get; set; }

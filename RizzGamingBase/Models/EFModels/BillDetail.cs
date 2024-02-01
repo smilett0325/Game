@@ -11,6 +11,7 @@ namespace RizzGamingBase.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BillDetail()
         {
+            BillItems = new HashSet<BillItem>();
             Collections = new HashSet<Collection>();
         }
 
@@ -33,6 +34,9 @@ namespace RizzGamingBase.Models.EFModels
         public virtual Game Game { get; set; }
 
         public virtual Member Member { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BillItem> BillItems { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Collection> Collections { get; set; }

@@ -111,7 +111,7 @@ namespace RizzGamingBase.Models.Exts
                                      Name = d.Game.Name,
                                      Developer = d.Game.Developer.Name,
                                      Price = d.Game.Price,
-                                     Image = d.Game.Image,
+                                     Image = d.Game.Cover,
                                      MaxPercent = d.Game.MaxPersent
                                  }
                              });

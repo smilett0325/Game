@@ -138,7 +138,7 @@ namespace RizzGamingBase.Controllers
                     Name = item.Name,
                     Developer = item.Developer.Name,
                     Price = item.Price,
-                    Image = item.Image,
+                    Image = item.Cover,
                     MaxPercent = item.MaxPersent
 
                 };
@@ -162,7 +162,7 @@ namespace RizzGamingBase.Controllers
                     Name = item.Name,
                     Developer = item.Developer.Name,
                     Price = item.Price,
-                    Image = item.Image,
+                    Image = item.Cover,
                     MaxPercent = item.MaxPersent
 
                 };
@@ -204,7 +204,7 @@ namespace RizzGamingBase.Controllers
                                       Name = d.Game.Name,
                                       Developer = d.Game.Developer.Name,
                                       Price = d.Game.Price,
-                                      Image = d.Game.Image,
+                                      Image = d.Game.Cover,
                                       MaxPercent = d.Game.MaxPersent
                                   }).ToList();
 
@@ -212,7 +212,7 @@ namespace RizzGamingBase.Controllers
         }
 
 
-        public JsonResult GetGames(int id)
+        public JsonResult GetGames(int id, string keyword)
         {
             var db = new AppDbContext();
 
@@ -224,9 +224,16 @@ namespace RizzGamingBase.Controllers
                                     Name = d.Name,
                                     Developer = d.Developer.Name,
                                     Price = d.Price,
-                                    Image = d.Image,
+                                    Image = d.Cover,
                                     MaxPercent = d.MaxPersent
                                 }).ToList();
+            if (!string.IsNullOrEmpty(keyword))
+                {
+                allgames = allgames.Where(d => d.Name.Contains(keyword))
+                            .ToList();
+                }
+            
+                
 
             var discountgames = db.DiscountItems
                                   .Include(d => d.Game)
@@ -237,7 +244,7 @@ namespace RizzGamingBase.Controllers
                                       Name = d.Game.Name,
                                       Developer = d.Game.Developer.Name,
                                       Price = d.Game.Price,
-                                      Image = d.Game.Image,
+                                      Image = d.Game.Cover,
                                       MaxPercent = d.Game.MaxPersent
                                   }).ToList();
 

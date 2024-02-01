@@ -11,7 +11,7 @@ namespace RizzGamingBase.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BonusProductType()
         {
-            BounsProducts = new HashSet<BounsProduct>();
+            BonusProducts = new HashSet<BonusProduct>();
         }
 
         public int Id { get; set; }
@@ -19,6 +19,6 @@ namespace RizzGamingBase.Models.EFModels
         public int Type { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BounsProduct> BounsProducts { get; set; }
+        public virtual ICollection<BonusProduct> BonusProducts { get; set; }
     }
 }

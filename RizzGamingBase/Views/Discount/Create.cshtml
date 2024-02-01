@@ -108,8 +108,7 @@
                                     <!-- 未加入的遊戲列表 -->
                                     <div class="col-md-6">
                                         <h5>未加入的遊戲</h5>
-                                        <input type="text" />
-                                        <button>查詢</button>
+                                        <input type="search" id="keyword" class="form-control" placeholder="想查詢的遊戲" />
                                         <ul id="availableGames" class="list-group">
                                         </ul>
                                     </div>
@@ -157,14 +156,21 @@
         var availableGames = [];
         var discountGames = [];
         var id = 0;
+        var keyword = "";
 
 
+        $('#keyword').on('input', event => {
+
+            keyword = event.target.value;
+            loadGame(keyword);
+
+        } );
 
         function loadGame() {
             $.ajax({
                 url: '@Url.Action("GetGames", "Discount")',
                 type: 'GET',
-                data: { id: id },
+                data: { id: id, keyword: keyword },
                 dataType: 'json',
                 success: function (data) {
                     availableGames = data;
