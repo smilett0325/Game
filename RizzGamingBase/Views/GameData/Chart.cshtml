@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "Chart";
+}
+
+
+
+<!-- 引入Chart.js库 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>*@
+
+
+<!-- 引入Tooltip插件 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/plugins/chartjs-plugin-tooltip.min.js"></script>
+
+<!-- 引入Datalabels插件 -->
+<script src="https://unpkg.com/chart.js-plugin-labels-dv/dist/chartjs-plugin-labels.min.js"></script>
+
+<!-- 在页面中添加图表容器 -->
+<div style="display:flex;flex-direction:column;">
+    <div style="display: inline-flex; justify-content: space-between; padding-bottom: 100px;">
+        <div>
+            <h2 style="text-align: center">近7日交易次數</h2>
+            <h2 id="7DayOfTimes" style="text-align: center"></h2>
+        </div>
+        <div>
+            <h2 style="text-align: center">近7日交易金額</h2>
+            <h2 id="7DayOfAmounts" style="text-align: center"></h2>
+        </div>
+        <div>
+            <h2 style="text-align: center">近30日交易次數</h2>
+            <h2 id="30DayOfTimes" style="text-align: center"></h2>
+        </div>
+        <div>
+            <h2 style="text-align: center">近30日交易金額</h2>
+            <h2 id="30DayOfAmounts" style="text-align: center"></h2>
+        </div>
+
+    </div>
+    <div style="display: inline-flex; justify-content: space-between;">
+        <div id="Line" style="height:25%;width:35%;padding-left:20px" >
+            <h2>2023</h2>
+            <h2>季度營收</h2>
+            <canvas id="myLineChart" width="100" height="100"></canvas>
+        </div>
+
+        <div id="pie" style="height: 25%; width: 35%; padding-right: 20px">
+            <h2>全體開發商</h2>
+            <h2>銷售佔比</h2>
+            <canvas id="myPieChart" width="100" height="100"></canvas>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- 在页面底部初始化图表 -->
+<script>
+    var ctx = document.getElementById('myLineChart').getContext('2d');
+    var pie = document.getElementById('myPieChart').getContext('2d');
+
+    var divLine = document.getElementById('Line');
+    var divPie = document.getElementById('pie');
+    var p7T = document.getElementById('7DayOfTimes');
+    var p7A = document.getElementById('7DayOfAmounts');
+    var p30T = document.getElementById('30DayOfTimes');
+    var p30A = document.getElementById('30DayOfAmounts');
+
+
+    // 将从Controller传递的数据绑定到图表
+    var Linedata = [@(ViewBag.LineChartData)];
+    var Piedata = [@Html.Raw(Json.Encode(ViewBag.PieChartData))];
+
+    var Data7T = [@(ViewBag.Data7T)];
+    var Data7A = [@(ViewBag.Data7A)];
+    var Data30T = [@(ViewBag.Data30T)];
+    var Data30A =[@(ViewBag.Data30A)];
+
+    //顯示數值
+    p7T.innerHTML = Data7T;
+    p7A.innerHTML = Data7A;
+    p30T.innerHTML = Data30T;
+    p30A.innerHTML = Data30A;
+
+
+    // 使用 map 函數處理每個元素，獲取對應的值
+    var pieLabels = Piedata.flatMap(function (item) {
+        return item.map(function (innerItem) {
+            return innerItem.GameName;
+        });
+    });
+
+    var pieValues = Piedata.flatMap(function (item) {
+        return item.map(function (innerItem) {
+            return innerItem.Amount;
+        });
+    });
+
+
+
+    // 创建图表
+
+    var myLineChart = new Chart(ctx, {
+        type: 'line', // 替换为所需的图表类型
+        data: {
+            labels: ['第一季度', '第二季度', '第三季度', '第四季度'],
+            datasets: [{
+                label: '元',
+                data: Linedata,
+                backgroundColor: 'blue',
+                borderColor: 'black',
+                borderWidth: 1 ,
+                fill: false
+
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    //['第一季度', '第二季度', '第三季度']
+    //[15, 10, 8]
+    var myPieChart = new Chart(pie, {
+        type: 'pie', // 替换为所需的图表类型
+        data: {
+            labels: pieLabels,
+            datasets: [{
+                label: '元',
+                data:  pieValues,
+                backgroundColor: ['blue','orange','red'],
+                borderColor: 'black',
+                borderWidth: 1,
+                border: false,
+            }]
+        },
+        options: {
+            plugins: {
+                labels: {
+                    render: 'percentage', // 使用百分比
+                    fontColor: 'white', // 标签颜色
+                    precision: 2, // 百分比精度，可以根据需要调整
+                    fontSize: 12, // 字体大小
+                    fontStyle: 'bold', // 字体样式
+                    textShadow: true // 是否使用文字阴影
+                }
+            }
+        }
+    });
+
+
+
+
+
+
+    divLine.addEventListener('click', function () {
+        window.location.href = '/GameData/LineChart';
+    });
+
+    divPie.addEventListener('click', function () {
+        window.location.href = '/GameData/PieChart';
+    });
+</script>
