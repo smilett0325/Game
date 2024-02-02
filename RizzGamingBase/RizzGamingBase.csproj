@@ -4418,6 +4418,7 @@
     <Content Include="Views\GameData\LineChart.cshtml" />
     <Content Include="Views\GameData\PieChart.cshtml" />
     <Content Include="Views\Shared\test.cshtml" />
+    <Content Include="Views\Shared\test01.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,7 +14,11 @@
 <!-- 引入Chart.js库 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
+@* 引入 html2canvas 库 *@
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
+<!-- 包含xlsx庫 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 
 <!-- 在页面中添加图表容器 -->
@@ -31,11 +35,19 @@
     </select>
 </div>
 
-<div id="Line" style="height:65%;width:65%">
+<div id="Line" style="height:50%;width:50%">
     <canvas id="myChart" width="100" height="100"></canvas>
+    @*<button id="exportButton">匯出到Excel</button>*@
 </div>
 <!-- 在页面底部初始化图表 -->
 <script>
+    // 假設你有一個名為 'myChart' 的 Chart.js 實例
+    var canvas = document.getElementById('myChart');
+
+    // 將 Canvas 轉換為圖片數據 URL
+    var dataURL = canvas.toDataURL('image/png');
+
+
     var datas = [];
 
     var theH2 = document.getElementById('h2');
@@ -59,21 +71,6 @@
     var check = false;
     var GameName = "";
 
-    // 日期控件
-    //$(document).ready(function () {
-    //    $("#Year").datepicker({
-    //        changeMonth: false,
-    //        changeYear: true,
-    //        showButtonPanel: true,
-    //        dateFormat: 'yy',
-    //        onClose: function (dateText, inst) {
-    //            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-    //            $(this).datepicker('setDate', new Date(year, 0, 1));
-    //        }
-    //    });
-    //});
-
-
 
     // 创建图表
 
@@ -92,21 +89,30 @@
             }]
         },
         options: {
-            options: {
-                elements: {
-                    line: {
-                        tension: 0
-                    }
-                }
-            },
             scales: {
                 y: {
                     beginAtZero: true
                 }
             }
         }
-    });
 
+    });
+    //匯出
+    //点击下載圖片
+    divLine.addEventListener('dblclick', async event => {
+        // 使用 html2canvas 將 Canvas 元素轉換為圖片
+        html2canvas(canvas).then(function (canvas) {
+            // 將圖片保存為文件（例如 PNG）
+            var link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'LineChart.png';
+            link.click();
+        });
+
+        var chartData = ctx.data;
+
+
+    });
 
     theYear.addEventListener('keydown', async event  => {
 
@@ -235,5 +241,53 @@
 
         Gamedatas = await response.json();
     }
+
+    //做不出來
+    ////excel
+    //// 添加一個導出按鈕的事件監聽器
+    //document.getElementById('exportButton').addEventListener('click', function () {
+    //    exportToExcel();
+    //});
+
+    //function exportToExcel() {
+    //    // 創建工作表對象
+    //    var ws = XLSX.utils.json_to_sheet(getChartData());
+
+    //    // 創建工作簿對象
+    //    var wb = XLSX.utils.book_new();
+    //    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    //    // 使用 XLSX.write 方法將工作簿轉換為二進制數據
+    //    var blob = XLSX.write(wb, { bookType: 'blob', mimeType: 'application/octet-stream' });
+
+    //    // 使用 FileSaver.js 保存 blob 數據為文件
+    //    saveAs(blob, 'chart_data.xlsx');
+    //}
+
+    //function getChartData() {
+    //    // 修改此函數以返回您要導出的數據
+    //    if (GameName !== "") {
+    //        return [
+    //            { 季度: '第一季度', 營收: 1 },
+    //            { 季度: '第二季度', 營收: 2 },
+    //            { 季度: '第三季度', 營收: 3 },
+    //            { 季度: '第四季度', 營收: 4 }
+    //        ];
+    //    } else if (DeveloperId !== 0) {
+    //        return [
+    //            { 季度: '第一季度', 營收: 1 },
+    //            { 季度: '第二季度', 營收: 2 },
+    //            { 季度: '第三季度', 營收: 3 },
+    //            { 季度: '第四季度', 營收: 4 }
+    //        ];
+    //    } else {
+    //        return [
+    //            { 季度: '第一季度', 營收: 1 },
+    //            { 季度: '第二季度', 營收: 2 },
+    //            { 季度: '第三季度', 營收: 3 },
+    //            { 季度: '第四季度', 營收: 4 }
+    //        ];
+    //    }
+    //}
 
 </script>

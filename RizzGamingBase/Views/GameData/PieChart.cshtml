@@ -12,6 +12,9 @@
 <!-- 引入Datalabels插件 -->
 @*<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>*@
 
+@* 引入 html2canvas 库 *@
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
 <script src="https://unpkg.com/chart.js-plugin-labels-dv/dist/chartjs-plugin-labels.min.js"></script>
 
 
@@ -29,11 +32,13 @@
     </select>
 </div>
 
-<div id="pie" style="height:65%;width:65%">
+<div id="pie" style="height:50%;width:50%">
     <canvas id="myPieChart" width="100" height="100"></canvas>
 </div>
 <!-- 在页面底部初始化图表 -->
 <script>
+    var canvas = document.getElementById('myPieChart');
+
     var datas = [];
     var theH2 = document.getElementById('h2');
     var pie = document.getElementById('myPieChart').getContext('2d');
@@ -87,6 +92,24 @@
         }
     });
 
+    //匯出
+    //点击下載圖片
+    divPie.addEventListener('dblclick', async event => {
+        // 使用 html2canvas 將 Canvas 元素轉換為圖片
+        html2canvas(canvas).then(function (canvas) {
+            // 將圖片保存為文件（例如 PNG）
+            var link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'PieChart.png';
+            link.click();
+        });
+
+        var chartData = pie.data;
+
+
+    });
+
+
 
 
     var DeveloperId = 0;
@@ -107,7 +130,7 @@
     });
 
     const loadDatas = async () => {
-        
+
             const response = await fetch(`@Url.Content("~/GameData/GetPieDataFromDatabase")?id=${DeveloperId}`, {
                 method: 'POST',
                 headers: {
@@ -116,7 +139,7 @@
             });
 
             datas = await response.json();
-        
+
     }
 
 </script>
