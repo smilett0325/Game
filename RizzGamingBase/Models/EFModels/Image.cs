@@ -14,7 +14,7 @@ namespace RizzGamingBase.Models.EFModels
 
         [Required]
         [StringLength(3000)]
-        public string Display { get; set; }
+        public string DisplayImage { get; set; }
 
         public virtual Game Game { get; set; }
     }

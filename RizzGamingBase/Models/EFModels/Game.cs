@@ -33,6 +33,10 @@ namespace RizzGamingBase.Models.EFModels
         public string Name { get; set; }
 
         [Required]
+        [StringLength(50)]
+        public string Introduction { get; set; }
+
+        [Required]
         [StringLength(1000)]
         public string Description { get; set; }
 
