@@ -6,16 +6,18 @@ namespace RizzGamingBase.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class GameTag
+    public partial class BillItem
     {
         public int Id { get; set; }
 
+        public int BillDetailId { get; set; }
+
         public int GameId { get; set; }
 
-        public int TagId { get; set; }
+        public decimal Price { get; set; }
+
+        public virtual BillDetail BillDetail { get; set; }
 
         public virtual Game Game { get; set; }
-
-        public virtual Tag Tag { get; set; }
     }
 }

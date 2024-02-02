@@ -21,7 +21,7 @@ namespace RizzGamingBase.Models.EFModels
         [Column(TypeName = "date")]
         public DateTime Date { get; set; }
 
-        public int AdminId { get; set; }
+        public int? AdminId { get; set; }
 
         public DateTime? StatusTime { get; set; }
 

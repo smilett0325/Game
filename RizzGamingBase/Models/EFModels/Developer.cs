@@ -26,13 +26,22 @@ namespace RizzGamingBase.Models.EFModels
 
         [Required]
         [StringLength(50)]
-        public string Password { get; set; }
+        public string EncryptedPassword { get; set; }
 
         [Required]
         [StringLength(256)]
-        public string Mail { get; set; }
+        public string EMail { get; set; }
 
-        public int? Number { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string PhoneNumber { get; set; }
+
+        public DateTime? BanTime { get; set; }
+
+        public bool IsConfirmed { get; set; }
+
+        [StringLength(50)]
+        public string ConfirmCode { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game> Games { get; set; }

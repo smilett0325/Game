@@ -174,7 +174,9 @@
     <Compile Include="Models\EFModels\BanGame.cs" />
     <Compile Include="Models\EFModels\BanMember.cs" />
     <Compile Include="Models\EFModels\BillDetail.cs" />
+    <Compile Include="Models\EFModels\BillItem.cs" />
     <Compile Include="Models\EFModels\Board.cs" />
+    <Compile Include="Models\EFModels\BonusItem.cs" />
     <Compile Include="Models\EFModels\BonusProduct.cs" />
     <Compile Include="Models\EFModels\BonusProductType.cs" />
     <Compile Include="Models\EFModels\Cart.cs" />
@@ -182,12 +184,12 @@
     <Compile Include="Models\EFModels\Comment.cs" />
     <Compile Include="Models\EFModels\Developer.cs" />
     <Compile Include="Models\EFModels\Discount.cs" />
+    <Compile Include="Models\EFModels\DiscountItem.cs" />
     <Compile Include="Models\EFModels\DLC.cs" />
     <Compile Include="Models\EFModels\Friend.cs" />
     <Compile Include="Models\EFModels\Game.cs" />
     <Compile Include="Models\EFModels\GameTag.cs" />
     <Compile Include="Models\EFModels\Image.cs" />
-    <Compile Include="Models\EFModels\Item.cs" />
     <Compile Include="Models\EFModels\Member.cs" />
     <Compile Include="Models\EFModels\MemberTag.cs" />
     <Compile Include="Models\EFModels\Message.cs" />
@@ -246,7 +248,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Models\Dtos\Dto.txt" />
-    <Content Include="Models\EFModels\EFModels.txt" />
     <Content Include="Models\Entities\Entities.txt" />
     <Content Include="Models\Exts\Exts.txt" />
     <Content Include="Models\Infra\Infra.txt" />
@@ -306,6 +307,7 @@
     <Content Include="Views\BonusProducts\Create.cshtml" />
     <Content Include="Views\BonusProducts\Edit.cshtml" />
     <Content Include="Views\BonusProducts\Delete.cshtml" />
+    <Content Include="Views\Shared\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

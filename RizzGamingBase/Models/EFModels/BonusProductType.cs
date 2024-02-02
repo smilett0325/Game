@@ -14,10 +14,7 @@ namespace RizzGamingBase.Models.EFModels
             BonusProducts = new HashSet<BonusProduct>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-
-        public int Type { get; set; }
 
         [Required]
         [StringLength(50)]

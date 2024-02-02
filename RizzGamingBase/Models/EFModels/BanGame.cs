@@ -20,7 +20,7 @@ namespace RizzGamingBase.Models.EFModels
 
         public DateTime Date { get; set; }
 
-        public int AdminId { get; set; }
+        public int? AdminId { get; set; }
 
         public DateTime? StatusTime { get; set; }
 

@@ -40,7 +40,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
                 .Select(bp => new BonusProductsEntity
                 {
                     Id = bp.Id,
-                    ProductTypeId = bp.BonusProductType.Type,
+                    ProductTypeId = bp.BonusProductType.Id,
                     ProductTypeName = bp.BonusProductType.Name,
                     Price = bp.Price,
                     URL = bp.URL,

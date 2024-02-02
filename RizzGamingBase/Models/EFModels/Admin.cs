@@ -18,9 +18,13 @@ namespace RizzGamingBase.Models.EFModels
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
-        public int Account { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Account { get; set; }
 
-        public int Password { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Password { get; set; }
 
         public int Identity { get; set; }
 
