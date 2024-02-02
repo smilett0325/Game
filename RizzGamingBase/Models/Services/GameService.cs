@@ -109,12 +109,13 @@ namespace RizzGamingBase.Models.Services
 				Video = displayVideo.FileName,
 			};
 
-			uploadFileHelper.UploadCoverFileToScratch(cover); //todo , coverScratchPath
-			uploadFileHelper.UploadDisplayVideoFileToScratch(displayVideo);//, displayVideoScratchPath
 			var gameId = _repo.Create(game.DtoToEntity());
-			uploadFileHelper.MoveCoverFromScratch(game.Cover, developerId, gameId);
-			uploadFileHelper.MoveVideoFromScratch(game.Video, developerId, gameId);
 
+			string[] imgAllowedExtensions = { ".jpg", ".jpeg", ".png" };
+			string[] vdoAllowedExtensions = { ".mp4", ".webm" };
+
+			uploadFileHelper.UploadFile(cover, "Covers", developerId, gameId, imgAllowedExtensions);
+			uploadFileHelper.UploadFile(displayVideo, "DisplayVideos", developerId, gameId, vdoAllowedExtensions);
 			//Create image
 
 			foreach (var di in displayImages)
@@ -125,7 +126,9 @@ namespace RizzGamingBase.Models.Services
 					DisplayImage = di.FileName,
 				};
 
-				uploadFileHelper.UploadDisplayImageFile(di, developerId, gameId);//, displayImagePath
+				string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+
+				uploadFileHelper.UploadFile(di,"DisplayImages" ,developerId, gameId, allowedExtensions);//, displayImagePath
 				iRepo.Create(image);
 			};
 

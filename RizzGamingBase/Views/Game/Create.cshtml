@@ -248,7 +248,7 @@
                 } else {
                     // 不符合要求的處理邏輯，例如發出警告
                     alert("不符合要求的檔案：" + fileName);
-                    document.getElementById('fileInput').value = '';
+                    document.getElementById('fileInputImg').value = '';
                 }
             }
 
@@ -310,11 +310,11 @@
                 } else {
                     // 不符合要求的處理邏輯，例如發出警告
                     alert("不符合要求的檔案：" + fileName);
-                    document.getElementById('fileInput').value = '';
+                    document.getElementById('fileInputVdo').value = '';
                 }
             }
 
-            if (fileInputVdo.files.length >= 2) {
+            if (fileInputVdo.files.length >= 1) {
                 fileInputVdo.disabled = true;
                 console.log("File input disabled");
             }

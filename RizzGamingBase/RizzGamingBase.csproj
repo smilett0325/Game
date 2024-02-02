@@ -5153,7 +5153,6 @@
     <Content Include="SQL\完整資料庫\完整資料庫20240114指令碼.ipynb" />
     <Content Include="SQL\完整資料庫\完整資料庫20240121指令碼.ipynb" />
     <Content Include="Views\Game\Index.cshtml" />
-    <Content Include="Views\Game\Edit.cshtml" />
     <Content Include="Views\Game\Create.cshtml" />
     <Content Include="Views\Mananger\Index.cshtml" />
     <Content Include="Views\Mananger\IsBan.cshtml" />
@@ -5172,6 +5171,7 @@
     <Content Include="Views\GameData\LineChart.cshtml" />
     <Content Include="Views\GameData\PieChart.cshtml" />
     <Content Include="Views\Shared\AdminBoard.cshtml" />
+    <Content Include="Views\Game\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

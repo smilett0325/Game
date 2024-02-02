@@ -30,7 +30,7 @@ namespace RizzGamingBase.Controllers
 		}
 
 		//[Authorize]
-		public ActionResult Edit(int id = 2)
+		public ActionResult Edit(int id = 69)
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
