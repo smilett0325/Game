@@ -1,0 +1,110 @@
+﻿@model RizzGamingBase.Models.ViewModels.BonusProductsCreateVm
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>BonusProductsCreateVm</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @*<div class="md-3">
+                @Html.LabelFor(model => model.TypeName, htmlAttributes: new { @class = "form-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TypeName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TypeName, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        <div class="mb-3">
+            <div class="ProductTypeSelect">
+                <select id="productTypeSelect" class="form-control form-select">
+                </select>
+                <span id="productTypeValidation" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="md-3">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="md-3">
+            @Html.LabelFor(model => model.URL, htmlAttributes: new { @class = "form-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.URL, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.URL, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="md-3">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="md-3">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+
+    <script>
+        var productTypeSelect = document.getElementById("productTypeSelect");
+        var btn = document.getElementById("btn");
+
+        // to do : 設計成能夠在外部新增新類別並動態添加近來
+        var producTypes =
+            [
+                { id: 1, name: '靜態頭像' },
+                { id: 2, name: '動態頭像' },
+                { id: 3, name: '靜態外框' },
+                { id: 4, name: '動態外框' },
+                { id: 5, name: '靜態貼圖' },
+                { id: 6, name: '動態貼圖' },
+                { id: 7, name: '靜態主題' },
+                { id: 8, name: '動態主題' }
+            ];
+
+        var defaultOption = document.createElement("option");
+        defaultOption.text = "--請選擇類別--";
+        productTypeSelect.appendChild(defaultOption);
+
+        producTypes.forEach(function (item) {
+            var option = document.createElement("option");
+            option.text = item.name;
+            option.value = item.id;
+            productTypeSelect.appendChild(option);
+        });
+
+        productTypeSelect.addEventListener("change", function () {
+            var productType = productTypeSelect.options[productTypeSelect.selectedIndex].value;
+            var productTypeValidation = document.getElementById("productTypeValidation");
+            console.log(productType);
+            if (productType === "") {
+                productTypeValidation.innerText = "請選擇類別";
+            } else {
+                productTypeValidation.innerText = "";
+            }
+        });
+    </script>
+}
