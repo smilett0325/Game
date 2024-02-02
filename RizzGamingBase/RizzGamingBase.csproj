@@ -47,12 +47,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -225,18 +219,6 @@
     <Compile Include="Models\Dtos\GTDto.cs" />
     <Compile Include="Models\Dtos\ImageDto.cs" />
     <Compile Include="Models\Dtos\TagDto.cs" />
-    <Compile Include="Models\EFModels\AppDbContext.cs" />
-    <Compile Include="Models\EFModels\BillDetail.cs" />
-    <Compile Include="Models\EFModels\Comment.cs" />
-    <Compile Include="Models\EFModels\Developer.cs" />
-    <Compile Include="Models\EFModels\Discount.cs" />
-    <Compile Include="Models\EFModels\DiscountItem.cs" />
-    <Compile Include="Models\EFModels\DLC.cs" />
-    <Compile Include="Models\EFModels\Game.cs" />
-    <Compile Include="Models\EFModels\GameTag.cs" />
-    <Compile Include="Models\EFModels\Image.cs" />
-    <Compile Include="Models\EFModels\Member.cs" />
-    <Compile Include="Models\EFModels\Tag.cs" />
     <Compile Include="Models\Entities\DiscountEntity.cs" />
     <Compile Include="Models\Entities\DiscountItemEntity.cs" />
     <Compile Include="Models\Entities\DLCEntity.cs" />

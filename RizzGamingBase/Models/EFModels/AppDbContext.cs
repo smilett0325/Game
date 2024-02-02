@@ -5,17 +5,17 @@ using System.Linq;
 
 namespace RizzGamingBase.Models.EFModels
 {
-	public partial class AppDbContext : DbContext
-	{
-		public AppDbContext()
-			: base("name=AppDbContext")
-		{
-		}
+    public partial class AppDbContext : DbContext
+    {
+        public AppDbContext()
+            : base("name=AppDbContext")
+        {
+        }
 
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<BanGame> BanGames { get; set; }
         public virtual DbSet<BanMember> BanMembers { get; set; }
-		public virtual DbSet<BillDetail> BillDetails { get; set; }
+        public virtual DbSet<BillDetail> BillDetails { get; set; }
         public virtual DbSet<BillItem> BillItems { get; set; }
         public virtual DbSet<Board> Boards { get; set; }
         public virtual DbSet<BonusItem> BonusItems { get; set; }
@@ -23,35 +23,28 @@ namespace RizzGamingBase.Models.EFModels
         public virtual DbSet<BonusProductType> BonusProductTypes { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Collection> Collections { get; set; }
-		public virtual DbSet<Comment> Comments { get; set; }
-		public virtual DbSet<Developer> Developers { get; set; }
-		public virtual DbSet<DiscountItem> DiscountItems { get; set; }
-		public virtual DbSet<Discount> Discounts { get; set; }
-		public virtual DbSet<DLC> DLCs { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Developer> Developers { get; set; }
+        public virtual DbSet<DiscountItem> DiscountItems { get; set; }
+        public virtual DbSet<Discount> Discounts { get; set; }
+        public virtual DbSet<DLC> DLCs { get; set; }
         public virtual DbSet<Friend> Friends { get; set; }
-		public virtual DbSet<Game> Games { get; set; }
-		public virtual DbSet<GameTag> GameTags { get; set; }
-		public virtual DbSet<Image> Images { get; set; }
-        public virtual DbSet<Item> Items { get; set; }
-		public virtual DbSet<Member> Members { get; set; }
+        public virtual DbSet<Game> Games { get; set; }
+        public virtual DbSet<GameTag> GameTags { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
+        public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MemberTag> MemberTags { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-		public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<WishListe> WishListes { get; set; }
-        public virtual DbSet<SeasonDiscount> SeasonDiscounts { get; set; }
 
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		{
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<BillDetail>()
                 .HasMany(e => e.BillItems)
                 .WithRequired(e => e.BillDetail)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Admin>()
-                .HasMany(e => e.BanMembers)
-                .WithRequired(e => e.Admin)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<BillDetail>()
@@ -81,20 +74,20 @@ namespace RizzGamingBase.Models.EFModels
                 .HasForeignKey(e => e.ProductTypeId)
                 .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Developer>()
-				.HasMany(e => e.Games)
-				.WithRequired(e => e.Developer)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Developer>()
+                .HasMany(e => e.Games)
+                .WithRequired(e => e.Developer)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Discount>()
-				.HasMany(e => e.DiscountItems)
-				.WithRequired(e => e.Discount)
+            modelBuilder.Entity<Discount>()
+                .HasMany(e => e.DiscountItems)
+                .WithRequired(e => e.Discount)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Discount>()
                 .HasMany(e => e.WishListes)
                 .WithRequired(e => e.Discount)
-				.WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Friend>()
                 .Property(e => e.Relationship)
@@ -113,7 +106,6 @@ namespace RizzGamingBase.Models.EFModels
             modelBuilder.Entity<Game>()
                 .HasMany(e => e.BillItems)
                 .WithRequired(e => e.Game)
-                .HasForeignKey(e => e.GameId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Game>()
@@ -126,38 +118,37 @@ namespace RizzGamingBase.Models.EFModels
                 .WithRequired(e => e.Game)
                 .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Game>()
-				.HasMany(e => e.Comments)
-				.WithRequired(e => e.Game)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Game>()
+                .HasMany(e => e.Comments)
+                .WithRequired(e => e.Game)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Game>()
-				.HasMany(e => e.DiscountItems)
-				.WithRequired(e => e.Game)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Game>()
+                .HasMany(e => e.DiscountItems)
+                .WithRequired(e => e.Game)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Game>()
-				.HasMany(e => e.DLCs)
-				.WithRequired(e => e.Game)
-				.HasForeignKey(e => e.GameId)
-				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<Game>()
-				.HasMany(e => e.DLCs1)
-				.WithRequired(e => e.Game1)
-				.HasForeignKey(e => e.AttachedGameId)
-				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<Game>()
-				.HasMany(e => e.GameTags)
-				.WithRequired(e => e.Game)
+            modelBuilder.Entity<Game>()
+                .HasMany(e => e.DLCs)
+                .WithRequired(e => e.Game)
                 .HasForeignKey(e => e.GameId)
-				.WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Game>()
-				.HasMany(e => e.Images)
-				.WithRequired(e => e.Game)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Game>()
+                .HasMany(e => e.DLCs1)
+                .WithRequired(e => e.Game1)
+                .HasForeignKey(e => e.AttachedGameId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Game>()
+                .HasMany(e => e.GameTags)
+                .WithRequired(e => e.Game)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Game>()
+                .HasMany(e => e.Images)
+                .WithRequired(e => e.Game)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Game>()
                 .HasMany(e => e.MemberTags)
@@ -167,12 +158,6 @@ namespace RizzGamingBase.Models.EFModels
             modelBuilder.Entity<Game>()
                 .HasMany(e => e.WishListes)
                 .WithRequired(e => e.Game)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<GameTag>()
-                .HasMany(e => e.Games)
-                .WithRequired(e => e.GameTag)
-                .HasForeignKey(e => e.GameTagId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Member>()
@@ -212,14 +197,14 @@ namespace RizzGamingBase.Models.EFModels
                 .WithRequired(e => e.Member)
                 .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Member>()
+            modelBuilder.Entity<Member>()
                 .HasMany(e => e.Collections)
                 .WithRequired(e => e.Member)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Member>()
-				.HasMany(e => e.Comments)
-				.WithRequired(e => e.Member)
+                .HasMany(e => e.Comments)
+                .WithRequired(e => e.Member)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Member>()
@@ -233,11 +218,6 @@ namespace RizzGamingBase.Models.EFModels
                 .WithRequired(e => e.Member1)
                 .HasForeignKey(e => e.Member2Id)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Member>()
-                .HasMany(e => e.Items)
-                .WithRequired(e => e.Member)
-				.WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Member>()
                 .HasMany(e => e.MemberTags)
@@ -264,14 +244,14 @@ namespace RizzGamingBase.Models.EFModels
                 .WithRequired(e => e.Message)
                 .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Tag>()
-				.Property(e => e.Name)
-				.IsUnicode(false);
+            modelBuilder.Entity<Tag>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Tag>()
-				.HasMany(e => e.GameTags)
-				.WithRequired(e => e.Tag)
-				.WillCascadeOnDelete(false);
-		}
-	}
+            modelBuilder.Entity<Tag>()
+                .HasMany(e => e.GameTags)
+                .WithRequired(e => e.Tag)
+                .WillCascadeOnDelete(false);
+        }
+    }
 }
