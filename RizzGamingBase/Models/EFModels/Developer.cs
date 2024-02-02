@@ -26,7 +26,7 @@ namespace RizzGamingBase.Models.EFModels
         public string Account { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(1000)]
         public string EncryptedPassword { get; set; }
 
         [Required]
@@ -41,7 +41,7 @@ namespace RizzGamingBase.Models.EFModels
 
         public bool IsConfirmed { get; set; }
 
-        [StringLength(50)]
+        [StringLength(500)]
         public string ConfirmCode { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

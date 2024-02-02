@@ -17,8 +17,6 @@ namespace RizzGamingBase.Models.EFModels
 
         public int Id { get; set; }
 
-        public int GameId { get; set; }
-
         public int MemberId { get; set; }
 
         public decimal FinalPayment { get; set; }
@@ -30,8 +28,6 @@ namespace RizzGamingBase.Models.EFModels
         public int? DiscountId { get; set; }
 
         public virtual Discount Discount { get; set; }
-
-        public virtual Game Game { get; set; }
 
         public virtual Member Member { get; set; }
 
