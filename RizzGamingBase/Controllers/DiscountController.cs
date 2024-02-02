@@ -184,7 +184,7 @@ namespace RizzGamingBase.Controllers
                     Developer = item.Developer.Name,
                     Price = item.Price,
                     Image = item.Cover,
-                    MaxPercent = item.MaxPersent
+                    MaxPercent = item.MaxPercent
 
                 };
                 return Json(game, JsonRequestBehavior.AllowGet);
@@ -208,7 +208,7 @@ namespace RizzGamingBase.Controllers
                     Developer = item.Developer.Name,
                     Price = item.Price,
                     Image = item.Cover,
-                    MaxPercent = item.MaxPersent
+                    MaxPercent = item.MaxPercent
 
                 };
                 return Json(game, JsonRequestBehavior.AllowGet);
@@ -250,7 +250,7 @@ namespace RizzGamingBase.Controllers
                                       Developer = d.Game.Developer.Name,
                                       Price = d.Game.Price,
                                       Image = d.Game.Cover,
-                                      MaxPercent = d.Game.MaxPersent
+                                      MaxPercent = d.Game.MaxPercent
                                   }).ToList();
 
             return Json(discountgames, JsonRequestBehavior.AllowGet);
@@ -270,7 +270,7 @@ namespace RizzGamingBase.Controllers
                                     Developer = d.Developer.Name,
                                     Price = d.Price,
                                     Image = d.Cover,
-                                    MaxPercent = d.MaxPersent
+                                    MaxPercent = d.MaxPercent
                                 }).ToList();
           
             
@@ -286,7 +286,7 @@ namespace RizzGamingBase.Controllers
                                       Developer = d.Game.Developer.Name,
                                       Price = d.Game.Price,
                                       Image = d.Game.Cover,
-                                      MaxPercent = d.Game.MaxPersent
+                                      MaxPercent = d.Game.MaxPercent
                                   }).ToList();
             
             

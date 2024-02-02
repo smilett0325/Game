@@ -99,11 +99,6 @@ namespace RizzGamingBase.Models.EFModels
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Game>()
-                .HasMany(e => e.BillDetails)
-                .WithRequired(e => e.Game)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Game>()
                 .HasMany(e => e.BillItems)
                 .WithRequired(e => e.Game)
                 .WillCascadeOnDelete(false);

@@ -1,15 +1,25 @@
-﻿<!DOCTYPE html>
+﻿@{
+    bool IsDeveloperLogin = true;
+    if (string.IsNullOrWhiteSpace(User.Identity.Name))
+    {
+        IsDeveloperLogin = false;
+    }
+}
+
+
+
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - 我的 ASP.NET 應用程式</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
 </head>
 <body>
-
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
             @Html.ActionLink("應用程式名稱", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -20,8 +30,27 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("首頁", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("關於", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("連絡人", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("BonusProductsCreate", "Create", "BonusProducts", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("BonusProductsIndex", "Index", "BonusProducts", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("活動", "Index", "Discount", new { area = "" }, new { @class = "nav-link" })</li>
+                    @{
+
+                        if (IsDeveloperLogin)
+                        {
+                            <li>@Html.ActionLink(User.Identity.Name, "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("登出", "LogOut", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
+                        }
+
+                        else
+                        {
+                            <li>@Html.ActionLink("登入", "Login", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("註冊", "Register", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
+                        }
+                    }
+
                 </ul>
             </div>
         </div>
@@ -36,6 +65,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     @RenderSection("scripts", required: false)
+    
 </body>
 </html>

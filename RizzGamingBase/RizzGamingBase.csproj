@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -45,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -131,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -164,11 +172,15 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BonusProductsController.cs" />
     <Compile Include="Controllers\DiscountController.cs" />
+    <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Controllers\DeveloperController.cs" />
+    <Compile Include="Controllers\GameDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\ManangerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Dtos\BonusProductsDto.cs" />
     <Compile Include="Models\Dtos\DiscountCreateDto.cs" />
     <Compile Include="Models\Dtos\DiscountDto.cs" />
     <Compile Include="Models\EFModels\Admin.cs" />
@@ -199,6 +211,16 @@
     <Compile Include="Models\EFModels\sysdiagram.cs" />
     <Compile Include="Models\EFModels\Tag.cs" />
     <Compile Include="Models\EFModels\WishListe.cs" />
+    <Compile Include="Models\Entities\BonusProductsEntity.cs" />
+    <Compile Include="Models\Exts\BonusProductExts.cs" />
+    <Compile Include="Models\Interfaces\IBonusProductsRepository.cs" />
+    <Compile Include="Models\Interfaces\IBonusProductsServices.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\BonusProductsEFRepository.cs" />
+    <Compile Include="Models\Services\BonusProductsServices.cs" />
+    <Compile Include="Models\ViewModels\BonusProductsCreateVm.cs" />
+    <Compile Include="Models\ViewModels\BonusProductsEditVm.cs" />
+    <Compile Include="Models\ViewModels\BonusProductsIndexVm.cs" />
+    <Compile Include="Models\ViewModels\BonusProductsVm.cs" />
     <Compile Include="Models\Entities\DiscountCreateEntity.cs" />
     <Compile Include="Models\Entities\DiscountEntity.cs" />
     <Compile Include="Models\Exts\DiscountActionExts.cs" />
@@ -210,6 +232,67 @@
     <Compile Include="Models\ViewModels\DiscountEventVm.cs" />
     <Compile Include="Models\ViewModels\DiscountGameVm.cs" />
     <Compile Include="Models\ViewModels\DiscountIndexVm.cs" />
+    <Compile Include="Models\Class\GameInfo.cs" />
+    <Compile Include="Models\Dtos\DiscountDto.cs" />
+    <Compile Include="Models\Dtos\DiscountItemDto.cs" />
+    <Compile Include="Models\Dtos\DLCDto.cs" />
+    <Compile Include="Models\Dtos\GameDto.cs" />
+    <Compile Include="Models\Dtos\GTDto.cs" />
+    <Compile Include="Models\Dtos\ImageDto.cs" />
+    <Compile Include="Models\Dtos\TagDto.cs" />
+    <Compile Include="Models\Entities\DiscountEntity.cs" />
+    <Compile Include="Models\Entities\DiscountItemEntity.cs" />
+    <Compile Include="Models\Entities\DLCEntity.cs" />
+    <Compile Include="Models\Entities\GameEntity.cs" />
+    <Compile Include="Models\Entities\GTEntity.cs" />
+    <Compile Include="Models\Entities\ImageEntity.cs" />
+    <Compile Include="Models\Entities\TagEntity.cs" />
+    <Compile Include="Models\Exts\GameExts.cs" />
+    <Compile Include="Models\Exts\GTExts.cs" />
+    <Compile Include="Models\Exts\ImageExts.cs" />
+    <Compile Include="Models\Exts\TagExts.cs" />
+    <Compile Include="Models\Infra\DAHelper.cs" />
+    <Compile Include="Models\Infra\Pagination.cs" />
+    <Compile Include="Models\Infra\UploadFileHelper.cs" />
+    <Compile Include="Models\Interfaces\IDLCRepository.cs" />
+    <Compile Include="Models\Interfaces\IGameRepository.cs" />
+    <Compile Include="Models\Interfaces\IGTRepository.cs" />
+    <Compile Include="Models\Interfaces\IImageRepository.cs" />
+    <Compile Include="Models\Interfaces\ITagRepository.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\DLCEFRepository.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\GameEFRepository.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\GTEFRepository.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\ImageEFRepository.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\sysdiagram.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\TagEFRepository.cs" />
+    <Compile Include="Models\Services\GameService.cs" />
+    <Compile Include="Models\Services\GTService.cs" />
+    <Compile Include="Models\Services\TagService.cs" />
+    <Compile Include="Models\ViewModels\DeveloperGameEditVm.cs" />
+    <Compile Include="Models\ViewModels\GameIndexVm.cs" />
+    <Compile Include="Models\Exts\DeveloperExt.cs" />
+    <Compile Include="Models\Exts\RegisterExt.cs" />
+    <Compile Include="Models\Infra\DAHelper.cs" />
+    <Compile Include="Models\Infra\EMailHelper.cs" />
+    <Compile Include="Models\Infra\HashUtility.cs" />
+    <Compile Include="Models\ViewModels\Developer\EditPasswordVm.cs" />
+    <Compile Include="Models\ViewModels\Developer\EditProfileVm.cs" />
+    <Compile Include="Models\ViewModels\Manerger\BanedDevVm.cs" />
+    <Compile Include="Models\ViewModels\Manerger\DeveloperInfoVm.cs" />
+    <Compile Include="Models\ViewModels\Developer\ForgetPasswordVm.cs" />
+    <Compile Include="Models\ViewModels\Developer\LoginVm.cs" />
+    <Compile Include="Models\ViewModels\Developer\RegisterVm.cs" />
+    <Compile Include="Models\ViewModels\Developer\ResetPasswordVM.cs" />
+    <Compile Include="Models\Dtos\GameDataDto.cs" />
+    <Compile Include="Models\Entities\GameDataEntity.cs" />
+    <Compile Include="Models\Exts\GameDataExts.cs" />
+    <Compile Include="Models\Exts\SelectListExts.cs" />
+    <Compile Include="Models\Interfaces\IGameDataRepository.cs" />
+    <Compile Include="Models\Interfaces\ISelectListItem.cs" />
+    <Compile Include="Models\Interfaces\ISelectListService.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\GameDataEFRepository.cs" />
+    <Compile Include="Models\Services\GameDataService.cs" />
+    <Compile Include="Models\ViewModels\GameDataVm.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -414,15 +497,12 @@
     <Content Include="docs\_layouts\page.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Models\Dtos\Dto.txt" />
-    <Content Include="Models\Entities\Entities.txt" />
     <Content Include="Models\Exts\Exts.txt" />
     <Content Include="Models\Infra\Infra.txt" />
     <Content Include="Models\Interfaces\Interface.txt" />
     <Content Include="Models\Repositories\DpRepositories\DpRepository.txt" />
     <Content Include="Models\Repositories\EFRepositories\EFRepository.txt" />
     <Content Include="Models\Repositories\Repositories.txt" />
-    <Content Include="Models\Services\Services.txt" />
     <Content Include="Models\ViewModels\ViewModels.txt" />
     <Content Include="pages\build\config\postcss.config.js" />
     <Content Include="pages\build\config\rollup.config.js" />
@@ -4386,6 +4466,8 @@
     <Content Include="plugins\uplot\uPlot.iife.js" />
     <Content Include="plugins\uplot\uPlot.iife.min.js" />
     <Content Include="plugins\uplot\uPlot.min.css" />
+    <Content Include="new.sql" />
+    <Content Include="ReadMe.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -5023,12 +5105,26 @@
     <Content Include="plugins\summernote\summernote.js.map" />
     <Content Include="plugins\summernote\summernote.min.js.map" />
     <Content Include="plugins\toastr\toastr.js.map" />
+    <Content Include="﻿ReadMe.txt" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
+    <Content Include="假資料.txt" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="SQL\20240118Update.sql" />
+    <Content Include="SQL\77.sql" />
+    <Content Include="SQL\Jo資料庫.sql" />
+    <Content Include="SQL\姚欽堂.sql" />
+    <Content Include="SQL\完整資料庫\資料庫圖表20240113.png" />
+    <Content Include="SQL\完整資料庫\資料庫圖表20240114.png" />
+    <Content Include="SQL\張淳毓.sql" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -5043,15 +5139,47 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\BonusProducts\Index.cshtml" />
+    <Content Include="Views\BonusProducts\Create.cshtml" />
+    <Content Include="Views\BonusProducts\Edit.cshtml" />
+    <Content Include="Views\BonusProducts\Delete.cshtml" />
     <Content Include="Views\Discount\Index.cshtml" />
     <Content Include="Views\Discount\Edit.cshtml" />
     <Content Include="Views\Discount\Create.cshtml" />
-    <Content Include="Views\Shared\Test.cshtml" />
     <Content Include="Views\Discount\test.cshtml" />
     <Content Include="Views\Discount\Home.cshtml" />
+    <Content Include="SQL\HanlaossSQL.ipynb" />
+    <Content Include="SQL\完整資料庫\完整資料庫20240113指令碼.ipynb" />
+    <Content Include="SQL\完整資料庫\完整資料庫20240114指令碼.ipynb" />
+    <Content Include="SQL\完整資料庫\完整資料庫20240121指令碼.ipynb" />
+    <Content Include="Views\Game\Index.cshtml" />
+    <Content Include="Views\Game\Edit.cshtml" />
+    <Content Include="Views\Game\Create.cshtml" />
+    <Content Include="Views\Mananger\Index.cshtml" />
+    <Content Include="Views\Mananger\IsBan.cshtml" />
+    <Content Include="Views\Developer\Index.cshtml" />
+    <Content Include="Views\Developer\Register.cshtml" />
+    <Content Include="Views\Developer\Login.cshtml" />
+    <Content Include="Views\Developer\RegisterConfirm.cshtml" />
+    <Content Include="Views\Developer\ActiveRegister.cshtml" />
+    <Content Include="Views\Developer\EditProfile.cshtml" />
+    <Content Include="Views\Developer\EditPassword.cshtml" />
+    <Content Include="Views\Developer\ForgetPassword.cshtml" />
+    <Content Include="Views\Developer\ForgetPasswordConfirm.cshtml" />
+    <Content Include="Views\Developer\ResetPassword.cshtml" />
+    <Content Include="Views\Developer\ConfirmResetPassword.cshtml" />
+    <Content Include="Views\GameData\Chart.cshtml" />
+    <Content Include="Views\GameData\LineChart.cshtml" />
+    <Content Include="Views\GameData\PieChart.cshtml" />
+    <Content Include="Views\Shared\AdminBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
+    <Folder Include="Images\Covers\" />
+    <Folder Include="Images\DisplayImages\" />
+    <Folder Include="Images\DisplayVideos\" />
+    <Folder Include="Views\Api\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />
@@ -5121,8 +5249,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -5157,7 +5285,10 @@
       <ErrorText>此專案參考這部電腦上所缺少的 NuGet 套件。請啟用 NuGet 套件還原，以下載該套件。如需詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的檔案是 {0}。</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
