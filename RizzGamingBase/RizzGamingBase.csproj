@@ -5166,7 +5166,7 @@
     <Content Include="Views\GameData\PieChart.cshtml" />
     <Content Include="Views\Shared\AdminBoard.cshtml" />
     <Content Include="Views\Shared\AdminBoard_.cshtml" />
-    <Content Include="Views\Shared\Test.cshtml" />
+    <Content Include="Views\Shared\Developer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
