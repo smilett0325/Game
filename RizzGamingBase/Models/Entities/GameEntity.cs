@@ -30,7 +30,7 @@ namespace RizzGamingBase.Models.Entities
 
 		[Required]
 		[StringLength(200)]
-		public string Image { get; set; }
+		public string Cover { get; set; }
 
 		public int DeveloperId { get; set; }
 

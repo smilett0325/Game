@@ -18,7 +18,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 			{
 				Id = entity.Id,
 				GameId = entity.GameId,
-				AttachmentGameId = entity.AttachmentGameId
+				AttachedGameId = entity.AttachedGameId
 			};
 
 			db.DLCs.Add(model);
@@ -40,7 +40,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 				{
 					Id = v.Id,
 					GameId = v.GameId,
-					AttachmentGameId = v.AttachmentGameId
+					AttachedGameId = v.AttachedGameId
 				})
 				.FirstOrDefault();
 		}
@@ -50,7 +50,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 			DLC model = db.DLCs.Find(entity.Id);
 
 			model.GameId = entity.GameId;
-			model.AttachmentGameId = entity.AttachmentGameId;
+			model.AttachedGameId = entity.AttachedGameId;
 
 			db.SaveChanges();
 		}
@@ -58,7 +58,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 		public List<GameEntity> GetDLCGame(int id)
 		{
 			return db.DLCs.AsNoTracking()
-				.Where(x => x.AttachmentGameId == id)
+				.Where(x => x.AttachedGameId == id)
 				.Join(
 				db.Games,
 				x => x.GameId,
@@ -73,7 +73,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 					Description = v.Description,
 					ReleaseDate = v.ReleaseDate,
 					Price = v.Price,
-					Image = v.Image,
+					Cover = v.Cover,
 					DeveloperId = v.DeveloperId,
 					MaxPercent = v.MaxPercent,
 				})

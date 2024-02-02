@@ -17,105 +17,127 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div>
-            <div class="mb-1"><p class="">新增標籤</p><button type="button" class="btn btn-light" onclick="showTagModal()" onclose="uploadTags()">+</button></div>
-            <div id="selectedTagsContainer"></div>
+            <div class="mb-1"><p class="d-inline-block">選擇主遊戲(若沒則不選擇)</p><button type="button" class="form-label btn btn-light" onclick="showDLCModal()">+</button></div>
+            <div id="selectedDLCContainer"></div>
         </div>
 
-        <div id="tagModal" class="modal" tabindex="-1" style="display: none;">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Modal title</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="activeAddTag">
-                                //生成已選tag
+        <div id="dlcModal" class="modal modal-lg" tabindex="-1" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">選擇主遊戲</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="DLCActiveClass">      
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">搜尋</span>
+                                <input id="search" type="text" class="form-control" placeholder="搜尋" aria-label="Username" aria-describedby="basic-addon1" onkeydown="filterGame()">
                             </div>
-                            <hr/>
-                            //列出全部tag
-                            @foreach (var tag in ViewBag.TagList)
-                    {
-                        <button type="button" class="btn btn-primary btn-sm m-1" onclick="addTag()" data-Id=`@tag.Id`>@tag.Name</button>
-                    }
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
+                        @foreach (var game in ViewBag.gameList)
+                        {
+                            <button id="@game.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')">@game.Name</button>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">關閉</button>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div>
+            <div class="mb-1"><p class="d-inline-block">編輯標籤</p><button type="button" class="form-label btn btn-light" onclick="showTagModal()">+</button></div>
+            <div id="selectedTagsContainer"></div>
+        </div>
+
+        <div id="tagModal" class="modal modal-lg" tabindex="-1" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">編輯標籤</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h2>已選標籤</h2>
+                        <div id="activeAddTag"></div>
+                        <hr />
+                        <h2>標籤列表</h2>
+                        @foreach (var tag in ViewBag.TagList)
+                        {
+                            <button id="@tag.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addTag('@tag.Id', '@tag.Name')">@tag.Name</button>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="mb-3">
-            <input type="file" name="cover" id="fileInputCov" onchange="coverFileChange()" />
-            <button type="button" class="btn btn-primary delete-cover btn-sm" disabled>重新上傳</button>
+            <div>
+                <label class="form-label">封面圖片</label>
+            </div>
+            <input type="file" name="cover" id="fileInputCov" class="form-control d-inline-block" onchange="coverFileChange()" />
+            <button type="button" class="btn btn-primary delete-cover " disabled>重新上傳</button>
         </div>
         <div id="coverContainer" class="mb-3"></div>
 
         <div class="mb-3">
-            <input type="file" name="displayImages" id="fileInputImg" onchange="imageFileChange()" multiple />
-            <button type="button" class="btn btn-primary delete-img btn-sm" disabled>重新上傳</button>
+            <div>
+                <label class="form-label">展示圖片</label>
+            </div>
+            <input type="file" name="displayImages" id="fileInputImg" class="form-control d-inline-block" onchange="imageFileChange()" multiple />
+            <button type="button" class="btn btn-primary delete-img " disabled>重新上傳</button>
         </div>
         <div id="imageContainer" class="mb-3"></div>
 
         <div class="mb-3">
-            <input type="file" name="displayVideo" id="fileInputVdo" onchange="videoFileChange()" multiple />
-            <button type="button" class="btn btn-primary delete-vdo btn-sm" disabled>重新上傳</button>
+            <div>
+                <label class="form-label">預告片</label>
+            </div>
+            <input type="file" name="displayVideo" id="fileInputVdo" class="form-control d-inline-block" onchange="videoFileChange()" />
+            <button type="button" class="btn btn-primary delete-vdo " disabled>重新上傳</button>
         </div>
         <div id="videoContainer" class="mb-3"></div>
 
-
-
-        @*<div>
-                <input type="file" name="files" id="fileInput" multiple />
-                <input type="submit" value="Upload" style="display: none;" />
-            </div>
-
-            <div id="imageContainer">
-            </div>*@
-
-        @*<div>
-                <input type="file" name="files" id="fileInput" multiple />
-                <input type="submit" value="Upload" style="display: none;" />
-            </div>
-
-            <div id="imageContainer">
-            </div>*@
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label col-md-2" })
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "form-label col-md-2" })
             @Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label col-md-2" })
             @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "form-label col-md-2" })
+
+            @*@Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @type = "date", @class = "form-control" } })
+
+
             @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-label col-md-2" })
             @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
         </div>
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MaxPercent, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MaxPercent, htmlAttributes: new { @class = "form-label col-md-2" })
 
             @Html.EditorFor(model => model.MaxPercent, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.MaxPercent, "", new { @class = "text-danger" })
@@ -135,12 +157,10 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@
     <script>
-    //var reader = new FileReader();
-
-        var formData = new FormData();
 
         function coverFileChange() {
             // 获取文件输入框
@@ -162,10 +182,6 @@
 
                 // 判斷附檔名是否符合要求
                 if (allowedExtensions.includes(fileExtension.toLowerCase())) {
-                    // 符合要求的處理邏輯
-                    //validFiles.push(file);
-                    formData.append('cover', file);
-
                     // 顯示圖片
                     $("#coverContainer").append(`
 <div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
@@ -188,14 +204,14 @@
                 console.log("File input disabled");
             }
 
-            $('.delete-cover').click(function () {
+            $('.delete-cover').on('click', function () {
                 $('#coverContainer').html("");
                 document.getElementById('fileInputCov').value = '';
 
                 $('.delete-cover').prop('disabled', true);
                 fileInputCov.disabled = false;
 
-                formData.delete('cover');
+                //formData.delete('cover');
             });
         }
 
@@ -219,10 +235,6 @@
 
                 // 判斷附檔名是否符合要求
                 if (allowedExtensions.includes(fileExtension.toLowerCase())) {
-                    // 符合要求的處理邏輯
-                    //validFiles.push(file);
-                    formData.append('displayImage', file);
-
                     // 顯示圖片
                     $("#imageContainer").append(`
 <div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
@@ -245,14 +257,14 @@
                 console.log("File input disabled");
             }
 
-            $('.delete-img').click(function () {
+            $('.delete-img').on('click', function () {
                 $('#imageContainer').html("");
                 document.getElementById('fileInputImg').value = '';
 
                 $('.delete-img').prop('disabled', true);
                 fileInputImg.disabled = false;
 
-                formData.delete('displayImage');
+                //formData.delete('displayImage');
             });
         }
 
@@ -281,9 +293,6 @@
 
                 // 判斷附檔名是否符合要求
                 if (allowedExtensions.includes(fileExtension.toLowerCase())) {
-                    // 符合要求的處理邏輯
-                    //validFiles.push(file);
-                    formData.append('displayVideo', file);
 
                     // 顯示圖片
                     $("#videoContainer").append(`
@@ -310,14 +319,14 @@
                 console.log("File input disabled");
             }
 
-            $('.delete-vdo').click(function () {
+            $('.delete-vdo').on('click', function () {
                 $('#videoContainer').html("");
                 document.getElementById('fileInputVdo').value = '';
 
                 $('.delete-vdo').prop('disabled', true);
                 fileInputVdo.disabled = false;
 
-                formData.delete('displayVideo');
+                //formData.delete('displayVideo');
             });
 
             if (fileInputVdo.files.length >= 1) {
@@ -330,143 +339,121 @@
             $('#tagModal').modal('show');
         }
 
-        function uploadTags() { }
+        let selectedTags = [];
 
-        $('#test').click(function () {
-            for (var i = 0; i < ViewBag.TagList.length; i++) {
-                var tag = ViewBag.TagList[i];
+        function addTag(tagId, tagName) {
+            //刻劃button功能
+            $('#activeAddTag').append(`
+                <button id="${tagId}-selected" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="removeTag('${tagId}')">${tagName}</button>
+            `)
+            $("#" + tagId).removeClass("btn-primary").addClass("btn-primary-subtle");
+            $("#" + tagId).prop("disabled", true);
+            $('#selectedTagsContainer').append(`
+                <div id="${tagId}-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">${tagName}</div>
+             `)
 
-                console.log(tag.TagName);
-                console.log(tag.TagId);
+            selectedTags.push(tagId);
+        }
+
+        function removeTag(tagId) {
+            $("#" + tagId + "-selected").remove();
+            $("#" + tagId).removeClass("btn-primary-subtle").addClass("btn-primary");
+            $("#" + tagId).prop("disabled", false);
+            $("#" + tagId + "-show").remove();
+            selectedTags = selectedTags.filter((id) => id !== tagId);
+        }
+
+        function showDLCModal() {
+            $('#dlcModal').modal('show');
+        }
+
+        let selectedGame = [];
+
+        function addDLC(gameId, gameName) {
+            //刻劃button功能
+            $('#selectedDLCContainer').find('.bg-primary').remove();
+            $('#DLCActiveClass').find('.btn-primary-subtle').prop("disabled", false);
+            $('#DLCActiveClass').find('.btn-primary-subtle').removeClass('btn-primary-subtle').addClass("btn-primary");;
+            $("#" + gameId).removeClass("btn-primary").addClass("btn-primary-subtle");
+            $("#" + gameId).prop("disabled", true);
+            $('#selectedDLCContainer').append(`
+                <div id="${gameId}-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">${gameName}</div>
+             `)
+            
+            selectedGame = [gameId];
+            console.log(selectedGame);
+        }
+
+        function filterGame() {
+            var search = $('#search').val();
+
+        }
+
+        $('#submit').on('click',function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(document.getElementById('fileForm'));
+
+            //add tag
+            for (var i = 0; i < selectedTags.length; i++) {
+                formData.append('selectedTags[]', selectedTags[i]);
             }
-           
-        });
 
-    
-    $('#submit').click(function () {
-        //e.preventDefault();
+            //add dlc
+            //for (var i = 0; i < selectedTags.length; i++) {
+            //    formData.append('selectedGame []', selectedGame[i]);
+            //}
+            formData.append('selectedGame', selectedGame);
 
-        @*$.ajax({
-            type: 'POST',
-            url: '@Url.Action("", "Game")',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                if (response.success) {
-                      // 在页面上移除被删除的图片
-                    console.log("Removing element with id: " + imageNameToDelete);
-                    $('.delete-btn').closest('.card').remove();
-                } else {
-                    // 在这里添加处理失败后的逻辑
-                    console.log("Failed to delete image. Error: " + response.message);
-                }
-            },
-        });*@
-    });
+            //add cover
+            var cover = document.getElementsByName('cover');
+            formData.append('cover', cover);
+            console.log("cover");
 
-        @*$(document).ready(function () {
-            $("#fileInput").change(function () {
-                // 当文件选择框内容改变时，立即触发上传
-                $("#fileForm").submit();
+            //add displayImages
+            //var displayImages = document.getElementsByName('displayImages');
+            formData.delete('displayImages');
+            var displayImages = document.getElementById('fileInputImg');
+            var files = displayImages.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                console.log(file);
+                formData.append('displayImages', file);
+            }
+
+            //add displayVideo
+            var displayVideo = document.getElementsByName('displayVideo');
+            for (var i = 0; i < displayVideo.length; i++) {
+                var file = displayVideo[i].files[0]; // 假設只有一個檔案
+                formData.append('displayVideo', file);
+            }
+
+            for (var i = 0; i < cover.length; i++) {
+                var coverInput = cover[i];
+                formData.append('cover', coverInput.files[0]); // 假設只有一個檔案
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create", "Game")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        ////location.replace('@Url.Content("~/Game/Index")?id=${}');
+                        window.location.href = '/Game/Index';
+                    } else {
+
+                    }
+                },
             });
 
-            $("#fileForm").submit(function (e) {
-                e.preventDefault(); // 阻止默认的表单提交行为
-
-                var formData = new FormData(this);
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("coverscratchasync", "Game")',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function (response) {
-                        if (response.success) {
-                            //alert(response.message);
-
-                            // 在这里处理返回的文件信息
-                            var images = response.images;
-                            for (var i = 0; i < images.length; i++) {
-                                var imageUrl = images[i].Name;
-                                var imageId = images[i].NameForId;
-                                console.log(imageId);
-
-                                //$("#coverContainer").append("<img id='" + imageId +"' src='../Image/Scratch/" + imageUrl + "' alt='Uploaded Image' height='200' class='inlineblock imgs'/>");
-
-                                $("#coverContainer").append(`
-    <div class="card d-inline-block" style="width: 18rem;" id="cover${i}">
-      <img src="../Image/Scratch/${imageUrl}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p class="card-text">${imageUrl}</p>
-        <a href="#" class="btn btn-primary delete-btn btn-sm">Delete</a>
-      </div>
-    </div>
-    `);
-                                cover.push(imageUrl);
-
-                                $('.delete-btn').click(function () {
-                                    var imageNameToDelete = "view1";  // 这里替换成实际的图片信息获取逻辑
-                                    var imageNameToDelete1 = "view1.jpg";
-                                    // 构造要发送的数据
-                                    var dataToSend = {
-                                        files: [imageNameToDelete1]
-                                    };
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '@Url.Action("DeleteCoverScratchAsync", "Game")',
-                                        data: dataToSend,
-                                        success: function (response) {
-                                            if (response.success) {
-                                                  // 在页面上移除被删除的图片
-                                                console.log("Removing element with id: " + imageNameToDelete);
-                                                $('.delete-btn').closest('.card').remove();
-                                            } else {
-                                                // 在这里添加处理失败后的逻辑
-                                                console.log("Failed to delete image. Error: " + response.message);
-                                            }
-                                        },
-                                    });
-
-                                    //cover = cover.filter(item => item !== "data2");
-                                    cover.shift();
-
-                                    // 创建一个新的文件输入框
-                                    var oldInput = document.getElementById("fileInput");
-                                    var newInput = oldInput.cloneNode(true);
-
-                                    // 替换旧的文件输入框
-                                    oldInput.parentNode.replaceChild(newInput, oldInput);
-                                });
-                            }
-                        } else {
-                            /* alert(response.message);*/
-                            // 在这里添加处理失败后的逻辑
-                        }
-                    },
-                    //error: function (xhr, status, error) {
-                    //    alert("Error: " + error);
-                    //    /* 在这里添加处理错误的逻辑*/
-                    //}
-                });
-
-            });*@
 
 
 
-
-            //todo tag selecter
-
-            //todo discount selecter
-
-            //todo dlc selecter
-
-            //todo submit button
-
-
-
+        });
 
 
     </script>
@@ -475,32 +462,6 @@
 
 @section styles {
     <style>
-        .aspect-ratio-container {
-            position: relative;
-            width: calc(200px * 16 / 9); /* 使用calc计算宽度，保持16:9宽高比 */
-            height: 200px; /* 固定的像素值，根据需要调整 */
-            overflow: hidden;
-        }
-
-        .aspect-ratio-item {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* 保持比例并填充容器，不裁剪图像 */
-            max-width: 100%; /* 图像宽度不超过容器宽度 */
-            max-height: 100%; /* 图像高度不超过容器高度 */
-        }
-
-        .card-size {
-            width: calc(150px * 16 / 9);
-            height: 150px;
-            object-fit: contain;
-        }
-
-        .www {
-            width: calc(150px * 16 / 9);
-        }
     </style>
 }
+

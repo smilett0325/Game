@@ -97,7 +97,7 @@ namespace RizzGamingBase.Models.Infra
 		//	return scratchObjects;
 		//}
 
-		public string UploadCoverFile(HttpPostedFileBase cover, string path, int developerId)
+		public void UploadCoverFile(HttpPostedFileBase cover, string path, int developerId)
 		{
 			// 判断是否有上传文件，若没有，抛出异常
 			if (cover == null || cover.ContentLength == 0)
@@ -136,56 +136,56 @@ namespace RizzGamingBase.Models.Infra
 
 			// 返回新的文件名，可以用于记录到数据库或其他用途
 			//return fullPath;
-			return fileName;
+			//return fileName;
 		}
 
-		public List<object> UploadDisplayImageFile(IEnumerable<HttpPostedFileBase> displayImage, string path, int developerId, int gameId)
+		public void UploadDisplayImageFile(HttpPostedFileBase displayImage, string path, int developerId, int gameId)
 		{
-			var imageObjects = new List<object>();
+			//var imageObjects = new List<object>();
 
-			foreach (var file in displayImage)
+			//foreach (var file in displayImage)
+			//{
+			// 判断是否有上传文件，若没有，抛出异常
+			if (displayImage == null || displayImage.ContentLength == 0)
+				throw new ArgumentNullException("file");
+
+			// 获取文件的扩展名，并检查是否为允许的文件类型
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+			string ext = Path.GetExtension(displayImage.FileName).ToLower();
+			if (!allowedExtensions.Contains(ext))
+				throw new ArgumentException($"不允許上傳此類檔案({ext})");
+
+			// 使用开发商的ID创建文件夹路径
+			string developerFolderPath = Path.Combine(path, $"{developerId}");
+
+			// 检查文件夹是否存在，如果不存在则创建
+			if (!Directory.Exists(developerFolderPath))
 			{
-				// 判断是否有上传文件，若没有，抛出异常
-				if (file == null || file.ContentLength == 0)
-					throw new ArgumentNullException("file");
-
-				// 获取文件的扩展名，并检查是否为允许的文件类型
-				string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
-				string ext = Path.GetExtension(file.FileName).ToLower();
-				if (!allowedExtensions.Contains(ext))
-					throw new ArgumentException($"不允許上傳此類檔案({ext})");
-
-				// 使用开发商的ID创建文件夹路径
-				string developerFolderPath = Path.Combine(path, $"{developerId}");
-
-				// 检查文件夹是否存在，如果不存在则创建
-				if (!Directory.Exists(developerFolderPath))
-				{
-					Directory.CreateDirectory(developerFolderPath);
-				}
-
-				//檢查developerGameFolderPath是否存在，不存在則創建
-				string developerGameFolderPath = Path.Combine(path, $"{developerId}", $"{gameId}");
-
-				if (!Directory.Exists(developerGameFolderPath))
-				{
-					Directory.CreateDirectory(developerGameFolderPath);
-				}
-
-				// 合并文件名和路径生成完整的文件路径
-				string fileName = file.FileName;
-				string fullPath = Path.Combine(developerGameFolderPath, fileName);
-
-				// 将上传的文件保存到指定路径
-				file.SaveAs(fullPath);
-				imageObjects.Add(new { GameId = gameId, DisplayIamge = fileName });
+				Directory.CreateDirectory(developerFolderPath);
 			}
 
+			//檢查developerGameFolderPath是否存在，不存在則創建
+			string developerGameFolderPath = Path.Combine(path, $"{developerId}", $"{gameId}");
+
+			if (!Directory.Exists(developerGameFolderPath))
+			{
+				Directory.CreateDirectory(developerGameFolderPath);
+			}
+
+			// 合并文件名和路径生成完整的文件路径
+			string fileName = displayImage.FileName;
+			string fullPath = Path.Combine(developerGameFolderPath, fileName);
+
+			// 将上传的文件保存到指定路径
+			displayImage.SaveAs(fullPath);
+			//imageObjects.Add(new { GameId = gameId, DisplayIamge = fileName });
+			//}
+
 			// 返回新的文件名，可以用于记录到数据库或其他用途
-			return imageObjects;
+			//return imageObjects;
 		}
 
-		public string UploadDisplayVideoFile(HttpPostedFileBase displayVideos, string path, int developerId)
+		public void UploadDisplayVideoFile(HttpPostedFileBase displayVideos, string path, int developerId)
 		{
 			// 判断是否有上传文件，若没有，抛出异常
 			if (displayVideos == null || displayVideos.ContentLength == 0)
@@ -224,7 +224,7 @@ namespace RizzGamingBase.Models.Infra
 
 			// 返回新的文件名，可以用于记录到数据库或其他用途
 			//return fullPath;
-			return fileName;
+			//return fileName;
 		}
 	}
 }

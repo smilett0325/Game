@@ -13,7 +13,7 @@ namespace RizzGamingBase.Models.ViewModels
 
 		public int Price { get; set; }
 
-		public string Image { get; set; }
+		public string Cover { get; set; }
 
 		//public int Percent {get; set; }
 	}

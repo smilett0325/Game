@@ -40,7 +40,7 @@ namespace RizzGamingBase.Models.EFModels
 
         [Required]
         [StringLength(200)]
-        public string Image { get; set; }
+        public string Cover { get; set; }
 
         public int DeveloperId { get; set; }
 
@@ -63,10 +63,6 @@ namespace RizzGamingBase.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DLC> DLCs1 { get; set; }
-
-        public virtual Game Games1 { get; set; }
-
-        public virtual Game Game1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GameTag> GameTags { get; set; }

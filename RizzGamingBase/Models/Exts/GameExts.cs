@@ -22,7 +22,7 @@ namespace RizzGamingBase.Models.Exts
 				Description = model.Description,
 				ReleaseDate = model.ReleaseDate,
 				Price = model.Price,
-				Image = model.Image,
+				Cover = model.Cover,
 				DeveloperId = model.DeveloperId,
 				MaxPercent = model.MaxPercent,
 				Video = model.Video,
@@ -39,7 +39,7 @@ namespace RizzGamingBase.Models.Exts
 				Description = model.Description,
 				ReleaseDate = model.ReleaseDate,
 				Price = model.Price,
-				Image = model.Image,
+				Cover = model.Cover,
 				DeveloperId = model.DeveloperId,
 				MaxPercent = model.MaxPercent,
 				Video = model.Video,
@@ -56,7 +56,7 @@ namespace RizzGamingBase.Models.Exts
 				Description = model.Description,
 				ReleaseDate = model.ReleaseDate,
 				Price = model.Price,
-				Image = model.Image,
+				Cover = model.Cover,
 				DeveloperId = model.DeveloperId,
 				MaxPercent = model.MaxPercent,
 				Video = model.Video,
@@ -74,7 +74,7 @@ namespace RizzGamingBase.Models.Exts
 			//    Description = model.Description,
 			//    ReleaseDate = model.ReleaseDate,
 			//    Price = model.Price,
-			//    Image = model.Image,
+			//    Cover = model.Cover,
 			//    DeveloperId = model.DeveloperId,
 			//    GameTagId = model.GameTagId,
 			//    DiscountId = model.DiscountId,
@@ -92,7 +92,7 @@ namespace RizzGamingBase.Models.Exts
 				Description = model.Description,
 				ReleaseDate = model.ReleaseDate,
 				Price = model.Price,
-				Image = model.Image,
+				Cover = model.Cover,
 				DeveloperId = model.DeveloperId,
 				MaxPercent = model.MaxPercent,
 				Video = model.Video,
@@ -106,7 +106,7 @@ namespace RizzGamingBase.Models.Exts
 				Id = model.Id,
 				Name = model.Name,
 				Price = model.Price,
-				Image = model.Image,
+				Cover = model.Cover,
 			};
 		}
 
@@ -126,18 +126,15 @@ namespace RizzGamingBase.Models.Exts
 			//var gR = new GameEFRepository();
 
 			var displayImage = iR.GetAll(model.Id);
-			//Game => gametag <= tag
-			//member => collection <= game
-			//collection (id,memberId, gameId)
 
 			var tag = tR.GetAll(model.Id);
 			var dlc = dlcR.GetDLCGame(model.Id);
 			//var discount =
 
-			var imageList = new List<ImageDto>();
+			var imageList = new List<string>();
 			foreach (var item in displayImage)
 			{
-				imageList.Add(item.EntityToDto());
+				imageList.Add(item.DisplayImage);
 			};
 
 			var tagList = new List<TagDto>();
@@ -158,7 +155,7 @@ namespace RizzGamingBase.Models.Exts
 				DeveloperId = model.DeveloperId,
 				Name = model.Name,
 				Price = model.Price,
-				Image = model.Image,
+				Cover = model.Cover,
 				Introduction = model.Introduction,
 				Description = model.Description,
 				ReleaseDate = model.ReleaseDate,

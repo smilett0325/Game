@@ -22,7 +22,6 @@ namespace RizzGamingBase.Models.EFModels
 		public virtual DbSet<GameTag> GameTags { get; set; }
 		public virtual DbSet<Image> Images { get; set; }
 		public virtual DbSet<Member> Members { get; set; }
-		public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 		public virtual DbSet<Tag> Tags { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -50,18 +49,14 @@ namespace RizzGamingBase.Models.EFModels
 			modelBuilder.Entity<Game>()
 				.HasMany(e => e.DLCs)
 				.WithRequired(e => e.Game)
-				.HasForeignKey(e => e.AttachmentGameId)
+				.HasForeignKey(e => e.GameId)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Game>()
 				.HasMany(e => e.DLCs1)
 				.WithRequired(e => e.Game1)
-				.HasForeignKey(e => e.GameId)
+				.HasForeignKey(e => e.AttachedGameId)
 				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<Game>()
-				.HasOptional(e => e.Games1)
-				.WithRequired(e => e.Game1);
 
 			modelBuilder.Entity<Game>()
 				.HasMany(e => e.GameTags)

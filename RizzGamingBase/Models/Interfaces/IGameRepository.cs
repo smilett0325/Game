@@ -10,7 +10,7 @@ namespace RizzGamingBase.Models.Interfaces
 {
 	public interface IGameRepository
 	{
-		void Create(GameEntity entity);
+		int Create(GameEntity entity);
 
 		GameEntity Search(int id);
 

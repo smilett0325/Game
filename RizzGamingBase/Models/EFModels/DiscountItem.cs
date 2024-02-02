@@ -6,9 +6,9 @@ namespace RizzGamingBase.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    [Table("DiscountItem")]
     public partial class DiscountItem
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         public int DiscountId { get; set; }

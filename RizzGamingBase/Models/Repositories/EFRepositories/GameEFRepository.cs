@@ -32,11 +32,14 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 				.FirstOrDefault();
 		}
 
-		public void Create(GameEntity entity)
+		public int Create(GameEntity entity)
 		{
 			Game model = entity.EntityToEF();
 			db.Games.Add(model);
 			db.SaveChanges();
+
+			db.Entry(model).Reload(); 
+			return model.Id;
 		}
 
 		public void Delete(int id)
@@ -52,7 +55,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 
 			model.Name = entity.Name;
 			model.Price = entity.Price;
-			model.Image = entity.Image;
+			model.Cover = entity.Cover;
 			model.ReleaseDate = entity.ReleaseDate;
 			model.Introduction = entity.Introduction;
 			model.MaxPercent = entity.MaxPercent;

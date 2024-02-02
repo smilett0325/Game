@@ -20,7 +20,7 @@ namespace RizzGamingBase.Models.Dtos
 
 		public int Price { get; set; }
 
-		public string Image { get; set; }
+		public string Cover { get; set; }
 
 		public int DeveloperId { get; set; }
 
