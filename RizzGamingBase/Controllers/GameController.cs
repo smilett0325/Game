@@ -89,16 +89,16 @@ namespace RizzGamingBase.Controllers
 
 			if (!ModelState.IsValid) { return View(vm); };
 
-			string displayImagePath = Server.MapPath("/Images/DisplayImages");
-			string coverPath = Server.MapPath("/Images/Covers");
-			string displayVideoPath = Server.MapPath("/Images/DisplayVideos");
+			//string displayImagePath = Server.MapPath("/Images/DisplayImages");
+			//string coverScratchPath = Server.MapPath("/Images/Scratch/Cover");
+			//string displayVideoScratchPath = Server.MapPath("/Images/Scratch/DisplayVideo");
 
 			//getDeveloperId， 尚未實作
 			int developerId = 1; 
 
 			try
 			{
-				service.Create(vm, developerId, displayImagePath, coverPath, displayVideoPath, cover , displayImages, displayVideo, selectedTags, attachedGame);
+				service.Create(vm, developerId, cover , displayImages, displayVideo, selectedTags, attachedGame);
 				//return RedirectToAction("Index");
 				var result = new { success = true, message = "操作成功" };
 

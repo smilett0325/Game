@@ -5174,6 +5174,8 @@
     <Folder Include="Images\Covers\" />
     <Folder Include="Images\DisplayImages\" />
     <Folder Include="Images\DisplayVideos\" />
+    <Folder Include="Images\Scratch\Cover\" />
+    <Folder Include="Images\Scratch\DisplayVideo\" />
     <Folder Include="Views\Api\" />
   </ItemGroup>
   <ItemGroup>
