@@ -87,24 +87,14 @@ namespace RizzGamingBase.Models.Services
 			//}
 		}
 
-		public void Create(DeveloperGameEditVm vm, int developerId, string displayImagePath, string coverPath, string displayVideoPath, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImages, HttpPostedFileBase displayVideo, string[] selectedTags, string[] attachedGame)
+		//public void Create(DeveloperGameEditVm vm, int developerId, string displayImagePath, string coverScratchPath, string displayVideoScratchPath, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImages, HttpPostedFileBase displayVideo, string[] selectedTags, string[] attachedGame)
+		public void Create(DeveloperGameEditVm vm, int developerId, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImages, HttpPostedFileBase displayVideo, string[] selectedTags, string[] attachedGame)
 		{
 			var iRepo = new ImageEFRepository();
 			var gtRepo = new GTEFRepository();
 			var dlcRepo = new DLCEFRepository();
 			var uploadFileHelper = new UploadFileHelper();
-			//var disepo = new DiscountItemEFRepository();
-
-			//var videos = new List<VideoDto>();
-			//var video = new VideoDto();
-			//var images = new List<ImageDto>();
-			//var gts = new List<TagDto>();
-			//var dlcs = new List<GameDto>();
-			//var discount = new List<DiscountDto>();
-
-			//todo 實作儲存
-			//update gmae
-			//game.Id = vm.Id;
+			
 			var game = new GameDto
 			{
 				Name = vm.Name,
@@ -119,10 +109,11 @@ namespace RizzGamingBase.Models.Services
 				Video = displayVideo.FileName,
 			};
 
-			uploadFileHelper.UploadCoverFile(cover, coverPath, developerId); //todo 
-			uploadFileHelper.UploadDisplayVideoFile(displayVideo, displayVideoPath, developerId);
+			uploadFileHelper.UploadCoverFileToScratch(cover); //todo , coverScratchPath
+			uploadFileHelper.UploadDisplayVideoFileToScratch(displayVideo);//, displayVideoScratchPath
 			var gameId = _repo.Create(game.DtoToEntity());
-
+			uploadFileHelper.MoveCoverFromScratch(game.Cover, developerId, gameId);
+			uploadFileHelper.MoveVideoFromScratch(game.Video, developerId, gameId);
 
 			//Create image
 
@@ -134,7 +125,7 @@ namespace RizzGamingBase.Models.Services
 					DisplayImage = di.FileName,
 				};
 
-				uploadFileHelper.UploadDisplayImageFile(di, displayImagePath, developerId, gameId);
+				uploadFileHelper.UploadDisplayImageFile(di, developerId, gameId);//, displayImagePath
 				iRepo.Create(image);
 			};
 
