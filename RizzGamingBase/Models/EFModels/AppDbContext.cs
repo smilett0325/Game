@@ -5,10 +5,10 @@ using System.Linq;
 
 namespace RizzGamingBase.Models.EFModels
 {
-    public partial class APPDbContext : DbContext
+    public partial class AppDbContext : DbContext
     {
-        public APPDbContext()
-            : base("name=APPDbContext")
+        public AppDbContext()
+            : base("name=AppDbContext")
         {
         }
 
@@ -18,10 +18,9 @@ namespace RizzGamingBase.Models.EFModels
         public virtual DbSet<BillDetail> BillDetails { get; set; }
         public virtual DbSet<BillItem> BillItems { get; set; }
         public virtual DbSet<Board> Boards { get; set; }
-        public virtual DbSet<BounsBillDetail> BounsBillDetails { get; set; }
-        public virtual DbSet<BounsItem> BounsItems { get; set; }
-        public virtual DbSet<BounsProduct> BounsProducts { get; set; }
-        public virtual DbSet<BounsProductType> BounsProductTypes { get; set; }
+        public virtual DbSet<BonusItem> BonusItems { get; set; }
+        public virtual DbSet<BonusProduct> BonusProducts { get; set; }
+        public virtual DbSet<BonusProductType> BonusProductTypes { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Collection> Collections { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
@@ -38,21 +37,10 @@ namespace RizzGamingBase.Models.EFModels
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
-        public virtual DbSet<Video> Videos { get; set; }
         public virtual DbSet<WishListe> WishListes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Admin>()
-                .HasMany(e => e.BanGames)
-                .WithRequired(e => e.Admin)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Admin>()
-                .HasMany(e => e.BanMembers)
-                .WithRequired(e => e.Admin)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<BillDetail>()
                 .HasMany(e => e.BillItems)
                 .WithRequired(e => e.BillDetail)
@@ -73,21 +61,15 @@ namespace RizzGamingBase.Models.EFModels
                 .WithRequired(e => e.Board)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<BounsProduct>()
-                .HasMany(e => e.BounsBillDetails)
-                .WithRequired(e => e.BounsProduct)
-                .HasForeignKey(e => e.BounsId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<BounsProduct>()
-                .HasMany(e => e.BounsItems)
-                .WithRequired(e => e.BounsProduct)
+            modelBuilder.Entity<BonusProduct>()
+                .HasMany(e => e.BonusItems)
+                .WithRequired(e => e.BonusProduct)
                 .HasForeignKey(e => e.ProductId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<BounsProductType>()
-                .HasMany(e => e.BounsProducts)
-                .WithRequired(e => e.BounsProductType)
+            modelBuilder.Entity<BonusProductType>()
+                .HasMany(e => e.BonusProducts)
+                .WithRequired(e => e.BonusProductType)
                 .HasForeignKey(e => e.ProductTypeId)
                 .WillCascadeOnDelete(false);
 
@@ -116,6 +98,11 @@ namespace RizzGamingBase.Models.EFModels
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Game>()
+                .HasMany(e => e.BillDetails)
+                .WithRequired(e => e.Game)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Game>()
                 .HasMany(e => e.BillItems)
                 .WithRequired(e => e.Game)
                 .WillCascadeOnDelete(false);
@@ -123,13 +110,6 @@ namespace RizzGamingBase.Models.EFModels
             modelBuilder.Entity<Game>()
                 .HasMany(e => e.Carts)
                 .WithRequired(e => e.Game)
-                .HasForeignKey(e => e.GameId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Game>()
-                .HasMany(e => e.Carts1)
-                .WithRequired(e => e.Game1)
-                .HasForeignKey(e => e.GameId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Game>()
@@ -150,13 +130,13 @@ namespace RizzGamingBase.Models.EFModels
             modelBuilder.Entity<Game>()
                 .HasMany(e => e.DLCs)
                 .WithRequired(e => e.Game)
-                .HasForeignKey(e => e.AttachmentGameId)
+                .HasForeignKey(e => e.GameId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Game>()
                 .HasMany(e => e.DLCs1)
                 .WithRequired(e => e.Game1)
-                .HasForeignKey(e => e.GameId)
+                .HasForeignKey(e => e.AttachedGameId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Game>()
@@ -171,11 +151,6 @@ namespace RizzGamingBase.Models.EFModels
 
             modelBuilder.Entity<Game>()
                 .HasMany(e => e.MemberTags)
-                .WithRequired(e => e.Game)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Game>()
-                .HasMany(e => e.Videos)
                 .WithRequired(e => e.Game)
                 .WillCascadeOnDelete(false);
 
@@ -212,12 +187,7 @@ namespace RizzGamingBase.Models.EFModels
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Member>()
-                .HasMany(e => e.BounsBillDetails)
-                .WithRequired(e => e.Member)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Member>()
-                .HasMany(e => e.BounsItems)
+                .HasMany(e => e.BonusItems)
                 .WithRequired(e => e.Member)
                 .WillCascadeOnDelete(false);
 

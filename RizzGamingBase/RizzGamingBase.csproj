@@ -165,22 +165,20 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\ManangerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Dtos\DeveloperDto.cs" />
     <Compile Include="Models\EFModels\Admin.cs" />
-    <Compile Include="Models\EFModels\APPDbContext.cs" />
+    <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\BanGame.cs" />
     <Compile Include="Models\EFModels\BanMember.cs" />
     <Compile Include="Models\EFModels\BillDetail.cs" />
     <Compile Include="Models\EFModels\BillItem.cs" />
     <Compile Include="Models\EFModels\Board.cs" />
-    <Compile Include="Models\EFModels\BounsBillDetail.cs" />
-    <Compile Include="Models\EFModels\BounsItem.cs" />
-    <Compile Include="Models\EFModels\BounsProduct.cs" />
-    <Compile Include="Models\EFModels\BounsProductType.cs" />
+    <Compile Include="Models\EFModels\BonusItem.cs" />
+    <Compile Include="Models\EFModels\BonusProduct.cs" />
+    <Compile Include="Models\EFModels\BonusProductType.cs" />
     <Compile Include="Models\EFModels\Cart.cs" />
     <Compile Include="Models\EFModels\Collection.cs" />
     <Compile Include="Models\EFModels\Comment.cs" />
@@ -197,18 +195,20 @@
     <Compile Include="Models\EFModels\Message.cs" />
     <Compile Include="Models\EFModels\Picture.cs" />
     <Compile Include="Models\EFModels\Tag.cs" />
-    <Compile Include="Models\EFModels\Video.cs" />
     <Compile Include="Models\EFModels\WishListe.cs" />
-    <Compile Include="Models\Entities\DeveloperEntity.cs" />
     <Compile Include="Models\Exts\DeveloperExt.cs" />
+    <Compile Include="Models\Exts\RegisterExt.cs" />
     <Compile Include="Models\Infra\DAHelper.cs" />
-    <Compile Include="Models\Repositories\EFRepositories\DeveloperRepository.cs" />
-    <Compile Include="Models\Interfaces\IDeveloperRepository.cs" />
-    <Compile Include="Models\Services\DeveloperService.cs" />
-    <Compile Include="Models\ViewModels\DeveloperEditVm.cs" />
-    <Compile Include="Models\ViewModels\DeveloperIndexVm.cs" />
-    <Compile Include="Models\ViewModels\DeveloperLoginVm.cs" />
-    <Compile Include="Models\ViewModels\DeveloperSignupVm.cs" />
+    <Compile Include="Models\Infra\EMailHelper.cs" />
+    <Compile Include="Models\Infra\HashUtility.cs" />
+    <Compile Include="Models\ViewModels\Developer\EditPasswordVm.cs" />
+    <Compile Include="Models\ViewModels\Developer\EditProfileVm.cs" />
+    <Compile Include="Models\ViewModels\Manerger\BanedDevVm.cs" />
+    <Compile Include="Models\ViewModels\Manerger\DeveloperInfoVm.cs" />
+    <Compile Include="Models\ViewModels\Developer\ForgetPasswordVm.cs" />
+    <Compile Include="Models\ViewModels\Developer\LoginVm.cs" />
+    <Compile Include="Models\ViewModels\Developer\RegisterVm.cs" />
+    <Compile Include="Models\ViewModels\Developer\ResetPasswordVM.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -248,15 +248,12 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Models\Dtos\Dto.txt" />
-    <Content Include="Models\Entities\Entities.txt" />
     <Content Include="Models\Exts\Exts.txt" />
     <Content Include="Models\Infra\Infra.txt" />
     <Content Include="Models\Interfaces\Interface.txt" />
     <Content Include="Models\Repositories\DpRepositories\DpRepository.txt" />
     <Content Include="Models\Repositories\EFRepositories\EFRepository.txt" />
     <Content Include="Models\Repositories\Repositories.txt" />
-    <Content Include="Models\Services\Services.txt" />
     <Content Include="Models\ViewModels\ViewModels.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -304,11 +301,19 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Developer\Delete.cshtml" />
-    <Content Include="Views\Developer\Details.cshtml" />
-    <Content Include="Views\Developer\Edit.cshtml" />
+    <Content Include="Views\Mananger\Index.cshtml" />
+    <Content Include="Views\Mananger\IsBan.cshtml" />
     <Content Include="Views\Developer\Index.cshtml" />
-    <Content Include="Views\Developer\Signup.cshtml" />
+    <Content Include="Views\Developer\Register.cshtml" />
+    <Content Include="Views\Developer\Login.cshtml" />
+    <Content Include="Views\Developer\RegisterConfirm.cshtml" />
+    <Content Include="Views\Developer\ActiveRegister.cshtml" />
+    <Content Include="Views\Developer\EditProfile.cshtml" />
+    <Content Include="Views\Developer\EditPassword.cshtml" />
+    <Content Include="Views\Developer\ForgetPassword.cshtml" />
+    <Content Include="Views\Developer\ForgetPasswordConfirm.cshtml" />
+    <Content Include="Views\Developer\ResetPassword.cshtml" />
+    <Content Include="Views\Developer\ConfirmResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -21,8 +21,6 @@ namespace RizzGamingBase.Models.EFModels
 
         public virtual Game Game { get; set; }
 
-        public virtual Game Game1 { get; set; }
-
         public virtual Member Member { get; set; }
     }
 }

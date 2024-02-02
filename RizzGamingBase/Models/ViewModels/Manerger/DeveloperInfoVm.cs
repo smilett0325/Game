@@ -5,7 +5,7 @@ using System.Web;
 
 namespace RizzGamingBase.Models.ViewModels
 {
-    public class DeveloperIndexVm
+    public class DeveloperInfoVm
     {
         public int Id { get; set; }
         public string Name { get; set; }

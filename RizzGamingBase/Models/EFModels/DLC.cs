@@ -12,7 +12,7 @@ namespace RizzGamingBase.Models.EFModels
 
         public int GameId { get; set; }
 
-        public int AttachmentGameId { get; set; }
+        public int AttachedGameId { get; set; }
 
         public virtual Game Game { get; set; }
 

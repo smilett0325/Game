@@ -34,13 +34,13 @@
                         if (IsDeveloperLogin)
                         {
                             <li>@Html.ActionLink(User.Identity.Name, "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li>@Html.ActionLink("登出", "SignOut", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("登出", "LogOut", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
                         }
 
                         else
                         {
                             <li>@Html.ActionLink("登入", "Login", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li>@Html.ActionLink("註冊", "Signup", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("註冊", "Register", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
                         }
                     }
 

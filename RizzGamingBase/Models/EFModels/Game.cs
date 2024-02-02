@@ -12,9 +12,9 @@ namespace RizzGamingBase.Models.EFModels
         public Game()
         {
             BanGames = new HashSet<BanGame>();
+            BillDetails = new HashSet<BillDetail>();
             BillItems = new HashSet<BillItem>();
             Carts = new HashSet<Cart>();
-            Carts1 = new HashSet<Cart>();
             Collections = new HashSet<Collection>();
             Comments = new HashSet<Comment>();
             DiscountItems = new HashSet<DiscountItem>();
@@ -23,7 +23,6 @@ namespace RizzGamingBase.Models.EFModels
             GameTags = new HashSet<GameTag>();
             Images = new HashSet<Image>();
             MemberTags = new HashSet<MemberTag>();
-            Videos = new HashSet<Video>();
             WishListes = new HashSet<WishListe>();
         }
 
@@ -35,7 +34,7 @@ namespace RizzGamingBase.Models.EFModels
 
         [Required]
         [StringLength(1000)]
-        public string Desciption { get; set; }
+        public string Description { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime ReleaseDate { get; set; }
@@ -44,25 +43,27 @@ namespace RizzGamingBase.Models.EFModels
 
         [Required]
         [StringLength(200)]
-        public string Image { get; set; }
+        public string Cover { get; set; }
 
         public int DeveloperId { get; set; }
 
-        public int? DiscountId { get; set; }
-
         public int? MaxPersent { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string Video { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BanGame> BanGames { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BillDetail> BillDetails { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillItem> BillItems { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Carts1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Collection> Collections { get; set; }
@@ -74,8 +75,6 @@ namespace RizzGamingBase.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DiscountItem> DiscountItems { get; set; }
-
-        public virtual Discount Discount { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DLC> DLCs { get; set; }
@@ -91,9 +90,6 @@ namespace RizzGamingBase.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberTag> MemberTags { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Video> Videos { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WishListe> WishListes { get; set; }

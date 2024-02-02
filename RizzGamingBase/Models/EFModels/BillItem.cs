@@ -8,7 +8,6 @@ namespace RizzGamingBase.Models.EFModels
 
     public partial class BillItem
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         public int BillDetailId { get; set; }
