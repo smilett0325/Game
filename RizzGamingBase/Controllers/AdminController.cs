@@ -64,7 +64,7 @@ namespace RizzGamingBase.Controllers
                     DateTime.Now.AddDays(2), // 到期日
                     rememberMe,     // 是否續存
                     roles,          // userdata
-                    "/" // cookie位置
+                    "/" // cookie的位置
                 );
 
             // 存入cookie
