@@ -170,6 +170,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\BonusProductsController.cs" />
     <Compile Include="Controllers\DiscountController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
@@ -5142,11 +5143,9 @@
     <Content Include="Views\BonusProducts\Create.cshtml" />
     <Content Include="Views\BonusProducts\Edit.cshtml" />
     <Content Include="Views\BonusProducts\Delete.cshtml" />
-    <Content Include="Views\Shared\Test.cshtml" />
     <Content Include="Views\Discount\Index.cshtml" />
     <Content Include="Views\Discount\Edit.cshtml" />
     <Content Include="Views\Discount\Create.cshtml" />
-    <Content Include="Views\Shared\Test.cshtml" />
     <Content Include="Views\Discount\test.cshtml" />
     <Content Include="Views\Discount\Home.cshtml" />
     <Content Include="SQL\HanlaossSQL.ipynb" />
@@ -5172,8 +5171,7 @@
     <Content Include="Views\GameData\Chart.cshtml" />
     <Content Include="Views\GameData\LineChart.cshtml" />
     <Content Include="Views\GameData\PieChart.cshtml" />
-    <Content Include="Views\Shared\test.cshtml" />
-    <Content Include="Views\Shared\test01.cshtml" />
+    <Content Include="Views\Shared\AdminBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

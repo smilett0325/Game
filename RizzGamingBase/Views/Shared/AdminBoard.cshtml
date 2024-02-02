@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="zh-tw">
 <head>
+    <meta http-equiv="content-type"  content="text/html; charset=utf-8" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RizzGamingBase</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
+    @Styles.Render("~/plugins/fontawesome-free/css/all.min.css")
     @Styles.Render("~/Content/css")
     @Styles.Render("~/dist/css/adminlte.min.css?v=3.2.0")
-    @Styles.Render("~/plugins/fontawesome-free/css/all.min.css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/plugins/fullcalendar/main.css")
+    @RenderSection("Styles", required: false)
+
+
+
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -22,12 +27,6 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
                 </li>
             </ul>
 
@@ -63,7 +62,7 @@
                         <a href="#" class="dropdown-item">
 
                             <div class="media">
-                                <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                <img src="" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         Brad Diesel
@@ -79,7 +78,7 @@
                         <a href="#" class="dropdown-item">
 
                             <div class="media">
-                                <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                <img src="" alt="User Avatar" class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         John Pierce
@@ -95,7 +94,7 @@
                         <a href="#" class="dropdown-item">
 
                             <div class="media">
-                                <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                <img src="" alt="User Avatar" class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         Nora Silvester
@@ -154,7 +153,7 @@
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
-            <a href="index3.html" class="brand-link">
+            <a href="" class="brand-link">
                 <img src="~/dist/img/rizzlogo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">RizzGamingBase</span>
             </a>
@@ -163,55 +162,45 @@
 
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img src="~/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">Alexander Pierce</a>
                     </div>
                 </div>
 
-                <div class="form-inline">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+
 
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                         <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
+                            <a href="" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    <i class="right fas fa-angle-left"></i>
+                                    優惠活動
                                 </p>
                             </a>
-
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <p>@Html.ActionLink("活動", "Index", "Discount", new { area = "" }, new { @class = "nav-link" })</p>
+                                    <a href="@Url.Action("Home", "Discount")" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>行事曆</p>
+                                    </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="@Url.Action("Index", "Discount")" class="nav-link ">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Inactive Page</p>
+                                        <p>活動列表</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Create", "Discount")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>創建活動</p>
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Simple Link
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
                         </li>
                     </ul>
                 </nav>
@@ -228,6 +217,7 @@
             <div class="content">
                 <div class="container-fluid">
                     @RenderBody()
+
                 </div>
             </div>
 
@@ -254,14 +244,19 @@
     </div>
 
 
-
-
-
-    @Scripts.Render("~/dist/js/adminlte.min.js?v=3.2.0")
     @Scripts.Render("~/plugins/jquery/jquery.min.js")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/plugins/bootstrap/js/bootstrap.bundle.min.js")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/plugins/jquery-ui/jquery-ui.min.js")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/dist/js/adminlte.min.js?v=3.2.0")
+    @Scripts.Render("~/plugins/moment/moment.min.js")
+    @Scripts.Render("~/plugins/fullcalendar/main.js")
+    @Scripts.Render("~/dist/js/demo.js")
+
     @RenderSection("scripts", required: false)
+
+
 </body>
 </html>
