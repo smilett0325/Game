@@ -242,52 +242,5 @@
         Gamedatas = await response.json();
     }
 
-    //做不出來
-    ////excel
-    //// 添加一個導出按鈕的事件監聽器
-    //document.getElementById('exportButton').addEventListener('click', function () {
-    //    exportToExcel();
-    //});
-
-    //function exportToExcel() {
-    //    // 創建工作表對象
-    //    var ws = XLSX.utils.json_to_sheet(getChartData());
-
-    //    // 創建工作簿對象
-    //    var wb = XLSX.utils.book_new();
-    //    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-    //    // 使用 XLSX.write 方法將工作簿轉換為二進制數據
-    //    var blob = XLSX.write(wb, { bookType: 'blob', mimeType: 'application/octet-stream' });
-
-    //    // 使用 FileSaver.js 保存 blob 數據為文件
-    //    saveAs(blob, 'chart_data.xlsx');
-    //}
-
-    //function getChartData() {
-    //    // 修改此函數以返回您要導出的數據
-    //    if (GameName !== "") {
-    //        return [
-    //            { 季度: '第一季度', 營收: 1 },
-    //            { 季度: '第二季度', 營收: 2 },
-    //            { 季度: '第三季度', 營收: 3 },
-    //            { 季度: '第四季度', 營收: 4 }
-    //        ];
-    //    } else if (DeveloperId !== 0) {
-    //        return [
-    //            { 季度: '第一季度', 營收: 1 },
-    //            { 季度: '第二季度', 營收: 2 },
-    //            { 季度: '第三季度', 營收: 3 },
-    //            { 季度: '第四季度', 營收: 4 }
-    //        ];
-    //    } else {
-    //        return [
-    //            { 季度: '第一季度', 營收: 1 },
-    //            { 季度: '第二季度', 營收: 2 },
-    //            { 季度: '第三季度', 營收: 3 },
-    //            { 季度: '第四季度', 營收: 4 }
-    //        ];
-    //    }
-    //}
 
 </script>
