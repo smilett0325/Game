@@ -6,14 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using RizzGamingBase.Models.Dtos;
 
 namespace RizzGamingBase.Models.Repositories.EFRepositories
 {
     public class BonusProductsEFRepository : IBonusProductsRepository
     {
+        private readonly AppDbContext db;
+        public BonusProductsEFRepository(AppDbContext context)
+        {
+            db = context;
+        }
+
         public void Create(BonusProductsEntity model)
         {
-            var db = new AppDbContext();
+            //var db = new AppDbContext();
 
             BonusProduct entity = new BonusProduct
             {
@@ -28,32 +35,9 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             db.SaveChanges();
         }
 
-        public void Delete(BonusProductsEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Search(BonusProductsEntity entity)
-        {
-            var db = new AppDbContext();
-
-            var BonusProducts = db.BonusProducts.AsNoTracking()
-            .Include(bp => bp.BonusProductType)
-            .Select(bp => new BonusProductsEntity
-            {
-                Id = bp.Id,
-                ProductTypeId = bp.BonusProductType.Type,
-                Price = bp.Price,
-                URL = bp.URL,
-                Name = bp.Name
-            })
-            .ToList();
-            return;
-        }
-
         public List<BonusProductsEntity> GetAll()
         {
-            var db = new AppDbContext();
+            //var db = new AppDbContext();
 
             var BonusProducts = db.BonusProducts.AsNoTracking()
                 .Include(bp => bp.BonusProductType)
@@ -70,28 +54,28 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             return BonusProducts;
         }
 
-        public void Edit(BonusProductsEntity entity)
-        {
-            var db = new AppDbContext();
-
-            var BonusProduct = db.BonusProducts.Find(entity.Id);
-            BonusProduct.ProductTypeId = entity.ProductTypeId;
-            BonusProduct.Price = entity.Price;
-            BonusProduct.URL = entity.URL;
-            BonusProduct.Name = entity.Name;
-            db.SaveChanges();
-
-        }
-
-        // todo 關鍵字搜尋
-        public BonusProductsEntity SearchByName(string bonusName)
+        public List<BonusProductsEntity> SearchByName(string keyword)
         {
             throw new NotImplementedException();
         }
 
+        // todo 完成3層式，編輯Repository
+        public void Edit(BonusProductsEntity entity)
+        {
+            //var db = new AppDbContext();
+
+            //var BonusProduct = db.BonusProducts.Find(entity.Id);
+            //BonusProduct.ProductTypeId = entity.ProductTypeId;
+            //BonusProduct.Price = entity.Price;
+            //BonusProduct.URL = entity.URL;
+            //BonusProduct.Name = entity.Name;
+            //db.SaveChanges();
+        }
+
+        // todo 關鍵字搜尋
         public BonusProductsEntity SearchById(int id)
         {
-            var db = new AppDbContext();
+            //var db = new AppDbContext();
             var model = db.BonusProducts.Find(id);
             var data = new BonusProductsEntity
             {
@@ -102,6 +86,13 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
                 Name = model.Name
             };
             return data;
+        }
+
+
+        // todo 完成3層式，刪除Repository
+        public void Delete(BonusProductsEntity entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

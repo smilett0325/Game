@@ -15,29 +15,28 @@ namespace RizzGamingBase.Controllers
 {
     public class BonusProductsController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext db;
 
         public BonusProductsController()
         {
-            _context = new AppDbContext();
+            db = new AppDbContext();
+            // todo DB連線using資源釋放尚未完工
+            //using (db = new AppDbContext())
+            //{
+            //}
         }
-
 
         // GET: Items
         public ActionResult Index()
         {
-            List<BonusProductsIndexVm> data = BonusProductExts.GetAll();//取得表單Data全部的值
+            List<BonusProductsIndexVm> data = BonusProductExts.GetAll(db);//取得表單Data全部的值
             return View(data);
             // todo 圖片字串 插入HTML
         }
 
-        // todo 關鍵字查詢
-        //private List<BonusProductsIndexVm> GetKeyword(string keyword)
-        //{
-        //    List<BonusProductsIndexVm> searchResults = BonusProductExts.
-        //}
         public ActionResult Search(string keyword)
         {
+            List<BonusProductsIndexVm> data = BonusProductExts.SearchByName(keyword, db);//取得表單Data全部的值
             return View();
         }
         public ActionResult Create()//實作顯示
@@ -52,7 +51,7 @@ namespace RizzGamingBase.Controllers
             {
                 try
                 {
-                    BonusProductExts.CreateProduct(model);
+                    BonusProductExts.CreateProduct(model, db);
                     return RedirectToAction("Index");//生成的物件回傳至 Index 
                 }
                 catch (Exception ex)
@@ -67,9 +66,8 @@ namespace RizzGamingBase.Controllers
         #region 單層編輯
         public ActionResult Edit(int id)//編輯
         {
-
             BonusProductsEditVm model = LoadProdct(id);
-            var productTypes = _context.BonusProductTypes.Select(t => new SelectListItem
+            var productTypes = db.BonusProductTypes.Select(t => new SelectListItem
             {
                 Value = t.Id.ToString(),
                 Text = t.Name
@@ -101,48 +99,40 @@ namespace RizzGamingBase.Controllers
         public BonusProductsEditVm LoadProdct(int id)//找到編輯欄位
         {
             //var model = new AppDbContext().BonusProducts.Find(id);
-            using (var db = new AppDbContext())//using會在連線字串完後自然釋放比上面更省效能也不用擔心資料外洩
+            //using (var db = new AppDbContext());//using會在連線字串完後自然釋放比上面更省效能也不用擔心資料外洩
+            //{
+            //}
+            var model = db.BonusProducts.Find(id);
+            return new BonusProductsEditVm
             {
-                var model = db.BonusProducts.Find(id);
-                return new BonusProductsEditVm
-                {
-                    Id = model.Id,
-                    ProductTypeId = model.ProductTypeId,
-                    ProductTypeName = model.BonusProductType.Name,
-                    Price = model.Price,
-                    URL = model.URL,
-                    Name = model.Name
-                };
-            }
+                Id = model.Id,
+                ProductTypeId = model.ProductTypeId,
+                ProductTypeName = model.BonusProductType.Name,
+                Price = model.Price,
+                URL = model.URL,
+                Name = model.Name
+            };
         }
         private void UpdateProduct(BonusProductsEditVm model)//修改
         {
-            using (var db = new AppDbContext())
+            //using (var db = new AppDbContext())
+            //{
+            //}
+            var findProduct = db.BonusProducts.Find(model.Id);
+            if (findProduct != null)
             {
-                var findProduct = db.BonusProducts.Find(model.Id);
-                if (findProduct != null)
-                {
-                    findProduct.ProductTypeId = model.ProductTypeId;
-                    findProduct.Price = model.Price;
-                    findProduct.URL = model.URL;
-                    findProduct.Name = model.Name;
+                findProduct.ProductTypeId = model.ProductTypeId;
+                findProduct.Price = model.Price;
+                findProduct.URL = model.URL;
+                findProduct.Name = model.Name;
 
-                    db.SaveChanges();
-                }
-                else
-                {
-                    throw new InvalidOperationException("Product not found.");
-                }
+                db.SaveChanges();
+            }
+            else
+            {
+                throw new InvalidOperationException("並未找到項目");
             }
         }
-
-        //private List<BonusProductType> GetProductTypes()
-        //{
-        //    using (var db = new AppDbContext())
-        //    {
-        //        return db.BonusProductTypes.ToList();
-        //    }
-        //}
         #endregion
 
         #region 三層編輯
@@ -192,19 +182,19 @@ namespace RizzGamingBase.Controllers
         [HttpGet]
         public ActionResult Delete(int? id)
         {
-            using (var db = new AppDbContext())
+            //using (var db = new AppDbContext())
+            //{
+            //}
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);//400錯誤回應
-                }
-                BonusProduct bonusProduct = db.BonusProducts.Find(id);
-                if (bonusProduct == null)
-                {
-                    return HttpNotFound();//找不到頁面
-                }
-                return View(bonusProduct);//回傳資料
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);//400錯誤回應
             }
+            BonusProduct bonusProduct = db.BonusProducts.Find(id);
+            if (bonusProduct == null)
+            {
+                return HttpNotFound();//找不到頁面
+            }
+            return View(bonusProduct);//回傳資料
         }
 
         [HttpPost, ActionName("Delete")]
