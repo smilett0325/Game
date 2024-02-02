@@ -208,7 +208,7 @@ namespace RizzGamingBase.Controllers
                               "Developer/ResetPassword?developerid={0}&confirmCode={1}"; // 生成網頁 url
             try
             {
-                ProcessResetPassword(vm.Account, vm.Mail, urlTemplate);
+                ProcessResetPassword(vm.Account, vm.EMail, urlTemplate);
             }
             catch (Exception ex)
             {
