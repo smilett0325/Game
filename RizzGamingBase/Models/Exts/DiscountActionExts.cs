@@ -20,7 +20,7 @@ namespace RizzGamingBase.Models.Exts
             return DiscountExts.GetDtoToVm(vm);
         }
 
-        public static DiscountVm GetEvent(int id)
+        public static DiscountCreateVm GetEvent(int id)
         {
             var repo = new DiscountEFRepository();
             var service = new DiscountService(repo);
@@ -37,7 +37,7 @@ namespace RizzGamingBase.Models.Exts
             service.Create(dto);
         }
 
-        public static void Edit(DiscountVm vm)
+        public static void Edit(DiscountCreateVm vm)
         {
             var repo = new DiscountEFRepository();
             var service = new DiscountService(repo);

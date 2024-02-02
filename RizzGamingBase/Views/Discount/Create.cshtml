@@ -115,9 +115,7 @@
 
                                     <!-- 已加入的遊戲列表 -->
                                     <div class="col-md-6">
-                                        <h5>已加入的遊戲</h5>
-                                        <input type="text" />
-                                        <button>查詢</button>
+                                        <h5>已加入的遊戲</h5>                                     
                                         <ul id="selectedGames" class="list-group">
                                         </ul>
                                     </div>
@@ -164,16 +162,34 @@
             keyword = event.target.value;
             loadGame(keyword);
 
-        } );
+        });
 
-        function loadGame() {
+        function updateAvailableGamesList() {
+            $('#availableGames').empty();
+            availableGames.forEach(function (game) {
+                $('#availableGames').append('<li data-id="' + game.Id + '">' + game.Name + ' <button type="button" data-id="' + game.Id + '" class="btn btn-primary btn-sm additem"  onclick="selectGame(' + game.Id + ', \'' + game.Name + '\')">選擇</button></li>');
+            });
+        }
+
+        function loadGame(keyword) {
             $.ajax({
                 url: '@Url.Action("GetGames", "Discount")',
                 type: 'GET',
-                data: { id: id, keyword: keyword },
+                data: { id: id, keyword: keyword},
                 dataType: 'json',
                 success: function (data) {
-                    availableGames = data;
+                    // 從 discountGames 中取得已經存在的遊戲的 Id 陣列
+                    var existingGameIds = discountGames.map(function (game) {
+                        return game.Id;
+                    });
+
+                    // 使用 filter 過濾掉已經存在於 discountGames 的遊戲
+                    var newGames = data.filter(function (game) {
+                        return !existingGameIds.includes(game.Id);
+                    });
+
+                    availableGames = newGames;
+                    updateAvailableGamesList();
                 }
             });
         }
@@ -196,7 +212,7 @@
 
         function loadInitialData() {
             generateTable(discountGames);
-                 loadGame();
+            loadGame();
         }
 
         loadInitialData();
@@ -219,12 +235,7 @@
 
         $('#gameModal').on('show.bs.modal', function () {
 
-            $('#availableGames').empty();
-
-            // 將未加入的遊戲動態添加到列表中
-            availableGames.forEach(function (game) {
-                $('#availableGames').append('<li data-id="' + game.Id + '">' + game.Name + ' <button type="button" data-id="' + game.Id + '" class="btn btn-primary btn-sm additem"  onclick="selectGame(' + game.Id + ', \'' + game.Name + '\')">選擇</button></li>');
-            });
+            updateAvailableGamesList();
 
             // 清空已加入的遊戲列表
             $('#selectedGames').empty();
@@ -284,7 +295,6 @@
                 return game.Id;
             });
 
-            console.log(gameIds);
             $('.Game').val(JSON.stringify(gameIds));
         }
 

@@ -27,12 +27,12 @@ namespace RizzGamingBase.Models.ViewModels
 
         [Display(Name = "開始日期")]
         [Required(ErrorMessage = "請選擇開始日期")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "結束日期")]
         [Required(ErrorMessage = "請選擇結束日期")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime EndDate { get; set; }
 
         [Display(Name = "折扣百分比")]
@@ -47,6 +47,8 @@ namespace RizzGamingBase.Models.ViewModels
 
         [Display(Name = "活動類型")]
         public IEnumerable<SelectListItem> DiscountTypeList { get; set; }
+
+        public int Developer {  get; set; }
     }
 
 

@@ -13,12 +13,12 @@ namespace RizzGamingBase.Models.Exts
 {
     public static class DiscountExts
     {
-        public static List<DiscountEntity> GetDbToEntity()
+        public static List<DiscountCreateEntity> GetDbToEntity()
         {
             var db = new AppDbContext();
 
             var entities = db.Discounts.AsNoTracking()
-               .Select(d => new DiscountEntity
+               .Select(d => new DiscountCreateEntity
                {
                    Id = d.Id,
                    Name = d.Name,
@@ -34,13 +34,13 @@ namespace RizzGamingBase.Models.Exts
             return entities;
         }
 
-        public static List<DiscountDto> GetEntityToDto(this List<DiscountEntity> entity)
+        public static List<DiscountCreateDto> GetEntityToDto(this List<DiscountCreateEntity> entity)
         {
-            var listvm = new List<DiscountDto>();
+            var listvm = new List<DiscountCreateDto>();
 
             foreach (var e in entity)
             {
-                var vm = new DiscountDto
+                var vm = new DiscountCreateDto
                 {
                     Id = e.Id,
                     Name = e.Name,
@@ -57,7 +57,7 @@ namespace RizzGamingBase.Models.Exts
             return listvm;
         }
 
-        public static List<DiscountIndexVm> GetDtoToVm(this List<DiscountDto> dtos)
+        public static List<DiscountIndexVm> GetDtoToVm(this List<DiscountCreateDto> dtos)
         {
             var listvm = new List<DiscountIndexVm>();
 
@@ -80,13 +80,13 @@ namespace RizzGamingBase.Models.Exts
             return listvm;
         }
 
-        public static DiscountEntity GetDbToEntity(int id)
+        public static DiscountCreateEntity GetDbToEntity(int id)
         {
             var db = new AppDbContext();
 
             var discount = db.Discounts.FirstOrDefault(x => x.Id == id);
 
-            var entity = new DiscountEntity
+            var entity = new DiscountCreateEntity
             {
                 Id = discount.Id,
                 Name = discount.Name,
@@ -98,31 +98,13 @@ namespace RizzGamingBase.Models.Exts
                 Desciption = discount.Desciption,
             };
 
-            var gameInfo = db.DiscountItems
-                             .Where(x => x.DiscountId == id)
-                             .Select(d => new DiscountItemInfo
-                             {
-                                 Id = d.Id,
-                                 DiscountId = discount.Id,
-                                 GameID = d.GameId,
-                                 Game = new GameInfo
-                                 {
-                                     Id = d.Game.Id,
-                                     Name = d.Game.Name,
-                                     Developer = d.Game.Developer.Name,
-                                     Price = d.Game.Price,
-                                     Image = d.Game.Cover,
-                                     MaxPercent = d.Game.MaxPersent
-                                 }
-                             });
 
-            entity.DiscountItem = gameInfo;
             return entity;
         }
 
-        public static DiscountDto GetEntityToDto(this DiscountEntity entity)
+        public static DiscountCreateDto GetEntityToDto(this DiscountCreateEntity entity)
         {
-            var dto = new DiscountDto
+            var dto = new DiscountCreateDto
             {
                 Id = entity.Id,
                 Name = entity.Name,
@@ -132,14 +114,14 @@ namespace RizzGamingBase.Models.Exts
                 EndDate = entity.EndDate,
                 Percent = entity.Percent,
                 Desciption = entity.Desciption,
-                DiscountItem = entity.DiscountItem
+
             };
             return dto;
         }
 
-        public static DiscountVm GetDtoToVm(this DiscountDto dto)
+        public static DiscountCreateVm GetDtoToVm(this DiscountCreateDto dto)
         {
-            var vm = new DiscountVm
+            var vm = new DiscountCreateVm
             {
                 Id = dto.Id,
                 DiscountName = dto.Name,
@@ -149,29 +131,9 @@ namespace RizzGamingBase.Models.Exts
                 EndDate = dto.EndDate,
                 Percent = dto.Percent,
                 Description = dto.Desciption,
-                DiscountItem = new List<DiscountItemVm>()
+
             };
 
-            foreach(var g in dto.DiscountItem)
-            {
-                var disocuntItemVm = new DiscountItemVm
-                {
-                    Id = g.Id,
-                    DiscountId = g.DiscountId,
-                    GameId = g.GameID,
-                    Game = new DiscountGameVm
-                    {
-                        Id = g.Game.Id,
-                        Name = g.Game.Name,
-                        Price = g.Game.Price,
-                        Developer = g.Game.Developer,
-                        Image = g.Game.Image,
-                        MaxPercent = g.Game.MaxPercent,
-                    }
-                };
-
-                vm.DiscountItem.Add(disocuntItemVm);
-            }
             return vm;
         }
 
@@ -188,14 +150,14 @@ namespace RizzGamingBase.Models.Exts
                 EndDate = vm.EndDate,
                 Percent = vm.Percent,
                 Desciption = vm.Description,
-                GameId = vm.Game               
+                GameId = vm.Game
             };
 
             return dto;
         }
-        public static DiscountDto EditVmToDto(this DiscountVm vm)
+        public static DiscountCreateDto EditVmToDto(this DiscountCreateVm vm)
         {
-            var dto = new DiscountDto
+            var dto = new DiscountCreateDto
             {
                 Id = vm.Id,
                 Name = vm.DiscountName,
@@ -205,21 +167,7 @@ namespace RizzGamingBase.Models.Exts
                 EndDate = vm.EndDate,
                 Percent = vm.Percent,
                 Desciption = vm.Description,
-                DiscountItem = vm.DiscountItem.Select(di => new DiscountItemInfo
-                {
-                    Id = di.Id,
-                    DiscountId = di.DiscountId,
-                    GameID = di.GameId, // 將字串轉換為整數
-                    Game = new GameInfo
-                    {
-                        Id = di.Game.Id,
-                        Name = di.Game.Name,
-                        Developer = di.Game.Developer,
-                        Price = di.Game.Price,
-                        MaxPercent = di.Game.MaxPercent,
-                        Image = di.Game.Image
-                    }
-                }).ToList()
+                GameId = vm.Game
             };
 
             return dto;
@@ -242,9 +190,9 @@ namespace RizzGamingBase.Models.Exts
             return entity;
         }
 
-        public static DiscountEntity EditDtoToEntity(this DiscountDto vm)
+        public static DiscountCreateEntity EditDtoToEntity(this DiscountCreateDto vm)
         {
-            var entity = new DiscountEntity
+            var entity = new DiscountCreateEntity
             {
                 Id = vm.Id,
                 Name = vm.Name,
@@ -254,7 +202,7 @@ namespace RizzGamingBase.Models.Exts
                 EndDate = vm.EndDate,
                 Percent = vm.Percent,
                 Desciption = vm.Desciption,
-                DiscountItem = vm.DiscountItem
+                GameId = vm.GameId
             };
 
             return entity;
@@ -296,7 +244,7 @@ namespace RizzGamingBase.Models.Exts
             }
         }
 
-        public static void EditEntityToDb(this DiscountEntity entity)
+        public static void EditEntityToDb(this DiscountCreateEntity entity)
         {
             using (var db = new AppDbContext())
             {
@@ -304,6 +252,7 @@ namespace RizzGamingBase.Models.Exts
 
                 if (discount != null)
                 {
+
                     discount.Name = entity.Name;
                     discount.DiscountType = entity.Type;
                     discount.Image = entity.Image;
@@ -312,31 +261,51 @@ namespace RizzGamingBase.Models.Exts
                     discount.Percent = entity.Percent;
                     discount.Desciption = entity.Desciption;
                     db.SaveChanges();
+                }
 
-                    foreach (var item in entity.DiscountItem)
+                string[] gameIdArray = entity.GameId.Trim('[', ']')
+                              .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                // 獲取資料庫中舊的 DiscountItems
+                var oldDiscountItems = db.DiscountItems.Where(d => d.DiscountId == entity.Id).ToList();
+
+                // 遍歷現有的 gameIdArray
+                foreach (var item in gameIdArray)
+                {
+                    if (int.TryParse(item, out int gameId))
                     {
-                        if (item.Id == 0)
+                        var discountItem = oldDiscountItems.SingleOrDefault(d => d.GameId == gameId);
+
+                        if (discountItem != null)
                         {
-                            var newItem = new DiscountItem
-                            {
-                                DiscountId = discount.Id,
-                                GameId = item.GameID
-                            };
-                            db.DiscountItems.Add(newItem);
+                            // 如果在現有的 gameIdArray 中找到，更新相應的資料
+                            discountItem.GameId = gameId;
                         }
                         else
                         {
-                            var discountItem = db.DiscountItems.SingleOrDefault(d => d.DiscountId == entity.Id && d.GameId == item.GameID);
-                            if (discountItem != null)
+                            // 如果在現有的 gameIdArray 中未找到，則新建 DiscountItem
+                            var newItem = new DiscountItem
                             {
-                                
-                                discountItem.GameId = item.GameID;
-                            }
+                                DiscountId = entity.Id,
+                                GameId = gameId
+                            };
+                            db.DiscountItems.Add(newItem);
                         }
                     }
-
-                    db.SaveChanges();
                 }
+
+                // 檢查是否有需要刪除的項目
+                foreach (var oldItem in oldDiscountItems)
+                {
+                    if (!gameIdArray.Contains(oldItem.GameId.ToString()))
+                    {
+                        // 如果在現有的 gameIdArray 中未找到，則從資料庫中刪除
+                        db.DiscountItems.Remove(oldItem);
+                    }
+                }
+
+                // 提交變更到資料庫
+                db.SaveChanges();
             }
         }
     }

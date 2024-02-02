@@ -10,12 +10,12 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 {
     public class DiscountEFRepository : IDiscountRepository
     {
-        public DiscountEntity GetEvent(int id)
+        public DiscountCreateEntity GetEvent(int id)
         {
            return DiscountExts.GetDbToEntity(id);
         }
 
-        public List<DiscountEntity> GetAllEvent()
+        public List<DiscountCreateEntity> GetAllEvent()
         {
 
             return DiscountExts.GetDbToEntity();
@@ -26,7 +26,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             DiscountExts.CreateEntityToDb(entity);
         }
 
-        public void Edit(DiscountEntity entity)
+        public void Edit(DiscountCreateEntity entity)
         {
             DiscountExts.EditEntityToDb(entity);
         }

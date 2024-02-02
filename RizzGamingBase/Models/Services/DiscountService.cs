@@ -17,13 +17,13 @@ namespace RizzGamingBase.Models.Services
             _repo = repo;
         }
 
-        public List<DiscountDto> GetAllEvent()
+        public List<DiscountCreateDto> GetAllEvent()
         {
             var enetity = _repo.GetAllEvent();
             return DiscountExts.GetEntityToDto(enetity);
         }
 
-        public DiscountDto GetEvent(int id)
+        public DiscountCreateDto GetEvent(int id)
         {
             var entity = _repo.GetEvent(id);
 
@@ -36,7 +36,7 @@ namespace RizzGamingBase.Models.Services
             _repo.Create(entity);
         }
 
-        public void Edit(DiscountDto dto)
+        public void Edit(DiscountCreateDto dto)
         {
             var entity = DiscountExts.EditDtoToEntity(dto);
             _repo.Edit(entity);

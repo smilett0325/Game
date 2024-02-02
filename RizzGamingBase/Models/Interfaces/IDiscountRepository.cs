@@ -9,10 +9,10 @@ namespace RizzGamingBase.Models.Interfaces
 {
     public interface IDiscountRepository
     {
-        List<DiscountEntity> GetAllEvent();
-        DiscountEntity GetEvent(int id);
+        List<DiscountCreateEntity> GetAllEvent();
+        DiscountCreateEntity GetEvent(int id);
         void Create(DiscountCreateEntity entity);
-        void Edit(DiscountEntity entity);
+        void Edit(DiscountCreateEntity entity);
         
     }
 }

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Security.Cryptography;
+using Microsoft.Ajax.Utilities;
 
 namespace RizzGamingBase.Controllers
 {
@@ -20,15 +21,22 @@ namespace RizzGamingBase.Controllers
             return View(vm);
         }
 
+
+        public ActionResult Home()
+        {
+            
+            return View();
+        }
+
         public ActionResult Edit(int id)
         {
-            DiscountVm vm = DiscountActionExts.GetEvent(id);
+            DiscountCreateVm vm = DiscountActionExts.GetEvent(id);
             return View(vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(DiscountVm vm)
+        public ActionResult Edit(DiscountCreateVm vm)
         {
             if(!ModelState.IsValid) return View(vm);
             try
@@ -102,7 +110,44 @@ namespace RizzGamingBase.Controllers
 
 
 
-     
+        public JsonResult GetDiscountEvent(int id)
+        {
+            var db = new AppDbContext();
+
+            if (id != 0) {
+                var discountevent = db.Discounts
+                                      .Where(d => d.DeveloperId == id)
+                                      .Select(d => new DiscountEventVm
+                                      {
+                                          Id = d.Id,
+                                          Name = d.Name,
+                                          Type = d.DiscountType,
+                                          StartDate = d.StartDate,
+                                          EndDate = d.EndDate,
+                                          Image = d.Image,
+                                      }).ToList();
+                return Json(discountevent, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var discountevent = db.Discounts
+                                      .Where(d => d.DeveloperId == id)
+                                      .Select(d => new DiscountEventVm
+                                      {
+                                          Id = d.Id,
+                                          Name = d.Name,
+                                          Type = d.DiscountType,
+                                          StartDate = d.StartDate,
+                                          EndDate = d.EndDate,
+                                          Image = d.Image,
+                                      }).ToList();
+                return Json(discountevent, JsonRequestBehavior.AllowGet);
+            } 
+        }
+
+
+
+
         public ActionResult AddItem(int id, int gameId)
         {
             var db = new AppDbContext();
@@ -227,14 +272,10 @@ namespace RizzGamingBase.Controllers
                                     Image = d.Cover,
                                     MaxPercent = d.MaxPersent
                                 }).ToList();
-            if (!string.IsNullOrEmpty(keyword))
-                {
-                allgames = allgames.Where(d => d.Name.Contains(keyword))
-                            .ToList();
-                }
+          
             
                 
-
+            
             var discountgames = db.DiscountItems
                                   .Include(d => d.Game)
                                   .Where(d => d.DiscountId == id)
@@ -247,12 +288,21 @@ namespace RizzGamingBase.Controllers
                                       Image = d.Game.Cover,
                                       MaxPercent = d.Game.MaxPersent
                                   }).ToList();
-
+            
+            
             var games = allgames.Except(discountgames).ToList();
+            
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                games = games.Where(d => d.Name.Contains(keyword))
+                            .ToList();
+            }
 
             return Json(games, JsonRequestBehavior.AllowGet);
         }
 
         
+
     }
 }
