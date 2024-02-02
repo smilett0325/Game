@@ -20,8 +20,6 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 
         public void Create(BonusProductsEntity model)
         {
-            //var db = new AppDbContext();
-
             BonusProduct entity = new BonusProduct
             {
                 Id = model.Id,
@@ -37,8 +35,6 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 
         public List<BonusProductsEntity> GetAll()
         {
-            //var db = new AppDbContext();
-
             var BonusProducts = db.BonusProducts.AsNoTracking()
                 .Include(bp => bp.BonusProductType)
                 .Select(bp => new BonusProductsEntity

@@ -1,8 +1,5 @@
-﻿using RizzGamingBase.Models.Dtos;
-using RizzGamingBase.Models.EFModels;
+﻿using RizzGamingBase.Models.EFModels;
 using RizzGamingBase.Models.Exts;
-using RizzGamingBase.Models.Repositories.EFRepositories;
-using RizzGamingBase.Models.Services;
 using RizzGamingBase.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -21,12 +18,9 @@ namespace RizzGamingBase.Controllers
         {
             db = new AppDbContext();
             // todo DB連線using資源釋放尚未完工
-            //using (db = new AppDbContext())
-            //{
-            //}
+            // using (db = new AppDbContext()){/* 初始化 db*/}
         }
 
-        // GET: Items
         public ActionResult Index()
         {
             List<BonusProductsIndexVm> data = BonusProductExts.GetAll(db);//取得表單Data全部的值
@@ -47,24 +41,25 @@ namespace RizzGamingBase.Controllers
         [HttpPost]
         public ActionResult Create(BonusProductsCreateVm model)//傳入DB
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    BonusProductExts.CreateProduct(model, db);
-                    return RedirectToAction("Index");//生成的物件回傳至 Index 
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(String.Empty, ex.Message);
-                    return View(model);
-                }
+                return View(model);
+            }
+            try
+            {
+                BonusProductExts.CreateProduct(model, db);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(String.Empty, ex.Message);
+                return View(model);
             }
         }
 
 
         #region 單層編輯
-        public ActionResult Edit(int id)//編輯
+        public ActionResult Edit(int id)
         {
             BonusProductsEditVm model = LoadProdct(id);
             var productTypes = db.BonusProductTypes.Select(t => new SelectListItem
@@ -72,7 +67,7 @@ namespace RizzGamingBase.Controllers
                 Value = t.Id.ToString(),
                 Text = t.Name
             }).ToList();
-            ViewBag.ProductTypes = productTypes; // 将 productTypes 设置到 ViewBag 中
+            ViewBag.ProductTypes = productTypes; // 將 productTypes 設置到 ViewBag 中
             return View(model);
         }
 
@@ -100,24 +95,22 @@ namespace RizzGamingBase.Controllers
         {
             //var model = new AppDbContext().BonusProducts.Find(id);
             //using (var db = new AppDbContext());//using會在連線字串完後自然釋放比上面更省效能也不用擔心資料外洩
-            //{
-            //}
-            var model = db.BonusProducts.Find(id);
-            return new BonusProductsEditVm
             {
-                Id = model.Id,
-                ProductTypeId = model.ProductTypeId,
-                ProductTypeName = model.BonusProductType.Name,
-                Price = model.Price,
-                URL = model.URL,
-                Name = model.Name
-            };
+                var model = db.BonusProducts.Find(id);
+                return new BonusProductsEditVm
+                {
+                    Id = model.Id,
+                    ProductTypeId = model.ProductTypeId,
+                    ProductTypeName = model.BonusProductType.Name,
+                    Price = model.Price,
+                    URL = model.URL,
+                    Name = model.Name
+                };
+            }
+
         }
         private void UpdateProduct(BonusProductsEditVm model)//修改
         {
-            //using (var db = new AppDbContext())
-            //{
-            //}
             var findProduct = db.BonusProducts.Find(model.Id);
             if (findProduct != null)
             {
@@ -182,9 +175,6 @@ namespace RizzGamingBase.Controllers
         [HttpGet]
         public ActionResult Delete(int? id)
         {
-            //using (var db = new AppDbContext())
-            //{
-            //}
             if (id == null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);//400錯誤回應
@@ -201,8 +191,6 @@ namespace RizzGamingBase.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var db = new AppDbContext();
-
             BonusProduct bonusProduct = db.BonusProducts.Find(id);
             db.BonusProducts.Remove(bonusProduct);
             db.SaveChanges();
