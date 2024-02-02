@@ -10,9 +10,9 @@ namespace RizzGamingBase.Models.Interfaces
     public interface IBonusProductsServices
     {
         void Create(BonusProductsDto dto);
-        void Search(BonusProductsDto dto);
-        void Update(BonusProductsDto dto);
-        void Delete(BonusProductsDto dto);
         List<BonusProductsDto> GetAll();
+        List<BonusProductsDto> SearchByName(string keyword);
+        void Edit(BonusProductsDto dto);
+        void Delete(BonusProductsDto dto);
     }
 }

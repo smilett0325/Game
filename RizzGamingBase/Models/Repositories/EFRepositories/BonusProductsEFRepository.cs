@@ -6,19 +6,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using RizzGamingBase.Models.Dtos;
 
 namespace RizzGamingBase.Models.Repositories.EFRepositories
 {
     public class BonusProductsEFRepository : IBonusProductsRepository
     {
+        private readonly AppDbContext db;
+        public BonusProductsEFRepository(AppDbContext context)
+        {
+            db = context;
+        }
+
         public void Create(BonusProductsEntity model)
         {
-            var db = new AppDbContext();
-
             BonusProduct entity = new BonusProduct
             {
                 Id = model.Id,
-                ProductTypeId = model.ProductTypeid,
+                ProductTypeId = model.ProductTypeId,
                 Price = model.Price,
                 URL = model.URL,
                 Name = model.Name
@@ -28,40 +33,15 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             db.SaveChanges();
         }
 
-        public void Delete(BonusProductsEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Search(BonusProductsEntity entity)
-        {
-            var db = new AppDbContext();
-
-            var BonusProducts = db.BonusProducts.AsNoTracking()
-            .Include(bp => bp.BonusProductType)
-            .Select(bp => new BonusProductsEntity
-            {
-                Id = bp.Id,
-                ProductTypeid = bp.BonusProductType.Type,
-                Price = bp.Price,
-                URL = bp.URL,
-                Name = bp.Name
-            })
-            .ToList();
-            return;
-        }
-
         public List<BonusProductsEntity> GetAll()
         {
-            var db = new AppDbContext();
-
             var BonusProducts = db.BonusProducts.AsNoTracking()
                 .Include(bp => bp.BonusProductType)
                 .Select(bp => new BonusProductsEntity
                 {
                     Id = bp.Id,
-                    ProductTypeid = bp.BonusProductType.Type,
-                    TypeName = bp.BonusProductType.Name,
+                    ProductTypeId = bp.BonusProductType.Id,
+                    ProductTypeName = bp.BonusProductType.Name,
                     Price = bp.Price,
                     URL = bp.URL,
                     Name = bp.Name
@@ -70,33 +50,45 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             return BonusProducts;
         }
 
-        public void Update(BonusProductsEntity entity)
-        {
-            var db = new AppDbContext();
-
-            var BonusProduct = db.BonusProducts.Find(entity.Id);
-
-
-        }
-
-        public BonusProductsEntity SearchByName(string bonusName)
+        public List<BonusProductsEntity> SearchByName(string keyword)
         {
             throw new NotImplementedException();
         }
 
+        // todo 完成3層式，編輯Repository
+        public void Edit(BonusProductsEntity entity)
+        {
+            //var db = new AppDbContext();
+
+            //var BonusProduct = db.BonusProducts.Find(entity.Id);
+            //BonusProduct.ProductTypeId = entity.ProductTypeId;
+            //BonusProduct.Price = entity.Price;
+            //BonusProduct.URL = entity.URL;
+            //BonusProduct.Name = entity.Name;
+            //db.SaveChanges();
+        }
+
+        // todo 關鍵字搜尋
         public BonusProductsEntity SearchById(int id)
         {
-            var db = new AppDbContext();
+            //var db = new AppDbContext();
             var model = db.BonusProducts.Find(id);
             var data = new BonusProductsEntity
             {
                 Id = model.Id,
-                ProductTypeid = model.ProductTypeId,
+                ProductTypeId = model.ProductTypeId,
                 Price = model.Price,
                 URL = model.URL,
                 Name = model.Name
             };
             return data;
+        }
+
+
+        // todo 完成3層式，刪除Repository
+        public void Delete(BonusProductsEntity entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

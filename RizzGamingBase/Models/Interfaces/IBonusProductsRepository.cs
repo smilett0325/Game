@@ -10,10 +10,10 @@ namespace RizzGamingBase.Models.Interfaces
     public interface IBonusProductsRepository
     {
         void Create(BonusProductsEntity entity);
-        BonusProductsEntity SearchByName(string bonusName);
-        BonusProductsEntity SearchById(int id);
-        void Update(BonusProductsEntity entity);
-        void Delete(BonusProductsEntity entity);
         List<BonusProductsEntity> GetAll();
+        List<BonusProductsEntity> SearchByName(string keyword);
+        BonusProductsEntity SearchById(int id);
+        void Edit(BonusProductsEntity entity);
+        void Delete(BonusProductsEntity entity);
     }
 }

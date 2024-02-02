@@ -17,5 +17,7 @@ namespace RizzGamingBase.Models.EFModels
         public virtual Game Game { get; set; }
 
         public virtual Game Game1 { get; set; }
+
+        public virtual Game Game2 { get; set; }
     }
 }

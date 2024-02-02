@@ -21,7 +21,7 @@ namespace RizzGamingBase.Models.Services
             BonusProductsEntity entity = new BonusProductsEntity
             {
                 Id = dto.Id,
-                ProductTypeid = dto.ProductTypeid,
+                ProductTypeId = dto.ProductTypeId,
                 Price = dto.Price,
                 URL = dto.URL,
                 Name = dto.Name
@@ -29,10 +29,6 @@ namespace RizzGamingBase.Models.Services
             _repo.Create(entity);
         }
 
-        public void Delete(BonusProductsDto dto)
-        {
-            throw new NotImplementedException();
-        }
         public List<BonusProductsDto> GetAll()
         {
             var entity = _repo.GetAll();
@@ -43,8 +39,8 @@ namespace RizzGamingBase.Models.Services
                 var dto = new BonusProductsDto
                 {
                     Id = dtoitem.Id,
-                    ProductTypeid = dtoitem.ProductTypeid,
-                    TypeName = dtoitem.TypeName,
+                    ProductTypeId = dtoitem.ProductTypeId,
+                    ProductTypeName = dtoitem.ProductTypeName,
                     Price = dtoitem.Price,
                     URL = dtoitem.URL,
                     Name = dtoitem.Name
@@ -54,9 +50,25 @@ namespace RizzGamingBase.Models.Services
             return dtoList;
         }
 
-        public void Search(BonusProductsDto dto)
+        public List<BonusProductsDto> SearchByName(string keyword)
         {
-            throw new NotImplementedException();
+            var entity = _repo.SearchByName(keyword);
+
+            var dtoList = new List<BonusProductsDto>();
+            foreach (var dtoitem in entity)
+            {
+                var dto = new BonusProductsDto
+                {
+                    Id = dtoitem.Id,
+                    ProductTypeId = dtoitem.ProductTypeId,
+                    ProductTypeName = dtoitem.ProductTypeName,
+                    Price = dtoitem.Price,
+                    URL = dtoitem.URL,
+                    Name = dtoitem.Name
+                };
+                dtoList.Add(dto);
+            }
+            return dtoList;
         }
 
         public BonusProductsDto LoadProdct(int id)
@@ -66,8 +78,8 @@ namespace RizzGamingBase.Models.Services
             var dto = new BonusProductsDto
             {
                 Id = entity.Id,
-                ProductTypeid = entity.ProductTypeid,
-                TypeName = entity.TypeName,
+                ProductTypeId = entity.ProductTypeId,
+                ProductTypeName = entity.ProductTypeName,
                 Price = entity.Price,
                 URL = entity.URL,
                 Name = entity.Name
@@ -75,18 +87,25 @@ namespace RizzGamingBase.Models.Services
             return dto;
         }
 
-        public void Update(BonusProductsDto dto)
+        // todo 完成3層式，編輯Service
+        public void Edit(BonusProductsDto dto)
         {
-            BonusProductsEntity entity = new BonusProductsEntity
-            {
-                Id = dto.Id,
-                ProductTypeid = dto.ProductTypeid,
-                Price = dto.Price,
-                TypeName = dto.TypeName,
-                URL = dto.URL,
-                Name = dto.Name
-            };
-            _repo.Update(entity);
+            //BonusProductsEntity entity = new BonusProductsEntity
+            //{
+            //    Id = dto.Id,
+            //    ProductTypeId = dto.ProductTypeId,
+            //    Price = dto.Price,
+            //    ProductTypeName = dto.ProductTypeName,
+            //    URL = dto.URL,
+            //    Name = dto.Name
+            //};
+            //_repo.Edit(entity);
+        }
+
+        // todo 完成3層式，刪除Service
+        public void Delete(BonusProductsDto dto)
+        {
+            throw new NotImplementedException();
         }
     }
 }
