@@ -28,6 +28,7 @@
     <input type="hidden" id="productTypeNameHidden" name="ProductTypeName" value="" /> <!-- 用於存儲選擇的名稱 -->
 
     <div class="mb-3">
+        @Html.LabelFor(model => model.ProductTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="ProductTypeSelect">
             <select id="productTypeSelect" class="form-control form-select" data-val="true" data-val-required="請選擇類別">
                 <option value="">--請選擇類別--</option>

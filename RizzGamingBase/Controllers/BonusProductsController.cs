@@ -21,18 +21,27 @@ namespace RizzGamingBase.Controllers
             // using (db = new AppDbContext()){/* 初始化 db*/}
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string keyword)
         {
-            List<BonusProductsIndexVm> data = BonusProductExts.GetAll(db);//取得表單Data全部的值
+            List<BonusProductsIndexVm> data;
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                // 如果使用者輸入了關鍵字，則進行篩選
+                data = BonusProductExts.GetAll(db)
+                                       .Where(bp => bp.Name.Contains(keyword)) // 假設你要以產品名稱為篩選條件
+                                       .ToList();
+            }
+            else
+            {
+                // 如果使用者未輸入關鍵字，則顯示所有資料
+                data = BonusProductExts.GetAll(db);
+            }
+
             return View(data);
             // todo 圖片字串 插入HTML
         }
 
-        public ActionResult Search(string keyword)
-        {
-            List<BonusProductsIndexVm> data = BonusProductExts.SearchByName(keyword, db);//取得表單Data全部的值
-            return View();
-        }
         public ActionResult Create()//實作顯示
         {
             return View();

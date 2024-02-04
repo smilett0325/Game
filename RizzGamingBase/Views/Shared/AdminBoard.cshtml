@@ -168,8 +168,6 @@
                     </div>
                 </div>
 
-
-
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item menu-is-opening">
@@ -288,29 +286,50 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item menu-is-opening">
+                            <a href="" class="nav-link active">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    紅利商品
+                                </p>
+                                <i class="right fas fa-angle-left"></i>
+                            </a>
+                            <ul class="nav-item nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index", "BonusProducts")" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>紅利清單</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Create", "BonusProducts")" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>新增紅利商品</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("", "")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>------</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
-
             </div>
-
         </aside>
 
         <div class="content-wrapper">
-
-
-
-
             <div class="content">
                 <div class="container-fluid">
                     @RenderBody()
                 </div>
             </div>
-
         </div>
 
 
         <aside class="control-sidebar control-sidebar-dark">
-
             <div class="p-3">
                 <h5>Title</h5>
                 <p>Sidebar content</p>
@@ -319,11 +338,9 @@
 
 
         <footer class="main-footer">
-
             <div class="float-right d-none d-sm-inline">
                 Anything you want
             </div>
-
             <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
         </footer>
     </div>
