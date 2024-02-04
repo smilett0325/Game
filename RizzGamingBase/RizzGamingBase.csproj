@@ -176,7 +176,15 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\GameDataController.cs" />
+    <Compile Include="Models\Dtos\GameDataDto.cs" />
+    <Compile Include="Models\Entities\GameDataEntity.cs" />
+    <Compile Include="Models\Exts\SelectListExts.cs" />
+    <Compile Include="Models\Interfaces\ISelectListItem.cs" />
+    <Compile Include="Models\Services\GameDataService.cs" />
+    <Compile Include="Models\Exts\GameDataExts.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\GameDataEFRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\Interfaces\IGameDataRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -217,6 +225,7 @@
     <Compile Include="Models\Interfaces\IBonusProductsServices.cs" />
     <Compile Include="Models\Repositories\EFRepositories\BonusProductsEFRepository.cs" />
     <Compile Include="Models\Services\BonusProductsServices.cs" />
+    <Compile Include="Models\Interfaces\ISelectListService.cs" />
     <Compile Include="Models\ViewModels\BonusProductsCreateVm.cs" />
     <Compile Include="Models\ViewModels\BonusProductsEditVm.cs" />
     <Compile Include="Models\ViewModels\BonusProductsIndexVm.cs" />
@@ -228,6 +237,7 @@
     <Compile Include="Models\Interfaces\IDiscountRepository.cs" />
     <Compile Include="Models\Repositories\EFRepositories\DiscountEFRepository.cs" />
     <Compile Include="Models\Services\DiscountService.cs" />
+    <Compile Include="Models\ViewModels\Developer\BanDevVm.cs" />
     <Compile Include="Models\ViewModels\DiscountCreateVm.cs" />
     <Compile Include="Models\ViewModels\DiscountEventVm.cs" />
     <Compile Include="Models\ViewModels\DiscountGameVm.cs" />
@@ -269,6 +279,7 @@
     <Compile Include="Models\Services\GTService.cs" />
     <Compile Include="Models\Services\TagService.cs" />
     <Compile Include="Models\ViewModels\DeveloperGameEditVm.cs" />
+    <Compile Include="Models\ViewModels\GameDataVm.cs" />
     <Compile Include="Models\ViewModels\GameIndexVm.cs" />
     <Compile Include="Models\Exts\DeveloperExt.cs" />
     <Compile Include="Models\Exts\RegisterExt.cs" />
@@ -281,6 +292,7 @@
     <Compile Include="Models\ViewModels\Developer\LoginVm.cs" />
     <Compile Include="Models\ViewModels\Developer\RegisterVm.cs" />
     <Compile Include="Models\ViewModels\Developer\ResetPasswordVM.cs" />
+    <Compile Include="Models\ViewModels\MLoginVm.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -5140,6 +5152,7 @@
     <Content Include="Views\Developer\ForgetPasswordConfirm.cshtml" />
     <Content Include="Views\Developer\ResetPassword.cshtml" />
     <Content Include="Views\Developer\ConfirmResetPassword.cshtml" />
+    <Content Include="Views\Developer\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,16 +1,12 @@
-﻿using System;
+﻿using RizzGamingBase.Models.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 
-namespace RizzGamingBase.Models.Interfaces
+namespace RizzGamingBase.Controllers
 {
-	public interface ISelectListService
-	{
-		IEnumerable<ISelectListItem> GetSelectListItems();
+    public interface ISelectListService
+    {
+        IEnumerable<ISelectListItem> GetSelectListItems();
 
-		IEnumerable<ISelectListItem> GetSelectListItemsDeveloper(int id);
-	}
+        IEnumerable<ISelectListItem> GetSelectListItemsDeveloper(int id);
+    }
 }

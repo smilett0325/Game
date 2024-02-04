@@ -1,8 +1,6 @@
 ﻿using RizzGamingBase.Models.EFModels;
 using RizzGamingBase.Models.ViewModels;
-using RizzGamingBase.Models.ViewModels.Manerger;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;

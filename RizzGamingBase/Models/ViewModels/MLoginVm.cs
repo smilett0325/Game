@@ -1,12 +1,11 @@
-﻿using System;
+﻿using RizzGamingBase.Models.Infra;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 using System.Linq;
 using System.Web;
-using RizzGamingBase.Models.Infra;
 
-namespace RizzGamingBase.Models.ViewModels.Manerger
+namespace RizzGamingBase.Models.ViewModels
 {
     public class MLoginVm
     {

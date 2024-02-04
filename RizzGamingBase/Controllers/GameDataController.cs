@@ -1,23 +1,11 @@
-﻿using System;
-using RizzGamingBase.Models.Dtos;
-using RizzGamingBase.Models.Entity;
-using RizzGamingBase.Models.Exts;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using RizzGamingBase.Models.Services;
-using RizzGamingBase.Models.Repositories;
-using RizzGamingBase.Models.InterFaces;
-using System.Web.Http;
+﻿using RizzGamingBase.Models.Exts;
 using RizzGamingBase.Models.ViewModels;
-using RizzGamingBase.Models.EFModels;
-using System.Data;
-using System.Web.UI.WebControls;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace RizzGamingBase.Controllers
 {
-	public class GameDataController : Controller
+    public class GameDataController : Controller
 	{
 		public ActionResult Index()
 		{
