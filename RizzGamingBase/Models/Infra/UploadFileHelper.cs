@@ -56,6 +56,12 @@ namespace RizzGamingBase.Models.Infra
 			file.SaveAs(fullPath);
 		}
 
+		public void DeleteFile(string categoryFolderName, int developerId, int gameId, string fileName)
+		{
+			var fullPath = HostingEnvironment.MapPath($"/Images/{categoryFolderName}/{developerId}/{gameId}/{fileName}");
+			File.Delete(fullPath);
+		}
+
 		//public void UploadDisplayVideoFileToScratch(HttpPostedFileBase displayVideos)
 		//{
 		//	// 判断是否有上传文件，若没有，抛出异常
@@ -134,11 +140,6 @@ namespace RizzGamingBase.Models.Infra
 		//	File.Move(scratchPath, destinationAbsolutePath);
 		//}
 
-		public void DeleteFile(string path)
 
-		{
-
-		}
-		//File.Delete(fullPath);
 	}
 }

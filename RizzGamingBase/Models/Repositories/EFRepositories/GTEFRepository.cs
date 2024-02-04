@@ -1,4 +1,5 @@
-﻿using RizzGamingBase.Models.EFModels;
+﻿using Microsoft.Ajax.Utilities;
+using RizzGamingBase.Models.EFModels;
 using RizzGamingBase.Models.Entities;
 using RizzGamingBase.Models.Exts;
 using RizzGamingBase.Models.Interfaces;
@@ -30,6 +31,16 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 		{
 			return db.GameTags.AsNoTracking()
 				.Where(condition ?? (x => true))
+				.AsEnumerable()
+				.Select(g => g.EFToEntity())
+				.ToList();
+		}
+
+		public List<GTEntity> GetGameTags(int id)
+		{
+			return db.GameTags.AsNoTracking()
+				.Where(g=> g.GameId == id)
+				.AsEnumerable()
 				.Select(g => g.EFToEntity())
 				.ToList();
 		}

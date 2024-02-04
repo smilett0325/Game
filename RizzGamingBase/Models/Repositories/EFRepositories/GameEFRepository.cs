@@ -16,11 +16,21 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 		public List<GameEntity> Filter(Func<Game, bool> condition = null)
 		{
 			//包裝轉型為擴充方法，可能影響到效能
-			return db.Games.AsNoTracking()
-				.Where(condition ?? (x => true))
+			if (condition == null)
+			{
+				return db.Games.AsNoTracking()
 				.AsEnumerable()
 				.Select(g => g.EFToEntity())
 				.ToList();
+			}
+			else
+			{
+				return db.Games.AsNoTracking()
+				.Where(condition)
+				.AsEnumerable()
+				.Select(g => g.EFToEntity())
+				.ToList();
+			}
 		}
 
 		public GameEntity Search(int id)
@@ -63,6 +73,57 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 			model.Video = entity.Video;
 
 			db.SaveChanges();
+		}
+
+		public List<GameEntity> GetDLCGame(int id)
+		{
+			return db.DLCs.AsNoTracking()
+				.Where(x => x.AttachedGameId == id)
+				.Join(
+				db.Games,
+				x => x.GameId,
+				y => y.Id,
+				(x, y) => y
+				)
+				.Select(v => new GameEntity
+				{
+					Id = v.Id,
+					Name = v.Name,
+					Introduction = v.Introduction,
+					Description = v.Description,
+					ReleaseDate = v.ReleaseDate,
+					Price = v.Price,
+					Cover = v.Cover,
+					DeveloperId = v.DeveloperId,
+					MaxPercent = v.MaxPercent,
+				})
+				.ToList();
+		}
+
+		public GameEntity GetAttachedGame(int id)
+		{
+			return db.DLCs.AsNoTracking()
+				.Where(x => x.GameId == id)
+				.Join(
+				db.Games,
+				x => x.AttachedGameId,
+				y => y.Id,
+				(x, y) => y
+				)
+				.Select(v => new GameEntity
+				{
+					Id = v.Id,
+					Name = v.Name,
+					Introduction = v.Introduction,
+					Description = v.Description,
+					ReleaseDate = v.ReleaseDate,
+					Price = v.Price,
+					Cover = v.Cover,
+					DeveloperId = v.DeveloperId,
+					MaxPercent = v.MaxPercent,
+				})
+				.FirstOrDefault();
+
 		}
 	}
 }

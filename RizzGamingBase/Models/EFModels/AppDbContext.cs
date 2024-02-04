@@ -36,7 +36,6 @@ namespace RizzGamingBase.Models.EFModels
 		public virtual DbSet<MemberTag> MemberTags { get; set; }
 		public virtual DbSet<Message> Messages { get; set; }
 		public virtual DbSet<Picture> Pictures { get; set; }
-		public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 		public virtual DbSet<Tag> Tags { get; set; }
 		public virtual DbSet<WishListe> WishListes { get; set; }
 
@@ -248,7 +247,5 @@ namespace RizzGamingBase.Models.EFModels
 				.WithRequired(e => e.Tag)
 				.WillCascadeOnDelete(false);
 		}
-
-        public System.Data.Entity.DbSet<RizzGamingBase.Models.ViewModels.DeveloperGameEditVm> DeveloperGameEditVms { get; set; }
-    }
+	}
 }

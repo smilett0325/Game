@@ -28,11 +28,12 @@
                         <h5 class="modal-title">選擇主遊戲</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body" id="DLCActiveClass">      
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">搜尋</span>
-                                <input id="search" type="text" class="form-control" placeholder="搜尋" aria-label="Username" aria-describedby="basic-addon1" onkeydown="filterGame()">
-                            </div>
+                    <div class="modal-body" id="DLCActiveClass">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">搜尋</span>
+                            <input id="search" type="text" class="form-control" placeholder="搜尋" aria-label="Username" aria-describedby="basic-addon1" onkeydown="filterGame()">
+                        </div>
+                        <button id="none" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('none', '無')">無</button>
                         @foreach (var game in ViewBag.gameList)
                         {
                             <button id="@game.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')">@game.Name</button>
@@ -64,7 +65,7 @@
                         <h2>標籤列表</h2>
                         @foreach (var tag in ViewBag.TagList)
                         {
-                            <button id="@tag.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addTag('@tag.Id', '@tag.Name')">@tag.Name</button>
+                            <button id="tag@(tag.Id)" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addTag('@tag.Id', '@tag.Name')">@tag.Name</button>
                         }
                     </div>
                     <div class="modal-footer">
@@ -79,7 +80,7 @@
                 <label class="form-label">封面圖片</label>
             </div>
             <input type="file" name="cover" id="fileInputCov" class="form-control d-inline-block" onchange="coverFileChange()" />
-            <button type="button" class="btn btn-primary delete-cover " disabled>重新上傳</button>
+            <button type="button" class="btn btn-primary delete-cover " onclick="clearCover()" disabled>重新上傳</button>
         </div>
         <div id="coverContainer" class="mb-3"></div>
 
@@ -88,7 +89,7 @@
                 <label class="form-label">展示圖片</label>
             </div>
             <input type="file" name="displayImages" id="fileInputImg" class="form-control d-inline-block" onchange="imageFileChange()" multiple />
-            <button type="button" class="btn btn-primary delete-img " disabled>重新上傳</button>
+            <button type="button" class="btn btn-primary delete-img " onclick="clearDisplayImages()" disabled>重新上傳</button>
         </div>
         <div id="imageContainer" class="mb-3"></div>
 
@@ -97,7 +98,7 @@
                 <label class="form-label">預告片</label>
             </div>
             <input type="file" name="displayVideo" id="fileInputVdo" class="form-control d-inline-block" onchange="videoFileChange()" />
-            <button type="button" class="btn btn-primary delete-vdo " disabled>重新上傳</button>
+            <button type="button" class="btn btn-primary delete-vdo " onclick="clearDisplayVideo()" disabled>重新上傳</button>
         </div>
         <div id="videoContainer" class="mb-3"></div>
 
@@ -187,7 +188,7 @@
 <div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
     <img src="${imgUrl}" class="card-img-top" alt="...">
     <div class="card-body">
-        <p class="card-text">${mainFileName}</p>
+        <p class="card-text">${mainFileName}</p><button type="button" class="form-label btn btn-danger" onclick="clearCover()">deldet</button>
     </div>
 </div>
 `);
@@ -195,31 +196,47 @@
                 } else {
                     // 不符合要求的處理邏輯，例如發出警告
                     alert("不符合要求的檔案：" + fileName);
-                    document.getElementById('fileInputCov').value = '';
+                    fileInputCov.value = '';
                 }
             }
 
             if (fileInputCov.files.length >= 1) {
                 fileInputCov.disabled = true;
                 console.log("File input disabled");
-            }
+            } 
+        };
 
-            $('.delete-cover').on('click', function () {
-                $('#coverContainer').html("");
-                document.getElementById('fileInputCov').value = '';
+        function clearCover() {
+            $('#coverContainer').html("");
+            $('#fileInputCov').val('').prop('disabled', false);
+            $('.delete-cov').prop('disabled', true);
+        };
 
-                $('.delete-cover').prop('disabled', true);
-                fileInputCov.disabled = false;
-
-                //formData.delete('cover');
-            });
-        }
+        var scratchImages = [];// 用來保存合格的檔案，如有需追蹤做使用
 
         function imageFileChange() {
             // 获取文件输入框
             var fileInputImg = document.getElementById("fileInputImg");
 
-            //var validFiles = [];  // 用來保存合格的檔案，如有需追蹤做使用
+
+            var maxFiles = 5;
+
+            console.log(scratchImages.length);
+            console.log(fileInputImg.files.length);
+
+            if (fileInputImg.files.length + scratchImages.length > maxFiles) {
+                fileInputImg.value = '';
+                //fileInputImg.disabled = true;
+                alert("總圖片數不能大於" + maxFiles + "張");
+            }
+
+            if (fileInputImg.files.length + scratchImages.length == maxFiles) {
+                
+                fileInputImg.disabled = true;
+               
+            }
+
+
 
             for (var i = 0; i < fileInputImg.files.length; i++) {
                 var file = fileInputImg.files[i];
@@ -240,33 +257,49 @@
 <div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
     <img src="${imgUrl}" class="card-img-top" alt="...">
     <div class="card-body">
-        <p class="card-text">${mainFileName}</p>
+        <p class="card-text">${mainFileName}</p><button type="button" class="form-label btn btn-danger" onclick="deleteImage(this)">deldet</button>
     </div>
 </div>
 `);
+                    
                     $('.delete-img').prop('disabled', false);
+
+                    scratchImages.push(file);
+
                 } else {
                     // 不符合要求的處理邏輯，例如發出警告
                     alert("不符合要求的檔案：" + fileName);
-                    document.getElementById('fileInputImg').value = '';
+                    fileInputImg.value = '';
                 }
             }
 
             if (fileInputImg.files.length >= 5) {
                 fileInputImg.disabled = true;
-                console.log("File input disabled");
+                //console.log("File input disabled");
             }
-
-            $('.delete-img').on('click', function () {
-                $('#imageContainer').html("");
-                document.getElementById('fileInputImg').value = '';
-
-                $('.delete-img').prop('disabled', true);
-                fileInputImg.disabled = false;
-
-                //formData.delete('displayImage');
-            });
         }
+
+        function deleteImage(button) {
+            // 获取包含删除按钮的 .card 元素
+            var card = button.closest('.card');
+
+            // 获取 .card 元素在父容器中的索引
+            var index = Array.from(card.parentElement.children).indexOf(card);
+
+            //console.log('Card index:', index);
+           
+            card.remove();
+            scratchImages.splice(index, 1)
+            fileInputImg.disabled = false;
+            //console.log(scratchImages);
+        }
+
+        function clearDisplayImages() {  
+            $('#imageContainer').html("");
+            $('#fileInputImg').val('').prop('disabled', false);
+            $('.delete-img').prop('disabled', true);
+            scratchImages = [];
+        };
 
         function videoFileChange() {
             // 获取文件输入框
@@ -283,13 +316,7 @@
                 var mainFileName = fileNameParts.slice(0, -1).join('.');  // 除了最后一个之外的所有部分
                 var fileExtension = fileNameParts.slice(-1)[0];  // 最后一个部分
                 var allowedExtensions = ['mp4', 'webm'];
-
                 var vdoUrl = URL.createObjectURL(file);
-
-                console.log(fileName);
-                console.log(mainFileName);
-                console.log(fileExtension);
-                console.log(vdoUrl);
 
                 // 判斷附檔名是否符合要求
                 if (allowedExtensions.includes(fileExtension.toLowerCase())) {
@@ -298,10 +325,10 @@
                     $("#videoContainer").append(`
 <div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
     <video controls class="card-img-top">
-        <source src="${vdoUrl}" type="video/mp4">
+        <source src="${vdoUrl}">
     </video>
     <div class="card-body">
-        <p class="card-text">${mainFileName}</p>
+        <p class="card-text">${mainFileName}</p><button type="button" class="form-label btn btn-danger" onclick="clearDisplayVideo()">deldet</button>
     </div>
 </div>
 `);
@@ -310,7 +337,7 @@
                 } else {
                     // 不符合要求的處理邏輯，例如發出警告
                     alert("不符合要求的檔案：" + fileName);
-                    document.getElementById('fileInputVdo').value = '';
+                    fileInputVdo.value = '';
                 }
             }
 
@@ -318,22 +345,13 @@
                 fileInputVdo.disabled = true;
                 console.log("File input disabled");
             }
-
-            $('.delete-vdo').on('click', function () {
-                $('#videoContainer').html("");
-                document.getElementById('fileInputVdo').value = '';
-
-                $('.delete-vdo').prop('disabled', true);
-                fileInputVdo.disabled = false;
-
-                //formData.delete('displayVideo');
-            });
-
-            if (fileInputVdo.files.length >= 1) {
-                fileInputVdo.disabled = true;
-                console.log("File input disabled");
-            }
         }
+
+        function clearDisplayVideo() {
+            $('#videoContainer').html("");
+            $('#fileInputVdo').val('').prop('disabled', false);
+            $('.delete-vdo').prop('disabled', true);
+        };
 
         function showTagModal() {
             $('#tagModal').modal('show');
@@ -343,23 +361,24 @@
 
         function addTag(tagId, tagName) {
             //刻劃button功能
+            console.log(tagId, tagName);
             $('#activeAddTag').append(`
-                <button id="${tagId}-selected" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="removeTag('${tagId}')">${tagName}</button>
+                <button id="tag${tagId}-selected" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="removeTag('${tagId}')">${tagName}</button>
             `)
-            $("#" + tagId).removeClass("btn-primary").addClass("btn-primary-subtle");
-            $("#" + tagId).prop("disabled", true);
+            $("#tag" + tagId).removeClass("btn-primary").addClass("btn-primary-subtle").prop("disabled", true);
+            //$("#12").removeClass("btn-primary").addClass("btn-primary-subtle").prop("disabled", true);
             $('#selectedTagsContainer').append(`
-                <div id="${tagId}-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">${tagName}</div>
+                <div id="tag${tagId}-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">${tagName}</div>
              `)
 
             selectedTags.push(tagId);
         }
 
         function removeTag(tagId) {
-            $("#" + tagId + "-selected").remove();
-            $("#" + tagId).removeClass("btn-primary-subtle").addClass("btn-primary");
-            $("#" + tagId).prop("disabled", false);
-            $("#" + tagId + "-show").remove();
+            $("#tag" + tagId + "-selected").remove();
+            $("#tag" + tagId).removeClass("btn-primary-subtle").addClass("btn-primary");
+            $("#tag" + tagId).prop("disabled", false);
+            $("#tag" + tagId + "-show").remove();
             selectedTags = selectedTags.filter((id) => id !== tagId);
         }
 
@@ -381,7 +400,7 @@
              `)
             
             selectedGame = [gameId];
-            console.log(selectedGame);
+            //console.log(selectedGame);
         }
 
         function filterGame() {
@@ -400,24 +419,19 @@
             }
 
             //add dlc
-            //for (var i = 0; i < selectedTags.length; i++) {
-            //    formData.append('selectedGame []', selectedGame[i]);
-            //}
             formData.append('selectedGame', selectedGame);
 
             //add cover
             var cover = document.getElementsByName('cover');
-            formData.append('cover', cover);
-            console.log("cover");
-
+            for (var i = 0; i < cover.length; i++) {
+                var coverInput = cover[i];
+                formData.append('cover', coverInput.files[0]); // 假設只有一個檔案
+            }
+            
             //add displayImages
-            //var displayImages = document.getElementsByName('displayImages');
             formData.delete('displayImages');
-            var displayImages = document.getElementById('fileInputImg');
-            var files = displayImages.files;
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                console.log(file);
+            for (var i = 0; i < scratchImages.length; i++) {
+                var file = scratchImages[i]; 
                 formData.append('displayImages', file);
             }
 
@@ -428,19 +442,14 @@
                 formData.append('displayVideo', file);
             }
 
-            for (var i = 0; i < cover.length; i++) {
-                var coverInput = cover[i];
-                formData.append('cover', coverInput.files[0]); // 假設只有一個檔案
-            }
 
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("Create", "Game")',
+                url: '@Url.Action("CreateGame", "Game")',
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (data) {
-                    console.log(data);
+                success: function (data) {                   
                     if (data.success) {
                         ////location.replace('@Url.Content("~/Game/Index")?id=${}');
                         window.location.href = '/Game/Index';
@@ -449,13 +458,11 @@
                     }
                 },
             });
-
-
-
-
         });
 
-
+        $('#test').on('click', function (e) {
+           
+        });
     </script>
 }
 

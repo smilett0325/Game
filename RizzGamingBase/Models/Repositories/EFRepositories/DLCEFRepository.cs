@@ -45,6 +45,19 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 				.FirstOrDefault();
 		}
 
+		public DLCEntity SearchByGameId(int gameId)
+		{
+			return db.DLCs.AsNoTracking()
+				.Where(d => d.GameId == gameId)
+				.Select(v => new DLCEntity
+				{
+					Id = v.Id,
+					GameId = v.GameId,
+					AttachedGameId = v.AttachedGameId
+				})
+				.FirstOrDefault();
+		}
+
 		public void Update(DLCEntity entity)
 		{
 			DLC model = db.DLCs.Find(entity.Id);
@@ -55,29 +68,6 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 			db.SaveChanges();
 		}
 
-		public List<GameEntity> GetDLCGame(int id)
-		{
-			return db.DLCs.AsNoTracking()
-				.Where(x => x.AttachedGameId == id)
-				.Join(
-				db.Games,
-				x => x.GameId,
-				y => y.Id,
-				(x, y) => y
-				)
-				.Select(v => new GameEntity
-				{
-					Id = v.Id,
-					Name = v.Name,
-					Introduction = v.Introduction,
-					Description = v.Description,
-					ReleaseDate = v.ReleaseDate,
-					Price = v.Price,
-					Cover = v.Cover,
-					DeveloperId = v.DeveloperId,
-					MaxPercent = v.MaxPercent,
-				})
-				.ToList();
-		}
+
 	}
 }
