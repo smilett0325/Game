@@ -36,6 +36,7 @@ namespace RizzGamingBase.Models.EFModels
         public virtual DbSet<MemberTag> MemberTags { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Picture> Pictures { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<WishListe> WishListes { get; set; }
 
@@ -94,11 +95,6 @@ namespace RizzGamingBase.Models.EFModels
 
             modelBuilder.Entity<Game>()
                 .HasMany(e => e.BanGames)
-                .WithRequired(e => e.Game)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Game>()
-                .HasMany(e => e.BillDetails)
                 .WithRequired(e => e.Game)
                 .WillCascadeOnDelete(false);
 

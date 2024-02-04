@@ -18,10 +18,8 @@ namespace RizzGamingBase.Models.EFModels
 
         public int Id { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime StartDate { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime EndDate { get; set; }
 
         public int Percent { get; set; }
@@ -41,8 +39,12 @@ namespace RizzGamingBase.Models.EFModels
         [StringLength(500)]
         public string Desciption { get; set; }
 
+        public int? DeveloperId { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillDetail> BillDetails { get; set; }
+
+        public virtual Developer Developer { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DiscountItem> DiscountItems { get; set; }

@@ -1,0 +1,136 @@
+﻿@model RizzGamingBase.Models.ViewModels.DiscountIndexVm
+
+@{
+    ViewBag.Title = "Home";
+}
+
+
+@using (Html.BeginForm())
+{
+
+
+    @Html.AntiForgeryToken()
+    @section Styles{
+        <style>
+            .bold-event {
+                font-weight: bold;
+                font-size: 20px;
+            }
+        </style>
+    }
+
+
+    <h2>活動行事曆</h2>
+
+    <div class="form-horizontal">
+        <div class="card card-primary">
+            <div class="card-body p-0">
+                <!-- THE CALENDAR -->
+                <div id="calendar"></div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+
+
+    @section Scripts{
+        <script>
+            id = 1;
+            var datas = [];
+            var discountevents = [];
+
+$(document).ready(function () {
+    $.ajax({
+        url: '@Url.Action("GetDiscountEvent", "Discount")',
+        type: 'GET',
+        data: { id: id },
+        dataType: 'json',
+        success: function (data) {
+            datas = data;
+
+            // 在成功獲取資料後，初始化日曆
+            initializeCalendar();
+            console.log(datas);
+        }
+    });
+});
+
+
+            function ColorCode() {
+                var makingColorCode = '0123456789ABCDEF';
+                var finalCode = '#';
+                for (var counter = 0; counter < 6; counter++) {
+                    finalCode = finalCode + makingColorCode[Math.floor(Math.random() * 16)];
+                }
+                return finalCode;
+            }
+
+
+
+
+        function initializeCalendar() {
+
+
+
+            function parseJsonDate(jsonDate) {
+                // 提取日期部分
+                var match = /\/Date\((\d+)(?:-\d+)?\)\//.exec(jsonDate);
+
+                if (match) {
+                    // 將匹配的數字轉換為整數
+                    var unixTimestamp = parseInt(match[1]);
+
+                    // 創建 JavaScript 的 Date 物件
+                    return new Date(unixTimestamp);
+                }
+
+                // 如果沒有匹配，返回 null 或者適當的預設值
+                return null;
+            }
+
+
+
+    var Calendar = FullCalendar.Calendar;
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new Calendar(calendarEl, {
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        themeSystem: 'bootstrap',
+        locale: 'zh-tw',
+        events: datas.map(function (item) {
+            return {
+                title: item.Name.replace(/[^a-zA-Z0-9\u4e00-\u9fa5\s]/g, ''),
+                start: parseJsonDate(item.StartDate),
+                end: parseJsonDate(item.EndDate),
+                textColor: ColorCode(),
+                backgroundColor: ColorCode(),
+                borderColor: ColorCode(),
+                classNames: ['bold-event'],
+                url: '@Url.Action("Edit", "Discount")' + '?id=' + parseInt(item.Id, 10),
+                imageUrl: item.Image  // 添加图片URL属性
+            };
+        }),
+        eventRender: function (event, element) {
+            // 添加图片
+            if (event.imageUrl) {
+                element.find('.fc-title').prepend('<img src="' + event.imageUrl + '" class="event-image" />');
+            }
+        },
+
+        editable: true,
+        droppable: false
+    });
+
+    calendar.render();
+}
+
+
+        </script>
+    }
+
+}
+

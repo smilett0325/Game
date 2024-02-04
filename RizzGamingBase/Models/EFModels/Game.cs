@@ -12,7 +12,6 @@ namespace RizzGamingBase.Models.EFModels
         public Game()
         {
             BanGames = new HashSet<BanGame>();
-            BillDetails = new HashSet<BillDetail>();
             BillItems = new HashSet<BillItem>();
             Carts = new HashSet<Cart>();
             Collections = new HashSet<Collection>();
@@ -47,17 +46,18 @@ namespace RizzGamingBase.Models.EFModels
 
         public int DeveloperId { get; set; }
 
-        public int? MaxPersent { get; set; }
+        public int? MaxPercent { get; set; }
 
         [Required]
         [StringLength(500)]
         public string Video { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BanGame> BanGames { get; set; }
+        [Required]
+        [StringLength(1000)]
+        public string Introduction { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BillDetail> BillDetails { get; set; }
+        public virtual ICollection<BanGame> BanGames { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillItem> BillItems { get; set; }

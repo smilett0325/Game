@@ -17,9 +17,9 @@
     <title>@ViewBag.Title - 我的 ASP.NET 應用程式</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
 </head>
 <body>
-
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
             @Html.ActionLink("應用程式名稱", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -29,6 +29,13 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("首頁", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("關於", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("連絡人", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("BonusProductsCreate", "Create", "BonusProducts", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("BonusProductsIndex", "Index", "BonusProducts", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("活動", "Index", "Discount", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("管理者登入", "Login", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
                     @{
 
@@ -61,5 +68,6 @@
     @Scripts.Render("~/bundles/bootstrap")
    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     @RenderSection("scripts", required: false)
+    
 </body>
 </html>
