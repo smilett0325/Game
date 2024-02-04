@@ -3,6 +3,10 @@
     ViewBag.Title = "DPieChart";
 }
 
+@{
+    Layout = "~/Views/Shared/Developer.cshtml";
+}
+
 <!-- 引入Chart.js库 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -23,14 +27,14 @@
 <h2>銷售佔比</h2>
 
 @*<div>
-    <label for="developerList">選擇開發商:</label>
-    <select id="developerList">
-        @foreach (var developer in ViewBag.DeveloperList)
-        {
-            <option value="@developer.Value">@developer.Text</option>
-        }
-    </select>
-</div>*@
+        <label for="developerList">選擇開發商:</label>
+        <select id="developerList">
+            @foreach (var developer in ViewBag.DeveloperList)
+            {
+                <option value="@developer.Value">@developer.Text</option>
+            }
+        </select>
+    </div>*@
 
 <div id="pie" style="height:50%;width:50%">
     <canvas id="myPieChart" width="100" height="100"></canvas>
