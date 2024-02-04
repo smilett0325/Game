@@ -5152,7 +5152,9 @@
     <Content Include="Views\Developer\ForgetPasswordConfirm.cshtml" />
     <Content Include="Views\Developer\ResetPassword.cshtml" />
     <Content Include="Views\Developer\ConfirmResetPassword.cshtml" />
-    <Content Include="Views\Developer\Delete.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Delete.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -5161,6 +5163,7 @@
     <Folder Include="Images\DisplayImages\" />
     <Folder Include="Images\DisplayVideos\" />
     <Folder Include="Views\Api\" />
+    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />
