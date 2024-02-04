@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "DPieChart";
+}
+
+<!-- 引入Chart.js库 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- 引入Tooltip插件 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/plugins/chartjs-plugin-tooltip.min.js"></script>
+
+<!-- 引入Datalabels插件 -->
+@*<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>*@
+
+@* 引入 html2canvas 库 *@
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<script src="https://unpkg.com/chart.js-plugin-labels-dv/dist/chartjs-plugin-labels.min.js"></script>
+
+
+<!-- 在页面中添加图表容器 -->
+@*<h2 id="h2">全體開發商</h2>*@
+<h2>銷售佔比</h2>
+
+@*<div>
+    <label for="developerList">選擇開發商:</label>
+    <select id="developerList">
+        @foreach (var developer in ViewBag.DeveloperList)
+        {
+            <option value="@developer.Value">@developer.Text</option>
+        }
+    </select>
+</div>*@
+
+<div id="pie" style="height:50%;width:50%">
+    <canvas id="myPieChart" width="100" height="100"></canvas>
+</div>
+<!-- 在页面底部初始化图表 -->
+<script>
+    var canvas = document.getElementById('myPieChart');
+
+    var datas = [];
+    var theH2 = document.getElementById('h2');
+    var pie = document.getElementById('myPieChart').getContext('2d');
+    var divPie = document.getElementById('pie');
+
+    var theDeveloper = document.getElementById('developerList');
+
+    var Piedata = [@Html.Raw(Json.Encode(ViewBag.PieChartData))];
+    //下拉
+    var list = [@Html.Raw(Json.Encode(ViewBag.DeveloperList))];
+
+
+
+    var pieLabels = Piedata.flatMap(function (item) {
+        return item.map(function (innerItem) {
+            return innerItem.GameName;
+        });
+    });
+
+    var pieValues = Piedata.flatMap(function (item) {
+        return item.map(function (innerItem) {
+            return innerItem.Amount;
+        });
+    });
+
+
+    var myPieChart = new Chart(pie, {
+        type: 'pie',
+        data: {
+            labels: pieLabels,
+            datasets: [{
+                label: '元',
+                data: pieValues,
+                backgroundColor: ['blue', 'orange', 'red'],
+                borderColor: 'black',
+                //borderWidth: 1,
+                border: false,
+            }]
+        },
+        options: {
+            plugins: {
+                labels: {
+                    render: 'percentage', // 使用百分比
+                    fontColor: 'white', // 标签颜色
+                    precision: 2, // 百分比精度，可以根据需要调整
+                    fontSize: 12, // 字体大小
+                    fontStyle: 'bold', // 字体样式
+                    textShadow: true // 是否使用文字阴影
+                }
+            }
+        }
+    });
+
+    //匯出
+    //点击下載圖片
+    divPie.addEventListener('dblclick', async event => {
+        // 使用 html2canvas 將 Canvas 元素轉換為圖片
+        html2canvas(canvas).then(function (canvas) {
+            // 將圖片保存為文件（例如 PNG）
+            var link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'PieChart.png';
+            link.click();
+        });
+
+        var chartData = pie.data;
+
+
+    });
+
+
+
+
+    //var DeveloperId = 0;
+
+    //theDeveloper.addEventListener('change', async event  => {
+    //    if (theDeveloper.options[theDeveloper.selectedIndex].value != 0) {
+    //    DeveloperId = theDeveloper.value;
+    //    theH2.innerHTML = theDeveloper.options[theDeveloper.selectedIndex].text;
+    //        await loadDatas();
+
+    //    // 更新圖表的數據集
+    //    myPieChart.data.labels = datas.map(item => item.GameName);
+    //    myPieChart.data.datasets[0].data = datas.map(item => item.Price);
+
+    //    // 更新圖表
+    //     myPieChart.update();
+    //    }
+    //});
+
+    @*const loadDatas = async () => {
+
+            const response = await fetch(`@Url.Content("~/GameData/GetPieDataFromDatabase")?id=${DeveloperId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            datas = await response.json();
+
+    }*@
+
+</script>
+
+
