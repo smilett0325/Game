@@ -15,7 +15,6 @@ namespace RizzGamingBase.Models.EFModels
             BanMembers = new HashSet<BanMember>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [Required]
