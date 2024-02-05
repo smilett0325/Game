@@ -24,5 +24,8 @@ namespace RizzGamingBase.Controllers
         List<GameDataEntity> SearchDeveloperGamesBi(int id);
 
         List<GameDataEntity> SearchNoDeveloperGamesBi();
-    }
+
+        int SearchDeveloperAccountToDeveloperId(string account);
+
+	}
 }

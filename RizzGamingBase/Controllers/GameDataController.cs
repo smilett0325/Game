@@ -6,7 +6,6 @@ using RizzGamingBase.Models.Services;
 using RizzGamingBase.Models.Repositories;
 using RizzGamingBase.Models.Interfaces;
 using System.Web.Http;
-using RizzGamingBase.Models.ViewModels;
 using RizzGamingBase.Models.EFModels;
 using System.Data;
 using System.Web.UI.WebControls;
@@ -44,16 +43,22 @@ namespace RizzGamingBase.Controllers
 			return View();
 		}
 
-		public ActionResult DChart(int id=1)
+		[System.Web.Mvc.Authorize]
+		public ActionResult DChart()
 		{
-			// 获取数据（示例数据）
-			List<decimal> Linedata = GetDeveloperIdLineDataFromDatabase(id);
-			List<GameDataVm> Piedata = GetDeveloperIdPieDataFromDatabase(id);
+			var service = new GameDataService(GetRepository());
+			var currentUserAccount = User.Identity.Name;
 
-			int Data7T = GetData7T(id);
-			decimal Data7A = GetData7A(id);
-			int Data30T = GetData30T(id);
-			decimal Data30A = GetData30A(id);
+			//搜尋developerId
+			int developerId = service.SearchDeveloperAccountToDeveloperId(currentUserAccount);
+			// 获取数据（示例数据）
+			List<decimal> Linedata = GetDeveloperIdLineDataFromDatabase(developerId);
+			List<GameDataVm> Piedata = GetDeveloperIdPieDataFromDatabase(developerId);
+
+			int Data7T = GetData7T(developerId);
+			decimal Data7A = GetData7A(developerId);
+			int Data30T = GetData30T(developerId);
+			decimal Data30A = GetData30A(developerId);
 			// 转换数据格式
 			ViewBag.LineChartData = string.Join(",", Linedata);
 			ViewBag.PieChartData = Piedata;
@@ -78,15 +83,21 @@ namespace RizzGamingBase.Controllers
 			return View();
 		}
 
-		public ActionResult DLineChart(int id=1)
+		[System.Web.Mvc.Authorize]
+		public ActionResult DLineChart()
 		{
 			var service = new GameDataService(GetRepository());
+			var currentUserAccount = User.Identity.Name;
+
+			//搜尋developerId
+			int developerId = service.SearchDeveloperAccountToDeveloperId(currentUserAccount);
 			// 获取数据（示例数据）
-			List<decimal> Linedata = GetDeveloperIdLineDataFromDatabase(id);
+
+			List<decimal> Linedata = GetDeveloperIdLineDataFromDatabase(developerId);
 			// 转换数据格式
 			ViewBag.LineChartData = string.Join(",", Linedata);
-			ViewBag.DeveloperList = SelectListExts.GetSelectListItemsDeveloper(service,id);
-			ViewBag.Id = id;
+			ViewBag.DeveloperList = SelectListExts.GetSelectListItemsDeveloper(service, developerId);
+			ViewBag.Id = developerId;
 			return View();
 		}
 
@@ -102,11 +113,15 @@ namespace RizzGamingBase.Controllers
 			return View();
 		}
 
-		public ActionResult DPieChart(int id=1)
+		[System.Web.Mvc.Authorize]
+		public ActionResult DPieChart()
 		{
 			var service = new GameDataService(GetRepository());
+			var currentUserAccount = User.Identity.Name;
+			//搜尋developerId
+			int developerId = service.SearchDeveloperAccountToDeveloperId(currentUserAccount);
 			// 获取数据（示例数据）
-			List<GameDataVm> Piedata = GetDeveloperIdPieDataFromDatabase(id);
+			List<GameDataVm> Piedata = GetDeveloperIdPieDataFromDatabase(developerId);
 			// 转换数据格式
 			ViewBag.PieChartData = Piedata;
 
