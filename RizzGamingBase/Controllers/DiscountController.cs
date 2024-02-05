@@ -44,8 +44,8 @@ namespace RizzGamingBase.Controllers
             if(!ModelState.IsValid) return View(vm);
             try
             {
+                DiscountActionExts.Edit(vm); 
                 vm.DiscountTypeList = GetDiscountTypeList();
-                DiscountActionExts.Edit(vm);
             }
             catch (Exception ex)
             {
