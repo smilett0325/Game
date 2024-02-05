@@ -21,7 +21,7 @@ namespace RizzGamingBase.Controllers
     {
 		
 		// GET: Game
-		public ActionResult Index( int? developreId = 1)
+		public ActionResult Index( int? developreId)
 		{
 			
 			IGameRepository repo = new GameEFRepository();
