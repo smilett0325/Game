@@ -61,8 +61,8 @@
                 <div class="card-tools">
                     Real time
                     <div class="btn-group" id="realtime" data-toggle="btn-toggle">
-                        <button type="button" class="btn btn-default btn-sm active" data-toggle="on">On</button>
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="off">Off</button>
+                        <button type="button" class="btn btn-default btn-sm active" data-toggle="on" id="on">On</button>
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="off" id="off">Off</button>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
 
     <!-- 在页面底部初始化图表 -->
     <script>
-    var ctx = document.getElementById('myLineChart').getContext('2d');
+    @*var ctx = document.getElementById('myLineChart').getContext('2d');
     var pie = document.getElementById('myPieChart').getContext('2d');
 
     var divLine = document.getElementById('Line');
@@ -112,7 +112,7 @@
     var Data7T = [@(ViewBag.Data7T)];
     var Data7A = [@(ViewBag.Data7A)];
     var Data30T = [@(ViewBag.Data30T)];
-    var Data30A =[@(ViewBag.Data30A)];
+    var Data30A =[@(ViewBag.Data30A)];*@
 
     //顯示數值
     //p7T.innerHTML = Data7T;
@@ -123,8 +123,11 @@
 /*Flot Interactive Chart*/
 
     // We use an inline data source in the example, usually data would
-    // be fetched from a server
-    var data = [],
+        // be fetched from a server
+
+        var theOn = document.getElementById('on')
+        var theOff = document.getElementById('off')
+        var data = [],
         totalPoints = 100
 
     function getRandomData() {
@@ -260,9 +263,13 @@
     $('#realtime .btn').click(function () {
         if ($(this).data('toggle') === 'on') {
             realtime = 'on'
+            theOn.classList.add("active")
+            theOff.classList.remove("active")
         }
         else {
             realtime = 'off'
+            theOff.classList.add("active")
+            theOn.classList.remove("active")
         }
         update()
     })
