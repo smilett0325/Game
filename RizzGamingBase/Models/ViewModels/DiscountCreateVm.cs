@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace RizzGamingBase.Models.ViewModels
-{
+{//
     public class DiscountCreateVm
     {
         public int Id { get; set; }
