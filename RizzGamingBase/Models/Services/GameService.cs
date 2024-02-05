@@ -186,13 +186,8 @@ namespace RizzGamingBase.Models.Services
 				Video = displayVideo.FileName,
 			};
 
-			var gameId = _repo.Create(game.DtoToEntity());
+			
 
-			string[] imgAllowedExtensions = { ".jpg", ".jpeg", ".png" };
-			string[] vdoAllowedExtensions = { ".mp4", ".webm" };
-
-			uploadFileHelper.UploadFile(cover, "Covers", developerId, gameId, imgAllowedExtensions);
-			uploadFileHelper.UploadFile(displayVideo, "DisplayVideos", developerId, gameId, vdoAllowedExtensions);
 			//Create image
 
 			foreach (var di in displayImages)
@@ -203,9 +198,7 @@ namespace RizzGamingBase.Models.Services
 					DisplayImage = di.FileName,
 				};
 
-				string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
-
-				uploadFileHelper.UploadFile(di, "DisplayImages", developerId, gameId, allowedExtensions);//, displayImagePath
+				//uploadFileHelper.UploadDisplayImageFile(di, developerId, gameId);//, displayImagePath
 				iRepo.Create(image);
 			};
 
@@ -228,15 +221,13 @@ namespace RizzGamingBase.Models.Services
 				{
 					if(item != "none")
 					{
-
-					var dlc = new DLCEntity
-					{
-						GameId = gameId,
-						AttachedGameId = Convert.ToInt32(item),
+						var dlc = new DLCEntity
+						{
+							GameId = Convert.ToInt32(item),
+							//AttachedGameId = gameId,
+						};
+						dlcRepo.Create(dlc);
 					};
-					dlcRepo.Create(dlc);
-					}
-
 				};
 			};
 		}

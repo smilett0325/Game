@@ -1,5 +1,6 @@
 ﻿using RizzGamingBase.Models.EFModels;
 using RizzGamingBase.Models.Exts;
+using RizzGamingBase.Models.Infra;
 using RizzGamingBase.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,28 +19,37 @@ namespace RizzGamingBase.Controllers
         {
             db = new AppDbContext();
             // todo DB連線using資源釋放尚未完工
-            // using (db = new AppDbContext()){/* 初始化 db*/}
+            // using (db = new AppDbContext()){/* 初始化 db*/}// todo 優化讀取
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string keyword)
         {
-            List<BonusProductsIndexVm> data = BonusProductExts.GetAll(db);//取得表單Data全部的值
+            List<BonusProductsIndexVm> data;
+
+            // 如果使用者輸入關鍵字，則顯示符合關鍵字的資料
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                data = BonusProductExts.GetAll(db)
+                                       .Where(bp => bp.Name.Contains(keyword)) // 用 Name 當 keyword 篩選
+                                       .ToList();
+            }
+            else
+            {
+                // 如果使用者未輸入關鍵字，則顯示所有資料
+                data = BonusProductExts.GetAll(db);
+            }
+
             return View(data);
             // todo 圖片字串 插入HTML
         }
 
-        public ActionResult Search(string keyword)
-        {
-            List<BonusProductsIndexVm> data = BonusProductExts.SearchByName(keyword, db);//取得表單Data全部的值
-            return View();
-        }
         public ActionResult Create()//實作顯示
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(BonusProductsCreateVm model)//傳入DB
+        public ActionResult CreateProduct(BonusProductsCreateVm model , HttpPostedFileBase URL)//傳入DB ///HttpPostedFileBase
         {
             if (!ModelState.IsValid)
             {
@@ -47,13 +57,16 @@ namespace RizzGamingBase.Controllers
             }
             try
             {
-                BonusProductExts.CreateProduct(model, db);
-                return RedirectToAction("Index");
+               
+                BonusProductExts.CreateProduct(model, db, URL);
+                //return RedirectToAction("Index");
+                return Json(new { success = true });
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(String.Empty, ex.Message);
-                return View(model);
+                //return View(model);
+                return Json(new { success = false });
             }
         }
 
@@ -73,7 +86,7 @@ namespace RizzGamingBase.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(BonusProductsEditVm model)
+        public ActionResult Edit(BonusProductsEditVm model, HttpPostedFileBase URL)
         {
             if (!ModelState.IsValid)
             {
@@ -81,7 +94,7 @@ namespace RizzGamingBase.Controllers
             }
             try
             {
-                UpdateProduct(model);
+                UpdateProduct(model,URL);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -109,17 +122,27 @@ namespace RizzGamingBase.Controllers
             }
 
         }
-        private void UpdateProduct(BonusProductsEditVm model)//修改
+        private void UpdateProduct(BonusProductsEditVm model, HttpPostedFileBase URL)//修改
         {
             var findProduct = db.BonusProducts.Find(model.Id);
+            var uploadFileHelper = new UploadFileHelper();
+
             if (findProduct != null)
             {
+                string[] imgAllowedExtensions = { ".jpg", ".jpeg", ".png",".gif" };
+
+                if (URL != null)
+                {
+                    uploadFileHelper.DeleteFile("BonusProducts", findProduct.ProductTypeId, findProduct.URL);
+                    uploadFileHelper.UploadFile(URL, "BonusProducts", model.ProductTypeId,  imgAllowedExtensions);
+                }
                 findProduct.ProductTypeId = model.ProductTypeId;
                 findProduct.Price = model.Price;
-                findProduct.URL = model.URL;
+                findProduct.URL = URL != null ? URL.FileName : findProduct.URL ;
                 findProduct.Name = model.Name;
 
                 db.SaveChanges();
+
             }
             else
             {
@@ -128,8 +151,8 @@ namespace RizzGamingBase.Controllers
         }
         #endregion
 
-        #region 三層編輯
         //todo 三程式架構編輯
+        #region 三層編輯
         /*
         public ActionResult Edit(int id)//編輯
         {
@@ -191,15 +214,19 @@ namespace RizzGamingBase.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var uploadFileHelper = new UploadFileHelper();
             BonusProduct bonusProduct = db.BonusProducts.Find(id);
             db.BonusProducts.Remove(bonusProduct);
             db.SaveChanges();
+
+            uploadFileHelper.DeleteFile("BonusProducts", bonusProduct.ProductTypeId, bonusProduct.URL);
+
             return RedirectToAction("Index");//返回
         }
         #endregion
 
-        #region 三層刪除
         // todo 三程式架構刪除
+        #region 三層刪除
         /*
         [HttpPost]
         [ValidateAntiForgeryToken]//驗證，避免偽造網頁刪除

@@ -7,37 +7,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
+using RizzGamingBase.Models.Infra;
 
 namespace RizzGamingBase.Models.Exts
 {
     public static class BonusProductExts
     {
-        public static List<BonusProductsIndexVm> GetAll(AppDbContext context)
+        public static List<BonusProductsIndexVm> GetAll(AppDbContext context, string keyword = null)
         {
             var repo = new BonusProductsEFRepository(context);
             var service = new BonusProductsServices(repo);
             var dto = service.GetAll();
-            var data = new List<BonusProductsIndexVm>();
-            foreach (var item in dto)
+
+            if (!string.IsNullOrEmpty(keyword))
             {
-                var model = new BonusProductsIndexVm
-                {
-                    Id = item.Id,
-                    ProductTypeId = item.ProductTypeId,
-                    ProductTypeName = item.ProductTypeName,
-                    Price = item.Price,
-                    URL = item.URL,
-                    Name = item.Name
-                };
-                data.Add(model);
+                // 如果有關鍵字，則根據關鍵字進行篩選
+                dto = dto.Where(bp => bp.Name.Contains(keyword)).ToList();
             }
-            return data;
-        }
-        public static List<BonusProductsIndexVm> SearchByName(string keyword,AppDbContext context)
-        {
-            var repo = new BonusProductsEFRepository(context);
-            var service = new BonusProductsServices(repo);
-            var dto = service.SearchByName(keyword);
+
             var data = new List<BonusProductsIndexVm>();
             foreach (var item in dto)
             {
@@ -55,8 +43,7 @@ namespace RizzGamingBase.Models.Exts
             return data;
         }
 
-
-        public static void CreateProduct(this BonusProductsCreateVm model,AppDbContext context)
+        public static void CreateProduct(this BonusProductsCreateVm model, AppDbContext context , HttpPostedFileBase URL)
         {
             var repo = new BonusProductsEFRepository(context);
             var service = new BonusProductsServices(repo);
@@ -66,15 +53,23 @@ namespace RizzGamingBase.Models.Exts
                 Id = model.Id,
                 ProductTypeId = model.ProductTypeId,
                 Price = model.Price,
-                URL = model.URL,
+                URL = URL.FileName,
                 Name = model.Name
             };
             service.Create(dto);
+
+            UploadFileHelper  uploadFileHelper = new UploadFileHelper();
+            string[] allowExts = { ".jpg", ".jpeg", ".png", ".gif" };
+
+            uploadFileHelper.UploadFile(URL, "BonusProducts" , model.ProductTypeId, allowExts);
         }
 
-        public static void Edit(this BonusProductsVm model, AppDbContext context)
-        {
-            var repo = new BonusProductsEFRepository(context);
-        }
+        // todo 完成三層式編輯
+        #region 三層式編輯
+        //public static void Edit(this BonusProductsVm model, AppDbContext context)
+        //{
+        //    var repo = new BonusProductsEFRepository(context);
+        //}
+        #endregion
     }
 }

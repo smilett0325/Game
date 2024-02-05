@@ -11,7 +11,6 @@ namespace RizzGamingBase.Models.Interfaces
     {
         void Create(BonusProductsEntity entity);
         List<BonusProductsEntity> GetAll();
-        List<BonusProductsEntity> SearchByName(string keyword);
         BonusProductsEntity SearchById(int id);
         void Edit(BonusProductsEntity entity);
         void Delete(BonusProductsEntity entity);
