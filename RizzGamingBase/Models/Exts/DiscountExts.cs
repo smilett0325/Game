@@ -265,28 +265,30 @@ namespace RizzGamingBase.Models.Exts
                     discount.Desciption = entity.Desciption;
                     db.SaveChanges();
                 }
-                // 假设 entity.GameId 是一个字符串数组
-                string[] gameIdStrings = entity.GameId;
+                int[] gameIdArray = entity.GameId
+                                          .FirstOrDefault() // 取得第一個元素
+                                          ?.Trim('[', ']', ' ') // 去掉方括號和空格
+                                           .Split(',') // 以逗號分割成字串陣列
+                                           .Select(int.Parse) // 轉換為整數
+                                           .ToArray();
 
-                // 将字符串数组转换为整数数组
-                int[] gameIds = gameIdStrings.Select(int.Parse).ToArray();
 
                 // 獲取資料庫中舊的 DiscountItems
                 var oldDiscountItems = db.DiscountItems.Where(d => d.DiscountId == entity.Id).ToList();
 
-                // 遍历现有的 gameIds 数组
-                foreach (var gameId in gameIds)
+                // 遍歷現有的 gameIdArray
+                foreach (var gameId in gameIdArray)
                 {
                     var discountItem = oldDiscountItems.SingleOrDefault(d => d.GameId == gameId);
 
                     if (discountItem != null)
                     {
-                        // 如果在现有的 gameIds 数组中找到，更新相应的数据
+                        // 如果在現有的 gameIdArray 中找到，更新相應的資料
                         discountItem.GameId = gameId;
                     }
                     else
                     {
-                        // 如果在现有的 gameIds 数组中未找到，新建 DiscountItem
+                        // 如果在現有的 gameIdArray 中未找到，則新建 DiscountItem
                         var newItem = new DiscountItem
                         {
                             DiscountId = entity.Id,
@@ -296,17 +298,17 @@ namespace RizzGamingBase.Models.Exts
                     }
                 }
 
-                // 检查是否有需要删除的项目
+                // 檢查是否有需要刪除的項目
                 foreach (var oldItem in oldDiscountItems)
                 {
-                    if (!gameIds.Contains(oldItem.GameId))
+                    if (!gameIdArray.Contains(oldItem.GameId))
                     {
-                        // 如果在现有的 gameIds 数组中未找到，从数据库中删除
+                        // 如果在現有的 gameIdArray 中未找到，則從資料庫中刪除
                         db.DiscountItems.Remove(oldItem);
                     }
                 }
 
-                // 提交变更到数据库
+                // 提交變更到資料庫
                 db.SaveChanges();
 
             }
