@@ -15,10 +15,35 @@ namespace RizzGamingBase.Controllers
     public class DiscountController : Controller
     {
         // GET: Discount
-        public ActionResult Index()
+        public ActionResult Index(string Account)
         {
-            List<DiscountIndexVm> vm = DiscountActionExts.GetAllEvent();
-            return View(vm);
+            if (Account == null)
+            {
+                List<DiscountIndexVm> vm = DiscountActionExts.GetAllEvent();
+                return View(vm);
+            }
+            else
+            {          
+                var db = new AppDbContext();
+
+                var vm = db.Discounts
+                           .Include(d => d.Developer)
+                           .Where(d => d.Developer.Account == Account)
+                           .Select(d => new DiscountIndexVm
+                           {
+                               Id = d.Id,
+                               Name = d.Name,
+                               StartDate = d.StartDate,
+                               EndDate = d.EndDate,
+                               Desciption = d.Desciption,
+                               Image = d.Image,
+                               Percent = d.Percent,
+                               Type = d.DiscountType,
+                               DeveloperId = d.DeveloperId,
+                           });
+
+                return View(vm);
+            }
         }
 
 
@@ -60,10 +85,7 @@ namespace RizzGamingBase.Controllers
             };
             return View(model);
         }
-
-
        
-
         [HttpPost]
         public ActionResult CreateDiscount(DiscountVm vm , HttpPostedFileBase DiscountImage) 
         {
@@ -88,10 +110,14 @@ namespace RizzGamingBase.Controllers
         
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", User.Identity.Name);
         }
 
 
+
+
+
+        
         private IEnumerable<SelectListItem> GetDiscountTypeList()
         {
             return new List<SelectListItem>
@@ -109,6 +135,28 @@ namespace RizzGamingBase.Controllers
 
 
 
+
+
+
+
+
+        public JsonResult GetDeveloperId(string Account)
+        {
+            if (string.IsNullOrEmpty(Account))
+            {
+                return null;
+            }
+            else
+            {
+                var db = new AppDbContext();
+                var id = db.Developers
+                           .Where(d => d.Account == Account)
+                           .Select(d => d.Id)
+                           .FirstOrDefault();
+
+                return Json(id, JsonRequestBehavior.AllowGet);
+            }
+        }
 
 
 
