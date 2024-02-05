@@ -494,6 +494,7 @@
     <Content Include="Images\Covers\1\64\Stitch, Hd Artist, 4k Wallpapers, Images, Backgrounds, Photos And Pictures 696.jpg" />
     <Content Include="Images\Covers\1\68\1234.jpg" />
     <Content Include="Images\Covers\1\69\Pickatchu.jpg" />
+    <Content Include="Images\Covers\1\70\babymiloarchive on ig.jpg" />
     <Content Include="Images\DisplayImages\1\0\下載 %281%29.jpg" />
     <Content Include="Images\DisplayImages\1\0\下載 %282%29.jpg" />
     <Content Include="Images\DisplayImages\1\0\下載.jpg" />
@@ -574,8 +575,12 @@
     <Content Include="Images\DisplayImages\1\69\HD Game Wallpapers 1080p - Wallpaper Cave.jpg" />
     <Content Include="Images\DisplayImages\1\69\Pickatchu.jpg" />
     <Content Include="Images\DisplayImages\1\69\Stitch, Hd Artist, 4k Wallpapers, Images, Backgrounds, Photos And Pictures 696.jpg" />
+    <Content Include="Images\DisplayImages\1\70\babymiloarchive on ig.jpg" />
     <Content Include="Images\DisplayVideos\1\64\www.saveyt.cc_360p_Noita - Noita%27d 27.mp4" />
     <Content Include="Images\DisplayVideos\1\69\www.saveyt.cc_360p_Noita - Noita%27d 27.mp4" />
+    <Content Include="Images\DisplayVideos\1\70\www.saveyt.cc_360p_Noita - Noita%27d 27.mp4" />
+    <Content Include="Images\Scratch\Cover\下載 %281%29.jpg" />
+    <Content Include="Images\Scratch\Cover\下載.jpg" />
     <Content Include="Models\Exts\Exts.txt" />
     <Content Include="Models\Infra\Infra.txt" />
     <Content Include="Models\Interfaces\Interface.txt" />
@@ -5251,11 +5256,11 @@
     <Content Include="Views\GameData\PieChart.cshtml" />
     <Content Include="Views\Shared\AdminBoard.cshtml" />
     <Content Include="Views\Game\Edit.cshtml" />
+    <Content Include="Views\Game\Edit - 複製.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
-    <Folder Include="Images\Scratch\Cover\" />
     <Folder Include="Images\Scratch\DisplayVideo\" />
     <Folder Include="Views\Api\" />
   </ItemGroup>

@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>創建遊戲</h2>
 
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "fileForm" }))
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>DeveloperGameEditVm</h4>
+        @*<h4>DeveloperGameEditVm</h4>*@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -80,7 +80,7 @@
                 <label class="form-label">封面圖片</label>
             </div>
             <input type="file" name="cover" id="fileInputCov" class="form-control d-inline-block" onchange="coverFileChange()" />
-            <button type="button" class="btn btn-primary delete-cover " onclick="clearCover()" disabled>重新上傳</button>
+
         </div>
         <div id="coverContainer" class="mb-3"></div>
 
@@ -89,7 +89,7 @@
                 <label class="form-label">展示圖片</label>
             </div>
             <input type="file" name="displayImages" id="fileInputImg" class="form-control d-inline-block" onchange="imageFileChange()" multiple />
-            <button type="button" class="btn btn-primary delete-img " onclick="clearDisplayImages()" disabled>重新上傳</button>
+
         </div>
         <div id="imageContainer" class="mb-3"></div>
 
@@ -98,7 +98,7 @@
                 <label class="form-label">預告片</label>
             </div>
             <input type="file" name="displayVideo" id="fileInputVdo" class="form-control d-inline-block" onchange="videoFileChange()" />
-            <button type="button" class="btn btn-primary delete-vdo " onclick="clearDisplayVideo()" disabled>重新上傳</button>
+
         </div>
         <div id="videoContainer" class="mb-3"></div>
 
@@ -161,6 +161,7 @@
 
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="https://kit.fontawesome.com/80f553bae6.js" crossorigin="anonymous"></script>
     <script>
 
         function coverFileChange() {
@@ -186,9 +187,10 @@
                     // 顯示圖片
                     $("#coverContainer").append(`
 <div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
+    <i class="fa-regular fa-circle-xmark custom-icon" onclick="clearCover()" onmouseover="mouseover(this)" onmouseout="mouseout(this)"></i>
     <img src="${imgUrl}" class="card-img-top" alt="...">
     <div class="card-body">
-        <p class="card-text">${mainFileName}</p><button type="button" class="form-label btn btn-danger" onclick="clearCover()">deldet</button>
+        <p class="card-text">${mainFileName}</p>
     </div>
 </div>
 `);
@@ -203,7 +205,7 @@
             if (fileInputCov.files.length >= 1) {
                 fileInputCov.disabled = true;
                 console.log("File input disabled");
-            } 
+            }
         };
 
         function clearCover() {
@@ -231,9 +233,9 @@
             }
 
             if (fileInputImg.files.length + scratchImages.length == maxFiles) {
-                
+
                 fileInputImg.disabled = true;
-               
+
             }
 
 
@@ -255,13 +257,14 @@
                     // 顯示圖片
                     $("#imageContainer").append(`
 <div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
+    <i class="fa-regular fa-circle-xmark custom-icon" onclick="deleteImage(this)" onmouseover="mouseover(this)" onmouseout="mouseout(this)"></i>
     <img src="${imgUrl}" class="card-img-top" alt="...">
     <div class="card-body">
-        <p class="card-text">${mainFileName}</p><button type="button" class="form-label btn btn-danger" onclick="deleteImage(this)">deldet</button>
+        <p class="card-text">${mainFileName}</p>
     </div>
 </div>
 `);
-                    
+
                     $('.delete-img').prop('disabled', false);
 
                     scratchImages.push(file);
@@ -287,14 +290,14 @@
             var index = Array.from(card.parentElement.children).indexOf(card);
 
             //console.log('Card index:', index);
-           
+
             card.remove();
             scratchImages.splice(index, 1)
             fileInputImg.disabled = false;
             //console.log(scratchImages);
         }
 
-        function clearDisplayImages() {  
+        function clearDisplayImages() {
             $('#imageContainer').html("");
             $('#fileInputImg').val('').prop('disabled', false);
             $('.delete-img').prop('disabled', true);
@@ -324,11 +327,12 @@
                     // 顯示圖片
                     $("#videoContainer").append(`
 <div class="card d-inline-block" style="width: 18rem;" id="${mainFileName}">
+    <i class="fa-regular fa-circle-xmark custom-icon" onclick="clearDisplayVideo()" onmouseover="mouseover(this)" onmouseout="mouseout(this)"></i>
     <video controls class="card-img-top">
         <source src="${vdoUrl}">
     </video>
     <div class="card-body">
-        <p class="card-text">${mainFileName}</p><button type="button" class="form-label btn btn-danger" onclick="clearDisplayVideo()">deldet</button>
+        <p class="card-text">${mainFileName}</p>
     </div>
 </div>
 `);
@@ -398,7 +402,7 @@
             $('#selectedDLCContainer').append(`
                 <div id="${gameId}-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">${gameName}</div>
              `)
-            
+
             selectedGame = [gameId];
             //console.log(selectedGame);
         }
@@ -406,6 +410,16 @@
         function filterGame() {
             var search = $('#search').val();
 
+        }
+
+        function mouseover(element) {
+            element.classList.remove('fa-regular');
+            element.classList.add('fa-solid');
+        }
+
+        function mouseout(element) {
+            element.classList.remove('fa-solid');
+            element.classList.add('fa-regular');
         }
 
         $('#submit').on('click',function (e) {
@@ -427,11 +441,11 @@
                 var coverInput = cover[i];
                 formData.append('cover', coverInput.files[0]); // 假設只有一個檔案
             }
-            
+
             //add displayImages
             formData.delete('displayImages');
             for (var i = 0; i < scratchImages.length; i++) {
-                var file = scratchImages[i]; 
+                var file = scratchImages[i];
                 formData.append('displayImages', file);
             }
 
@@ -449,7 +463,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (data) {                   
+                success: function (data) {
                     if (data.success) {
                         ////location.replace('@Url.Content("~/Game/Index")?id=${}');
                         window.location.href = '/Game/Index';
@@ -461,7 +475,7 @@
         });
 
         $('#test').on('click', function (e) {
-           
+
         });
     </script>
 }
@@ -469,6 +483,13 @@
 
 @section styles {
     <style>
+        .custom-icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            z-index: 1100; /* 设置合适的 z-index 值，根据页面需求调整 */
+            font-size: 30px;
+        }
     </style>
 }
 

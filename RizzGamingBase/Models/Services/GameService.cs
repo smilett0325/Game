@@ -54,7 +54,7 @@ namespace RizzGamingBase.Models.Services
 			string[] vdoAllowedExtensions = { ".mp4", ".webm" };
 
 			if (cover != null)
-			{
+			{ 
 				uploadFileHelper.DeleteFile("Covers", developerId, vm.Id, originalGame.Cover);
 				uploadFileHelper.UploadFile(cover, "Covers", developerId, vm.Id, imgAllowedExtensions);
 			}

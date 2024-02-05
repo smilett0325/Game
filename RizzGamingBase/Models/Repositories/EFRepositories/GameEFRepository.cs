@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace RizzGamingBase.Models.Repositories.EFRepositories
 {
@@ -102,6 +103,24 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 
 		public GameEntity GetAttachedGame(int id)
 		{
+			//	return db.DLCs.AsNoTracking()
+			//.Include(x => x.Game)
+			//.Where(x => x.GameId == id)
+			//.Select(v => new GameEntity
+			//{
+			//	Id = v.Game.Id,
+			//	Name = v.Game.Name,
+			//	Introduction = v.Game.Introduction,
+			//	Description = v.Game.Description,
+			//	ReleaseDate = v.Game.ReleaseDate,
+			//	Price = v.Game.Price,
+			//	Cover = v.Game.Cover,
+			//	DeveloperId = v.Game.DeveloperId,
+			//	MaxPercent = v.Game.MaxPercent,
+			//	Video = v.Game.Video
+			//})
+			//.FirstOrDefault();
+
 			return db.DLCs.AsNoTracking()
 				.Where(x => x.GameId == id)
 				.Join(
@@ -121,6 +140,7 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
 					Cover = v.Cover,
 					DeveloperId = v.DeveloperId,
 					MaxPercent = v.MaxPercent,
+					Video = v.Video
 				})
 				.FirstOrDefault();
 
