@@ -1,0 +1,283 @@
+﻿
+@{
+    ViewBag.Title = "Chart";
+}
+
+
+<!-- 引入Chart.js库 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>*@
+
+<!-- jQuery -->
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/dist/js/adminlte.min.js"></script>
+<!-- FLOT CHARTS -->
+<script src="~/plugins/flot/jquery.flot.js"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="~/plugins/flot/plugins/jquery.flot.resize.js"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="~/plugins/flot/plugins/jquery.flot.pie.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="~/dist/js/demo.js"></script>
+
+
+<!-- 引入Tooltip插件 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/plugins/chartjs-plugin-tooltip.min.js"></script>
+
+<!-- 引入Datalabels插件 -->
+<script src="https://unpkg.com/chart.js-plugin-labels-dv/dist/chartjs-plugin-labels.min.js"></script>
+
+<!-- 在页面中添加图表容器 -->
+<div style="display:flex;flex-direction:column;">
+    @* style="display: inline-flex; justify-content: space-between; padding-bottom: 100px;" *@
+    <div>
+        @*<div>
+                <h2 style="text-align: center">近7日交易次數</h2>
+                <h2 id="7DayOfTimes" style="text-align: center"></h2>
+            </div>
+            <div>
+                <h2 style="text-align: center">近7日交易金額</h2>
+                <h2 id="7DayOfAmounts" style="text-align: center"></h2>
+            </div>
+            <div>
+                <h2 style="text-align: center">近30日交易次數</h2>
+                <h2 id="30DayOfTimes" style="text-align: center"></h2>
+            </div>
+            <div>
+                <h2 style="text-align: center">近30日交易金額</h2>
+                <h2 id="30DayOfAmounts" style="text-align: center"></h2>
+            </div>*@
+        <!-- interactive chart -->
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="far fa-chart-bar"></i>
+
+                </h3>
+
+                <div class="card-tools">
+                    Real time
+                    <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                        <button type="button" class="btn btn-default btn-sm active" data-toggle="on">On</button>
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="off">Off</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="interactive" style="height: 300px;"></div>
+            </div>
+            <!-- /.card-body-->
+
+        </div>
+
+        @* 下方div *@
+        @*<div style="display: inline-flex; justify-content: space-between;">
+            <div id="Line" style="height:25%;width:35%;padding-left:20px">
+                <h2>2023</h2>
+                <h2>季度營收</h2>
+                <canvas id="myLineChart" width="100" height="100"></canvas>
+            </div>
+
+            <div id="pie" style="height: 25%; width: 35%; padding-right: 20px">
+                <h2>全體開發商</h2>
+                <h2>銷售佔比</h2>
+                <canvas id="myPieChart" width="100" height="100"></canvas>
+            </div>
+
+        </div>*@
+    </div>
+
+
+
+    <!-- 在页面底部初始化图表 -->
+    <script>
+    var ctx = document.getElementById('myLineChart').getContext('2d');
+    var pie = document.getElementById('myPieChart').getContext('2d');
+
+    var divLine = document.getElementById('Line');
+    var divPie = document.getElementById('pie');
+    var p7T = document.getElementById('7DayOfTimes');
+    var p7A = document.getElementById('7DayOfAmounts');
+    var p30T = document.getElementById('30DayOfTimes');
+    var p30A = document.getElementById('30DayOfAmounts');
+
+
+    // 将从Controller传递的数据绑定到图表
+    var Linedata = [@(ViewBag.LineChartData)];
+    var Piedata = [@Html.Raw(Json.Encode(ViewBag.PieChartData))];
+
+    var Data7T = [@(ViewBag.Data7T)];
+    var Data7A = [@(ViewBag.Data7A)];
+    var Data30T = [@(ViewBag.Data30T)];
+    var Data30A =[@(ViewBag.Data30A)];
+
+    //顯示數值
+    //p7T.innerHTML = Data7T;
+    //p7A.innerHTML = Data7A;
+    //p30T.innerHTML = Data30T;
+    //p30A.innerHTML = Data30A;
+
+/*Flot Interactive Chart*/
+
+    // We use an inline data source in the example, usually data would
+    // be fetched from a server
+    var data = [],
+        totalPoints = 100
+
+    function getRandomData() {
+
+        if (data.length > 0) {
+            data = data.slice(1)
+        }
+
+        // Do a random walk
+        while (data.length < totalPoints) {
+
+
+            var prev = data.length > 0 ? data[data.length - 1] : 50,
+                y = prev + Math.random() * 10 - 5
+
+            if (y < 0) {
+                y = 0
+            } else if (y > 100) {
+                y = 100
+            }
+/*            loadBiDatas();*/
+            data.push(y)
+        }
+
+        // Zip the generated y values with the x values
+        var res = []
+        for (var i = 0; i < data.length; ++i) {
+            res.push([i, data[i]])
+        }
+
+        return res
+    }
+
+    var interactive_plot = $.plot('#interactive', [
+        {
+            data: getRandomData(),
+        }
+    ],
+        {
+            grid: {
+                borderColor: '#f3f3f3',
+                borderWidth: 1,
+                tickColor: '#f3f3f3'
+            },
+            series: {
+                color: '#3c8dbc',
+                lines: {
+                    lineWidth: 2,
+                    show: true,
+                    fill: true,
+                },
+            },
+            yaxis: {
+                //min: 0,
+                //max: 100,
+                show: true
+            },
+            xaxis: {
+                //min: 0,
+                //max: 101,
+                //ticks: [[0, "0"], [12.5, "3"], [25, "6"], [37.5, "9"], [50, "12"], [62.5, "15"], [75, "18"], [87.5, "21"], [100, "24"]],
+                show: true
+            }
+        }
+    )
+
+
+    var updateInterval = 500 //Fetch data ever x milliseconds
+        var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
+        var change = 0;
+    function update() {
+
+        interactive_plot.setData([getRandomData()])
+
+        //interactive_plot.getAxes().xaxis.options.ticks = [[0, "0-3"], [12.5, "3-6"], [25, "6-9"], [37.5, "9-12"], [50, "12-15"], [62.5, "15-18"], [75, "18-21"], [87.5, "21-24"]];
+        if (change == 0) {
+
+            interactive_plot.getAxes().xaxis.options.ticks = [[0, "24"], [12.5, "3"], [25, "6"], [37.5, "9"], [50, "12"], [62.5, "15"], [75, "18"], [87.5, "21"]];
+        }
+        else if (change == 12) {
+
+            interactive_plot.getAxes().xaxis.options.ticks = [[0, "3"], [12.5, "6"], [25, "9"], [37.5, "12"], [50, "15"], [62.5, "18"], [75, "21"], [87.5, "24"]];
+        }
+        else if (change == 24) {
+
+            interactive_plot.getAxes().xaxis.options.ticks = [[0, "6"], [12.5, "9"], [25, "12"], [37.5, "15"], [50, "18"], [62.5, "21"], [75, "24"], [87.5, "3"]];
+        }
+        else if (change == 36) {
+
+            interactive_plot.getAxes().xaxis.options.ticks = [[0, "9"], [12.5, "12"], [25, "15"], [37.5, "18"], [50, "21"], [62.5, "24"], [75, "3"], [87.5, "6"]];
+        }
+        else if (change == 48) {
+
+            interactive_plot.getAxes().xaxis.options.ticks = [[0, "12"], [12.5, "15"], [25, "18"], [37.5, "21"], [50, "24"], [62.5, "3"], [75, "6"], [87.5, "9"]];
+        }
+        else if (change == 60) {
+
+            interactive_plot.getAxes().xaxis.options.ticks = [[0, "15"], [12.5, "18"], [25, "21"], [37.5, "24"], [50, "3"], [62.5, "6"], [75, "9"], [87.5, "12"]];
+        }
+        else if (change == 72) {
+
+            interactive_plot.getAxes().xaxis.options.ticks = [[0, "18"], [12.5, "21"], [25, "24"], [37.5, "3"], [50, "6"], [62.5, "9"], [75, "12"], [87.5, "15"]];
+        }
+        else if (change == 84) {
+
+            interactive_plot.getAxes().xaxis.options.ticks = [[0, "21"], [12.5, "24"], [25, "3"], [37.5, "6"], [50, "9"], [62.5, "12"], [75, "15"], [87.5, "18"]];
+        }
+        else if (change == 96) {
+
+            interactive_plot.getAxes().xaxis.options.ticks = [[0, "24"], [12.5, "3"], [25, "6"], [37.5, "9"], [50, "12"], [62.5, "15"], [75, "18"], [87.5, "21"]];
+        }
+        else if (change == 107) {
+            change = -1;
+        }
+
+        //interactive_plot.getAxes().xaxis.ticks: = [[0, "0-3"], [12.5, "3-6"], [25, "6-9"], [37.5, "9-12"], [50, "12-15"], [62.5, "15-18"], [75, "18-21"], [87.5, "21-24"]];
+        interactive_plot.setupGrid();
+        // Since the axes don't change, we don't need to call plot.setupGrid()
+        interactive_plot.draw()
+        if (realtime === 'on') {
+            setTimeout(update, updateInterval)
+            change++;
+            console.log(change);
+        }
+    }
+
+
+    //INITIALIZE REALTIME DATA FETCHING
+    if (realtime === 'on') {
+        update()
+    }
+    //REALTIME TOGGLE
+    $('#realtime .btn').click(function () {
+        if ($(this).data('toggle') === 'on') {
+            realtime = 'on'
+        }
+        else {
+            realtime = 'off'
+        }
+        update()
+    })
+    /*
+     * END INTERACTIVE CHART
+     */
+
+    @*const loadBiDatas = async () => {
+        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabaseDeveloperId")?month=${month}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        BiDatas = await response.json();
+    }*@
+    </script>

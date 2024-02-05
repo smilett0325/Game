@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\GameDataController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Models\Dtos\GameDataDto.cs" />
     <Compile Include="Models\Entities\GameDataEntity.cs" />
     <Compile Include="Models\Exts\SelectListExts.cs" />
@@ -5175,6 +5176,9 @@
     <Content Include="Views\BonusProducts\Delete.cshtml" />
     <Content Include="Views\BonusProducts\Edit.cshtml" />
     <Content Include="Views\BonusProducts\Index.cshtml" />
+    <Content Include="Views\GameData\TChart.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Member\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -5184,8 +5188,6 @@
     <Folder Include="Images\DisplayVideos\" />
     <Folder Include="Images\Scratch\Cover\" />
     <Folder Include="Images\Scratch\DisplayVideo\" />
-    <Folder Include="Views\Api\" />
-    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />

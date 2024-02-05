@@ -10,6 +10,7 @@ using RizzGamingBase.Models.EFModels;
 using System.Data;
 using System.Web.UI.WebControls;
 using RizzGamingBase.Models.Entities;
+using System;
 
 namespace RizzGamingBase.Controllers
 {
@@ -43,6 +44,29 @@ namespace RizzGamingBase.Controllers
 			return View();
 		}
 
+		public ActionResult TChart()
+		{
+			// 获取数据（示例数据）
+			List<decimal> Linedata = GetLineDataFromDatabase();
+			List<GameDataVm> Piedata = GetPieDataFromDatabase();
+
+			int Data7T = GetData7T();
+			decimal Data7A = GetData7A();
+			int Data30T = GetData30T();
+			decimal Data30A = GetData30A();
+			// 转换数据格式
+			ViewBag.LineChartData = string.Join(",", Linedata);
+			ViewBag.PieChartData = Piedata;
+
+			ViewBag.Data7T = Data7T;
+			ViewBag.Data7A = Data7A;
+			ViewBag.Data30T = Data30T;
+			ViewBag.Data30A = Data30A;
+
+
+			return View();
+		}
+
 		[System.Web.Mvc.Authorize]
 		public ActionResult DChart()
 		{
@@ -54,7 +78,7 @@ namespace RizzGamingBase.Controllers
 			// 获取数据（示例数据）
 			List<decimal> Linedata = GetDeveloperIdLineDataFromDatabase(developerId);
 			List<GameDataVm> Piedata = GetDeveloperIdPieDataFromDatabase(developerId);
-
+			
 			int Data7T = GetData7T(developerId);
 			decimal Data7A = GetData7A(developerId);
 			int Data30T = GetData30T(developerId);
@@ -214,6 +238,19 @@ namespace RizzGamingBase.Controllers
 			return dataList;
 		}
 
+		[System.Web.Mvc.HttpPost]
+		public ActionResult GetBiMonth(int month)
+		{
+
+			// 使用 model.GameName 進行處理
+			var service = new GameDataService(GetRepository());
+			var dataList = service.SearchBisToMonths(0,month);
+			//var dataList = service.SearchGameName(gameName, year);
+
+			// 返回示例數據，這裡你可以返回JSON結果或者視圖
+			return Json(dataList);
+
+		}
 
 
 		[System.Web.Mvc.HttpPost]
