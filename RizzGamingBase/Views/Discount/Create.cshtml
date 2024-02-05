@@ -24,7 +24,6 @@
                 <div class="col-4 ">
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.Game, new { @class = "Game" })
                     @Html.HiddenFor(model => model.StartDate, new { @class = "StartDate" })
                     @Html.HiddenFor(model => model.EndDate, new { @class = "EndDate" })
                     <div class="mb-3">
@@ -145,8 +144,8 @@
 
         <div class="mb-3">
 
-            <button type="button" id="update" class="btn btn-primary" onclick="updateDiscountGamesInput(); updateSelectedDateRange();"><i class="fas fa-save"></i>update</button>
-            <button type="button"  class="btn btn-primary" onclick="create()">創建</button>
+            <button type="button" id="update" class="btn btn-primary" onclick=""><i class="fas fa-save"></i>update</button>
+            <button type="button"  class="btn btn-primary" onclick="create();">創建</button>
         </div>
     </div>
 
@@ -168,7 +167,7 @@
     <script>
         var availableGames = [];
         var discountGames = [];
-        var id = 0;
+        var id;
         var keyword = "";
 
 
@@ -313,19 +312,6 @@
         console.log(discountGames);
         }
 
-        function updateDiscountGamesInput() {
-            var gameIds = discountGames.map(function (game) {
-                return game.Id;
-            });
-
-            $('.Game').val(JSON.stringify(gameIds));
-        }
-
-        function updateDiscountType() {
-            var selectedValue = $('#DiscountType').val();
-            $('#DiscountType').val(selectedValue);
-        }
-
          function updateSelectedDateRange() {
 
      var selectedDateRange = $('#reservationtime').data('daterangepicker');
@@ -358,10 +344,14 @@
     </script>
     <script>
         function create() {
-
-
-            
+ 
             var formData = new FormData(document.getElementById('fileForm'));
+            console.log(discountGames.length);
+            for (var i = 0; i < discountGames.length; i++) {
+                var discountGame = discountGames[i];
+                formData.append('Game', discountGame.Id);
+               
+            }
 
             $.ajax({
                 type: 'POST',
@@ -372,12 +362,15 @@
                 success: function (data) {
                     console.log(data);
                     if (data.success) {
-                        /*window.location.href = '/Discount/Index';*/
+                        window.location.href = '/Discount/Index';
                     } else {
                         e.preventDefault;
                     }
                 },
-            });        
+            });
+
+
+
         }
 
     </script>

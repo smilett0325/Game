@@ -416,6 +416,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="DiscountPictures\background.jpg" />
     <Content Include="DiscountPictures\background2.jpg" />
+    <Content Include="DiscountPictures\background3.jpg" />
     <Content Include="DiscountPictures\Load1.png" />
     <Content Include="DiscountPictures\pika.gif" />
     <Content Include="DiscountPictures\寶可夢朱.jpg" />
@@ -562,6 +563,16 @@
     <Content Include="docs\_layouts\page.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\DiscountPicture\0\background.jpg" />
+    <Content Include="Images\DiscountPicture\0\background2.jpg" />
+    <Content Include="Images\DiscountPicture\0\background3.jpg" />
+    <Content Include="Images\DiscountPicture\0\Load1.png" />
+    <Content Include="Images\DiscountPicture\0\pika.gif" />
+    <Content Include="Images\DiscountPicture\0\家教.jpg" />
+    <Content Include="Images\DiscountPicture\0\寶可夢朱.jpg" />
+    <Content Include="Images\DiscountPicture\0\寶可夢紫.jpg" />
+    <Content Include="Images\DiscountPicture\0\測試封面1.jpg" />
+    <Content Include="Images\DiscountPicture\0\測試封面2.jpg" />
     <Content Include="Images\DiscountPicture\0\轟.jfif" />
     <Content Include="Models\Exts\Exts.txt" />
     <Content Include="Models\Infra\Infra.txt" />

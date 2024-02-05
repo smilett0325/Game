@@ -231,10 +231,8 @@ namespace RizzGamingBase.Models.Exts
             db.SaveChanges();
 
 
-            string[] gameIdArray = entity.GameId.Trim('[', ']')
-                                   .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (var item in gameIdArray)
+            foreach (var item in entity.GameId)
             {
                 if (int.TryParse(item, out int gameId))
                 {
@@ -268,14 +266,11 @@ namespace RizzGamingBase.Models.Exts
                     db.SaveChanges();
                 }
 
-                string[] gameIdArray = entity.GameId.Trim('[', ']')
-                              .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
                 // 獲取資料庫中舊的 DiscountItems
                 var oldDiscountItems = db.DiscountItems.Where(d => d.DiscountId == entity.Id).ToList();
 
                 // 遍歷現有的 gameIdArray
-                foreach (var item in gameIdArray)
+                foreach (var item in entity.GameId)
                 {
                     if (int.TryParse(item, out int gameId))
                     {
@@ -302,7 +297,7 @@ namespace RizzGamingBase.Models.Exts
                 // 檢查是否有需要刪除的項目
                 foreach (var oldItem in oldDiscountItems)
                 {
-                    if (!gameIdArray.Contains(oldItem.GameId.ToString()))
+                    if (!entity.GameId.Contains(oldItem.GameId.ToString()))
                     {
                         // 如果在現有的 gameIdArray 中未找到，則從資料庫中刪除
                         db.DiscountItems.Remove(oldItem);

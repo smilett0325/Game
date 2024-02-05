@@ -78,6 +78,9 @@ namespace RizzGamingBase.Controllers
             {
                 vm.DiscountImage = DiscountImage.FileName;
                 DiscountActionExts.Create(vm, DiscountImage);
+
+                var result = new { success = true };
+                return Json(result);
             }
             catch (Exception ex)
             {
@@ -109,11 +112,11 @@ namespace RizzGamingBase.Controllers
 
 
 
-        public JsonResult GetDiscountEvent(int id)
+        public JsonResult GetDiscountEvent(int? id)
         {
             var db = new AppDbContext();
 
-            if (id != 0) {
+            if (id != null) {
                 var discountevent = db.Discounts
                                       .Where(d => d.DeveloperId == id)
                                       .Select(d => new DiscountEventVm
@@ -130,7 +133,6 @@ namespace RizzGamingBase.Controllers
             else
             {
                 var discountevent = db.Discounts
-                                      .Where(d => d.DeveloperId == id)
                                       .Select(d => new DiscountEventVm
                                       {
                                           Id = d.Id,
@@ -256,7 +258,7 @@ namespace RizzGamingBase.Controllers
         }
 
 
-        public JsonResult GetGames(int id, string keyword)
+        public JsonResult GetGames(int? id, string keyword)
         {
             var db = new AppDbContext();
 

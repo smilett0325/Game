@@ -55,7 +55,7 @@ namespace RizzGamingBase.Models.Infra
             // 将上传的文件保存到指定路径
             file.SaveAs(fullPath);
         }
-        public void UploadFile(HttpPostedFileBase file, string categoryFolderName, int developerId, string[] allowedExtensions)
+        public void UploadFile(HttpPostedFileBase file, string categoryFolderName, int? developerId, string[] allowedExtensions)
         {
             //判斷是否上傳
             if (file == null || file.ContentLength == 0)
