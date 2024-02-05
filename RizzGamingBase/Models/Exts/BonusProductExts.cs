@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using RizzGamingBase.Models.Infra;
 
 namespace RizzGamingBase.Models.Exts
 {
@@ -42,7 +43,7 @@ namespace RizzGamingBase.Models.Exts
             return data;
         }
 
-        public static void CreateProduct(this BonusProductsCreateVm model, AppDbContext context)
+        public static void CreateProduct(this BonusProductsCreateVm model, AppDbContext context , HttpPostedFileBase URL)
         {
             var repo = new BonusProductsEFRepository(context);
             var service = new BonusProductsServices(repo);
@@ -52,15 +53,23 @@ namespace RizzGamingBase.Models.Exts
                 Id = model.Id,
                 ProductTypeId = model.ProductTypeId,
                 Price = model.Price,
-                URL = model.URL,
+                URL = URL.FileName,
                 Name = model.Name
             };
             service.Create(dto);
+
+            UploadFileHelper  uploadFileHelper = new UploadFileHelper();
+            string[] allowExts = { ".jpg", ".jpeg", ".png", ".gif" };
+
+            uploadFileHelper.UploadFile(URL, "BonusProducts" , allowExts);
         }
 
-        public static void Edit(this BonusProductsVm model, AppDbContext context)
-        {
-            var repo = new BonusProductsEFRepository(context);
-        }
+        // todo 完成三層式編輯
+        #region 三層式編輯
+        //public static void Edit(this BonusProductsVm model, AppDbContext context)
+        //{
+        //    var repo = new BonusProductsEFRepository(context);
+        //}
+        #endregion
     }
 }

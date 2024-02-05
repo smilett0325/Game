@@ -518,6 +518,7 @@
     <Content Include="docs\_layouts\page.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\BonusProducts\testjpg.jpg" />
     <Content Include="Models\Exts\Exts.txt" />
     <Content Include="Models\Infra\Infra.txt" />
     <Content Include="Models\Interfaces\Interface.txt" />

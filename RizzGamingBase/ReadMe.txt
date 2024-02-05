@@ -1,8 +1,21 @@
-﻿[v]實作 GameIndex 顯示 GameindexVm 在首頁
-[v]實作顯示DeveloperEeditGameVm(DGVm) (各項遊戲編輯)
-	--字串轉圖片尚未完成
-[workong on]完成DEVm編輯後儲存
-			實現儲存圖片功能
+﻿﻿開發商首頁
+[v]EFModels => 
+[v]Repository(實作IRepository) => 
+[v]Entity => 
+[]Service => 不實作ISERVICE，直接叫用Repository
+[v]Dtos => 
+[v]Controller => 
+[v]ViewModel => 
+[v]View
 
-
-[]把DGVm字串轉換成圖片
+[]開發商註冊
+	開發商登入
+	開發商登出
+	開發商修改密碼
+	開發商修改基本資料
+	開發商刪除帳號
+[]開發商CRUD
+	C:註冊成為開發商
+	R:SHOW GAME資料
+	U:修改開發商基本資料
+	D:開發商停權	
