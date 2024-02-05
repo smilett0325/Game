@@ -7,7 +7,7 @@
 <h2>編輯</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "fileForm" }))
 {
     @Html.AntiForgeryToken()
 
@@ -16,8 +16,9 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
+        @*Type*@
         <div class="mb-3">
-            @Html.LabelFor(model => model.ProductTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ProductTypeId, htmlAttributes: new { @class = "form-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.ProductTypeId, ViewBag.ProductTypes as List<SelectListItem>, new { @class = "form-control form-select" })
                 @Html.ValidationMessageFor(model => model.ProductTypeId, "", new { @class = "text-danger" })
@@ -35,7 +36,7 @@
         <div class="mb-3">
             @Html.LabelFor(model => model.URL, htmlAttributes: new { @class = "form-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.URL, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.URL, new { htmlAttributes = new { @type = "file", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.URL, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -57,4 +58,29 @@
 
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@
+<script>
+        $('#submit').on('click', function () {
+            e.preventDefault();
+
+            var formData = new FormData(document.getElementById('fileForm'));
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateProduct", "BonusProducts")',// actionresultName , controllerName
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.success) {
+                        alert("新增成功");
+                        window.location.href = '/BonusProducts/Index';//return RedirectToAction
+                    } else {
+                        e.perventDefault;
+                        alert("確認輸入欄位")
+                    }
+                },
+            });
+
+        });
+</script>
 }

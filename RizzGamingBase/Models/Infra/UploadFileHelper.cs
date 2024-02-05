@@ -98,7 +98,11 @@ namespace RizzGamingBase.Models.Infra
             // 将上传的文件保存到指定路径
             file.SaveAs(fullPath);
         }
-
+        public void DeleteFile(string categoryFolderName, int bonusProductId, string fileName)
+        {
+            var fullPath = HostingEnvironment.MapPath($"/Images/{categoryFolderName}/{bonusProductId}/{fileName}");
+            File.Delete(fullPath);
+        }
         //public void UploadDisplayVideoFileToScratch(HttpPostedFileBase displayVideos)
         //{
         //	// 判断是否有上传文件，若没有，抛出异常

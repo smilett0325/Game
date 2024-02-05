@@ -1,5 +1,6 @@
 ﻿using RizzGamingBase.Models.EFModels;
 using RizzGamingBase.Models.Exts;
+using RizzGamingBase.Models.Infra;
 using RizzGamingBase.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -85,7 +86,7 @@ namespace RizzGamingBase.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(BonusProductsEditVm model)
+        public ActionResult Edit(BonusProductsEditVm model, HttpPostedFileBase URL)
         {
             if (!ModelState.IsValid)
             {
@@ -93,7 +94,7 @@ namespace RizzGamingBase.Controllers
             }
             try
             {
-                UpdateProduct(model);
+                UpdateProduct(model,URL);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -121,17 +122,27 @@ namespace RizzGamingBase.Controllers
             }
 
         }
-        private void UpdateProduct(BonusProductsEditVm model)//修改
+        private void UpdateProduct(BonusProductsEditVm model, HttpPostedFileBase URL)//修改
         {
             var findProduct = db.BonusProducts.Find(model.Id);
+            var uploadFileHelper = new UploadFileHelper();
+
             if (findProduct != null)
             {
+                string[] imgAllowedExtensions = { ".jpg", ".jpeg", ".png",".gif" };
+
+                if (URL != null)
+                {
+                    uploadFileHelper.DeleteFile("BonusProducts", findProduct.ProductTypeId, findProduct.URL);
+                    uploadFileHelper.UploadFile(URL, "BonusProducts", model.ProductTypeId,  imgAllowedExtensions);
+                }
                 findProduct.ProductTypeId = model.ProductTypeId;
                 findProduct.Price = model.Price;
-                findProduct.URL = model.URL;
+                findProduct.URL = URL != null ? URL.FileName : findProduct.URL ;
                 findProduct.Name = model.Name;
 
                 db.SaveChanges();
+
             }
             else
             {
@@ -203,9 +214,13 @@ namespace RizzGamingBase.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var uploadFileHelper = new UploadFileHelper();
             BonusProduct bonusProduct = db.BonusProducts.Find(id);
             db.BonusProducts.Remove(bonusProduct);
             db.SaveChanges();
+
+            uploadFileHelper.DeleteFile("BonusProducts", bonusProduct.ProductTypeId, bonusProduct.URL);
+
             return RedirectToAction("Index");//返回
         }
         #endregion

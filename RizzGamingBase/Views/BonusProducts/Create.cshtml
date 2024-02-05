@@ -27,6 +27,7 @@
         <input type="hidden" id="productTypeIdHidden" name="ProductTypeId" value="" /> <!-- 用於存儲選擇的 id -->
         <input type="hidden" id="productTypeNameHidden" name="ProductTypeName" value="" /> <!-- 用於存儲選擇的名稱 -->
 
+        @*Type*@
         <div class="mb-3">
             @*@Html.LabelFor(model => model.ProductTypeId, htmlAttributes: new { @class = "form-label col-md-2" })*@
             @Html.LabelFor(model => model.ProductTypeId, htmlAttributes: new { @class = "form-label col-md-2" })
@@ -115,7 +116,6 @@
             e.perventDefault;
 
             var formData = new FormData(document.getElementById('fileForm'));
-
 
             $.ajax({
                 type: 'POST',
