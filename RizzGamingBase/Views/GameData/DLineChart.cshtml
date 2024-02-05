@@ -24,7 +24,7 @@
 
 
 <!-- 在页面中添加图表容器 -->
-<h2 id="h2">2023</h2>
+<h2 id="h2">2023 總</h2>
 <h2 id="h21">季度營收</h2>
 
 <div class="mb-2" id="dev">
@@ -121,16 +121,32 @@
     theYear.addEventListener('keydown', async event  => {
 
         if (event.which === 13) {
+            console.log(check);
             year = theYear.value;
-            theH2.innerHTML = year;
-            await loadDatas();;
+            if (check == true) {
+                theH2.innerHTML = year + " " + theDeveloper.options[theDeveloper.selectedIndex].text;
+                theH21.innerHTML = "季度營收";
+                await loadGameDatas();
 
-            myChart.data.datasets[0].data[0] = datas[0];
-            myChart.data.datasets[0].data[1] = datas[1];
-            myChart.data.datasets[0].data[2] = datas[2];
-            myChart.data.datasets[0].data[3] = datas[3];
+                myChart.data.datasets[0].data[0] = Gamedatas[0];
+                myChart.data.datasets[0].data[1] = Gamedatas[1];
+                myChart.data.datasets[0].data[2] = Gamedatas[2];
+                myChart.data.datasets[0].data[3] = Gamedatas[3];
 
-            myChart.update();
+                myChart.update();
+            }
+            else {
+                theH2.innerHTML = year+" 總";
+                await loadDatas();;
+
+                myChart.data.datasets[0].data[0] = datas[0];
+                myChart.data.datasets[0].data[1] = datas[1];
+                myChart.data.datasets[0].data[2] = datas[2];
+                myChart.data.datasets[0].data[3] = datas[3];
+
+                myChart.update();
+            }
+
         }
     });
 
@@ -151,20 +167,33 @@
 
     theDeveloper.addEventListener('change', async event => {
         if (theDeveloper.options[theDeveloper.selectedIndex].value != 0) {
-        DeveloperId = theDeveloper.value;
-        theH2.innerHTML = year + " " + theDeveloper.options[theDeveloper.selectedIndex].text;
-        theH21.innerHTML =  "季度營收";
-        await loadGameDatas();
+            GameName = theDeveloper.options[theDeveloper.selectedIndex].text;
+            check = true;
+            theH2.innerHTML = year + " " + theDeveloper.options[theDeveloper.selectedIndex].text;
+            theH21.innerHTML = "季度營收";
+            await loadGameDatas();
 
             myChart.data.datasets[0].data[0] = Gamedatas[0];
             myChart.data.datasets[0].data[1] = Gamedatas[1];
             myChart.data.datasets[0].data[2] = Gamedatas[2];
             myChart.data.datasets[0].data[3] = Gamedatas[3];
 
-        myChart.update();
+            myChart.update();
 
 
-      }
+        }
+        else {
+            check = false;
+            theH2.innerHTML = year;
+            await loadDatas();;
+
+            myChart.data.datasets[0].data[0] = datas[0];
+            myChart.data.datasets[0].data[1] = datas[1];
+            myChart.data.datasets[0].data[2] = datas[2];
+            myChart.data.datasets[0].data[3] = datas[3];
+
+            myChart.update();
+        }
     });
 
     const loadGameDatas = async () => {
