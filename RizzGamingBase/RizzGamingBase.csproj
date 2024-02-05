@@ -322,16 +322,6 @@
     <Content Include="Content\BonusProductPictures\AnimatedAvatarImage\PortalgunImage.gif" />
     <Content Include="Content\BonusProductPictures\AnimatedAvatarImage\ReMe.txt" />
     <Content Include="Content\BonusProductPictures\AnimatedAvatarImage\VRImage.gif" />
-    <Content Include="Content\BonusProductPictures\ApexFrame.png" />
-    <Content Include="Content\BonusProductPictures\CatFrame1.png" />
-    <Content Include="Content\BonusProductPictures\CatFrame2.png" />
-    <Content Include="Content\BonusProductPictures\CatImage.gif" />
-    <Content Include="Content\BonusProductPictures\CoinImage.gif" />
-    <Content Include="Content\BonusProductPictures\DiceImage.gif" />
-    <Content Include="Content\BonusProductPictures\DrakSoulsImage.gif" />
-    <Content Include="Content\BonusProductPictures\PortalgunImage.gif" />
-    <Content Include="Content\BonusProductPictures\ReMe.txt" />
-    <Content Include="Content\BonusProductPictures\SpeedLineFrame.png" />
     <Content Include="Content\BonusProductPictures\StaticAvatarFrame\ReMe.txt" />
     <Content Include="Content\BonusProductPictures\StaticAvatarImage\ReMe.txt" />
     <Content Include="build\config\postcss.config.js" />
@@ -357,9 +347,6 @@
     <Content Include="build\npm\Plugins.js" />
     <Content Include="build\npm\Publish.js" />
     <Content Include="build\npm\vnu-jar.js" />
-    <Content Include="Content\BonusProductPictures\TVFrame.png" />
-    <Content Include="Content\BonusProductPictures\VRImage.gif" />
-    <Content Include="Content\BonusProductPictures\WhiteFrame.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
