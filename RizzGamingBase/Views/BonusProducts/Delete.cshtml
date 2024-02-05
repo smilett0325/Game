@@ -4,52 +4,31 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
-
 <h3>是否刪除商品</h3>
 <div>
-    <h4>BonusProduct</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductTypeId)
-        </dt>
+        <dt>類型</dt>
+        <dd>@Html.DisplayFor(model => model.ProductTypeId)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ProductTypeId)
-        </dd>
+        <dt>價格</dt>
+        <dd>@Html.DisplayFor(model => model.Price) </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+        <dt>產品圖片</dt>
+        <img src="@Url.Content("~/Images/BonusProducts/"+Model.ProductTypeId+"/"+Model.URL)" alt="@Model.Name" style="width: 138px; " /> @*有限制大小*@
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.URL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.URL)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
+        <dt>名稱</dt>
+        <dd>@Html.DisplayFor(model => model.Name)</dd>
     </dl>
-
-    @using (Html.BeginForm()) {
+    <div>
+        <h4>警告！刪除後無無法復原了</h4>
+    </div>
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> 
+            <input type="submit" value="刪除" class="btn btn-danger" />
         </div>
     }
 </div>

@@ -212,6 +212,7 @@
     <Compile Include="Models\Repositories\EFRepositories\BonusProductsEFRepository.cs" />
     <Compile Include="Models\Services\BonusProductsServices.cs" />
     <Compile Include="Models\ViewModels\BonusProductsCreateVm.cs" />
+    <Compile Include="Models\ViewModels\BonusProductsDeleteVm.cs" />
     <Compile Include="Models\ViewModels\BonusProductsEditVm.cs" />
     <Compile Include="Models\ViewModels\BonusProductsIndexVm.cs" />
     <Compile Include="Models\ViewModels\BonusProductsVm.cs" />
@@ -5167,6 +5168,7 @@
     <Content Include="plugins\summernote\summernote.js.map" />
     <Content Include="plugins\summernote\summernote.min.js.map" />
     <Content Include="plugins\toastr\toastr.js.map" />
+    <Content Include="Views\BonusProducts\TextFile1.txt" />
     <Content Include="﻿ReadMe.txt" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
