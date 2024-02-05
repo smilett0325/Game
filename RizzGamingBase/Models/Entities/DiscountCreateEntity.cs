@@ -16,5 +16,6 @@ namespace RizzGamingBase.Models.Entities
         public int Percent { get; set; }
         public string Desciption { get; set; }
         public string GameId { get; set; }
+        public int DeveloperId { get; set; }
     }
 }

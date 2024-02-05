@@ -119,9 +119,9 @@ namespace RizzGamingBase.Models.Exts
             return dto;
         }
 
-        public static DiscountCreateVm GetDtoToVm(this DiscountCreateDto dto)
+        public static DiscountVm GetDtoToVm(this DiscountCreateDto dto)
         {
-            var vm = new DiscountCreateVm
+            var vm = new DiscountVm
             {
                 Id = dto.Id,
                 DiscountName = dto.Name,
@@ -139,7 +139,7 @@ namespace RizzGamingBase.Models.Exts
 
 
 
-        public static DiscountCreateDto CreateVmToDto(this DiscountCreateVm vm)
+        public static DiscountCreateDto CreateVmToDto(this DiscountVm vm)
         {
             var dto = new DiscountCreateDto
             {
@@ -150,12 +150,14 @@ namespace RizzGamingBase.Models.Exts
                 EndDate = vm.EndDate,
                 Percent = vm.Percent,
                 Desciption = vm.Description,
-                GameId = vm.Game
+                GameId = vm.Game,
+                DeveloperId = vm.DeveloperId,
+               
             };
 
             return dto;
         }
-        public static DiscountCreateDto EditVmToDto(this DiscountCreateVm vm)
+        public static DiscountCreateDto EditVmToDto(this DiscountVm vm)
         {
             var dto = new DiscountCreateDto
             {
@@ -173,18 +175,20 @@ namespace RizzGamingBase.Models.Exts
             return dto;
         }
 
-        public static DiscountCreateEntity CreateDtoToEntity(this DiscountCreateDto vm)
+        public static DiscountCreateEntity CreateDtoToEntity(this DiscountCreateDto dto)
         {
             var entity = new DiscountCreateEntity
             {
-                Name = vm.Name,
-                Type = vm.Type,
-                Image = vm.Image,
-                StartDate = vm.StartDate,
-                EndDate = vm.EndDate,
-                Percent = vm.Percent,
-                Desciption = vm.Desciption,
-                GameId = vm.GameId
+                Name = dto.Name,
+                Type = dto.Type,
+                Image = dto.Image,
+                StartDate = dto.StartDate,
+                EndDate = dto.EndDate,
+                Percent = dto.Percent,
+                Desciption = dto.Desciption,
+                GameId = dto.GameId,
+                DeveloperId = dto.DeveloperId
+
             };
 
             return entity;
@@ -221,6 +225,7 @@ namespace RizzGamingBase.Models.Exts
                 EndDate = entity.EndDate,
                 Percent = entity.Percent,
                 Desciption = entity.Desciption,
+                DeveloperId = entity.DeveloperId
             };
             db.Discounts.Add(discount);
             db.SaveChanges();
