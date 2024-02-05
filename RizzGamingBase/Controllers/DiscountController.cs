@@ -10,6 +10,7 @@ using System.Data.Entity;
 using System.Security.Cryptography;
 using Microsoft.Ajax.Utilities;
 
+
 namespace RizzGamingBase.Controllers
 {
     public class DiscountController : Controller
@@ -41,7 +42,11 @@ namespace RizzGamingBase.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(DiscountVm vm)
         {
-            if(!ModelState.IsValid) return View(vm);
+            if (!ModelState.IsValid)
+            {
+                vm.DiscountTypeList = GetDiscountTypeList();
+                return View(vm);
+            }
             try
             {
                 DiscountActionExts.Edit(vm); 
@@ -51,6 +56,7 @@ namespace RizzGamingBase.Controllers
             {
                 vm.DiscountTypeList = GetDiscountTypeList();
                 ModelState.AddModelError("", ex.Message);
+                vm.DiscountTypeList = GetDiscountTypeList();
                 return View(vm);
             }
 

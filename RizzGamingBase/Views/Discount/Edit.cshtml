@@ -28,6 +28,7 @@
                         @Html.HiddenFor(model => model.DiscountType, new { @class = "DiscountType" })
 
 
+
                         <div class="form-group">
                             @Html.LabelFor(model => model.DiscountName, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -40,6 +41,7 @@
                             @Html.LabelFor(model => model.DiscountType, htmlAttributes: new { @class = "form-label col-md-2" })
 
                             @Html.DropDownListFor(model => model.DiscountType, Model.DiscountTypeList, "請選擇", new { @class = "form-control", @onchange = "updateDiscountType()" })
+
                             @Html.ValidationMessageFor(model => model.DiscountType, "", new { @class = "text-danger" })
 
                         </div>
@@ -345,10 +347,10 @@
         $('.Game').val(JSON.stringify(gameIds));
     }
 
-    function updateDiscountType() {
-        var selectedValue = $('#DiscountType').val();
-        $('#DiscountType').val(selectedValue);
-    }
+        function updateDiscountType() {
+            var selectedValue = $('#DiscountType').val();
+            $('#DiscountType').val(selectedValue);
+        }
         function updateSelectedDateRange() {
 
             var selectedDateRange = $('#reservationtime').data('daterangepicker');
