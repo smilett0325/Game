@@ -54,7 +54,7 @@ namespace RizzGamingBase.Controllers
                 return View(vm);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Home");
         }
         public ActionResult Create() 
         {
