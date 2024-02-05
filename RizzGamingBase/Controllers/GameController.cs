@@ -21,22 +21,31 @@ namespace RizzGamingBase.Controllers
     {
 		
 		// GET: Game
-		public ActionResult Index()
+		public ActionResult Index( int? developreId)
 		{
+			
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
-			List<GameIndexVm> vm = service.Filter().ToGameVm(); //顯示全部
-			return View(vm);
+			if(developreId == null)
+			{
+				List<GameIndexVm> vm = service.Filter().ToGameVm(); //顯示全部
+				return View(vm);
+			}
+			else
+			{
+				List<GameIndexVm> vm2 = service.FilterByDeveloper(developreId).ToGameVm();
+				return View(vm2);
+			}
 		}
 
 		//[Authorize]
-		public ActionResult Edit(int id)
+		public ActionResult Edit(int id )
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
 
 			var tagList = service.GetAllTag();
-			ViewBag.TagList = tagList;
+			ViewBag.tagList = tagList;
 			var gameList = service.Filter(x => x.Id != id).ToList();
 			ViewBag.gameList = gameList;
 
