@@ -1,7 +1,8 @@
 ﻿@model RizzGamingBase.Models.ViewModels.DiscountVm
 
 @{
-    ViewBag.Title = "Edit";
+   ViewBag.Title = "Edit";
+   Layout = "~/Views/Shared/AdminBoard.cshtml";
 }
 
 
@@ -24,7 +25,7 @@
                         @Html.HiddenFor(model => model.Game, new { @class = "Game" })
                         @Html.HiddenFor(model => model.StartDate, new { @class = "StartDate" })
                         @Html.HiddenFor(model => model.EndDate, new { @class = "EndDate" })
-                        @Html.HiddenFor(model => model.DiscountType, new { @class = "EndDate" })
+                        @Html.HiddenFor(model => model.DiscountType, new { @class = "DiscountType" })
 
 
                         <div class="form-group">
