@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+@*<h2>編輯遊戲</h2>*@
 
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "fileForm" }))
@@ -12,218 +12,225 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>DeveloperGameEditVm</h4>
+        @*<h4>DeveloperGameEditVm</h4>*@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.DeveloperId)
 
-        <div>
-            <div class="mb-1"><p class="d-inline-block">選擇主遊戲(若沒則不選擇)</p><button type="button" class="form-label btn btn-light" onclick="showDLCModal()">+</button></div>
-            <div id="selectedDLCContainer">
-                @if (ViewBag.attachedGame == null)
-                {
-                    <div id="none-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">無</div>
-                }
-                else
-                {
-                    <div id="@ViewBag.attachedGame.Id-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">@ViewBag.attachedGame.Name</div>
-                }
+
+        <div class="card card-green">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-pen-alt"></i>編輯遊戲</h3>
             </div>
-        </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3 ">
 
-        <div id="dlcModal" class="modal modal-lg" tabindex="-1" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">選擇主遊戲</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="DLCActiveClass">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">搜尋</span>
-                            <input id="search" type="text" class="form-control" placeholder="搜尋" aria-label="Username" aria-describedby="basic-addon1" onkeydown="filterGame()">
+
+                        <div class="form-floating mb-3">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @placeholder = "name@example.com", @type = "email", @class = "form-control" } })
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label col-md-2" })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                         </div>
-                        <button id="none" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('none', '無')">無</button>
-                        @if (ViewBag.attarchedGame == null)
-                        {
 
-                            foreach (var game in ViewBag.gameList)
+                        <div class="form-floating mb-3">
+                            @Html.TextAreaFor(model => model.Introduction, new { @placeholder = "Leave a comment here", @class = "form-control" })
+                            @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "form-label col-md-2" })
+                            @*@Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            @Html.TextAreaFor(model => model.Description, new { @placeholder = "Leave a comment here", @class = "form-control", @style = "height: 150px" })
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label col-md-2" })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @type = "date", @class = "form-control", @Value = Model.ReleaseDate.ToString("yyyy-MM-dd") } })
+                            @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "form-label col-md-2" })
+                            @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-label col-md-2" })
+                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                        </div>
+
+
+                        <div class="form-floating mb-3">
+                            @Html.EditorFor(model => model.MaxPercent, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.LabelFor(model => model.MaxPercent, htmlAttributes: new { @class = "form-label col-md-2" })
+                            @Html.ValidationMessageFor(model => model.MaxPercent, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="button" value="Save" class="btn btn-primary" id="save" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7">
+
+
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">封面圖片</label>
+                            </div>
+                            <input type="file" name="cover" id="fileInputCov" class="form-control d-inline-block" onchange="coverFileChange()" disabled />
+                        </div>
+                        <div id="coverContainer" class="mb-3">
+                            <div class="card d-inline-block" style="width: 18rem; position: relative;" id="@(Model.Cover)">
+                                <i class="fa-regular fa-circle-xmark custom-icon" onclick="clearCover()" onmouseover="mouseover(this)" onmouseout="mouseout(this)"></i>
+                                <img src="~/Images/Covers/@(Model.DeveloperId)/@(Model.Id)/@(Model.Cover)" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">@(Model.Cover)</p>@*<button type="button" class="form-label btn btn-danger" onclick="clearCover()">deldet</button>*@
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">展示圖片</label>
+                            </div>
+                            <input type="file" name="displayImages" id="fileInputImg" class="form-control d-inline-block" onchange="imageFileChange()" multiple />
+                        </div>
+                        <div id="imageLoadContainer" class="mb-3">
+                            @foreach (var displayImage in Model.DisplayImages)
                             {
-                                <button id="@game.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')">@game.Name</button>
+                                <div class="card d-inline-block" style="width: 18rem;" id="@displayImage">
+                                    <i class="fa-regular fa-circle-xmark custom-icon" onclick="deleteLoadImage(this)" onmouseover="mouseover(this)" onmouseout="mouseout(this)"></i>
+                                    <img src="~/Images/DisplayImages/@(Model.DeveloperId)/@(Model.Id)/@(displayImage)" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <p class="card-text">@displayImage</p>@*<button type="button" class="form-label btn btn-danger" onclick="deleteLoadImage(this)">deldet</button>*@
+                                    </div>
+                                </div>
                             }
-                        }
-                        else
-                        {
-                            foreach (var game in ViewBag.gameList)
-                            {
-                                if (game.Id != ViewBag.attachedGame.Id)
+                        </div>
+                        <div id="imageContainer" class="mb-3">
+
+                        </div>
+
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">預告片</label>
+                            </div>
+                            <input type="file" name="displayVideo" id="fileInputVdo" class="form-control d-inline-block" onchange="videoFileChange()" disabled />
+                        </div>
+                        <div id="videoContainer" class="mb-3">
+                            <div class="card d-inline-block" style="width: 18rem;" id="@(Model.Video)">
+                                <i class="fa-regular fa-circle-xmark custom-icon" onclick="clearDisplayVideo()" onmouseover="mouseover(this)" onmouseout="mouseout(this)"></i>
+                                <video controls class="card-img-top">
+                                    <source src="~/Images/DisplayVideos/@(Model.DeveloperId)/@(Model.Id)/@(Model.Video)">
+                                </video>
+                                <div class="card-body">
+                                    <p class="card-text">@(Model.Video)</p><button type="button" class="form-label btn btn-danger" onclick="clearDisplayVideo()">deldet</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+
+                        <div>
+                            <div class="mb-1"><p class="d-inline-block">編輯標籤</p><button type="button" class="form-label btn btn-light" onclick="showTagModal()">+</button></div>
+                            <div id="selectedTagsContainer">
+                                @foreach (var selectedTag1 in ViewBag.selectedTags)
                                 {
-                                    <button id="@game.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')">@game.Name</button>
+                                    <div id="tag@(selectedTag1.Id)-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">@selectedTag1.Name</div>
+                                }
+                            </div>
+                        </div>
+
+                        <div id="tagModal" class="modal" tabindex="-1" style="display: none;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">編輯標籤</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h2>已選標籤</h2>
+                                        <div id="activeAddTag">
+                                            @foreach (var selectedTag2 in ViewBag.selectedTags)
+                                            {
+                                                <button id="tag@(selectedTag2.Id)-selected" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="removeTag('@selectedTag2.Id')" data-select="@selectedTag2.Id">@selectedTag2.Name</button>
+                                            }
+                                        </div>
+                                        <hr />
+                                        <h2>標籤列表</h2>
+                                        @foreach (var tag in ViewBag.TagList)
+                                        {
+                                            <button id="tag@(tag.Id)" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addTag('@tag.Id', '@tag.Name')">@tag.Name</button>
+                                        }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">關閉</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="mb-1"><p class="d-inline-block">選擇主遊戲(若沒則不選擇)</p><button type="button" class="form-label btn btn-light" onclick="showDLCModal()">+</button></div>
+                            <div id="selectedDLCContainer">
+                                @if (ViewBag.attachedGame == null)
+                                {
+                                    <div id="none-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">無</div>
                                 }
                                 else
                                 {
-                                    <button id="@game.Id" type="button" class="btn btn-primary-subtle rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')" disabled>@game.Name</button>
+                                    <div id="@ViewBag.attachedGame.Id-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">@ViewBag.attachedGame.Name</div>
                                 }
-                            }
-                        }
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">關閉</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="mb-1"><p class="d-inline-block">編輯標籤</p><button type="button" class="form-label btn btn-light" onclick="showTagModal()">+</button></div>
-            <div id="selectedTagsContainer">
-                @foreach (var selectedTag1 in ViewBag.selectedTags)
-                {
-                    <div id="@selectedTag1.Id-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">@selectedTag1.Name</div>
-                }
-            </div>
-        </div>
-
-        <div id="tagModal" class="modal modal-lg" tabindex="-1" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">編輯標籤</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h2>已選標籤</h2>
-                        <div id="activeAddTag">
-                            @foreach (var selectedTag2 in ViewBag.selectedTags)
-                            {
-                                <button id="tag@(selectedTag2.Id)-selected" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="removeTag('@selectedTag2.Id')" data-select="@selectedTag2.Id">@selectedTag2.Name</button>
-                            }
+                            </div>
                         </div>
-                        <hr />
-                        <h2>標籤列表</h2>
-                        @foreach (var tag in ViewBag.TagList)
-                        {
-                            <button id="tag@(tag.Id)" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addTag('@tag.Id', '@tag.Name')">@tag.Name</button>
-                        }
+
+                        <div id="dlcModal" class="modal" tabindex="-1" style="display: none;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">選擇主遊戲</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" id="DLCActiveClass">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">搜尋</span>
+                                            <input id="search" type="text" class="form-control" placeholder="搜尋" aria-label="Username" aria-describedby="basic-addon1" onkeydown="filterGame()">
+                                        </div>
+                                        <button id="none" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('none', '無')">無</button>
+                                        @if (ViewBag.attarchedGame == null)
+                                        {
+
+                                            foreach (var game in ViewBag.gameList)
+                                            {
+                                                <button id="@game.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')">@game.Name</button>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            foreach (var game in ViewBag.gameList)
+                                            {
+                                                if (game.Id != ViewBag.attachedGame.Id)
+                                                {
+                                                    <button id="@game.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')">@game.Name</button>
+                                                }
+                                                else
+                                                {
+                                                    <button id="@game.Id" type="button" class="btn btn-primary-subtle rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')" disabled>@game.Name</button>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">關閉</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">關閉</button>
-                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="mb-3">
-            <div>
-                <label class="form-label">封面圖片</label>
-            </div>
-            <input type="file" name="cover" id="fileInputCov" class="form-control d-inline-block" onchange="coverFileChange()" disabled />
-        </div>
-        <div id="coverContainer" class="mb-3">
-            <div class="card d-inline-block" style="width: 18rem; position: relative;" id="@(Model.Cover)">
-                <i class="fa-regular fa-circle-xmark custom-icon" onclick="clearCover()" onmouseover="mouseover(this)" onmouseout="mouseout(this)"></i>
-                <img src="~/Images/Covers/@(Model.DeveloperId)/@(Model.Id)/@(Model.Cover)" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <p class="card-text">@(Model.Cover)</p>@*<button type="button" class="form-label btn btn-danger" onclick="clearCover()">deldet</button>*@
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <div>
-                <label class="form-label">展示圖片</label>
-            </div>
-            <input type="file" name="displayImages" id="fileInputImg" class="form-control d-inline-block" onchange="imageFileChange()" multiple />
-        </div>
-        <div id="imageLoadContainer" class="mb-3">
-            @foreach (var displayImage in Model.DisplayImages)
-            {
-                <div class="card d-inline-block" style="width: 18rem;" id="@displayImage">
-                    <i class="fa-regular fa-circle-xmark custom-icon" onclick="deleteLoadImage(this)" onmouseover="mouseover(this)" onmouseout="mouseout(this)"></i>
-                    <img src="~/Images/DisplayImages/@(Model.DeveloperId)/@(Model.Id)/@(displayImage)" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text">@displayImage</p>@*<button type="button" class="form-label btn btn-danger" onclick="deleteLoadImage(this)">deldet</button>*@
-                    </div>
-                </div>
-            }
-        </div>
-        <div id="imageContainer" class="mb-3">
-
-        </div>
-
-        <div class="mb-3">
-            <div>
-                <label class="form-label">預告片</label>
-            </div>
-            <input type="file" name="displayVideo" id="fileInputVdo" class="form-control d-inline-block" onchange="videoFileChange()" disabled />
-        </div>
-        <div id="videoContainer" class="mb-3">
-            <div class="card d-inline-block" style="width: 18rem;" id="@(Model.Video)">
-                <i class="fa-regular fa-circle-xmark custom-icon" onclick="clearDisplayVideo()" onmouseover="mouseover(this)" onmouseout="mouseout(this)"></i>
-                <video controls class="card-img-top">
-                    <source src="~/Images/DisplayVideos/@(Model.DeveloperId)/@(Model.Id)/@(Model.Video)">
-                </video>
-                <div class="card-body">
-                    <p class="card-text">@(Model.Video)</p>@*<button type="button" class="form-label btn btn-danger" onclick="clearDisplayVideo()">deldet</button>*@
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label col-md-2" })
-
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "form-label col-md-2" })
-
-            @Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label col-md-2" })
-
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "form-label col-md-2" })
-
-            @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-label col-md-2" })
-
-            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.MaxPercent, htmlAttributes: new { @class = "form-label col-md-2" })
-
-            @Html.EditorFor(model => model.MaxPercent, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.MaxPercent, "", new { @class = "text-danger" })
-
-        </div>
-
-
-
-        <div class="mb-3">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Save" class="btn btn-default" id="submit" />
-            </div>
         </div>
     </div>
 }
@@ -235,6 +242,7 @@
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@
     <script src="https://kit.fontawesome.com/80f553bae6.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         window.onload = function () {
             var buttons = $("#activeAddTag").find("button");
@@ -441,20 +449,20 @@
             $('#tagModal').modal('show');
         }
 
-        let selectedTags = [];
+        //let selectedTags = [];
 
         function addTag(tagId, tagName) {
             //刻劃button功能
             console.log(tagId, tagName);
             $('#activeAddTag').append(`
-                <button id="tag${tagId}-selected" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="removeTag('${tagId}')">${tagName}</button>
+                <button id="tag${tagId}-selected" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="removeTag('${tagId}')" data-select="${tagId}">${tagName}</button>
             `)
             $("#tag" + tagId).removeClass("btn-primary").addClass("btn-primary-subtle").prop("disabled", true);
             $('#selectedTagsContainer').append(`
                 <div id="tag${tagId}-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">${tagName}</div>
              `)
 
-            selectedTags.push(tagId);
+            //selectedTags.push(tagId);
         }
 
         function removeTag(tagId) {
@@ -462,7 +470,7 @@
             $("#tag" + tagId).removeClass("btn-primary-subtle").addClass("btn-primary");
             $("#tag" + tagId).prop("disabled", false);
             $("#tag" + tagId + "-show").remove();
-            selectedTags = selectedTags.filter((id) => id !== tagId);
+            //selectedTags = selectedTags.filter((id) => id !== tagId);
         }
 
         function showDLCModal() {
@@ -497,11 +505,20 @@
         }
 
 
-        $('#submit').on('click', function (e) {
+        $('#save').on('click', function (e) {
             e.preventDefault();
 
 
             var formData = new FormData(document.getElementById('fileForm'));
+
+            var selectedTags = [];
+
+            // 遍歷所有的按鈕，抓取 data-select 屬性的值
+            var buttons = document.querySelectorAll('#activeAddTag button');
+            buttons.forEach(function (button) {
+                var tagId = button.getAttribute('data-select');
+                selectedTags.push(tagId);
+            });
 
             //add tag
             for (var i = 0; i < selectedTags.length; i++) {
@@ -545,6 +562,8 @@
                 formData.append('originalImages', fileName);
             });
 
+
+
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Update", "Game")',
@@ -553,10 +572,35 @@
                 processData: false,
                 success: function (data) {
                     if (data.success) {
-                        ////location.replace('@Url.Content("~/Game/Index")?id=${}');
-                        window.location.href = '/Game/Index';
-                    } else {
 
+                        Swal.fire({
+                            title: "編輯成功",
+                            text: "你已成功編輯遊戲資訊!",
+                            icon: "success",
+                            showCancelButton: false,
+
+                            confirmButtonText: "返回遊戲清單"
+                        }).then((result) => {
+                            window.location.href = '/Game/Index';
+                        });
+
+                        //Swal.fire({
+                        //    title: "編輯成功!",
+                        //    text: "你已成功編輯遊戲資訊",
+                        //    icon: "success"
+                        //});
+                        //window.location.href = '/Game/Index';
+                    } else {
+                        Swal.fire({
+                            title: "編輯失敗",
+                            text: "請檢察欄位是否都有正確填寫!",
+                            icon: "error",
+                            showCancelButton: false,
+
+                            confirmButtonText: "確認"
+                        }).then((result) => {
+                            ;
+                        });
                     }
                 },
             });
@@ -572,6 +616,7 @@
             top: 5px;
             right: 5px;
             font-size: 30px;
+            z-index: 1040;
         }
     </style>
 }

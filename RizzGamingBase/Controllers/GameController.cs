@@ -22,7 +22,7 @@ namespace RizzGamingBase.Controllers
 		
 		// GET: Game
 		public ActionResult Index( int? developreId)
-		{
+		{	
 			
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
@@ -39,7 +39,7 @@ namespace RizzGamingBase.Controllers
 		}
 
 		//[Authorize]
-		public ActionResult Edit(int id )
+		public ActionResult Edit(int id = 3)
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
@@ -119,7 +119,7 @@ namespace RizzGamingBase.Controllers
 			if (!ModelState.IsValid) { return View(vm); };
 
 			//getDeveloperId， 尚未實作
-			int developerId = 1; 
+			int developerId = 8; 
 
 			try
 			{

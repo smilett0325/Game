@@ -15,6 +15,8 @@ namespace RizzGamingBase.Models.ViewModels
 
 		public string Cover { get; set; }
 
+		public int DeveloperId { get; set; }
+
 		//public int Percent {get; set; }
 	}
 }
