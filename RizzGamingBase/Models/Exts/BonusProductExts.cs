@@ -61,7 +61,7 @@ namespace RizzGamingBase.Models.Exts
             UploadFileHelper  uploadFileHelper = new UploadFileHelper();
             string[] allowExts = { ".jpg", ".jpeg", ".png", ".gif" };
 
-            uploadFileHelper.UploadFile(URL, "BonusProducts" , allowExts);
+            uploadFileHelper.UploadFile(URL, "BonusProducts" , model.ProductTypeId, allowExts);
         }
 
         // todo 完成三層式編輯

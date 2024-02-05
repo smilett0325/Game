@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RizzGamingBase.Models.EFModels;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -62,7 +63,7 @@ namespace RizzGamingBase.Models.Infra
             File.Delete(fullPath);
         }
 
-        public void UploadFile(HttpPostedFileBase file, string categoryFolderName, string[] allowedExtensions)
+        public void UploadFile(HttpPostedFileBase file, string categoryFolderName, int bonusProductId ,string[] allowedExtensions)
         {
             //判斷是否上傳
             if (file == null || file.ContentLength == 0)
@@ -84,9 +85,15 @@ namespace RizzGamingBase.Models.Infra
             if (!Directory.Exists(categoryFolderPath))
                 Directory.CreateDirectory(categoryFolderPath);
 
-            
+            // 使用紅利商品的ID創建文件夾路徑，可自訂命名規則
+            string bonusProductTypePath = Path.Combine(categoryFolderPath, $"{bonusProductId}");
+
+            // 检查文件夾是否存在，如果不存在则创建
+            if (!Directory.Exists(bonusProductTypePath))
+                Directory.CreateDirectory(bonusProductTypePath);
+
             string fileName = file.FileName;
-            string fullPath = Path.Combine(categoryFolderPath, fileName);
+            string fullPath = Path.Combine(bonusProductTypePath, fileName);
 
             // 将上传的文件保存到指定路径
             file.SaveAs(fullPath);
