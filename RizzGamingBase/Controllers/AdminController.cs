@@ -1,4 +1,5 @@
-﻿using RizzGamingBase.Models.EFModels;
+﻿using Newtonsoft.Json.Serialization;
+using RizzGamingBase.Models.EFModels;
 using RizzGamingBase.Models.ViewModels;
 using System;
 using System.Linq;
@@ -16,39 +17,40 @@ namespace RizzGamingBase.Controllers
             return View(db.Developers.ToList());
         }
 
-        [HttpGet]
+      
         // GET: Admin/Delete/{developerId}
-        public ActionResult Delete(int? developerId)
-        {
-            var AppDbContext = new AppDbContext();
-            var db = AppDbContext;
+        //public ActionResult Delete(int? developerId)
+        //{
+        //    var AppDbContext = new AppDbContext();
+        //    var db = AppDbContext;
 
-            if (developerId == null)
-            {
-                // 如果 developerId 為空.返回錯誤或重新導向
-                return RedirectToAction("Index");
-            }
+        //    if (developerId == null)
+        //    {
+        //        // 如果 developerId 為空.返回錯誤或重新導向
+        //        return RedirectToAction("Index");
+        //    }
 
-            // 根據 developerId 從資料庫中獲取開發者信息
-            Developer developer = db.Developers.Find(developerId);
+        //    // 根據 developerId 從資料庫中獲取開發者信息
+        //    Developer developer = db.Developers.Find(developerId);
 
-            if (developer == null)
-            {
-                // 如果找不到開發者，返回錯誤或重新導向
-                return RedirectToAction("Index");
-            }
+        //    if (developer == null)
+        //    {
+        //        // 如果找不到開發者，返回錯誤或重新導向
+        //        return RedirectToAction("Index");
+        //    }
 
-            // 將開發者信息傳遞給視圖
-            return View(developer);
-        }
+        //    // 將開發者信息傳遞給視圖
+        //    return View(developer);
+        //}
 
         // POST: Admin/Delete/{developerId}
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int developerId, DateTime banTime)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Delete(int developerId)
         {
             var AppDbContext = new AppDbContext();
             var db = AppDbContext;
+            
             try
             {
                 // 根據 developerId 從資料庫中獲取開發者信息
@@ -61,7 +63,7 @@ namespace RizzGamingBase.Controllers
                 }
 
                 // 將 banTime 存入資料庫中的 BanTime 欄位
-                developer.BanTime = banTime;
+                developer.BanTime = new DateTime(2023 ,01 ,01,00,00,000) ;
 
                 // 保存變更
                 db.SaveChanges();
