@@ -25,6 +25,37 @@ namespace RizzGamingBase.Controllers
         }
 
 
+
+        public ActionResult Detail(int id)
+        {
+            var db = new AppDbContext();
+
+            var details = db.DiscountItems
+                            .Include(d => d.Game)
+                            .Where(d => d.DiscountId == id)
+                            .Select(d => new DiscountDetailVm
+                            {
+                                DiscountName = d.Discount.Name,
+                                DiscountType = d.Discount.DiscountType,
+                                DiscountImage = d.Discount.Image,
+                                StartDate = d.Discount.StartDate,
+                                EndDate = d.Discount.EndDate,                               
+                                Description = d.Discount.Desciption,
+                                Game = new List<DiscountGameInfo>
+                                {
+                                    new DiscountGameInfo
+                                    {
+                                        Id = d.Game.Id,
+                                        Name = d.Game.Name,
+                                        Percent = d.Discount.Percent,
+                                        Iamge = d.Game.Cover,
+                                        Price = d.Game.Price,
+                                    }
+                                }
+                            });
+            return View(details);
+        }
+
         public ActionResult Home()
         {
             
@@ -60,7 +91,7 @@ namespace RizzGamingBase.Controllers
                 return View(vm);
             }
 
-            return RedirectToAction("Home");
+            return RedirectToAction("Index");
         }
         public ActionResult Create() 
         {
