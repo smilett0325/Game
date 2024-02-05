@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using RizzGamingBase.Models.Services;
 using RizzGamingBase.Models.Repositories;
-using RizzGamingBase.Models.InterFaces;
+using RizzGamingBase.Models.Interfaces;
 using System.Web.Http;
 using RizzGamingBase.Models.ViewModels;
 using RizzGamingBase.Models.EFModels;

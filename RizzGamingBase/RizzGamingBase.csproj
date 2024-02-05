@@ -232,7 +232,6 @@
     <Compile Include="Models\Repositories\EFRepositories\DiscountEFRepository.cs" />
     <Compile Include="Models\Services\DiscountService.cs" />
     <Compile Include="Models\ViewModels\Developer\BanDevVm.cs" />
-    <Compile Include="Models\ViewModels\DiscountCreateVm.cs" />
     <Compile Include="Models\ViewModels\DiscountEventVm.cs" />
     <Compile Include="Models\ViewModels\DiscountGameVm.cs" />
     <Compile Include="Models\ViewModels\DiscountIndexVm.cs" />
@@ -273,6 +272,7 @@
     <Compile Include="Models\Services\GTService.cs" />
     <Compile Include="Models\Services\TagService.cs" />
     <Compile Include="Models\ViewModels\DeveloperGameEditVm.cs" />
+    <Compile Include="Models\ViewModels\DiscountVm.cs" />
     <Compile Include="Models\ViewModels\GameDataVm.cs" />
     <Compile Include="Models\ViewModels\GameIndexVm.cs" />
     <Compile Include="Models\Exts\DeveloperExt.cs" />
@@ -501,6 +501,7 @@
     <Content Include="Models\Repositories\DpRepositories\DpRepository.txt" />
     <Content Include="Models\Repositories\EFRepositories\EFRepository.txt" />
     <Content Include="Models\Repositories\Repositories.txt" />
+    <Content Include="Models\ViewModels\EditVm.txt" />
     <Content Include="Models\ViewModels\ViewModels.txt" />
     <Content Include="pages\build\config\postcss.config.js" />
     <Content Include="pages\build\config\rollup.config.js" />
@@ -5153,6 +5154,27 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Delete.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\GameData\Chart.cshtml" />
+    <Content Include="Views\GameData\DChart.cshtml" />
+    <Content Include="Views\GameData\DLineChart.cshtml" />
+    <Content Include="Views\GameData\DPieChart.cshtml" />
+    <Content Include="Views\GameData\LineChart.cshtml" />
+    <Content Include="Views\GameData\PieChart.cshtml" />
+    <Content Include="Views\Game\Create.cshtml" />
+    <Content Include="Views\Game\Edit.cshtml" />
+    <Content Include="Views\Game\Index.cshtml" />
+    <Content Include="Views\Discount\Create.cshtml" />
+    <Content Include="Views\Discount\Edit.cshtml" />
+    <Content Include="Views\Discount\Home.cshtml" />
+    <Content Include="Views\Discount\Index.cshtml" />
+    <Content Include="Views\Discount\test.cshtml" />
+    <Content Include="Views\Shared\AdminBoard.cshtml" />
+    <Content Include="Views\Shared\AdminBoard_.cshtml" />
+    <Content Include="Views\Shared\Developer.cshtml" />
+    <Content Include="Views\BonusProducts\Create.cshtml" />
+    <Content Include="Views\BonusProducts\Delete.cshtml" />
+    <Content Include="Views\BonusProducts\Edit.cshtml" />
+    <Content Include="Views\BonusProducts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
