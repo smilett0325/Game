@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/AdminBoard.cshtml";
+}
 }
 
 <h2>編輯</h2>
@@ -58,7 +60,7 @@
 
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@
-<script>
+    <script>
         $('#submit').on('click', function () {
             e.preventDefault();
 
@@ -82,5 +84,5 @@
             });
 
         });
-</script>
+    </script>
 }
