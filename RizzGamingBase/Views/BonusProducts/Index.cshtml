@@ -8,15 +8,18 @@
 
 @using (Html.BeginForm("Index", "BonusProducts", FormMethod.Get, new { id = "searchForm" }))
 {
-    <div class="input-group mb-3">
-        <input type="text" id="keyword" name="keyword" class="form-control" placeholder="搜尋紅利商品" />
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">搜尋</button>
+    <div class="d-flex justify-content-between"style="width: 100%;">
+        <div class="input-group mb-3 ">
+            <input type="text" id="keyword" name="keyword" class="form-control" placeholder="搜尋紅利商品" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-sm btn-primary">搜尋</button>
+            </div>
+        </div>
+        <div class="ml-2"style="white-space: nowrap;">
+            @Html.ActionLink("新增商品", "Create", null, new { @class = "btn btn-sm btn-primary" })
         </div>
     </div>
 }
-
-
 <table class="table">
     <tr>
         <th>
@@ -48,7 +51,7 @@
             </td>
             <td>
                 @*@Html.DisplayFor(modelItem => item.URL)*@
-                <img src="@Url.Content("~/Images/BonusProducts/"+item.ProductTypeId+"/"+item.URL)" alt="@item.Name" style="width: 138px; "/> @*有限制大小*@
+                <img src="@Url.Content("~/Images/BonusProducts/"+item.ProductTypeId+"/"+item.URL)" alt="@item.Name" style="width: 138px; " /> @*有限制大小*@
             </td>
             <td>
                 @Html.ActionLink("編輯", "Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-success" })
