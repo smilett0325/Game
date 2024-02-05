@@ -14,6 +14,7 @@ using RizzGamingBase.Models.ViewModels;
 using RizzGamingBase.Models.EFModels;
 using System.Data;
 using System.Web.UI.WebControls;
+using RizzGamingBase.Models.Entities;
 
 namespace RizzGamingBase.Controllers
 {
@@ -47,6 +48,29 @@ namespace RizzGamingBase.Controllers
 			return View();
 		}
 
+		public ActionResult DChart(int id=1)
+		{
+			// 获取数据（示例数据）
+			List<decimal> Linedata = GetDeveloperIdLineDataFromDatabase(id);
+			List<GameDataVm> Piedata = GetDeveloperIdPieDataFromDatabase(id);
+
+			int Data7T = GetData7T(id);
+			decimal Data7A = GetData7A(id);
+			int Data30T = GetData30T(id);
+			decimal Data30A = GetData30A(id);
+			// 转换数据格式
+			ViewBag.LineChartData = string.Join(",", Linedata);
+			ViewBag.PieChartData = Piedata;
+
+			ViewBag.Data7T = Data7T;
+			ViewBag.Data7A = Data7A;
+			ViewBag.Data30T = Data30T;
+			ViewBag.Data30A = Data30A;
+
+
+			return View();
+		}
+
 		public ActionResult LineChart()
 		{
 			var service = new GameDataService(GetRepository());
@@ -55,6 +79,18 @@ namespace RizzGamingBase.Controllers
 			// 转换数据格式
 			ViewBag.LineChartData = string.Join(",", Linedata);
 			ViewBag.DeveloperList = SelectListExts.GetSelectListItems(service);
+			return View();
+		}
+
+		public ActionResult DLineChart(int id=1)
+		{
+			var service = new GameDataService(GetRepository());
+			// 获取数据（示例数据）
+			List<decimal> Linedata = GetDeveloperIdLineDataFromDatabase(id);
+			// 转换数据格式
+			ViewBag.LineChartData = string.Join(",", Linedata);
+			ViewBag.DeveloperList = SelectListExts.GetSelectListItemsDeveloper(service,id);
+			ViewBag.Id = id;
 			return View();
 		}
 
@@ -70,6 +106,17 @@ namespace RizzGamingBase.Controllers
 			return View();
 		}
 
+		public ActionResult DPieChart(int id=1)
+		{
+			var service = new GameDataService(GetRepository());
+			// 获取数据（示例数据）
+			List<GameDataVm> Piedata = GetDeveloperIdPieDataFromDatabase(id);
+			// 转换数据格式
+			ViewBag.PieChartData = Piedata;
+
+			return View();
+		}
+
 		public List<decimal> GetLineDataFromDatabase(int year =2023)
 		{
 			// 使用ADO.NET从数据库中检索数据的逻辑
@@ -78,6 +125,16 @@ namespace RizzGamingBase.Controllers
 			var dataList = service.SearchAllGameBi(year);
 
 			// 返回示例数据
+			return dataList;
+		}
+
+		public List<decimal> GetDeveloperIdLineDataFromDatabase( int developerId, int year = 2023)
+		{
+			// 使用 model.GameName 進行處理
+			var service = new GameDataService(GetRepository());
+			var dataList = service.SearchDeveloperBi(developerId, year);
+
+			// 返回示例數據，這裡你可以返回JSON結果或者視圖
 			return dataList;
 		}
 
@@ -133,6 +190,17 @@ namespace RizzGamingBase.Controllers
 			var data = GameDataExts.DtoToIndexVm(dataList);
 			// 返回示例数据
 			return data;
+		}
+
+		public List<GameDataVm> GetDeveloperIdPieDataFromDatabase(int id)
+		{
+			// 使用ADO.NET从数据库中检索数据的逻辑
+			var service = new GameDataService(GetRepository());
+
+			var dataList = GameDataExts.DtoToIndexVm(service.SearchGames(id));
+
+			// 返回示例数据
+			return dataList;
 		}
 
 

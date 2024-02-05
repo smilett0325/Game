@@ -1,9 +1,11 @@
 ﻿
 @{
-    ViewBag.Title = "PieChart";
+    ViewBag.Title = "DPieChart";
 }
 
-
+@{
+    Layout = "~/Views/Shared/Developer.cshtml";
+}
 
 <!-- 引入Chart.js库 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -21,18 +23,18 @@
 
 
 <!-- 在页面中添加图表容器 -->
-<h2 id="h2">全體開發商</h2>
+@*<h2 id="h2">全體開發商</h2>*@
 <h2>銷售佔比</h2>
 
-<div>
-    <label for="developerList">選擇開發商:</label>
-    <select id="developerList">
-        @foreach (var developer in ViewBag.DeveloperList)
-        {
-            <option value="@developer.Value">@developer.Text</option>
-        }
-    </select>
-</div>
+@*<div>
+        <label for="developerList">選擇開發商:</label>
+        <select id="developerList">
+            @foreach (var developer in ViewBag.DeveloperList)
+            {
+                <option value="@developer.Value">@developer.Text</option>
+            }
+        </select>
+    </div>*@
 
 <div id="pie" style="height:50%;width:50%">
     <canvas id="myPieChart" width="100" height="100"></canvas>
@@ -114,24 +116,24 @@
 
 
 
-    var DeveloperId = 0;
+    //var DeveloperId = 0;
 
-    theDeveloper.addEventListener('change', async event  => {
-        if (theDeveloper.options[theDeveloper.selectedIndex].value != 0) {
-        DeveloperId = theDeveloper.value;
-        theH2.innerHTML = theDeveloper.options[theDeveloper.selectedIndex].text;
-            await loadDatas();
+    //theDeveloper.addEventListener('change', async event  => {
+    //    if (theDeveloper.options[theDeveloper.selectedIndex].value != 0) {
+    //    DeveloperId = theDeveloper.value;
+    //    theH2.innerHTML = theDeveloper.options[theDeveloper.selectedIndex].text;
+    //        await loadDatas();
 
-        // 更新圖表的數據集
-        myPieChart.data.labels = datas.map(item => item.GameName);
-        myPieChart.data.datasets[0].data = datas.map(item => item.Price);
+    //    // 更新圖表的數據集
+    //    myPieChart.data.labels = datas.map(item => item.GameName);
+    //    myPieChart.data.datasets[0].data = datas.map(item => item.Price);
 
-        // 更新圖表
-         myPieChart.update();
-        }
-    });
+    //    // 更新圖表
+    //     myPieChart.update();
+    //    }
+    //});
 
-    const loadDatas = async () => {
+    @*const loadDatas = async () => {
 
             const response = await fetch(`@Url.Content("~/GameData/GetPieDataFromDatabase")?id=${DeveloperId}`, {
                 method: 'POST',
@@ -142,6 +144,8 @@
 
             datas = await response.json();
 
-    }
+    }*@
 
 </script>
+
+
