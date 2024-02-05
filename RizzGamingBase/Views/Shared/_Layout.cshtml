@@ -36,6 +36,7 @@
                     <li>@Html.ActionLink("BonusProductsIndex", "Index", "BonusProducts", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("活動", "Index", "Discount", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("管理者登入", "Login", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
                     @{
 
                         if (IsDeveloperLogin)
@@ -46,8 +47,8 @@
 
                         else
                         {
-                            <li>@Html.ActionLink("登入", "Login", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li>@Html.ActionLink("註冊", "Register", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("開發商登入", "Login", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("開發商註冊", "Register", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
                         }
                     }
 

@@ -168,10 +168,18 @@
     <Compile Include="Controllers\BonusProductsController.cs" />
     <Compile Include="Controllers\DiscountController.cs" />
     <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\GameDataController.cs" />
+    <Compile Include="Models\Dtos\GameDataDto.cs" />
+    <Compile Include="Models\Entities\GameDataEntity.cs" />
+    <Compile Include="Models\Exts\SelectListExts.cs" />
+    <Compile Include="Models\Interfaces\ISelectListItem.cs" />
+    <Compile Include="Models\Services\GameDataService.cs" />
+    <Compile Include="Models\Exts\GameDataExts.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\GameDataEFRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManangerController.cs" />
+    <Compile Include="Models\Interfaces\IGameDataRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -211,6 +219,7 @@
     <Compile Include="Models\Interfaces\IBonusProductsServices.cs" />
     <Compile Include="Models\Repositories\EFRepositories\BonusProductsEFRepository.cs" />
     <Compile Include="Models\Services\BonusProductsServices.cs" />
+    <Compile Include="Models\Interfaces\ISelectListService.cs" />
     <Compile Include="Models\ViewModels\BonusProductsCreateVm.cs" />
     <Compile Include="Models\ViewModels\BonusProductsEditVm.cs" />
     <Compile Include="Models\ViewModels\BonusProductsIndexVm.cs" />
@@ -222,7 +231,8 @@
     <Compile Include="Models\Interfaces\IDiscountRepository.cs" />
     <Compile Include="Models\Repositories\EFRepositories\DiscountEFRepository.cs" />
     <Compile Include="Models\Services\DiscountService.cs" />
-    <Compile Include="Models\ViewModels\DiscountVm.cs" />
+    <Compile Include="Models\ViewModels\Developer\BanDevVm.cs" />
+    <Compile Include="Models\ViewModels\DiscountCreateVm.cs" />
     <Compile Include="Models\ViewModels\DiscountEventVm.cs" />
     <Compile Include="Models\ViewModels\DiscountGameVm.cs" />
     <Compile Include="Models\ViewModels\DiscountIndexVm.cs" />
@@ -263,6 +273,7 @@
     <Compile Include="Models\Services\GTService.cs" />
     <Compile Include="Models\Services\TagService.cs" />
     <Compile Include="Models\ViewModels\DeveloperGameEditVm.cs" />
+    <Compile Include="Models\ViewModels\GameDataVm.cs" />
     <Compile Include="Models\ViewModels\GameIndexVm.cs" />
     <Compile Include="Models\Exts\DeveloperExt.cs" />
     <Compile Include="Models\Exts\RegisterExt.cs" />
@@ -271,22 +282,11 @@
     <Compile Include="Models\Infra\HashUtility.cs" />
     <Compile Include="Models\ViewModels\Developer\EditPasswordVm.cs" />
     <Compile Include="Models\ViewModels\Developer\EditProfileVm.cs" />
-    <Compile Include="Models\ViewModels\Manerger\BanedDevVm.cs" />
-    <Compile Include="Models\ViewModels\Manerger\DeveloperInfoVm.cs" />
     <Compile Include="Models\ViewModels\Developer\ForgetPasswordVm.cs" />
     <Compile Include="Models\ViewModels\Developer\LoginVm.cs" />
     <Compile Include="Models\ViewModels\Developer\RegisterVm.cs" />
     <Compile Include="Models\ViewModels\Developer\ResetPasswordVM.cs" />
-    <Compile Include="Models\Dtos\GameDataDto.cs" />
-    <Compile Include="Models\Entities\GameDataEntity.cs" />
-    <Compile Include="Models\Exts\GameDataExts.cs" />
-    <Compile Include="Models\Exts\SelectListExts.cs" />
-    <Compile Include="Models\Interfaces\IGameDataRepository.cs" />
-    <Compile Include="Models\Interfaces\ISelectListItem.cs" />
-    <Compile Include="Models\Interfaces\ISelectListService.cs" />
-    <Compile Include="Models\Repositories\EFRepositories\GameDataEFRepository.cs" />
-    <Compile Include="Models\Services\GameDataService.cs" />
-    <Compile Include="Models\ViewModels\GameDataVm.cs" />
+    <Compile Include="Models\ViewModels\MLoginVm.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -5137,22 +5137,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\BonusProducts\Index.cshtml" />
-    <Content Include="Views\BonusProducts\Create.cshtml" />
-    <Content Include="Views\BonusProducts\Edit.cshtml" />
-    <Content Include="Views\BonusProducts\Delete.cshtml" />
-    <Content Include="Views\Discount\Index.cshtml" />
-    <Content Include="Views\Discount\Edit.cshtml" />
-    <Content Include="Views\Discount\Create.cshtml" />
-    <Content Include="Views\Discount\test.cshtml" />
-    <Content Include="Views\Discount\Home.cshtml" />
-    <Content Include="SQL\HanlaossSQL.ipynb" />
-    <Content Include="SQL\完整資料庫\完整資料庫20240113指令碼.ipynb" />
-    <Content Include="SQL\完整資料庫\完整資料庫20240114指令碼.ipynb" />
-    <Content Include="SQL\完整資料庫\完整資料庫20240121指令碼.ipynb" />
-    <Content Include="Views\Game\Index.cshtml" />
-    <Content Include="Views\Game\Edit.cshtml" />
-    <Content Include="Views\Game\Create.cshtml" />
     <Content Include="Views\Mananger\Index.cshtml" />
     <Content Include="Views\Mananger\IsBan.cshtml" />
     <Content Include="Views\Developer\Index.cshtml" />
@@ -5166,12 +5150,9 @@
     <Content Include="Views\Developer\ForgetPasswordConfirm.cshtml" />
     <Content Include="Views\Developer\ResetPassword.cshtml" />
     <Content Include="Views\Developer\ConfirmResetPassword.cshtml" />
-    <Content Include="Views\GameData\Chart.cshtml" />
-    <Content Include="Views\GameData\LineChart.cshtml" />
-    <Content Include="Views\GameData\PieChart.cshtml" />
-    <Content Include="Views\Shared\AdminBoard.cshtml" />
-    <Content Include="Views\Shared\AdminBoard_.cshtml" />
-    <Content Include="Views\Shared\Developer.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Delete.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -5182,6 +5163,7 @@
     <Folder Include="Images\Scratch\Cover\" />
     <Folder Include="Images\Scratch\DisplayVideo\" />
     <Folder Include="Views\Api\" />
+    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />
