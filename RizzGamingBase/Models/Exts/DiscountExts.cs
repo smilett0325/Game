@@ -266,12 +266,7 @@ namespace RizzGamingBase.Models.Exts
                     discount.Desciption = entity.Desciption;
                     db.SaveChanges();
                 }
-                int[] gameIdArray = entity.GameId
-                                          .FirstOrDefault() // 取得第一個元素
-                                          ?.Trim('[', ']', ' ') // 去掉方括號和空格
-                                           .Split(',') // 以逗號分割成字串陣列
-                                           .Select(int.Parse) // 轉換為整數
-                                           .ToArray();
+
 
 
                 int[] gameIdArray = entity.GameId
