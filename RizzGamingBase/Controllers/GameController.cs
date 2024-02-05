@@ -21,7 +21,7 @@ namespace RizzGamingBase.Controllers
     {
 		
 		// GET: Game
-		public ActionResult Index( int? developreId = 1)
+		public ActionResult Index( int? developreId)
 		{
 			
 			IGameRepository repo = new GameEFRepository();
@@ -39,7 +39,7 @@ namespace RizzGamingBase.Controllers
 		}
 
 		//[Authorize]
-		public ActionResult Edit(int id = 3)
+		public ActionResult Edit(int id )
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
