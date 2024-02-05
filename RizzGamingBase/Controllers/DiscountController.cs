@@ -65,7 +65,7 @@ namespace RizzGamingBase.Controllers
        
 
         [HttpPost]
-        public ActionResult Create(DiscountVm vm) 
+        public ActionResult CreateDiscount(DiscountVm vm , HttpPostedFileBase DiscountImage) 
         {
 
             if (!ModelState.IsValid) 
@@ -76,7 +76,8 @@ namespace RizzGamingBase.Controllers
 
             try
             {
-                DiscountActionExts.Create(vm);
+                vm.DiscountImage = DiscountImage.FileName;
+                DiscountActionExts.Create(vm, DiscountImage);
             }
             catch (Exception ex)
             {
