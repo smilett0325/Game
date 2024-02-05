@@ -232,7 +232,6 @@
     <Compile Include="Models\Repositories\EFRepositories\DiscountEFRepository.cs" />
     <Compile Include="Models\Services\DiscountService.cs" />
     <Compile Include="Models\ViewModels\Developer\BanDevVm.cs" />
-    <Compile Include="Models\ViewModels\DiscountCreateVm.cs" />
     <Compile Include="Models\ViewModels\DiscountEventVm.cs" />
     <Compile Include="Models\ViewModels\DiscountGameVm.cs" />
     <Compile Include="Models\ViewModels\DiscountIndexVm.cs" />
