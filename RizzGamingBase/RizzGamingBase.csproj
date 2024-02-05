@@ -563,11 +563,31 @@
     <Content Include="docs\_layouts\page.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\backgroud\background1.jpg" />
+    <Content Include="Images\backgroud\background2.jpg" />
+    <Content Include="Images\backgroud\background3.jpg" />
+    <Content Include="Images\backgroud\background4.jpg" />
+    <Content Include="Images\backgroud\background5.jpg" />
+    <Content Include="Images\backgroud\background6.jpg" />
+    <Content Include="Images\backgroud\background7.jpg" />
+    <Content Include="Images\backgroud\backgroundVedio1.mp4" />
+    <Content Include="Images\backgroud\backgroundVedio2.mp4" />
     <Content Include="Images\Covers\1\63\Stitch, Hd Artist, 4k Wallpapers, Images, Backgrounds, Photos And Pictures 696.jpg" />
     <Content Include="Images\Covers\1\64\Stitch, Hd Artist, 4k Wallpapers, Images, Backgrounds, Photos And Pictures 696.jpg" />
     <Content Include="Images\Covers\1\68\1234.jpg" />
     <Content Include="Images\Covers\1\69\Pickatchu.jpg" />
     <Content Include="Images\Covers\1\70\babymiloarchive on ig.jpg" />
+    <Content Include="Images\DiscountPicture\background.jpg" />
+    <Content Include="Images\DiscountPicture\background2.jpg" />
+    <Content Include="Images\DiscountPicture\background3.jpg" />
+    <Content Include="Images\DiscountPicture\Load1.png" />
+    <Content Include="Images\DiscountPicture\pika.gif" />
+    <Content Include="Images\DiscountPicture\家教.jpg" />
+    <Content Include="Images\DiscountPicture\寶可夢朱.jpg" />
+    <Content Include="Images\DiscountPicture\寶可夢紫.jpg" />
+    <Content Include="Images\DiscountPicture\測試封面1.jpg" />
+    <Content Include="Images\DiscountPicture\測試封面2.jpg" />
+    <Content Include="Images\DiscountPicture\轟.jfif" />
     <Content Include="Images\DisplayImages\1\0\下載 %281%29.jpg" />
     <Content Include="Images\DisplayImages\1\0\下載 %282%29.jpg" />
     <Content Include="Images\DisplayImages\1\0\下載.jpg" />
@@ -652,19 +672,10 @@
     <Content Include="Images\DisplayVideos\1\64\www.saveyt.cc_360p_Noita - Noita%27d 27.mp4" />
     <Content Include="Images\DisplayVideos\1\69\www.saveyt.cc_360p_Noita - Noita%27d 27.mp4" />
     <Content Include="Images\DisplayVideos\1\70\www.saveyt.cc_360p_Noita - Noita%27d 27.mp4" />
+    <Content Include="Images\logo\RizzGamingBase_1.png" />
+    <Content Include="Images\logo\RizzGamingBase_2.png" />
     <Content Include="Images\Scratch\Cover\下載 %281%29.jpg" />
     <Content Include="Images\Scratch\Cover\下載.jpg" />
-    <Content Include="Images\DiscountPicture\0\background.jpg" />
-    <Content Include="Images\DiscountPicture\0\background2.jpg" />
-    <Content Include="Images\DiscountPicture\0\background3.jpg" />
-    <Content Include="Images\DiscountPicture\0\Load1.png" />
-    <Content Include="Images\DiscountPicture\0\pika.gif" />
-    <Content Include="Images\DiscountPicture\0\家教.jpg" />
-    <Content Include="Images\DiscountPicture\0\寶可夢朱.jpg" />
-    <Content Include="Images\DiscountPicture\0\寶可夢紫.jpg" />
-    <Content Include="Images\DiscountPicture\0\測試封面1.jpg" />
-    <Content Include="Images\DiscountPicture\0\測試封面2.jpg" />
-    <Content Include="Images\DiscountPicture\0\轟.jfif" />
     <Content Include="Models\Exts\Exts.txt" />
     <Content Include="Models\Infra\Infra.txt" />
     <Content Include="Models\Interfaces\Interface.txt" />
@@ -5358,6 +5369,7 @@
     <Content Include="Views\BonusProducts\Delete.cshtml" />
     <Content Include="Views\BonusProducts\Edit.cshtml" />
     <Content Include="Views\BonusProducts\Index.cshtml" />
+    <Content Include="Views\Shared\DeveloperBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".nuget\" />
@@ -5365,6 +5377,7 @@
     <Folder Include="Data\" />
     <Folder Include="Images\Scratch\DisplayVideo\" />
     <Folder Include="Views\Api\" />
+    <Folder Include="Views\Member\" />
     <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>

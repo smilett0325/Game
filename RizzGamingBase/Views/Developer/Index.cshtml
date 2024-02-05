@@ -3,17 +3,208 @@
 }
 
 @{
-    Layout = "~/Views/Shared/Developer.cshtml";
+    Layout = "~/Views/Shared/DeveloperBoard.cshtml";
 }
+<div class="row">
 
-<h2>會員中心</h2>
+    <div class="mb-3 col-12">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="4000">
+                    <img src="~/Images/backgroud/background1.jpg" class="d-block w-100" height="400" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                    <img src="~/Images/backgroud/background2.jpg" class="d-block w-100" height="400" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Images/backgroud/background3.jpg" class="d-block w-100" height="400" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Images/backgroud/background4.jpg" class="d-block w-100" height="400" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Images/backgroud/background5.jpg" class="d-block w-100" height="400" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Images/backgroud/background6.jpg" class="d-block w-100" height="400" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Images/backgroud/background7.jpg" class="d-block w-100" height="400" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
 
-<div>
-    @Html.ActionLink("修改個人資料", "EditProfile")
+
+    <div class="col-md-6">
+        <!-- Widget: user widget style 1 -->
+        <div class="card card-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-yellow">
+                <h3 class="widget-user-username">開發商資訊</h3>
+                <h5 class="widget-user-desc"></h5>
+            </div>
+            <div class="widget-user-image">
+                <img class="img-circle elevation-2" src="../Images/backgroud/background3.jpg" alt="User Avatar">
+            </div>
+            <div class="card-footer">
+                <div class="row">
+
+                    <!-- /.col -->
+                    <div class="col-sm-6 border-right">
+                        <div class="description-block">
+                            <div>
+                                @Html.ActionLink("修改個人資料", "EditProfile")
+                            </div>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-6">
+                        <div class="description-block">
+                            <div>
+                                @Html.ActionLink("更改密碼", "EditPassword")
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+    </div>
+    <div class="col-md-6">
+        <!-- Widget: user widget style 1 -->
+        <div class="card card-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-info">
+                <h3 class="widget-user-username">遊戲資訊</h3>
+                <h5 class="widget-user-desc"></h5>
+            </div>
+            <div class="widget-user-image">
+                <img class="img-circle elevation-2" src="../Images/backgroud/background2.jpg" alt="User Avatar">
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <!-- /.col -->
+                    <div class="col-sm-6 border-right">
+                        <div class="description-block">
+                            <div>
+                                @Html.ActionLink("已發行遊戲列表", "EditProfile")
+                            </div>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-6">
+                        <div class="description-block">
+                            <div>
+                                @Html.ActionLink("上架遊戲", "EditPassword")
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+    </div>
+    <div class="col-md-6">
+        <!-- Widget: user widget style 1 -->
+        <div class="card card-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-pink">
+                <h3 class="widget-user-username">活動資訊</h3>
+                <h5 class="widget-user-desc"></h5>
+            </div>
+            <div class="widget-user-image">
+                <img class="img-circle elevation-2" src="../Images/backgroud/background7.jpg" alt="User Avatar">
+            </div>
+            <div class="card-footer">
+                <div class="row">
+
+                    <!-- /.col -->
+                    <div class="col-sm-6 border-right">
+                        <div class="description-block">
+                            <div>
+                                <a href="@Url.Action("Index", "Discount", new { Account = @User.Identity.Name })">活動列表</a>
+                            </div>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-6">
+                        <div class="description-block">
+                            <div>
+                                @Html.ActionLink("創建活動", "Create", "Discount")
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+    </div>
+    <div class="col-md-6">
+        <!-- Widget: user widget style 1 -->
+        <div class="card card-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-lightblue">
+                <h3 class="widget-user-username">營收數據</h3>
+                <h5 class="widget-user-desc"></h5>
+            </div>
+            <div class="widget-user-image">
+                <img class="img-circle elevation-2" src="../Images/backgroud/background7.jpg" alt="User Avatar">
+            </div>
+            <div class="card-footer">
+                <div class="row">
+
+                    <!-- /.col -->
+                    <div class="col-sm-6 border-right">
+                        <div class="description-block">
+                            <div>
+                                @Html.ActionLink("營收數據", "DChart", "GameData")
+                            </div>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-6">
+                        <div class="description-block">
+                            <div>
+                                @Html.ActionLink("營收數據2", "TChart", "GameData")
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+    </div>
 </div>
 
-<div>
-    @Html.ActionLink("更改密碼", "EditPassword")
-</div>
+
+
+
+
+
 
 

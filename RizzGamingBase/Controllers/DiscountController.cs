@@ -15,35 +15,12 @@ namespace RizzGamingBase.Controllers
     public class DiscountController : Controller
     {
         // GET: Discount
-        public ActionResult Index(string Account)
+        public ActionResult Index( )
         {
-            if (Account == null)
-            {
+
                 List<DiscountIndexVm> vm = DiscountActionExts.GetAllEvent();
                 return View(vm);
-            }
-            else
-            {          
-                var db = new AppDbContext();
-
-                var vm = db.Discounts
-                           .Include(d => d.Developer)
-                           .Where(d => d.Developer.Account == Account)
-                           .Select(d => new DiscountIndexVm
-                           {
-                               Id = d.Id,
-                               Name = d.Name,
-                               StartDate = d.StartDate,
-                               EndDate = d.EndDate,
-                               Desciption = d.Desciption,
-                               Image = d.Image,
-                               Percent = d.Percent,
-                               Type = d.DiscountType,
-                               DeveloperId = d.DeveloperId,
-                           });
-
-                return View(vm);
-            }
+          
         }
 
 
@@ -67,10 +44,12 @@ namespace RizzGamingBase.Controllers
             if(!ModelState.IsValid) return View(vm);
             try
             {
+                vm.DiscountTypeList = GetDiscountTypeList();
                 DiscountActionExts.Edit(vm);
             }
             catch (Exception ex)
             {
+                vm.DiscountTypeList = GetDiscountTypeList();
                 ModelState.AddModelError("", ex.Message);
                 return View(vm);
             }
@@ -133,30 +112,7 @@ namespace RizzGamingBase.Controllers
 
 
 
-
-
-
-
-
-
-
-        public JsonResult GetDeveloperId(string Account)
-        {
-            if (string.IsNullOrEmpty(Account))
-            {
-                return null;
-            }
-            else
-            {
-                var db = new AppDbContext();
-                var id = db.Developers
-                           .Where(d => d.Account == Account)
-                           .Select(d => d.Id)
-                           .FirstOrDefault();
-
-                return Json(id, JsonRequestBehavior.AllowGet);
-            }
-        }
+        
 
 
 

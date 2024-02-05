@@ -36,7 +36,7 @@ namespace RizzGamingBase.Models.Exts
             string[] allowexts = new string[] { ".jpg", ".jpeg", ".png" , ".jfif"};
 
 
-            uploadFileHelper.UploadFile(DisplayImage, "DiscountPicture", vm.DeveloperId, allowexts);
+            uploadFileHelper.UploadFile(DisplayImage, "DiscountPicture", allowexts);
             var repo = new DiscountEFRepository();
             var service = new DiscountService(repo);
             var dto = DiscountExts.CreateVmToDto(vm);

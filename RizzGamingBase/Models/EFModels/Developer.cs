@@ -22,11 +22,11 @@ namespace RizzGamingBase.Models.EFModels
         public string Name { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(500)]
         public string Account { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(500)]
         public string EncryptedPassword { get; set; }
 
         [Required]
