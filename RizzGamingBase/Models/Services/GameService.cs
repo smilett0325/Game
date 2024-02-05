@@ -261,7 +261,7 @@ namespace RizzGamingBase.Models.Services
 			//         return result;
 		}
 
-		public List<GameDto> FilterByDeveloper(int developerId)
+		public List<GameDto> FilterByDeveloper(int? developerId)
 		{
 			var data = _repo.Filter(g => g.DeveloperId == developerId);
 
