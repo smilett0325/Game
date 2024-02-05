@@ -29,7 +29,8 @@ namespace RizzGamingBase.Models.ViewModels
 		public string Description { get; set; }
 
 		[Display(Name = "發行日期")]
-		[Column(TypeName = "date")]
+		
+		[DataType(DataType.DateTime)]
 		public DateTime ReleaseDate { get; set; }
 
 		[Display(Name = "價格")]

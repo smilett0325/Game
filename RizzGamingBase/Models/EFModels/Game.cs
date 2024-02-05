@@ -32,6 +32,10 @@ namespace RizzGamingBase.Models.EFModels
         public string Name { get; set; }
 
         [Required]
+        [StringLength(50)]
+        public string Introduction { get; set; }
+
+        [Required]
         [StringLength(1000)]
         public string Description { get; set; }
 
@@ -49,12 +53,8 @@ namespace RizzGamingBase.Models.EFModels
         public int? MaxPercent { get; set; }
 
         [Required]
-        [StringLength(500)]
+        [StringLength(200)]
         public string Video { get; set; }
-
-        [Required]
-        [StringLength(1000)]
-        public string Introduction { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BanGame> BanGames { get; set; }

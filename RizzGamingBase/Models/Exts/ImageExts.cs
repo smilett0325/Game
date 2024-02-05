@@ -40,6 +40,11 @@ namespace RizzGamingBase.Models.Exts
 			};
 		}
 
+		public static List<ImageDto> EntityToDto(this List<ImageEntity> model)
+		{
+			return model.Select(x => x.EntityToDto()).ToList();
+		}
+
 		public static ImageEntity DtoToEntity(this ImageDto model)
 		{
 			return new ImageEntity

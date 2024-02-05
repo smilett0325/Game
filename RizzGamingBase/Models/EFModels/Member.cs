@@ -36,7 +36,7 @@ namespace RizzGamingBase.Models.EFModels
 
         [Required]
         [StringLength(50)]
-        public string EncryptedPassword { get; set; }
+        public string Password { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -57,11 +57,6 @@ namespace RizzGamingBase.Models.EFModels
 
         [StringLength(50)]
         public string NickName { get; set; }
-
-        public bool IsConfirmed { get; set; }
-
-        [StringLength(500)]
-        public string ConfirmCode { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BanGame> BanGames { get; set; }

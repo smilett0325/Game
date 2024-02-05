@@ -26,7 +26,7 @@ namespace RizzGamingBase.Models.EFModels
         public string Account { get; set; }
 
         [Required]
-        [StringLength(1000)]
+        [StringLength(50)]
         public string EncryptedPassword { get; set; }
 
         [Required]

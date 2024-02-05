@@ -18,8 +18,10 @@ namespace RizzGamingBase.Models.EFModels
 
         public int Id { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime StartDate { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime EndDate { get; set; }
 
         public int Percent { get; set; }
