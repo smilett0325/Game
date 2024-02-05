@@ -63,7 +63,7 @@ namespace RizzGamingBase.Controllers
                 }
 
                 // 將 banTime 存入資料庫中的 BanTime 欄位
-                developer.BanTime = new DateTime(2023 ,01 ,01,00,00,000) ;
+                developer.BanTime = DateTime.Now;
 
                 // 保存變更
                 db.SaveChanges();

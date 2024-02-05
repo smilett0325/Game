@@ -42,14 +42,16 @@
         <div class="small-box bg-success">
             <div class="inner">
                 <h3>開發商管理</h3>
-
-                <p>編輯開發商資訊</p>
+                
+                <a href="@Url.Action("Index", "Admin")" class="link-light">開發商列表</a>
+                <br >
                 <a href="@Url.Action("Chart", "GameData")" class="link-light">營收數據</a>
+                <p></p>
             </div>
             <div class="icon">
                 <i class="fas fa-store"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="@Url.Action("Index", "Admin")" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -73,8 +75,11 @@
         <div class="small-box bg-danger">
             <div class="inner">
                 <h3>優惠活動</h3>
-
-                <p>優惠活動管理</p>
+                <a href="@Url.Action("Home", "Discount")" class="link-light">行事曆</a>
+                <br>
+                <a href="@Url.Action("Index", "Discount")" class="link-light">活動列表</a>
+                <br>
+                <a href="@Url.Action("Create", "Discount")" class="link-light">創建活動</a>
             </div>
             <div class="icon">
                 <i class="fas fa-calendar"></i>
