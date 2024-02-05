@@ -133,7 +133,19 @@ namespace RizzGamingBase.Controllers
             return queryList;
         }
 
-        private List<GameDataEntity> SearchGameIdToBI(int gameId, string name = "")
+		public int SearchDeveloperAccountToDeveloperId(string account)
+		{
+			var db = new AppDbContext();
+
+			var developerId = db.Developers.AsNoTracking()
+				.Where(d => d.Account == account)
+				.Select(d => d.Id)
+				.First();
+
+            return developerId;
+		}
+
+		private List<GameDataEntity> SearchGameIdToBI(int gameId, string name = "")
         {
             var db = new AppDbContext();
 
@@ -261,5 +273,7 @@ namespace RizzGamingBase.Controllers
                 })
                 .ToList();
         }
-    }
+
+
+	}
 }

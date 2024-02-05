@@ -5244,24 +5244,27 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Delete.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
-    <Content Include="Views\BonusProducts\Create.cshtml" />
-    <Content Include="Views\BonusProducts\Delete.cshtml" />
-    <Content Include="Views\BonusProducts\Edit.cshtml" />
-    <Content Include="Views\BonusProducts\Index.cshtml" />
+    <Content Include="Views\GameData\Chart.cshtml" />
+    <Content Include="Views\GameData\DChart.cshtml" />
+    <Content Include="Views\GameData\DLineChart.cshtml" />
+    <Content Include="Views\GameData\DPieChart.cshtml" />
+    <Content Include="Views\GameData\LineChart.cshtml" />
+    <Content Include="Views\GameData\PieChart.cshtml" />
+    <Content Include="Views\Game\Create.cshtml" />
+    <Content Include="Views\Game\Edit.cshtml" />
+    <Content Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Discount\Create.cshtml" />
     <Content Include="Views\Discount\Edit.cshtml" />
     <Content Include="Views\Discount\Home.cshtml" />
     <Content Include="Views\Discount\Index.cshtml" />
     <Content Include="Views\Discount\test.cshtml" />
-    <Content Include="Views\Game\Create.cshtml" />
-    <Content Include="Views\Game\Edit.cshtml" />
-    <Content Include="Views\Game\Index.cshtml" />
-    <Content Include="Views\GameData\Chart.cshtml" />
-    <Content Include="Views\GameData\LineChart.cshtml" />
-    <Content Include="Views\GameData\PieChart.cshtml" />
     <Content Include="Views\Shared\AdminBoard.cshtml" />
     <Content Include="Views\Shared\AdminBoard_.cshtml" />
     <Content Include="Views\Shared\Developer.cshtml" />
+    <Content Include="Views\BonusProducts\Create.cshtml" />
+    <Content Include="Views\BonusProducts\Delete.cshtml" />
+    <Content Include="Views\BonusProducts\Edit.cshtml" />
+    <Content Include="Views\BonusProducts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".nuget\" />

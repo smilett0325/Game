@@ -3,7 +3,9 @@
     ViewBag.Title = "LineChart";
 }
 
-
+@{
+    Layout = "~/Views/Shared/Developer.cshtml";
+}
 
 <div>
     <label for="Year" class="form-label">請選擇年份：</label>
@@ -22,11 +24,11 @@
 
 
 <!-- 在页面中添加图表容器 -->
-<h2 id="h2">2023</h2>
+<h2 id="h2">2023 總</h2>
 <h2 id="h21">季度營收</h2>
 
 <div class="mb-2" id="dev">
-    <label for="developerList">選擇開發商:</label>
+    <label for="developerList">選擇遊戲:</label>
     <select id="developerList">
         @foreach (var developer in ViewBag.DeveloperList)
         {
@@ -62,18 +64,15 @@
     // 将从Controller传递的数据绑定到图表
     var Linedata = [@(ViewBag.LineChartData)];
 
-    var list = [@Html.Raw(Json.Encode(ViewBag.DeveloperList))];
+    var id =[@(ViewBag.Id)];
 
-    // 获取包含下拉列表的父容器
-    var parentContainer = document.querySelector('#dev');
+     var list = [@Html.Raw(Json.Encode(ViewBag.DeveloperList))];
 
     const theYear = document.querySelector("#Year");
 
     var year = 2023;
     var DeveloperId = 0;
-    var checkGameList = false;
-    var checkGame = false;
-    var checkDeveloperId = false;
+    var check = false;
     var GameName = "";
 
 
@@ -122,16 +121,11 @@
     theYear.addEventListener('keydown', async event  => {
 
         if (event.which === 13) {
-
+            console.log(check);
             year = theYear.value;
-
-            //if (checkGameList == true) {
-            //    parentContainer.removeChild(gamesList);
-            //    checkGameList = false;
-            //}
-
-            if (checkGame == true) {
+            if (check == true) {
                 theH2.innerHTML = year + " " + theDeveloper.options[theDeveloper.selectedIndex].text;
+                theH21.innerHTML = "季度營收";
                 await loadGameDatas();
 
                 myChart.data.datasets[0].data[0] = Gamedatas[0];
@@ -141,19 +135,10 @@
 
                 myChart.update();
             }
-            else if (checkDeveloperId == true) {
-                await loadDeveloperBiDatas();
+            else {
+                theH2.innerHTML = year+" 總";
+                await loadDatas();;
 
-                myChart.data.datasets[0].data[0] = DeveloperBidatas[0];
-                myChart.data.datasets[0].data[1] = DeveloperBidatas[1];
-                myChart.data.datasets[0].data[2] = DeveloperBidatas[2];
-                myChart.data.datasets[0].data[3] = DeveloperBidatas[3];
-
-                myChart.update();
-            }
-            else { 
-                theH2.innerHTML = year;
-                await loadDatas();
                 myChart.data.datasets[0].data[0] = datas[0];
                 myChart.data.datasets[0].data[1] = datas[1];
                 myChart.data.datasets[0].data[2] = datas[2];
@@ -161,11 +146,12 @@
 
                 myChart.update();
             }
+
         }
     });
 
     const loadDatas = async () => {
-        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabaseYear")?year=${year}`, {
+        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabaseDeveloperId")?year=${year}&developerId=${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -181,103 +167,34 @@
 
     theDeveloper.addEventListener('change', async event => {
         if (theDeveloper.options[theDeveloper.selectedIndex].value != 0) {
-        DeveloperId = theDeveloper.value;
-        theH2.innerHTML = year + " " + theDeveloper.options[theDeveloper.selectedIndex].text;
-        theH21.innerHTML =  "季度營收";
-            checkDeveloperId = true;
-        await loadDeveloperDatas();
-        await loadDeveloperBiDatas();
+            GameName = theDeveloper.options[theDeveloper.selectedIndex].text;
+            check = true;
+            theH2.innerHTML = year + " " + theDeveloper.options[theDeveloper.selectedIndex].text;
+            theH21.innerHTML = "季度營收";
+            await loadGameDatas();
 
-        myChart.data.datasets[0].data[0] = DeveloperBidatas[0];
-        myChart.data.datasets[0].data[1] = DeveloperBidatas[1];
-        myChart.data.datasets[0].data[2] = DeveloperBidatas[2];
-        myChart.data.datasets[0].data[3] = DeveloperBidatas[3];
+            myChart.data.datasets[0].data[0] = Gamedatas[0];
+            myChart.data.datasets[0].data[1] = Gamedatas[1];
+            myChart.data.datasets[0].data[2] = Gamedatas[2];
+            myChart.data.datasets[0].data[3] = Gamedatas[3];
 
-        myChart.update();
-
-        //console.log(DeveloperBidatas);
+            myChart.update();
 
 
-
-        // 创建新的下拉列表
-            if (checkGameList == true) {
-            var oldSelect = document.getElementById('gamesList');
-            parentContainer.removeChild(oldSelect);
-
-            }
-        var newSelect = document.createElement('select');
-        newSelect.id = 'gamesList';
-        checkGameList = true;
-        // 添加新的选项
-        for (var i = 0; i < Developerdatas.length; i++) {
-            var option = document.createElement('option');
-            option.value = Developerdatas[i].Value;
-            option.text = Developerdatas[i].Text;
-            newSelect.add(option);
         }
+        else {
+            check = false;
+            theH2.innerHTML = year;
+            await loadDatas();;
 
-        // 将新的下拉列表添加到父容器
-        parentContainer.appendChild(newSelect);
+            myChart.data.datasets[0].data[0] = datas[0];
+            myChart.data.datasets[0].data[1] = datas[1];
+            myChart.data.datasets[0].data[2] = datas[2];
+            myChart.data.datasets[0].data[3] = datas[3];
 
-        // 你可能还需要触发新的下拉列表的change事件，以便更新相关的数据
-        newSelect.addEventListener('change', async event => {
-            if (newSelect.options[newSelect.selectedIndex].value != 0) {
-                checkGame = true;
-                GameName = newSelect.options[newSelect.selectedIndex].text;
-                theH21.innerHTML = newSelect.options[newSelect.selectedIndex].text + " " + "季度營收";
-
-                await loadGameDatas();
-
-                myChart.data.datasets[0].data[0] = Gamedatas[0];
-                myChart.data.datasets[0].data[1] = Gamedatas[1];
-                myChart.data.datasets[0].data[2] = Gamedatas[2];
-                myChart.data.datasets[0].data[3] = Gamedatas[3];
-
-                myChart.update();
-            }
-            else {
-                checkGame = false;
-            }
-
-
-        })
+            myChart.update();
         }
-        else{
-                checkDeveloperId = false;
-                parentContainer.removeChild(gamesList);
-                checkGameList = false;
-                theH2.innerHTML = year;
-                await loadDatas();
-                myChart.data.datasets[0].data[0] = datas[0];
-                myChart.data.datasets[0].data[1] = datas[1];
-                myChart.data.datasets[0].data[2] = datas[2];
-                myChart.data.datasets[0].data[3] = datas[3];
-                myChart.update();
-        }
-        ;
     });
-
-    const loadDeveloperDatas = async () => {
-        const response = await fetch(`@Url.Content("~/GameData/loadDeveloperDatas")?id=${DeveloperId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-
-        Developerdatas = await response.json();
-    }
-
-    const loadDeveloperBiDatas = async () => {
-        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabaseDeveloperId")?year=${year}&developerId=${DeveloperId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-
-        DeveloperBidatas = await response.json();
-    }
 
     const loadGameDatas = async () => {
         const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabaseGameName")?year=${year}&gameName=${GameName}`, {

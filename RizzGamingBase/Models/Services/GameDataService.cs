@@ -227,8 +227,14 @@ namespace RizzGamingBase.Controllers
             return dtos;
         }
 
-        //
-        public IEnumerable<ISelectListItem> GetSelectListItems()
+        public int SearchDeveloperAccountToDeveloperId(string developerAccount)
+        {
+            return _repository.SearchDeveloperAccountToDeveloperId(developerAccount);
+
+		}
+
+		//
+		public IEnumerable<ISelectListItem> GetSelectListItems()
         {
             return _repository.SearchAllDeveloper();
         }
