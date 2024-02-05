@@ -4,66 +4,259 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table p-5">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Percent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Desciption)
-        </th>
-        <th></th>
-    </tr>
+@Styles.Render("~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css")
+@Styles.Render("~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css")
+@Styles.Render("~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css")
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <img src="~/DiscountPictures/@Html.DisplayFor(modelItem => item.Image)" width="150" height="70"/>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Percent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Desciption)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
+
+<div class="mb-5 card card-lightblue">
+    <div class="card-header">
+        <h3 class="card-title"> 活動列表</h3>
+
+        <div class="card-tools">
+
+            <button type="button" class="btn btn-tool" id="content1">
+                <i class="fas fa-list"></i>
+            </button>
+            <button type="button" class="btn btn-tool" id="content2">
+                <i class="fas fa-box"></i>
+            </button>
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row" id="showinfo">
+            @foreach (var item in Model)
+            {
+                <div class="mb-3 card card-info col-4">
+                    <div class="card-header">
+                        <h3 class="card-title"> @Html.DisplayFor(modelItem => item.Name)</h3>
+
+                        <div class="card-tools">
+
+                            <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+
+                        </div>
+                        <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <img src="~/DiscountPictures/@Html.DisplayFor(modelItem => item.Image)" class="w-100 h-auto" />
+                        <br>
+
+                        活動類型: @Html.DisplayFor(modelItem => item.Type)
+                        <br>
+                        活動時間: @Html.DisplayFor(modelItem => item.StartDate) ~~  @Html.DisplayFor(modelItem => item.EndDate)
+                        <br>
+                        折扣百分比 : @Html.DisplayFor(modelItem => item.Percent) %
+                        <br>
+                        <p>
+
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                               <i class="fas fa-info-circle">活動描述</i>
+                            </button>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                @Html.DisplayFor(modelItem => item.Desciption)
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Edit", "Discount", new { Id = item.Id })">
+                            編輯活動 <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+
+                    </div>
+
+                    <!-- /.card-body -->
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+
+@section Scripts{
+    @Scripts.Render("~/plugins/datatables/jquery.dataTables.min.js")
+    @Scripts.Render("~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js")
+    @Scripts.Render("~/plugins/datatables-responsive/js/dataTables.responsive.min.js")
+    @Scripts.Render("~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js")
+    @Scripts.Render("~/plugins/datatables-buttons/js/dataTables.buttons.min.js")
+    @Scripts.Render("~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js")
+    @Scripts.Render("~/plugins/jszip/jszip.min.js")
+    @Scripts.Render("~/plugins/pdfmake/pdfmake.min.js")
+    @Scripts.Render("~/plugins/pdfmake/vfs_fonts.js")
+    @Scripts.Render("~/plugins/datatables-buttons/js/buttons.html5.min.js")
+    @Scripts.Render("~/plugins/datatables-buttons/js/buttons.print.min.js")
+    @Scripts.Render("~/plugins/datatables-buttons/js/buttons.colVis.min.js")
+
+
+<script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+
+            $('#content1').on('click', function () {
+                // 在 showinfo 元素中插入 content1 的 HTML
+                $('#showinfo').html(content1);
+            });
+
+            $('#content2').on('click', function () {
+                // 在 showinfo 元素中插入 content2 的 HTML
+                $('#showinfo').html(content2);
+            });
+
+
+            const content1 = `<div class="card card-info">
+    <div class="card-header">
+        <i class="icon fas fa-calendar-check"></i>
+        <h3 class="card-title">現有活動列表</h3>
+        <button></button>
+    </div>
+
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Image)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Percent)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Desciption)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/DiscountPictures/@Html.DisplayFor(modelItem => item.Image)" width="150" height="70" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Percent)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Desciption)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-success" }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success" }) |
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>`;
+        });
+
+
+
+    const content2 = `@foreach (var item in Model)
+{
+    <div class="mb-3 card card-info col-4">
+        <div class="card-header">
+            <h3 class="card-title"> @Html.DisplayFor(modelItem => item.Name)</h3>
+
+            <div class="card-tools">
+
+                <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+
+            </div>
+            <!-- /.card-tools -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <img src="~/DiscountPictures/@Html.DisplayFor(modelItem => item.Image)" class="w-100 h-auto" />
+            <br>
+
+            活動類型: @Html.DisplayFor(modelItem => item.Type)
+            <br>
+            活動時間: @Html.DisplayFor(modelItem => item.StartDate) ~~  @Html.DisplayFor(modelItem => item.EndDate)
+            <br>
+            折扣百分比 : @Html.DisplayFor(modelItem => item.Percent) %
+            <br>
+            <p>
+
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                   <i class="fas fa-info-circle">活動描述</i>
+                </button>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    @Html.DisplayFor(modelItem => item.Desciption)
+                </div>
+            </div>
+            <a href="@Url.Action("Edit", "Discount", new { Id = item.Id })">
+                編輯活動 <i class="fas fa-arrow-circle-right"></i>
+            </a>
+
+        </div>
+
+        <!-- /.card-body -->
+    </div>
+}`;
+
+
+
+
+
+
+</script>
 }
-
-</table>

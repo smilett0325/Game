@@ -30,13 +30,14 @@ namespace RizzGamingBase.Controllers
 
         public ActionResult Edit(int id)
         {
-            DiscountCreateVm vm = DiscountActionExts.GetEvent(id);
+            DiscountVm vm = DiscountActionExts.GetEvent(id);
+            vm.DiscountTypeList = GetDiscountTypeList();
             return View(vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(DiscountCreateVm vm)
+        public ActionResult Edit(DiscountVm vm)
         {
             if(!ModelState.IsValid) return View(vm);
             try
@@ -53,7 +54,7 @@ namespace RizzGamingBase.Controllers
         }
         public ActionResult Create() 
         {
-            var model = new DiscountCreateVm
+            var model = new DiscountVm
             {
                 DiscountTypeList = GetDiscountTypeList(),
             };
@@ -61,18 +62,10 @@ namespace RizzGamingBase.Controllers
         }
 
 
-        private IEnumerable<SelectListItem> GetDiscountTypeList()
-        {
-            return new List<SelectListItem>
-            {
-            new SelectListItem { Value = "季度特價", Text = "季度特價" },
-            new SelectListItem { Value = "自訂特價", Text = "自訂特價" },
-            
-            };
-        }
+       
 
         [HttpPost]
-        public ActionResult Create(DiscountCreateVm vm) 
+        public ActionResult Create(DiscountVm vm) 
         {
 
             if (!ModelState.IsValid) 
@@ -87,17 +80,22 @@ namespace RizzGamingBase.Controllers
             }
             catch (Exception ex)
             {
-                if (vm.StartDate.Date < DateTime.Now.Date)
-                {
-                    ModelState.AddModelError("StartDate", "开始日期不能选择已经过了的日期");
-                    vm.DiscountTypeList = GetDiscountTypeList();
-                    ModelState.AddModelError("", ex.Message);
-                    return View(vm);
-                }
+               
         
             }
 
             return RedirectToAction("Index");
+        }
+
+
+        private IEnumerable<SelectListItem> GetDiscountTypeList()
+        {
+            return new List<SelectListItem>
+            {
+            new SelectListItem { Value = "季度特價", Text = "季度特價" },
+            new SelectListItem { Value = "自訂特價", Text = "自訂特價" },
+
+            };
         }
 
 

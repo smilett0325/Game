@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace RizzGamingBase.Models.ViewModels
 {
-    public class DiscountCreateVm
+    public class DiscountVm
     {
         public int Id { get; set; }
 
@@ -48,8 +48,19 @@ namespace RizzGamingBase.Models.ViewModels
         [Display(Name = "活動類型")]
         public IEnumerable<SelectListItem> DiscountTypeList { get; set; }
 
-        public int Developer {  get; set; }
+        public int DeveloperId {  get; set; }
+
+
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (EndDate < StartDate)
+            {
+                yield return new ValidationResult("結束日期不能早於開始日期", new[] { nameof(EndDate) });
+            }
+        }
     }
+
 
 
     
