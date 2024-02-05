@@ -12,7 +12,7 @@ namespace RizzGamingBase.Models.Infra
 {
     public class UploadFileHelper
     {
-        public void UploadFile(HttpPostedFileBase file, string categoryFolderName, int developerId, int gameId, string[] allowedExtensions)
+        public void UploadFile(HttpPostedFileBase file, string categoryFolderName, int gameId, string[] allowedExtensions)
         {
             //判斷是否上傳
             if (file == null || file.ContentLength == 0)
@@ -35,7 +35,7 @@ namespace RizzGamingBase.Models.Infra
                 Directory.CreateDirectory(categoryFolderPath);
 
             // 使用开发商的ID創建文件夾路徑，可自訂命名規則
-            string developerFolderPath = Path.Combine(categoryFolderPath, $"{developerId}");
+            string developerFolderPath = Path.Combine(categoryFolderPath);
 
             // 检查文件夹是否存在，如果不存在則創建
             if (!Directory.Exists(developerFolderPath))
