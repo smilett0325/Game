@@ -109,11 +109,11 @@ namespace RizzGamingBase.Models.Services
 				Video = displayVideo.FileName,
 			};
 
-			uploadFileHelper.UploadCoverFileToScratch(cover); //todo , coverScratchPath
-			uploadFileHelper.UploadDisplayVideoFileToScratch(displayVideo);//, displayVideoScratchPath
-			var gameId = _repo.Create(game.DtoToEntity());
-			uploadFileHelper.MoveCoverFromScratch(game.Cover, developerId, gameId);
-			uploadFileHelper.MoveVideoFromScratch(game.Video, developerId, gameId);
+			//uploadFileHelper.UploadCoverFileToScratch(cover); //todo , coverScratchPath
+			//uploadFileHelper.UploadDisplayVideoFileToScratch(displayVideo);//, displayVideoScratchPath
+			//var gameId = _repo.Create(game.DtoToEntity());
+			//uploadFileHelper.MoveCoverFromScratch(game.Cover, developerId, gameId);
+			//uploadFileHelper.MoveVideoFromScratch(game.Video, developerId, gameId);
 
 			//Create image
 
@@ -121,11 +121,11 @@ namespace RizzGamingBase.Models.Services
 			{
 				var image = new ImageEntity
 				{
-					GameId = gameId,
+					//GameId = gameId,
 					DisplayImage = di.FileName,
 				};
 
-				uploadFileHelper.UploadDisplayImageFile(di, developerId, gameId);//, displayImagePath
+				//uploadFileHelper.UploadDisplayImageFile(di, developerId, gameId);//, displayImagePath
 				iRepo.Create(image);
 			};
 
@@ -135,7 +135,7 @@ namespace RizzGamingBase.Models.Services
 			{
 				var gt = new GTEntity
 				{
-					GameId = gameId,
+					//GameId = gameId,
 					TagId = Convert.ToInt32(tag),
 				};
 				gtRepo.Create(gt);
@@ -151,7 +151,7 @@ namespace RizzGamingBase.Models.Services
 						var dlc = new DLCEntity
 						{
 							GameId = Convert.ToInt32(item),
-							AttachedGameId = gameId,
+							//AttachedGameId = gameId,
 						};
 						dlcRepo.Create(dlc);
 					};
