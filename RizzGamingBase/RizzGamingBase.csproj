@@ -593,6 +593,9 @@
     <Content Include="docs\_layouts\page.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\backgroud\background10.jpg" />
+    <Content Include="Images\backgroud\background8.jpg" />
+    <Content Include="Images\backgroud\background9.jpg" />
     <Content Include="Images\Covers\10\10\ss_ffd046bcf93e80e4f506a6235bae69670b7eec79.600x338.jpg" />
     <Content Include="Images\Covers\10\37\ss_df93b5e8a183f7232d68be94ae78920a90de1443.600x338.jpg" />
     <Content Include="Images\Covers\10\46\ss_0c79f56fc7be1bd0102f2ca1c92c8f0900daf4fb.600x338.jpg" />
@@ -608,9 +611,6 @@
     <Content Include="Images\Covers\15\42\ss_d4930d675af053dc1e61a876a34fc003e85e261f.600x338.jpg" />
     <Content Include="Images\Covers\15\51\ss_b5d5ea3ed8622e2a12ea6e30b512c0b358f92f01.1920x1080.jpg" />
     <Content Include="Images\Covers\15\53\ss_6eac5a3b59e181d1ffa26757b041be521bfe1779.600x338.jpg" />
-    <Content Include="Images\backgroud\background1.jpg" />
-    <Content Include="Images\backgroud\background2.jpg" />
-    <Content Include="Images\backgroud\background3.jpg" />
     <Content Include="Images\backgroud\background4.jpg" />
     <Content Include="Images\backgroud\background5.jpg" />
     <Content Include="Images\backgroud\background6.jpg" />
@@ -637,6 +637,13 @@
     <Content Include="Images\Covers\9\38\ss_391a1c5adf618fbcd1bec89e25e0ac54bb4d915f.600x338.jpg" />
     <Content Include="Images\Covers\9\48\ss_168528c86261f98aeb64192dc34025a4b361ff4a.1920x1080.jpg" />
     <Content Include="Images\Covers\9\5\ss_d1c0a418890d7dce6fc1ef88e0ab038c12ca69d7.600x338.jpg" />
+    <Content Include="Images\DiscountPicture\background10.jpg" />
+    <Content Include="Images\DiscountPicture\background4.jpg" />
+    <Content Include="Images\DiscountPicture\background5.jpg" />
+    <Content Include="Images\DiscountPicture\background6.jpg" />
+    <Content Include="Images\DiscountPicture\background7.jpg" />
+    <Content Include="Images\DiscountPicture\background8.jpg" />
+    <Content Include="Images\DiscountPicture\background9.jpg" />
     <Content Include="Images\DisplayImages\10\10\ss_0ef5e9c846ad1cdd7357a7ca6b122e2643d74b9c.1920x1080.jpg" />
     <Content Include="Images\DisplayImages\10\10\ss_13bb35638c0267759276f511ee97064773b37a51.1920x1080.jpg" />
     <Content Include="Images\DisplayImages\10\10\ss_27258f5e9161bbffe37393e3b6752ad3bc1233c1.1920x1080.jpg" />
