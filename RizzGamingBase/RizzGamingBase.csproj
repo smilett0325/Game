@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\GameDataController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Models\Dtos\GameDataDto.cs" />
     <Compile Include="Models\EFModels\Admin.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
@@ -5533,6 +5534,10 @@
     <Content Include="Views\BonusProducts\Delete.cshtml" />
     <Content Include="Views\BonusProducts\Edit.cshtml" />
     <Content Include="Views\BonusProducts\Index.cshtml" />
+    <Content Include="Views\GameData\TChart.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Member\Create.cshtml" />
+    <Content Include="Views\Member\Edit.cshtml" />
     <Content Include="Views\Shared\DeveloperBoard.cshtml" />
     <Content Include="Views\Discount\Detail.cshtml" />
   </ItemGroup>

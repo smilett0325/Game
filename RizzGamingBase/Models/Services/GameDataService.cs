@@ -162,7 +162,30 @@ namespace RizzGamingBase.Controllers
 
             return i;
         }
-        public decimal SearchBisToAmouts(int id, int day)
+
+		public decimal SearchBisToMonths(int id, int month)
+		{
+			List<GameDataEntity> entity = _repository.SearchDeveloperGamesBi(id);
+			int m = month;
+			if (id == 0)
+			{
+				entity = _repository.SearchNoDeveloperGamesBi();
+			}
+			var initialdto = GameDataExts.EntityToDto(entity);
+
+			decimal amout = 0;
+
+
+            int year = 2023;
+			foreach (var item in initialdto)
+			{
+				if (item.TransactionDate >= new DateTime(year/month/1) || item.TransactionDate <= new DateTime(year / month+3 / 1))
+					amout += item.Price;
+			}
+
+			return amout;
+		}
+		public decimal SearchBisToAmouts(int id, int day)
         {
             List<GameDataEntity> entity = _repository.SearchDeveloperGamesBi(id);
             int d = day * -1;

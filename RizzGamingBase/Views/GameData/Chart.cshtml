@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Chart";
+    Layout = "~/Views/Shared/AdminBoard.cshtml";
 }
 @{
     Layout = "~/Views/Shared/AdminBoard.cshtml";
@@ -110,10 +111,10 @@
             datasets: [{
                 label: '元',
                 data: Linedata,
-                backgroundColor: 'blue',
+                backgroundColor: '#3c8dbc' ,
                 borderColor: 'black',
                 borderWidth: 1 ,
-                fill: false
+                fill: true,
 
             }]
         },
