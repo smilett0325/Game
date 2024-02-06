@@ -220,7 +220,7 @@
 
             discountGames.forEach(function (item) {
                 var row = $('<tr>');
-                row.append('<td><img src="/DiscountPictures/' + item.Image + '" width="100" height="50" class="img-fluid" /></td>');
+                row.append('<td><img src="~/Images/DiscountPicture' + item.Image + '" width="100" height="50" class="img-fluid" /></td>');
                 row.append('<td>' + item.Name + '</td>');
                 row.append('<td><button type="button" class="btn btn-primary remove" data-id="' + item.Id + '">移除</button></td>');
 
