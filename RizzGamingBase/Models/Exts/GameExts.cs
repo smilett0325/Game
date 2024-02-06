@@ -104,6 +104,7 @@ namespace RizzGamingBase.Models.Exts
 			return new GameIndexVm
 			{
 				Id = model.Id,
+				DeveloperId = model.DeveloperId,
 				Name = model.Name,
 				Price = model.Price,
 				Cover = model.Cover,

@@ -1,4 +1,4 @@
-﻿using RizzGamingBase.Models.Interfaces;
+﻿using RizzGamingBase.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,41 +7,41 @@ using System.Web.Mvc;
 
 namespace RizzGamingBase.Models.Exts
 {
-	public static class SelectListExts
-	{
-		public static IEnumerable<SelectListItem> GetSelectListItems(this ISelectListService service)
-		{
-			var list = service.GetSelectListItems();
+    public static class SelectListExts
+    {
+        public static IEnumerable<SelectListItem> GetSelectListItems(this ISelectListService service)
+        {
+            var list = service.GetSelectListItems();
 
-			var result = new List<SelectListItem>();
+            var result = new List<SelectListItem>();
 
-			foreach (var item in list)
-			{
-				result.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.DeveloperName });
-			}
+            foreach (var item in list)
+            {
+                result.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.DeveloperName });
+            }
 
-			return result.Prepend(new SelectListItem { Value = "0", Text = "請選擇..." });
-		}
+            return result.Prepend(new SelectListItem { Value = "0", Text = "請選擇..." });
+        }
 
-		public static IEnumerable<SelectListItem> GetSelectListItemsDeveloper(this ISelectListService service,int id)
-		{
-			var list = service.GetSelectListItemsDeveloper(id);
+        public static IEnumerable<SelectListItem> GetSelectListItemsDeveloper(this ISelectListService service, int id)
+        {
+            var list = service.GetSelectListItemsDeveloper(id);
 
-			var result = new List<SelectListItem>();
+            var result = new List<SelectListItem>();
 
-			foreach (var item in list)
-			{
-				result.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.GameName });
-			}
+            foreach (var item in list)
+            {
+                result.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.GameName });
+            }
 
-			return result.Prepend(new SelectListItem { Value = "0", Text = "請選擇..." });
-		}
+            return result.Prepend(new SelectListItem { Value = "0", Text = "請選擇..." });
+        }
 
-		public static SelectList GetSelectList(this ISelectListService service, int id)
-		{
-			return new SelectList(service.GetSelectListItems(), "Id", "Name", id);
-		}
+        public static SelectList GetSelectList(this ISelectListService service, int id)
+        {
+            return new SelectList(service.GetSelectListItems(), "Id", "Name", id);
+        }
 
 
-	}
+    }
 }

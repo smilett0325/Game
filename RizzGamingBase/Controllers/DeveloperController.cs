@@ -17,7 +17,7 @@ namespace RizzGamingBase.Controllers
         [Authorize]
         public ActionResult Index()
         {
-                return View();
+            return View();
         }
 
 
@@ -78,7 +78,7 @@ namespace RizzGamingBase.Controllers
         public ActionResult ActiveRegister(int developerId, string confirmCode)
         {
             //驗證傳入值是否合理
-            
+
             if (developerId <= 0 || string.IsNullOrEmpty(confirmCode))
             {
                 return View(); // 在view中,我們會顯示'已開通,謝謝'
@@ -94,7 +94,7 @@ namespace RizzGamingBase.Controllers
         }
 
         // 這支method如何實作註冊功能? 直接叫用 EF or 叫用 DeveloperService
-       
+
 
         private Developer GetUnConfirmedDeveloper(int developerId, string confirmCode)
         {
@@ -428,8 +428,8 @@ namespace RizzGamingBase.Controllers
         }
 
 
-        
-        
+
+
 
     }
 }

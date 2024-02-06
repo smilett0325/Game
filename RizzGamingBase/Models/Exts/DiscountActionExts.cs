@@ -1,4 +1,5 @@
 ﻿using RizzGamingBase.Models.Dtos;
+using RizzGamingBase.Models.Infra;
 using RizzGamingBase.Models.Repositories.EFRepositories;
 using RizzGamingBase.Models.Services;
 using RizzGamingBase.Models.ViewModels;
@@ -20,7 +21,7 @@ namespace RizzGamingBase.Models.Exts
             return DiscountExts.GetDtoToVm(vm);
         }
 
-        public static DiscountCreateVm GetEvent(int id)
+        public static DiscountVm GetEvent(int id)
         {
             var repo = new DiscountEFRepository();
             var service = new DiscountService(repo);
@@ -29,15 +30,21 @@ namespace RizzGamingBase.Models.Exts
             return DiscountExts.GetDtoToVm(vm);
         }
 
-        public static void Create(DiscountCreateVm vm)
+        public static void Create(DiscountVm vm , HttpPostedFileBase DisplayImage)
         {
+            UploadFileHelper uploadFileHelper = new UploadFileHelper();
+            string[] allowexts = new string[] { ".jpg", ".jpeg", ".png" , ".jfif"};
+
+
+            uploadFileHelper.UploadFile(DisplayImage, "DiscountPicture", allowexts);
             var repo = new DiscountEFRepository();
             var service = new DiscountService(repo);
             var dto = DiscountExts.CreateVmToDto(vm);
             service.Create(dto);
+
         }
 
-        public static void Edit(DiscountCreateVm vm)
+        public static void Edit(DiscountVm vm)
         {
             var repo = new DiscountEFRepository();
             var service = new DiscountService(repo);

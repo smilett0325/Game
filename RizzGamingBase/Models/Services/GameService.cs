@@ -55,14 +55,14 @@ namespace RizzGamingBase.Models.Services
 
 			if (cover != null)
 			{ 
-				uploadFileHelper.DeleteFile("Covers", developerId, vm.Id, originalGame.Cover);
-				uploadFileHelper.UploadFile(cover, "Covers", developerId, vm.Id, imgAllowedExtensions);
+				uploadFileHelper.DeleteFile("Covers", vm.DeveloperId, vm.Id, originalGame.Cover);
+				uploadFileHelper.UploadFile(cover, "Covers", vm.DeveloperId, vm.Id, imgAllowedExtensions);
 			}
 
 			if (displayVideo != null)
 			{
-				uploadFileHelper.DeleteFile("DisplayVideos", developerId, vm.Id, originalGame.Video);
-				uploadFileHelper.UploadFile(displayVideo, "DisplayVideos", developerId, vm.Id, vdoAllowedExtensions);
+				uploadFileHelper.DeleteFile("DisplayVideos", vm.DeveloperId, vm.Id, originalGame.Video);
+				uploadFileHelper.UploadFile(displayVideo, "DisplayVideos", vm.DeveloperId, vm.Id, vdoAllowedExtensions);
 			}
 
 			//Update image
@@ -75,10 +75,10 @@ namespace RizzGamingBase.Models.Services
 
 			var deleteImages = dataImageString.Except(undeletedImages).ToList();
 			dataImageList.Where(x => deleteImages.Contains(x.DisplayImage)).ToList().ForEach(i => iRepo.Delete(i.Id));
-			deleteImages.ForEach(item => uploadFileHelper.DeleteFile("DisplayImages", developerId, vm.Id, item));
+			//deleteImages.ForEach(item => uploadFileHelper.DeleteFile("DisplayImages", developerId, vm.Id, item));
 			foreach (var di in deleteImages)
 			{
-				uploadFileHelper.DeleteFile("DisplayImages", developerId, vm.Id, di);
+				uploadFileHelper.DeleteFile("DisplayImages", vm.DeveloperId, vm.Id, di);
 			}
 			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
 
@@ -87,7 +87,7 @@ namespace RizzGamingBase.Models.Services
 			{
 				foreach (var di in displayImages)
 				{
-					uploadFileHelper.UploadFile(di, "DisplayImages", developerId, vm.Id, allowedExtensions);//, displayImagePath
+					uploadFileHelper.UploadFile(di, "DisplayImages", vm.DeveloperId, vm.Id, allowedExtensions);//, displayImagePath
 					var image = new ImageEntity
 					{
 						GameId = vm.Id,
@@ -102,15 +102,17 @@ namespace RizzGamingBase.Models.Services
 			var dataTagList = gRepo.GetGameTags(vm.Id);
 			List<string> dataTagStrings = dataTagList.Select(data => data.TagId.ToString()).ToList();
 
-			
-			var selectedTagList = selectedTags != null ? selectedTags.ToList() : new List<string>();
-			var tagsToAdd = selectedTagList.Except(dataTagStrings);
+			var selectedTagList = selectedTags.ToList();
 
-			// 要新增的标签
-			if (tagsToAdd.Count() > 0)
+			var intersectTags = dataTagStrings.Intersect(selectedTagList);
+
+			if(intersectTags.Count() == 0)
 			{
-
-				foreach (var item in tagsToAdd)
+				foreach (var item in dataTagList)
+				{
+					gRepo.Delete(item.Id);
+				}
+				foreach (var item in selectedTagList)
 				{
 					var gt = new GTEntity
 					{
@@ -120,39 +122,56 @@ namespace RizzGamingBase.Models.Services
 					gRepo.Create(gt);
 				}
 			}
-
-			// 要删除的标签
-			var tagsToDelete = dataTagStrings.Except(selectedTagList);
-			if (tagsToDelete.Count() > 0)
+			else
 			{
+				var tagsToAdd = selectedTagList.Except(dataTagStrings);
+				var tagsToDelete = dataTagStrings.Except(selectedTagList);
 
-				foreach (var item in tagsToDelete)
+				if (tagsToAdd.Count() > 0)
 				{
-					var deletetag = dataTagList
-							.Where(x => string.Equals(x.TagId.ToString(), item, StringComparison.OrdinalIgnoreCase))
-							.Select(tag => tag.Id)
-							.FirstOrDefault();
-					//var deletetag = dataTagList.Where(x => x.TagId == Convert.ToInt32(item)).Select(tag => tag.Id).FirstOrDefault();
-					gRepo.Delete(deletetag);
+
+					foreach (var item in tagsToAdd)
+					{
+						var gt = new GTEntity
+						{
+							GameId = vm.Id,
+							TagId = Convert.ToInt32(item),
+						};
+						gRepo.Create(gt);
+					}
+				}
+
+				// 要删除的标签
+
+				if (tagsToDelete.Count() > 0)
+				{
+
+					foreach (var item in tagsToDelete)
+					{
+						var deletetag = dataTagList
+								.Where(x => string.Equals(x.TagId.ToString(), item, StringComparison.OrdinalIgnoreCase))
+								.Select(tag => tag.Id)
+								.FirstOrDefault(); 
+						//var deletetag = dataTagList.Where(x => x.TagId == Convert.ToInt32(item)).Select(tag => tag.Id).FirstOrDefault();
+						gRepo.Delete(deletetag);
+					}
 				}
 			}
 
 			//Update or Create dlc
 			var dataDLC = dlcRepo.SearchByGameId(vm.Id);
-			var empty = "";		
+			//var empty = "";		
+
+
 			foreach (var item in attachedGame)
 			{
 				if(item == "none")
 				{
 					dlcRepo.Delete(dataDLC.Id);
-				}else if(item == empty){
-					return;
-				}
-				else 
+				}else 
 				{
-					if (dataDLC.AttachedGameId != Convert.ToInt32(item))
+					if (dataDLC != null && dataDLC.AttachedGameId != Convert.ToInt32(item))
 					{
-
 						var dlc = new DLCEntity
 						{
 							GameId = vm.Id,
@@ -186,14 +205,12 @@ namespace RizzGamingBase.Models.Services
 				Video = displayVideo.FileName,
 			};
 
-			var gameId = _repo.Create(game.DtoToEntity());
+			int gameId = _repo.Create(game.DtoToEntity());
+			uploadFileHelper.UploadFile(cover, "Covers", developerId, gameId, new string[] { ".jpg", ".jpeg", ".png" });
+			uploadFileHelper.UploadFile(displayVideo, "DisplayVideos", developerId, gameId, new string[] { ".mp4" , ".webm"});
 
-			string[] imgAllowedExtensions = { ".jpg", ".jpeg", ".png" };
-			string[] vdoAllowedExtensions = { ".mp4", ".webm" };
-
-			uploadFileHelper.UploadFile(cover, "Covers", developerId, gameId, imgAllowedExtensions);
-			uploadFileHelper.UploadFile(displayVideo, "DisplayVideos", developerId, gameId, vdoAllowedExtensions);
 			//Create image
+			var allowedExtensions = new string[] { ".jpg", ".jpeg", ".png"};
 
 			foreach (var di in displayImages)
 			{
@@ -203,9 +220,7 @@ namespace RizzGamingBase.Models.Services
 					DisplayImage = di.FileName,
 				};
 
-				string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
-
-				uploadFileHelper.UploadFile(di, "DisplayImages", developerId, gameId, allowedExtensions);//, displayImagePath
+				uploadFileHelper.UploadFile(di, "DisplayImages", developerId, gameId, allowedExtensions);
 				iRepo.Create(image);
 			};
 
@@ -228,15 +243,13 @@ namespace RizzGamingBase.Models.Services
 				{
 					if(item != "none")
 					{
-
-					var dlc = new DLCEntity
-					{
-						GameId = gameId,
-						AttachedGameId = Convert.ToInt32(item),
+						var dlc = new DLCEntity
+						{
+							GameId = Convert.ToInt32(item),
+							AttachedGameId = gameId,
+						};
+						dlcRepo.Create(dlc);
 					};
-					dlcRepo.Create(dlc);
-					}
-
 				};
 			};
 		}

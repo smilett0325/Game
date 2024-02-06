@@ -1,0 +1,211 @@
+﻿
+@{
+    ViewBag.Title = "LineChart";
+}
+
+@{
+    Layout = "~/Views/Shared/Developer.cshtml";
+}
+
+<div>
+    <label for="Year" class="form-label">請選擇年份：</label>
+    <input type="text" class="form-control" id="Year" name="Year">
+</div>
+
+
+<!-- 引入Chart.js库 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
+@* 引入 html2canvas 库 *@
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<!-- 包含xlsx庫 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+
+<!-- 在页面中添加图表容器 -->
+<h2 id="h2">2023 總</h2>
+<h2 id="h21">季度營收</h2>
+
+<div class="mb-2" id="dev">
+    <label for="developerList">選擇遊戲:</label>
+    <select id="developerList">
+        @foreach (var developer in ViewBag.DeveloperList)
+        {
+            <option value="@developer.Value">@developer.Text</option>
+        }
+    </select>
+</div>
+
+<div id="Line" style="height:50%;width:50%">
+    <canvas id="myChart" width="100" height="100"></canvas>
+    @*<button id="exportButton">匯出到Excel</button>*@
+</div>
+<!-- 在页面底部初始化图表 -->
+<script>
+    // 假設你有一個名為 'myChart' 的 Chart.js 實例
+    var canvas = document.getElementById('myChart');
+
+    // 將 Canvas 轉換為圖片數據 URL
+    var dataURL = canvas.toDataURL('image/png');
+
+
+    var datas = [];
+
+    var theH2 = document.getElementById('h2');
+
+    var theH21 = document.getElementById('h21');
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    var divLine = document.getElementById('Line');
+
+    var theDeveloper = document.getElementById('developerList');
+    // 将从Controller传递的数据绑定到图表
+    var Linedata = [@(ViewBag.LineChartData)];
+
+    var id =[@(ViewBag.Id)];
+
+     var list = [@Html.Raw(Json.Encode(ViewBag.DeveloperList))];
+
+    const theYear = document.querySelector("#Year");
+
+    var year = 2023;
+    var DeveloperId = 0;
+    var check = false;
+    var GameName = "";
+
+
+    // 创建图表
+
+    var myChart = new Chart(ctx, {
+        type: 'line', // 替换为所需的图表类型
+        data: {
+            labels: ['第一季度', '第二季度', '第三季度', '第四季度'],
+            datasets: [{
+                label: '元',
+                data: Linedata,
+                backgroundColor: 'blue',
+                borderColor: 'black',
+                borderWidth: 1,
+
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+
+    });
+    //匯出
+    //点击下載圖片
+    divLine.addEventListener('dblclick', async event => {
+        // 使用 html2canvas 將 Canvas 元素轉換為圖片
+        html2canvas(canvas).then(function (canvas) {
+            // 將圖片保存為文件（例如 PNG）
+            var link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'LineChart.png';
+            link.click();
+        });
+
+        var chartData = ctx.data;
+
+
+    });
+
+    theYear.addEventListener('keydown', async event  => {
+
+        if (event.which === 13) {
+            console.log(check);
+            year = theYear.value;
+            if (check == true) {
+                theH2.innerHTML = year + " " + theDeveloper.options[theDeveloper.selectedIndex].text;
+                theH21.innerHTML = "季度營收";
+                await loadGameDatas();
+
+                myChart.data.datasets[0].data[0] = Gamedatas[0];
+                myChart.data.datasets[0].data[1] = Gamedatas[1];
+                myChart.data.datasets[0].data[2] = Gamedatas[2];
+                myChart.data.datasets[0].data[3] = Gamedatas[3];
+
+                myChart.update();
+            }
+            else {
+                theH2.innerHTML = year+" 總";
+                await loadDatas();;
+
+                myChart.data.datasets[0].data[0] = datas[0];
+                myChart.data.datasets[0].data[1] = datas[1];
+                myChart.data.datasets[0].data[2] = datas[2];
+                myChart.data.datasets[0].data[3] = datas[3];
+
+                myChart.update();
+            }
+
+        }
+    });
+
+    const loadDatas = async () => {
+        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabaseDeveloperId")?year=${year}&developerId=${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        datas = await response.json();
+    }
+
+
+        // 在這裡處理伺服器的回應結果，例如更新UI
+        // result 是從控制器返回的數據，可以用於更新視圖
+
+    theDeveloper.addEventListener('change', async event => {
+        if (theDeveloper.options[theDeveloper.selectedIndex].value != 0) {
+            GameName = theDeveloper.options[theDeveloper.selectedIndex].text;
+            check = true;
+            theH2.innerHTML = year + " " + theDeveloper.options[theDeveloper.selectedIndex].text;
+            theH21.innerHTML = "季度營收";
+            await loadGameDatas();
+
+            myChart.data.datasets[0].data[0] = Gamedatas[0];
+            myChart.data.datasets[0].data[1] = Gamedatas[1];
+            myChart.data.datasets[0].data[2] = Gamedatas[2];
+            myChart.data.datasets[0].data[3] = Gamedatas[3];
+
+            myChart.update();
+
+
+        }
+        else {
+            check = false;
+            theH2.innerHTML = year;
+            await loadDatas();;
+
+            myChart.data.datasets[0].data[0] = datas[0];
+            myChart.data.datasets[0].data[1] = datas[1];
+            myChart.data.datasets[0].data[2] = datas[2];
+            myChart.data.datasets[0].data[3] = datas[3];
+
+            myChart.update();
+        }
+    });
+
+    const loadGameDatas = async () => {
+        const response = await fetch(`@Url.Content("~/GameData/GetLineDataFromDatabaseGameName")?year=${year}&gameName=${GameName}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        Gamedatas = await response.json();
+    }
+
+
+</script>

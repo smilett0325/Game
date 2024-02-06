@@ -50,27 +50,6 @@ namespace RizzGamingBase.Models.Services
             return dtoList;
         }
 
-        public List<BonusProductsDto> SearchByName(string keyword)
-        {
-            var entity = _repo.SearchByName(keyword);
-
-            var dtoList = new List<BonusProductsDto>();
-            foreach (var dtoitem in entity)
-            {
-                var dto = new BonusProductsDto
-                {
-                    Id = dtoitem.Id,
-                    ProductTypeId = dtoitem.ProductTypeId,
-                    ProductTypeName = dtoitem.ProductTypeName,
-                    Price = dtoitem.Price,
-                    URL = dtoitem.URL,
-                    Name = dtoitem.Name
-                };
-                dtoList.Add(dto);
-            }
-            return dtoList;
-        }
-
         public BonusProductsDto LoadProdct(int id)
         {
             var entity = _repo.SearchById(id);

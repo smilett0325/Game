@@ -13,23 +13,23 @@ namespace RizzGamingBase.Models.ViewModels
 		public int Id { get; set; }
 		public int DeveloperId { get; set; }
 
-		[Display(Name = "名稱")]
-		//[Required]
+		[Display(Name = "遊戲名稱")]
+		[Required(ErrorMessage = "請輸入遊戲名稱")]
 		[StringLength(50)]
 		public string Name { get; set; }
 
-		[Display(Name = "簡介")]
-		//[Required]
+		[Display(Name = "遊戲簡介")]
+		[Required(ErrorMessage = "請輸入遊戲簡介")]
 		[StringLength(50)]
 		public string Introduction { get; set; }
 
-		[Display(Name = "說明")]
-		//[Required]
+		[Display(Name = "遊戲說明")]
+		[Required(ErrorMessage = "請輸入遊戲說明")]
 		[StringLength(1000)]
 		public string Description { get; set; }
 
 		[Display(Name = "發行日期")]
-		
+		[Required(ErrorMessage = "請輸入發行日期")]
 		[DataType(DataType.DateTime)]
 		public DateTime ReleaseDate { get; set; }
 

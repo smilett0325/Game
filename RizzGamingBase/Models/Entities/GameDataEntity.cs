@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace RizzGamingBase.Models.Entity
+namespace RizzGamingBase.Models.Entities
 {
-	public class GameDataEntity : ISelectListItem
-	{
-		public int Id { get; set; }
-		public string GameName { get; set; }
+    public class GameDataEntity : ISelectListItem
+    {
+        public int Id { get; set; }
+        public string GameName { get; set; }
 
-		public string DeveloperName { get; set; }
-		public DateTime TransactionDate { get; set; }
-		public decimal Amount { get; set; }
+        public string DeveloperName { get; set; }
+        public DateTime TransactionDate { get; set; }
+        public decimal Amount { get; set; }
 
-	}
+    }
 }

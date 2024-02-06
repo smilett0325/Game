@@ -11,7 +11,6 @@ namespace RizzGamingBase.Models.Interfaces
     {
         void Create(BonusProductsDto dto);
         List<BonusProductsDto> GetAll();
-        List<BonusProductsDto> SearchByName(string keyword);
         void Edit(BonusProductsDto dto);
         void Delete(BonusProductsDto dto);
     }

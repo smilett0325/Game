@@ -50,22 +50,10 @@ namespace RizzGamingBase.Models.Repositories.EFRepositories
             return BonusProducts;
         }
 
-        public List<BonusProductsEntity> SearchByName(string keyword)
-        {
-            throw new NotImplementedException();
-        }
-
         // todo 完成3層式，編輯Repository
         public void Edit(BonusProductsEntity entity)
         {
-            //var db = new AppDbContext();
-
-            //var BonusProduct = db.BonusProducts.Find(entity.Id);
-            //BonusProduct.ProductTypeId = entity.ProductTypeId;
-            //BonusProduct.Price = entity.Price;
-            //BonusProduct.URL = entity.URL;
-            //BonusProduct.Name = entity.Name;
-            //db.SaveChanges();
+            
         }
 
         // todo 關鍵字搜尋
