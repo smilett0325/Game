@@ -247,7 +247,5 @@ namespace RizzGamingBase.Models.EFModels
 				.WithRequired(e => e.Tag)
 				.WillCascadeOnDelete(false);
 		}
-
-        public System.Data.Entity.DbSet<RizzGamingBase.Models.ViewModels.DeveloperGameEditVm> DeveloperGameEditVms { get; set; }
-    }
+	}
 }

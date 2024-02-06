@@ -22,11 +22,11 @@ namespace RizzGamingBase.Models.EFModels
         public string Name { get; set; }
 
         [Required]
-        [StringLength(500)]
+        [StringLength(50)]
         public string Account { get; set; }
 
         [Required]
-        [StringLength(500)]
+        [StringLength(1000)]
         public string EncryptedPassword { get; set; }
 
         [Required]
@@ -40,8 +40,8 @@ namespace RizzGamingBase.Models.EFModels
         public DateTime? BanTime { get; set; }
 
         public bool IsConfirmed { get; set; }
-        //
-        [StringLength(500)]
+
+        [StringLength(256)]
         public string ConfirmCode { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

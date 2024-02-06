@@ -17,8 +17,6 @@ namespace RizzGamingBase.Models.EFModels
 
         public int Id { get; set; }
 
-        public int GameId { get; set; }
-
         public int MemberId { get; set; }
 
         public decimal FinalPayment { get; set; }

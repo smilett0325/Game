@@ -21,25 +21,28 @@ namespace RizzGamingBase.Controllers
     {
 		
 		// GET: Game
-		public ActionResult Index( int? developreId)
-		{
-			
+		public ActionResult Index()
+		{	
+			string developerAccount = User.Identity.Name;
+			var db = new AppDbContext();
+			int? developerId = db.Developers.Where(x=> x.Account == developerAccount).Select(x => x.Id).FirstOrDefault();
+			 
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
-			if(developreId == null)
+			if(developerId == 0)
 			{
 				List<GameIndexVm> vm = service.Filter().ToGameVm(); //顯示全部
 				return View(vm);
 			}
 			else
 			{
-				List<GameIndexVm> vm2 = service.FilterByDeveloper(developreId).ToGameVm();
+				List<GameIndexVm> vm2 = service.FilterByDeveloper(developerId).ToGameVm();
 				return View(vm2);
 			}
 		}
 
 		//[Authorize]
-		public ActionResult Edit(int id )
+		public ActionResult Edit(int id = 3)
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
@@ -119,7 +122,7 @@ namespace RizzGamingBase.Controllers
 			if (!ModelState.IsValid) { return View(vm); };
 
 			//getDeveloperId， 尚未實作
-			int developerId = 1; 
+			int developerId = 8; 
 
 			try
 			{
