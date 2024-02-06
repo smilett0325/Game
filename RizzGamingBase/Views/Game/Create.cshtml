@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/DeveloperBoard.cshtml";
 }
 
 @*<h2>創建遊戲</h2>*@
@@ -61,36 +62,6 @@
                             @Html.LabelFor(model => model.MaxPercent, htmlAttributes: new { @class = "form-label col-md-2" })
                             @Html.ValidationMessageFor(model => model.MaxPercent, "", new { @class = "text-danger" })
                         </div>
-                    </div>
-                    <div class="col-7">
-                        <div class="mb-3">
-                            <div>
-                                <label class="form-label">封面圖片</label>
-                            </div>
-                            <input type="file" name="cover" id="fileInputCov" class="form-control d-inline-block" onchange="coverFileChange()" />
-
-                        </div>
-                        <div id="coverContainer" class="mb-3"></div>
-
-                        <div class="mb-3">
-                            <div>
-                                <label class="form-label">展示圖片</label>
-                            </div>
-                            <input type="file" name="displayImages" id="fileInputImg" class="form-control d-inline-block" onchange="imageFileChange()" multiple />
-
-                        </div>
-                        <div id="imageContainer" class="mb-3"></div>
-
-                        <div class="mb-3">
-                            <div>
-                                <label class="form-label">預告片</label>
-                            </div>
-                            <input type="file" name="displayVideo" id="fileInputVdo" class="form-control d-inline-block" onchange="videoFileChange()" />
-
-                        </div>
-                        <div id="videoContainer" class="mb-3"></div>
-                    </div>
-                    <div class="col-2">
 
                         <div>
                             <div class="mb-1"><p class="d-inline-block">編輯標籤</p><button type="button" class="form-label btn btn-light" onclick="showTagModal()">+</button></div>
@@ -151,6 +122,35 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-7">
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">封面圖片</label>
+                            </div>
+                            <input type="file" name="cover" id="fileInputCov" class="form-control d-inline-block" onchange="coverFileChange()" />
+
+                        </div>
+                        <div id="coverContainer" class="mb-3"></div>
+
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">展示圖片</label>
+                            </div>
+                            <input type="file" name="displayImages" id="fileInputImg" class="form-control d-inline-block" onchange="imageFileChange()" multiple />
+
+                        </div>
+                        <div id="imageContainer" class="mb-3"></div>
+
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">預告片</label>
+                            </div>
+                            <input type="file" name="displayVideo" id="fileInputVdo" class="form-control d-inline-block" onchange="videoFileChange()" />
+
+                        </div>
+                        <div id="videoContainer" class="mb-3"></div>
+                    </div>
+
 
                     <div class="mb-3">
                         <div class="col-md-offset-2 col-md-10">

@@ -65,7 +65,103 @@
                             @Html.LabelFor(model => model.MaxPercent, htmlAttributes: new { @class = "form-label col-md-2" })
                             @Html.ValidationMessageFor(model => model.MaxPercent, "", new { @class = "text-danger" })
                         </div>
-                        
+
+                        <div>
+                            <div class="mb-1"><p class="d-inline-block">編輯標籤</p><button type="button" class="form-label btn btn-light" onclick="showTagModal()">+</button></div>
+                            <div id="selectedTagsContainer">
+                                @foreach (var selectedTag1 in ViewBag.selectedTags)
+        {
+                                <div id="tag@(selectedTag1.Id)-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">@selectedTag1.Name</div>
+        }
+                            </div>
+                        </div>
+
+                        <div id="tagModal" class="modal" tabindex="-1" style="display: none;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">編輯標籤</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h2>已選標籤</h2>
+                                        <div id="activeAddTag">
+                                            @foreach (var selectedTag2 in ViewBag.selectedTags)
+                    {
+                                            <button id="tag@(selectedTag2.Id)-selected" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="removeTag('@selectedTag2.Id')" data-select="@selectedTag2.Id">@selectedTag2.Name</button>
+                    }
+                                        </div>
+                                        <hr />
+                                        <h2>標籤列表</h2>
+                                        @foreach (var tag in ViewBag.TagList)
+                {
+                                        <button id="tag@(tag.Id)" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addTag('@tag.Id', '@tag.Name')">@tag.Name</button>
+                }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">關閉</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="mb-1"><p class="d-inline-block">選擇主遊戲(若沒則不選擇)</p><button type="button" class="form-label btn btn-light" onclick="showDLCModal()">+</button></div>
+                            <div id="selectedDLCContainer">
+                                @if (ViewBag.attachedGame == null)
+        {
+                                <div id="none-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">無</div>
+        }
+        else
+        {
+                                <div id="@ViewBag.attachedGame.Id-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">@ViewBag.attachedGame.Name</div>
+        }
+                            </div>
+                        </div>
+
+                        <div id="dlcModal" class="modal" tabindex="-1" style="display: none;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">選擇主遊戲</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" id="DLCActiveClass">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">搜尋</span>
+                                            <input id="search" type="text" class="form-control" placeholder="搜尋" aria-label="Username" aria-describedby="basic-addon1" onkeydown="filterGame()">
+                                        </div>
+                                        <button id="none" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('none', '無')">無</button>
+                                        @if (ViewBag.attarchedGame == null)
+                {
+
+                    foreach (var game in ViewBag.gameList)
+                    {
+                                        <button id="@game.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')">@game.Name</button>
+                    }
+                }
+                else
+                {
+                    foreach (var game in ViewBag.gameList)
+                    {
+                        if (game.Id != ViewBag.attachedGame.Id)
+                        {
+                                        <button id="@game.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')">@game.Name</button>
+                        }
+                        else
+                        {
+                                        <button id="@game.Id" type="button" class="btn btn-primary-subtle rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')" disabled>@game.Name</button>
+                        }
+                    }
+                }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">關閉</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-7">
 
@@ -125,104 +221,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-2">
-
-                        <div>
-                            <div class="mb-1"><p class="d-inline-block">編輯標籤</p><button type="button" class="form-label btn btn-light" onclick="showTagModal()">+</button></div>
-                            <div id="selectedTagsContainer">
-                                @foreach (var selectedTag1 in ViewBag.selectedTags)
-                                {
-                                    <div id="tag@(selectedTag1.Id)-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">@selectedTag1.Name</div>
-                                }
-                            </div>
-                        </div>
-
-                        <div id="tagModal" class="modal" tabindex="-1" style="display: none;">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">編輯標籤</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h2>已選標籤</h2>
-                                        <div id="activeAddTag">
-                                            @foreach (var selectedTag2 in ViewBag.selectedTags)
-                                            {
-                                                <button id="tag@(selectedTag2.Id)-selected" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="removeTag('@selectedTag2.Id')" data-select="@selectedTag2.Id">@selectedTag2.Name</button>
-                                            }
-                                        </div>
-                                        <hr />
-                                        <h2>標籤列表</h2>
-                                        @foreach (var tag in ViewBag.TagList)
-                                        {
-                                            <button id="tag@(tag.Id)" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addTag('@tag.Id', '@tag.Name')">@tag.Name</button>
-                                        }
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">關閉</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="mb-1"><p class="d-inline-block">選擇主遊戲(若沒則不選擇)</p><button type="button" class="form-label btn btn-light" onclick="showDLCModal()">+</button></div>
-                            <div id="selectedDLCContainer">
-                                @if (ViewBag.attachedGame == null)
-                                {
-                                    <div id="none-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">無</div>
-                                }
-                                else
-                                {
-                                    <div id="@ViewBag.attachedGame.Id-show" class="d-inline-flex bg-primary text-light rounded-pill mr-1 mb-1" style="padding: .25rem .5rem; font-size: 13px">@ViewBag.attachedGame.Name</div>
-                                }
-                            </div>
-                        </div>
-
-                        <div id="dlcModal" class="modal" tabindex="-1" style="display: none;">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">選擇主遊戲</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body" id="DLCActiveClass">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">搜尋</span>
-                                            <input id="search" type="text" class="form-control" placeholder="搜尋" aria-label="Username" aria-describedby="basic-addon1" onkeydown="filterGame()">
-                                        </div>
-                                        <button id="none" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('none', '無')">無</button>
-                                        @if (ViewBag.attarchedGame == null)
-                                        {
-
-                                            foreach (var game in ViewBag.gameList)
-                                            {
-                                                <button id="@game.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')">@game.Name</button>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            foreach (var game in ViewBag.gameList)
-                                            {
-                                                if (game.Id != ViewBag.attachedGame.Id)
-                                                {
-                                                    <button id="@game.Id" type="button" class="btn btn-primary rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')">@game.Name</button>
-                                                }
-                                                else
-                                                {
-                                                    <button id="@game.Id" type="button" class="btn btn-primary-subtle rounded-pill mr-1 mb-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="addDLC('@game.Id', '@game.Name')" disabled>@game.Name</button>
-                                                }
-                                            }
-                                        }
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">關閉</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div> 
                         <div class="mb-3">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="button" value="Save" class="btn btn-primary" id="save" />
@@ -233,7 +232,7 @@
             </div>
 
         </div>
-    </div>
+ 
         }
 
         <div>

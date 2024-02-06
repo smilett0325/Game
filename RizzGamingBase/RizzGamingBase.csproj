@@ -5540,6 +5540,7 @@
     <Content Include="Views\Member\Edit.cshtml" />
     <Content Include="Views\Shared\DeveloperBoard.cshtml" />
     <Content Include="Views\Discount\Detail.cshtml" />
+    <Content Include="Views\Game\DeveloperIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".nuget\" />
@@ -5547,7 +5548,6 @@
     <Folder Include="Data\" />
     <Folder Include="Images\Scratch\DisplayVideo\" />
     <Folder Include="Views\Api\" />
-    <Folder Include="Views\Member\" />
     <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
