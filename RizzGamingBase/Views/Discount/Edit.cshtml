@@ -1,7 +1,8 @@
 ﻿@model RizzGamingBase.Models.ViewModels.DiscountVm
 
 @{
-    ViewBag.Title = "Edit";
+   ViewBag.Title = "Edit";
+   Layout = "~/Views/Shared/AdminBoard.cshtml";
 }
 
 
@@ -24,6 +25,8 @@
                         @Html.HiddenFor(model => model.Game, new { @class = "Game" })
                         @Html.HiddenFor(model => model.StartDate, new { @class = "StartDate" })
                         @Html.HiddenFor(model => model.EndDate, new { @class = "EndDate" })
+                        @Html.HiddenFor(model => model.DiscountType, new { @class = "DiscountType" })
+
 
 
                         <div class="form-group">
@@ -38,6 +41,7 @@
                             @Html.LabelFor(model => model.DiscountType, htmlAttributes: new { @class = "form-label col-md-2" })
 
                             @Html.DropDownListFor(model => model.DiscountType, Model.DiscountTypeList, "請選擇", new { @class = "form-control", @onchange = "updateDiscountType()" })
+
                             @Html.ValidationMessageFor(model => model.DiscountType, "", new { @class = "text-danger" })
 
                         </div>
@@ -245,7 +249,7 @@
 
             discountGames.forEach(function (item) {
             var row = $('<tr>');
-            row.append('<td><img src="/DiscountPictures/' + item.Image + '" width="100" height="50" class="img-fluid" /></td>');
+            row.append('<td><img src="/Images/DiscountPicture/' + item.Image + '" width="100" height="50" class="img-fluid" /></td>');
             row.append('<td>' + item.Name + '</td>');
             row.append('<td><button type="button" class="btn btn-primary remove" data-id="' + item.Id + '">移除</button></td>');
 
@@ -302,7 +306,7 @@
         data: { gameId: gameId },
         success: function (data) {
             discountGames.push(data);
-            alert("已加入");
+           
         }
     });
 
@@ -343,10 +347,10 @@
         $('.Game').val(JSON.stringify(gameIds));
     }
 
-    function updateDiscountType() {
-        var selectedValue = $('#DiscountType').val();
-        $('#DiscountType').val(selectedValue);
-    }
+        function updateDiscountType() {
+            var selectedValue = $('#DiscountType').val();
+            $('#DiscountType').val(selectedValue);
+        }
         function updateSelectedDateRange() {
 
             var selectedDateRange = $('#reservationtime').data('daterangepicker');

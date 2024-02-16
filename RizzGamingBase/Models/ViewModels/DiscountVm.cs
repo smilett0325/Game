@@ -43,12 +43,12 @@ namespace RizzGamingBase.Models.ViewModels
         [Display(Name = "描述")]
         public string Description { get; set; }
 
-        public string Game { get; set; }
+        public string[] Game { get; set; }
 
         [Display(Name = "活動類型")]
         public IEnumerable<SelectListItem> DiscountTypeList { get; set; }
 
-        public int DeveloperId {  get; set; }
+        public int? DeveloperId {  get; set; }
 
 
 

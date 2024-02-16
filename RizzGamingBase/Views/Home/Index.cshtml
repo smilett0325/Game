@@ -1,4 +1,10 @@
-﻿<div class="row">
+﻿@{ 
+    Layout = "~/Views/Shared/AdminBoard.cshtml";
+}
+
+
+
+<div class="row">
     <div class="mb-3 col-12">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -22,58 +28,92 @@
             </button>
         </div>
     </div>
-    <div class="col-lg-6 col-6">
-        <!-- small box -->
-        <div class="small-box bg-info">
-            <div class="inner">
-                <h3>會員管理</h3>
+    <div class="row">
+        <div class="col-lg-6 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>會員管理</h3>
 
-                <p>編輯會員資料</p>
+                    <a href="@Url.Action("", "")" class="link-light">會員列表</a>
+                    <br />
+                    <a href="@Url.Action("", "")" class="link-light">檢舉列表</a>
+                    <p></p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <div class="icon">
-                <i class="fas fa-edit"></i>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-6 col-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>開發商管理</h3>
+
+                    <a href="@Url.Action("Index", "Admin")" class="link-light">開發商列表</a>
+                    <br>
+                    <a href="@Url.Action("Chart", "GameData")" class="link-light">營收數據</a>
+                    <p></p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <a href="@Url.Action("Index", "Admin")" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
-    <div class="col-lg-6 col-6">
+    <div class="col-lg-4 col-4">
         <!-- small box -->
-        <div class="small-box bg-success">
-            <div class="inner">
-                <h3>開發商管理</h3>
-
-                <p>編輯開發商資訊</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-store"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-6 col-6">
-        <!-- small box -->
-        <div class="small-box bg-purple">
+        <div class="small-box bg-green">
             <div class="inner">
                 <h3>遊戲管理</h3>
 
-                <p>遊戲上下架管理</p>
+                <a href="@Url.Action("Index", "Game")" class="link-light">遊戲列表</a>
+                <br />
+                <a href="@Url.Action("Index", "Game")" class="link-light"></a>
+                <br />
+                <a href="@Url.Action("Index", "Game")" class="link-light"></a>
+                
             </div>
             <div class="icon">
-                <i class="fas fa-gamepad" ></i>
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-4 col-4">
+        <!-- small box -->
+        <div class="small-box bg-purple">
+            <div class="inner">
+                <h3>紅利產品管理</h3>
+
+                <a href="@Url.Action("", "")" class="link-light">紅利產品列表</a>
+                <br />
+                <a href="@Url.Action("", "")" class="link-light"></a>
+                <br />
+                <a href="@Url.Action("", "")" class="link-light"></a>
+            </div>
+            <div class="icon">
+                <i class="fab fa-product-hunt"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
-    <div class="col-lg-6 col-6">
+    <div class="col-lg-4 col-4">
         <!-- small box -->
         <div class="small-box bg-danger">
             <div class="inner">
                 <h3>優惠活動</h3>
-
-                <p>優惠活動管理</p>
+                <a href="@Url.Action("Home", "Discount")" class="link-light">行事曆</a>
+                <br>
+                <a href="@Url.Action("Index", "Discount")" class="link-light">活動列表</a>
+                <br>
+                <a href="@Url.Action("AdminCreate", "Discount")" class="link-light">創建活動</a>
             </div>
             <div class="icon">
                 <i class="fas fa-calendar"></i>

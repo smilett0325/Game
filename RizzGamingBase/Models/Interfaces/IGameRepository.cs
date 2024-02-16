@@ -19,5 +19,9 @@ namespace RizzGamingBase.Models.Interfaces
 		void Update(GameEntity entity);
 
 		void Delete(int id);
+
+		List<GameEntity> GetDLCGame(int id);
+
+		GameEntity GetAttachedGame(int id);
 	}
 }

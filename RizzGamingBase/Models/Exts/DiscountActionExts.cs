@@ -1,4 +1,5 @@
 ﻿using RizzGamingBase.Models.Dtos;
+using RizzGamingBase.Models.Infra;
 using RizzGamingBase.Models.Repositories.EFRepositories;
 using RizzGamingBase.Models.Services;
 using RizzGamingBase.Models.ViewModels;
@@ -29,12 +30,18 @@ namespace RizzGamingBase.Models.Exts
             return DiscountExts.GetDtoToVm(vm);
         }
 
-        public static void Create(DiscountVm vm)
+        public static void Create(DiscountVm vm , HttpPostedFileBase DisplayImage)
         {
+            UploadFileHelper uploadFileHelper = new UploadFileHelper();
+            string[] allowexts = new string[] { ".jpg", ".jpeg", ".png" , ".jfif"};
+
+
+            uploadFileHelper.UploadFile(DisplayImage, "DiscountPicture", allowexts);
             var repo = new DiscountEFRepository();
             var service = new DiscountService(repo);
             var dto = DiscountExts.CreateVmToDto(vm);
             service.Create(dto);
+
         }
 
         public static void Edit(DiscountVm vm)

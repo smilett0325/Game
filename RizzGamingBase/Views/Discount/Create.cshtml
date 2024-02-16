@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/AdminBoard.cshtml";
 }
 
 
@@ -9,148 +10,147 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "fileForm" }))
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
 
-    <div class="card card-blue">
-        <div class="card-header">
-            <h3 class="card-title"><i class="fas fa-pen-alt"></i>創建活動</h3>
-        </div>
-        <div class="card-body">
-            <div class="form-horizontal ">
-                <div class="row">
-                    <div class="col-4 ">
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.Game, new { @class = "Game" })
-                        @Html.HiddenFor(model => model.StartDate, new { @class = "StartDate" })
-                        @Html.HiddenFor(model => model.EndDate, new { @class = "EndDate" })
-                        <div class="mb-3">
-                            @Html.LabelFor(model => model.DiscountName, htmlAttributes: new { @class = "form-label col-md-2" })
+<div class="card card-blue">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-pen-alt"></i>創建活動</h3>
+    </div>
+    <div class="card-body">
+        <div class="form-horizontal ">
+            <div class="row">
+                <div class="col-4 ">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.StartDate, new { @class = "StartDate" })
+                    @Html.HiddenFor(model => model.EndDate, new { @class = "EndDate" })
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.DiscountName, htmlAttributes: new { @class = "form-label col-md-2" })
 
-                            @Html.EditorFor(model => model.DiscountName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.DiscountName, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.DiscountName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DiscountName, "", new { @class = "text-danger" })
 
-                        </div>
+                    </div>
 
-                        <div class="mb-3">
-                            @Html.LabelFor(model => model.DiscountType, htmlAttributes: new { @class = "form-label col-md-2" })
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.DiscountType, htmlAttributes: new { @class = "form-label col-md-2" })
 
-                            @Html.DropDownListFor(model => model.DiscountType, Model.DiscountTypeList, "請選擇", new { @class = "form-control", @onchange = "updateDiscountType()" })
-                            @Html.ValidationMessageFor(model => model.DiscountType, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.DiscountType, Model.DiscountTypeList, "請選擇", new { @class = "form-control", @onchange = "updateDiscountType()" })
+                        @Html.ValidationMessageFor(model => model.DiscountType, "", new { @class = "text-danger" })
 
-                        </div>
+                    </div>
 
-                        <div class="mb-3">
-                            @Html.LabelFor(model => model.DiscountImage, htmlAttributes: new { @class = "form-label col-md-2" })
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.DiscountImage, htmlAttributes: new { @class = "form-label col-md-2" })
 
-                            <input type="file" name="DiscountImage" class="form-control" />
-                            @Html.ValidationMessageFor(model => model.DiscountImage, "", new { @class = "text-danger" })
+                        <input type="file" name="DiscountImage" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.DiscountImage, "", new { @class = "text-danger" })
 
-                        </div>
+                    </div>
 
-                        <div class="mb-3">
-                            <label>設定活動時間:</label>
+                    <div class="mb-3">
+                        <label>設定活動時間:</label>
 
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                </div>
-                                <input type="text" class="form-control float-right" id="reservationtime">
-                                <input type="hidden" id="selectedDateRange" name="selectedDateRange" />
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-clock"></i></span>
                             </div>
-
+                            <input type="text" class="form-control float-right" id="reservationtime">
+                            <input type="hidden" id="selectedDateRange" name="selectedDateRange" />
                         </div>
 
-
-
-
-                        <div class="mb-3">
-                            @Html.LabelFor(model => model.Percent, htmlAttributes: new { @class = "form-label col-md-2" })
-
-                            @Html.EditorFor(model => model.Percent, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Percent, "", new { @class = "text-danger" })
-
-                        </div>
-
-                        <div class="mb-3">
-                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label col-md-2" })
-
-                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-
-                        </div>
                     </div>
 
 
-                    <div class="col-8">
-                        <div class="mb-3 col-8">
-                            <hr />
-                            <table class="table table-bordered" id="discountTable">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">圖片</th>
-                                        <th scope="col">遊戲名稱</th>
-                                        <th scope="col">移除</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
 
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#gameModal">選擇優惠遊戲</button>
 
-                        <!-- 模態框 -->
-                        <div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="gameModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="gameModalLabel">遊戲選擇</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <!-- 未加入的遊戲列表 -->
-                                            <div class="col-md-6">
-                                                <h5>未加入的遊戲</h5>
-                                                <input type="search" id="keyword" class="form-control" placeholder="想查詢的遊戲" />
-                                                <ul id="availableGames" class="list-group">
-                                                </ul>
-                                            </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.Percent, htmlAttributes: new { @class = "form-label col-md-2" })
 
-                                            <!-- 已加入的遊戲列表 -->
-                                            <div class="col-md-6">
-                                                <h5>已加入的遊戲</h5>
-                                                <ul id="selectedGames" class="list-group">
-                                                </ul>
-                                            </div>
+                        @Html.EditorFor(model => model.Percent, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Percent, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label col-md-2" })
+
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+
+                <div class="col-8">
+                    <div class="mb-3 col-8">
+                        <hr />
+                        <table class="table table-bordered" id="discountTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">圖片</th>
+                                    <th scope="col">遊戲名稱</th>
+                                    <th scope="col">移除</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#gameModal">選擇優惠遊戲</button>
+
+                    <!-- 模態框 -->
+                    <div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="gameModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="gameModalLabel">遊戲選擇</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <!-- 未加入的遊戲列表 -->
+                                        <div class="col-md-6">
+                                            <h5>未加入的遊戲</h5>
+                                            <input type="search" id="keyword" class="form-control" placeholder="想查詢的遊戲" />
+                                            <ul id="availableGames" class="list-group">
+                                            </ul>
+                                        </div>
+
+                                        <!-- 已加入的遊戲列表 -->
+                                        <div class="col-md-6">
+                                            <h5>已加入的遊戲</h5>
+                                            <ul id="selectedGames" class="list-group">
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                                        <button type="button" class="btn btn-primary" onclick="addSelectedGames()" data-dismiss="modal">確定</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                    <button type="button" class="btn btn-primary" onclick="addSelectedGames()" data-dismiss="modal">確定</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <div class="mb-3">
-
-                <button type="submit" class="btn btn-primary" onclick="updateDiscountGamesInput(); updateSelectedDateRange();"><i class="fas fa-save"></i>新建活動</button>
-
-            </div>
         </div>
 
+
+        <div class="mb-3">
+
+            <button type="button" id="update" class="btn btn-primary" onclick=""><i class="fas fa-save"></i>update</button>
+            <button type="button"  class="btn btn-primary" onclick="create();">創建</button>
+        </div>
     </div>
+
+</div>
 
 }
 
@@ -168,7 +168,7 @@
     <script>
         var availableGames = [];
         var discountGames = [];
-        var id = 0;
+        var id;
         var keyword = "";
 
 
@@ -178,6 +178,8 @@
             loadGame(keyword);
 
         });
+
+
 
 
         function updateAvailableGamesList() {
@@ -218,7 +220,7 @@
 
             discountGames.forEach(function (item) {
                 var row = $('<tr>');
-                row.append('<td><img src="/DiscountPictures/' + item.Image + '" width="100" height="50" class="img-fluid" /></td>');
+                row.append('<td><img src="/Images/DiscountPicture/' + item.Image + '" width="100" height="50" class="img-fluid" /></td>');
                 row.append('<td>' + item.Name + '</td>');
                 row.append('<td><button type="button" class="btn btn-primary remove" data-id="' + item.Id + '">移除</button></td>');
 
@@ -277,7 +279,7 @@
             data: { gameId: gameId },
             success: function (data) {
                 discountGames.push(data);
-                alert("已加入");
+             
             }
         });
 
@@ -311,19 +313,6 @@
         console.log(discountGames);
         }
 
-        function updateDiscountGamesInput() {
-            var gameIds = discountGames.map(function (game) {
-                return game.Id;
-            });
-
-            $('.Game').val(JSON.stringify(gameIds));
-        }
-
-        function updateDiscountType() {
-            var selectedValue = $('#DiscountType').val();
-            $('#DiscountType').val(selectedValue);
-        }
-
          function updateSelectedDateRange() {
 
      var selectedDateRange = $('#reservationtime').data('daterangepicker');
@@ -334,19 +323,56 @@
  }
 
 
+       
 
     </script>
 
     <script>
         $(document).ready(function () {
-        $('#reservationtime').daterangepicker({
-            timePicker: true,
-            timePickerIncrement: 30,
-            locale: {
-                format: 'MM/DD/YYYY hh:mm A'
-            },
+            $('#reservationtime').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'MM/DD/YYYY hh:mm A'
+                },
+            });
         });
-    });
+
+
+
+                
+
+    </script>
+    <script>
+        function create() {
+ 
+            var formData = new FormData(document.getElementById('fileForm'));
+            console.log(discountGames.length);
+            for (var i = 0; i < discountGames.length; i++) {
+                var discountGame = discountGames[i];
+                formData.append('Game', discountGame.Id);
+               
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateDiscount", "Discount")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        window.location.href = '/Discount/Index';
+                    } else {
+                        e.preventDefault;
+                    }
+                },
+            });
+
+
+
+        }
 
     </script>
 }

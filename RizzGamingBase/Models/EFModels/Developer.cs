@@ -41,7 +41,7 @@ namespace RizzGamingBase.Models.EFModels
 
         public bool IsConfirmed { get; set; }
 
-        [StringLength(500)]
+        [StringLength(256)]
         public string ConfirmCode { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

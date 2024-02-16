@@ -104,6 +104,7 @@ namespace RizzGamingBase.Models.Exts
 			return new GameIndexVm
 			{
 				Id = model.Id,
+				DeveloperId = model.DeveloperId,
 				Name = model.Name,
 				Price = model.Price,
 				Cover = model.Cover,
@@ -123,12 +124,12 @@ namespace RizzGamingBase.Models.Exts
 			var dlcR = new DLCEFRepository();
 			var tR = new TagEFRepository();
 			//var dR = new DiscountEFRepository();
-			//var gR = new GameEFRepository();
+			var gR = new GameEFRepository();
 
 			var displayImage = iR.GetAll(model.Id);
 
 			var tag = tR.GetAll(model.Id);
-			var dlc = dlcR.GetDLCGame(model.Id);
+			var dlc = gR.GetDLCGame(model.Id);
 			//var discount =
 
 			var imageList = new List<string>();
@@ -165,75 +166,7 @@ namespace RizzGamingBase.Models.Exts
 				Video = model.Video,
 				Tags = tagList,
 				DLCs = dlcList,
-				//Discounts = new List<DiscountDto>(),
 			};
-
-			//var gts = db.GameTags.AsNoTracking()
-			//	.Where(x => x.Id == model.Id)
-			//	.Include(gt => gt.Tag)
-			//	.ToList();
-
-			//List<Tag> tags = gts.Select(gt => gt.Tag).ToList();
-
-			//var di = db.DiscountItems.AsNoTracking()
-			//	.Where(x => x.GameId == model.Id)
-			//	.Include(x => x.Discount)
-			//	.ToList();
-
-			//List<Discount> discounts = di.Select(x => x.Discount).ToList();
-
-			//var dlc = db.DLCs.AsNoTracking()
-			//		.Where(x => x.AttachmentGameId == model.Id)
-			//		.Include(x => x.Game)
-			//		.ToList();
-
-			//List<Game> dlcGames = dlc.Select(x => x.Game).ToList();
-
-
-
-			//複雜像單獨查詢是否會優化效能?
-
-			//var vm = db.Games.AsNoTracking()
-			//	.Include(x => x.Videos)
-			//	.Include(x => x.Images)
-			//	.Include(x => x.DLCs)
-			//	.Where(x => x.Id == model.Id)
-			//	.Select(x => new DeveloperGameEditVm
-			//	{
-			//		Id = x.Id,
-			//		Name = x.Name,
-			//		Introduction = x.Introduction,
-			//		Description = x.Description,
-			//		ReleaseDate = x.ReleaseDate,
-			//		Price = x.Price,
-			//		Image = x.Image,
-			//		DisplayImages = x.Images.ToList(),  //無法轉型成dto
-			//		DisplayVideos = x.Videos.ToList(),
-			//		MaxPercent = x.MaxPercent,
-			//		Tags = db.GameTags
-			//			.Where(gt => gt.GameId == x.Id)
-			//			.Join(
-			//				db.Tags,
-			//				gt => gt.TagId,
-			//				t => t.Id,
-			//				(gt, t) => t
-			//			)
-			//			.ToList(),
-			//		Discounts = db.DiscountItems
-			//			.Where(d => d.GameId == x.Id)
-			//			.Join(
-			//				db.Discounts,
-			//				di => di.DiscountId,
-			//				d => d.Id,
-			//				(di, d) => d
-			//			)
-			//			.ToList(),
-			//		DLCs = db.DLCs
-			//			.Where(dlc => dlc.AttachmentGameId == x.Id)
-			//			.Select(dlc => dlc.Game)
-			//			.ToList(),
-			//	})
-			//	.FirstOrDefault();
 
 			return vm;
 		}

@@ -1,33 +1,31 @@
-﻿using System;
+﻿using RizzGamingBase.Models.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RizzGamingBase.Models.Dtos;
-using RizzGamingBase.Models.Entity;
 
-namespace RizzGamingBase.Models.InterFaces
+namespace RizzGamingBase.Controllers
 {
-	public interface IGameDataRepository
-	{
-		List<GameDataEntity> SearchGameNameToBI(string name);
+    public interface IGameDataRepository
+    {
+        List<GameDataEntity> SearchGameNameToBI(string name);
 
-		
-		int SearchGameNameToId(string name);
-		List<GameDataEntity> SearchDeveloperIdToGame(int id);
 
-		List<GameDataEntity> SearchDeveloperIdToGameNoGroup(int id);
+        int SearchGameNameToId(string name);
+        List<GameDataEntity> SearchDeveloperIdToGame(int id);
 
-		List<GameDataEntity> SearchAllDevelopersGames();
+        List<GameDataEntity> SearchDeveloperIdToGameNoGroup(int id);
 
-		List<GameDataEntity> SearchAllGamesBi();
+        List<GameDataEntity> SearchAllDevelopersGames();
 
-		IEnumerable<GameDataEntity> SearchAllDeveloper();
+        List<GameDataEntity> SearchAllGamesBi();
 
-		IEnumerable<GameDataEntity> SearchAllDevelopersGame(int id);
+        IEnumerable<GameDataEntity> SearchAllDeveloper();
 
-		List<GameDataEntity> SearchDeveloperGamesBi(int id);
+        IEnumerable<GameDataEntity> SearchAllDevelopersGame(int id);
 
-		List<GameDataEntity> SearchNoDeveloperGamesBi();
+        List<GameDataEntity> SearchDeveloperGamesBi(int id);
+
+        List<GameDataEntity> SearchNoDeveloperGamesBi();
+
+        int SearchDeveloperAccountToDeveloperId(string account);
+
 	}
 }

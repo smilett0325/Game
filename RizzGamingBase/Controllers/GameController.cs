@@ -22,39 +22,85 @@ namespace RizzGamingBase.Controllers
 		
 		// GET: Game
 		public ActionResult Index()
+		{	
+			string developerAccount = User.Identity.Name;
+			var db = new AppDbContext();
+			int? developerId = db.Developers.Where(x=> x.Account == developerAccount).Select(x => x.Id).FirstOrDefault();
+			 
+			IGameRepository repo = new GameEFRepository();
+			GameService service = new GameService(repo);
+			if(developerId == 0)
+			{
+				List<GameIndexVm> vm = service.Filter().ToGameVm(); //顯示全部
+				return View(vm);
+			}
+			else 
+			{	
+				return RedirectToAction("DeveloperIndex");
+			}
+		}
+		public ActionResult DeveloperIndex()
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
-			List<GameIndexVm> vm = service.Filter().ToGameVm(); //顯示全部
-			return View(vm);
+			string developerAccount = User.Identity.Name;
+			var db = new AppDbContext();
+			int? developerId = db.Developers.Where(x => x.Account == developerAccount).Select(x => x.Id).FirstOrDefault();
+			List<GameIndexVm> vm2 = service.FilterByDeveloper(developerId).ToGameVm();
+			return View(vm2);
 		}
 
 		//[Authorize]
-		public ActionResult Edit(int id = 2)
+		public ActionResult Edit(int id)
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
+
+			var tagList = service.GetAllTag();
+			ViewBag.tagList = tagList;
+			var gameList = service.Filter(x => x.Id != id).ToList();
+			ViewBag.gameList = gameList;
+
+			//ViewBag SelectedTag
+			var selectedTags = service.GetSelectedTags(id);
+			ViewBag.selectedTags = selectedTags;
+
+			//ViewBag SelectedDLC
+			var attachedGame = service.GetAttachedGame(id);
+			ViewBag.attachedGame = attachedGame;
 
 			var game = service.Search(id);
 			DeveloperGameEditVm vm = game.ToDGVm();
 			return View(vm);
 		}
 
-		//[Authorize]
 		[HttpPost]
-		public ActionResult Edit(DeveloperGameEditVm vm, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImage, IEnumerable<HttpPostedFileBase> displayVideo)
+		public ActionResult Update(DeveloperGameEditVm vm, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImages, HttpPostedFileBase displayVideo)
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
 
-			string displayImagePath = Server.MapPath("/Image/DisplayImage");
-			string coverPath = Server.MapPath("/Image/Cover");
-			string displayVideoPath = Server.MapPath("/Image/DisplayVideo");
+			if (!ModelState.IsValid) { return View(vm); };
+			int developerId = 1;
 
-			service.DGSave(vm, displayImagePath, coverPath, displayVideoPath);
+			string[] selectedTags = Request.Form.GetValues("selectedTags[]");
+			string[] attachedGame = Request.Form.GetValues("selectedGame");
+			string[] originalImages = Request.Form.GetValues("originalImages");
+
+
+			try
+			{
+
+				service.Save(vm, developerId, cover, displayImages, displayVideo, selectedTags, attachedGame,originalImages);
+				var result = new { success = true, message = "操作成功" };
+
+				return Json(result);
+			}
+			catch(Exception ex)
+			{
+				ModelState.AddModelError(string.Empty, ex.Message);
+			}
 			return RedirectToAction("Index");
-
-			
 		}
 
 		//[Authorize]
@@ -74,27 +120,21 @@ namespace RizzGamingBase.Controllers
 
 		//[Authorize]
 		[HttpPost]
-		public ActionResult Create(DeveloperGameEditVm vm, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImages, HttpPostedFileBase displayVideo)
+		public ActionResult CreateGame(DeveloperGameEditVm vm, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImages, HttpPostedFileBase displayVideo)
 		{
 			IGameRepository repo = new GameEFRepository();
 			GameService service = new GameService(repo);
-			
-			var tagList = service.GetAllTag();
-			ViewBag.TagList = tagList;
-			var gameList = service.Filter();
-			ViewBag.gameList = gameList;
+			string developerAccount = User.Identity.Name;
+			var db = new AppDbContext();
+			int developerId = db.Developers.Where(x => x.Account == developerAccount).Select(x => x.Id).FirstOrDefault();
 
 			string[] selectedTags = Request.Form.GetValues("selectedTags[]");			
 			string[] attachedGame = Request.Form.GetValues("selectedGame");
 
 			if (!ModelState.IsValid) { return View(vm); };
 
-			//string displayImagePath = Server.MapPath("/Images/DisplayImages");
-			//string coverScratchPath = Server.MapPath("/Images/Scratch/Cover");
-			//string displayVideoScratchPath = Server.MapPath("/Images/Scratch/DisplayVideo");
-
 			//getDeveloperId， 尚未實作
-			int developerId = 1; 
+			
 
 			try
 			{

@@ -25,5 +25,6 @@ namespace RizzGamingBase.Models.ViewModels
         public int Percent { get; set; }
         [Display(Name = "活動描述")]
         public string Desciption { get; set; }
+        public int? DeveloperId {  get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using RizzGamingBase.Models.Dtos;
+﻿using Microsoft.Ajax.Utilities;
+using RizzGamingBase.Models.Dtos;
 using RizzGamingBase.Models.EFModels;
 using RizzGamingBase.Models.Entities;
 using RizzGamingBase.Models.Exts;
@@ -7,6 +8,7 @@ using RizzGamingBase.Models.Interfaces;
 using RizzGamingBase.Models.Repositories.EFRepositories;
 using RizzGamingBase.Models.ViewModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
@@ -23,21 +25,16 @@ namespace RizzGamingBase.Models.Services
 		{
 			_repo = repo;
 		}
-		public void DGSave(DeveloperGameEditVm vm, string displayImagePath, string coverPath, string displayVideoPath)
+		public void Save(DeveloperGameEditVm vm, int developerId, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImages, HttpPostedFileBase displayVideo, string[] selectedTags, string[] attachedGame, string[] originalImages)
 		{
 			var iRepo = new ImageEFRepository();
 			var gRepo = new GTEFRepository();
 			var dlcRepo = new DLCEFRepository();
-			//var dicepo = new DiscountEFRepository();
+			var uploadFileHelper = new UploadFileHelper();
 
-			//cover，image，bug要修
 			var game = new GameDto();
-			string[] image;
-			var gt = new List<TagDto>();
-			var dlc = new List<GameDto>();
-			var discount = new List<DiscountDto>();
 
-			//todo 實作儲存
+			var originalGame = _repo.Search(vm.Id);
 			//update gmae
 			game.Id = vm.Id;
 			game.Name = vm.Name;
@@ -47,44 +44,143 @@ namespace RizzGamingBase.Models.Services
 			game.Price = vm.Price;
 			game.DeveloperId = vm.DeveloperId;
 			game.MaxPercent = vm.MaxPercent;
-			//game.Image = vm.Image;
-			//game.Video = vm.Video;
+			game.Cover = cover != null ? cover.FileName : originalGame.Cover;
+			game.Video = displayVideo != null ? displayVideo.FileName : originalGame.Video;
 
-			_repo.Update(game.DtoToEntity());
-			//Create video
+			var updatedGame = game.DtoToEntity();
+			_repo.Update(updatedGame);
 
+			string[] imgAllowedExtensions = { ".jpg", ".jpeg", ".png" };
+			string[] vdoAllowedExtensions = { ".mp4", ".webm" };
 
-			//Create image
+			if (cover != null)
+			{ 
+				uploadFileHelper.DeleteFile("Covers", vm.DeveloperId, vm.Id, originalGame.Cover);
+				uploadFileHelper.UploadFile(cover, "Covers", vm.DeveloperId, vm.Id, imgAllowedExtensions);
+			}
+
+			if (displayVideo != null)
+			{
+				uploadFileHelper.DeleteFile("DisplayVideos", vm.DeveloperId, vm.Id, originalGame.Video);
+				uploadFileHelper.UploadFile(displayVideo, "DisplayVideos", vm.DeveloperId, vm.Id, vdoAllowedExtensions);
+			}
+
+			//Update image
+			List<string> dataImageString = new List<string>();
+			var dataImageList = iRepo.GetAll(vm.Id);
+			foreach (var data in dataImageList) dataImageString.Add(data.DisplayImage); //get dat
+
+			//刪除圖片
+			List<string> undeletedImages = originalImages.ToList();
+
+			var deleteImages = dataImageString.Except(undeletedImages).ToList();
+			dataImageList.Where(x => deleteImages.Contains(x.DisplayImage)).ToList().ForEach(i => iRepo.Delete(i.Id));
+			//deleteImages.ForEach(item => uploadFileHelper.DeleteFile("DisplayImages", developerId, vm.Id, item));
+			foreach (var di in deleteImages)
+			{
+				uploadFileHelper.DeleteFile("DisplayImages", vm.DeveloperId, vm.Id, di);
+			}
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+
+			//新增圖片
+			if (displayImages != null)
+			{
+				foreach (var di in displayImages)
+				{
+					uploadFileHelper.UploadFile(di, "DisplayImages", vm.DeveloperId, vm.Id, allowedExtensions);//, displayImagePath
+					var image = new ImageEntity
+					{
+						GameId = vm.Id,
+						DisplayImage = di.FileName,
+					};
+
+					iRepo.Create(image);
+				};
+			}
 
 			//Update or Create gt
+			var dataTagList = gRepo.GetGameTags(vm.Id);
+			List<string> dataTagStrings = dataTagList.Select(data => data.TagId.ToString()).ToList();
+
+			var selectedTagList = selectedTags.ToList();
+
+			var intersectTags = dataTagStrings.Intersect(selectedTagList);
+
+			if(intersectTags.Count() == 0)
+			{
+				foreach (var item in dataTagList)
+				{
+					gRepo.Delete(item.Id);
+				}
+				foreach (var item in selectedTagList)
+				{
+					var gt = new GTEntity
+					{
+						GameId = vm.Id,
+						TagId = Convert.ToInt32(item),
+					};
+					gRepo.Create(gt);
+				}
+			}
+			else
+			{
+				var tagsToAdd = selectedTagList.Except(dataTagStrings);
+				var tagsToDelete = dataTagStrings.Except(selectedTagList);
+
+				if (tagsToAdd.Count() > 0)
+				{
+
+					foreach (var item in tagsToAdd)
+					{
+						var gt = new GTEntity
+						{
+							GameId = vm.Id,
+							TagId = Convert.ToInt32(item),
+						};
+						gRepo.Create(gt);
+					}
+				}
+
+				// 要删除的标签
+
+				if (tagsToDelete.Count() > 0)
+				{
+
+					foreach (var item in tagsToDelete)
+					{
+						var deletetag = dataTagList
+								.Where(x => string.Equals(x.TagId.ToString(), item, StringComparison.OrdinalIgnoreCase))
+								.Select(tag => tag.Id)
+								.FirstOrDefault(); 
+						//var deletetag = dataTagList.Where(x => x.TagId == Convert.ToInt32(item)).Select(tag => tag.Id).FirstOrDefault();
+						gRepo.Delete(deletetag);
+					}
+				}
+			}
 
 			//Update or Create dlc
+			var dataDLC = dlcRepo.SearchByGameId(vm.Id);
+			//var empty = "";		
 
-			//Update or Create discount
 
-			//public ActionResult Create(ProductVm model, HttpPostedFileBase file1)
-			//{
-			//	//判斷ModelState.IsVaild
-			//	if (!ModelState.IsValid) { return View(model); }
-
-			//	string path = Server.MapPath("/UploadFile");
-
-			//	try
-			//	{
-			//		string newFileName = new UploadFileHelper().UploadImageFile(file1, path);
-			//		model.FileName = newFileName;
-
-			//		//todo 新增紀錄
-
-			//		return RedirectToAction("Index");
-			//	}
-			//	catch (Exception ex)
-			//	{
-			//		ModelState.AddModelError(string.Empty, ex.Message);
-			//	}
-
-			//	return View();
-			//}
+			foreach (var item in attachedGame)
+			{
+				if(item == "none")
+				{
+					dlcRepo.Delete(dataDLC.Id);
+				}else 
+				{
+					if (dataDLC != null && dataDLC.AttachedGameId != Convert.ToInt32(item))
+					{
+						var dlc = new DLCEntity
+						{
+							GameId = vm.Id,
+							AttachedGameId = Convert.ToInt32(item),
+						};
+						dlcRepo.Update(dlc);
+					}
+				}
+			};
 		}
 
 		//public void Create(DeveloperGameEditVm vm, int developerId, string displayImagePath, string coverScratchPath, string displayVideoScratchPath, HttpPostedFileBase cover, IEnumerable<HttpPostedFileBase> displayImages, HttpPostedFileBase displayVideo, string[] selectedTags, string[] attachedGame)
@@ -94,7 +190,7 @@ namespace RizzGamingBase.Models.Services
 			var gtRepo = new GTEFRepository();
 			var dlcRepo = new DLCEFRepository();
 			var uploadFileHelper = new UploadFileHelper();
-			
+
 			var game = new GameDto
 			{
 				Name = vm.Name,
@@ -109,19 +205,22 @@ namespace RizzGamingBase.Models.Services
 				Video = displayVideo.FileName,
 			};
 
-			
+			int gameId = _repo.Create(game.DtoToEntity());
+			uploadFileHelper.UploadFile(cover, "Covers", developerId, gameId, new string[] { ".jpg", ".jpeg", ".png" });
+			uploadFileHelper.UploadFile(displayVideo, "DisplayVideos", developerId, gameId, new string[] { ".mp4" , ".webm"});
 
 			//Create image
+			var allowedExtensions = new string[] { ".jpg", ".jpeg", ".png"};
 
 			foreach (var di in displayImages)
 			{
 				var image = new ImageEntity
 				{
-					//GameId = gameId,
+					GameId = gameId,
 					DisplayImage = di.FileName,
 				};
 
-				//uploadFileHelper.UploadDisplayImageFile(di, developerId, gameId);//, displayImagePath
+				uploadFileHelper.UploadFile(di, "DisplayImages", developerId, gameId, allowedExtensions);
 				iRepo.Create(image);
 			};
 
@@ -131,7 +230,7 @@ namespace RizzGamingBase.Models.Services
 			{
 				var gt = new GTEntity
 				{
-					//GameId = gameId,
+					GameId = gameId,
 					TagId = Convert.ToInt32(tag),
 				};
 				gtRepo.Create(gt);
@@ -142,12 +241,12 @@ namespace RizzGamingBase.Models.Services
 			{
 				foreach (var item in attachedGame)
 				{
-					if (item != "12")
+					if(item != "none")
 					{
 						var dlc = new DLCEntity
 						{
 							GameId = Convert.ToInt32(item),
-							//AttachedGameId = gameId,
+							AttachedGameId = gameId,
 						};
 						dlcRepo.Create(dlc);
 					};
@@ -162,7 +261,7 @@ namespace RizzGamingBase.Models.Services
 
 		public List<GameDto> Filter(Func<Game, bool> condition = null)
 		{
-			return _repo.Filter().EntityToDto();
+			return _repo.Filter(condition).EntityToDto();
 			//         var data = _repo.Filter();
 
 			//         var result = new List<GameDto>();
@@ -175,7 +274,7 @@ namespace RizzGamingBase.Models.Services
 			//         return result;
 		}
 
-		public List<GameDto> FilterByDeveloper(int developerId)
+		public List<GameDto> FilterByDeveloper(int? developerId)
 		{
 			var data = _repo.Filter(g => g.DeveloperId == developerId);
 
@@ -246,6 +345,28 @@ namespace RizzGamingBase.Models.Services
 			}
 
 			return result;
+		}
+
+		public List<ImageDto> GetDisplayImages(int id)
+		{
+			var iRepo = new ImageEFRepository();
+			return iRepo.GetAll(id).EntityToDto();
+		}
+
+		public List<TagDto> GetSelectedTags(int id)
+		{
+			var tRepo = new TagEFRepository();
+			return tRepo.GetAll(id).Select(x => new TagDto { Id = x.Id, Name = x.Name }).ToList();
+		}
+
+		public GameDto GetAttachedGame(int id)
+		{
+			var attachedGame = _repo.GetAttachedGame(id);
+			if (attachedGame != null)
+			{
+				return attachedGame.EntityToDto();
+			}
+			return null;
 		}
 	}
 }

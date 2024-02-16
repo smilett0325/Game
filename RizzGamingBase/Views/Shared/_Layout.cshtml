@@ -18,9 +18,6 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("styles", required: false)
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
@@ -39,6 +36,7 @@
                     <li>@Html.ActionLink("BonusProductsIndex", "Index", "BonusProducts", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("活動", "Index", "Discount", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("管理者登入", "Login", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
                     @{
 
                         if (IsDeveloperLogin)
@@ -49,8 +47,8 @@
 
                         else
                         {
-                            <li>@Html.ActionLink("登入", "Login", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li>@Html.ActionLink("註冊", "Register", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("開發商登入", "Login", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("開發商註冊", "Register", "Developer", new { area = "" }, new { @class = "nav-link" })</li>
                         }
                     }
 
@@ -68,8 +66,14 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     @RenderSection("scripts", required: false)
-    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#gameTable').DataTable();
+        });
+    </script>
+
 </body>
 </html>

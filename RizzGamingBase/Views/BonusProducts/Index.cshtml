@@ -2,20 +2,22 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminBoard.cshtml";
+}
 }
 
 <h2>紅利商品列表</h2>
 
 @using (Html.BeginForm("Index", "BonusProducts", FormMethod.Get, new { id = "searchForm" }))
 {
-    <div class="d-flex justify-content-between"style="width: 100%;">
+    <div class="d-flex justify-content-between" style="width: 100%;">
         <div class="input-group mb-3 ">
             <input type="text" id="keyword" name="keyword" class="form-control" placeholder="搜尋紅利商品" />
             <div class="input-group-append">
                 <button type="submit" class="btn btn-sm btn-primary">搜尋</button>
             </div>
         </div>
-        <div class="ml-2"style="white-space: nowrap;">
+        <div class="ml-2" style="white-space: nowrap;">
             @Html.ActionLink("新增商品", "Create", null, new { @class = "btn btn-sm btn-primary" })
         </div>
     </div>

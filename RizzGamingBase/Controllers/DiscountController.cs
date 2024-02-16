@@ -10,17 +10,51 @@ using System.Data.Entity;
 using System.Security.Cryptography;
 using Microsoft.Ajax.Utilities;
 
+
 namespace RizzGamingBase.Controllers
 {
     public class DiscountController : Controller
     {
         // GET: Discount
-        public ActionResult Index()
+        public ActionResult Index( )
         {
-            List<DiscountIndexVm> vm = DiscountActionExts.GetAllEvent();
-            return View(vm);
+
+                List<DiscountIndexVm> vm = DiscountActionExts.GetAllEvent();
+                return View(vm);
+          
         }
 
+
+
+        public ActionResult Detail(int id)
+        {
+            var db = new AppDbContext();
+
+            var details = db.DiscountItems
+                            .Include(d => d.Game)
+                            .Where(d => d.DiscountId == id)
+                            .Select(d => new DiscountDetailVm
+                            {
+                                DiscountName = d.Discount.Name,
+                                DiscountType = d.Discount.DiscountType,
+                                DiscountImage = d.Discount.Image,
+                                StartDate = d.Discount.StartDate,
+                                EndDate = d.Discount.EndDate,                               
+                                Description = d.Discount.Desciption,
+                                Game = new List<DiscountGameInfo>
+                                {
+                                    new DiscountGameInfo
+                                    {
+                                        Id = d.Game.Id,
+                                        Name = d.Game.Name,
+                                        Percent = d.Discount.Percent,
+                                        Iamge = d.Game.Cover,
+                                        Price = d.Game.Price,
+                                    }
+                                }
+                            });
+            return View(details);
+        }
 
         public ActionResult Home()
         {
@@ -39,14 +73,21 @@ namespace RizzGamingBase.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(DiscountVm vm)
         {
-            if(!ModelState.IsValid) return View(vm);
+            if (!ModelState.IsValid)
+            {
+                vm.DiscountTypeList = GetDiscountTypeList();
+                return View(vm);
+            }
             try
             {
-                DiscountActionExts.Edit(vm);
+                DiscountActionExts.Edit(vm); 
+                vm.DiscountTypeList = GetDiscountTypeList();
             }
             catch (Exception ex)
             {
+                vm.DiscountTypeList = GetDiscountTypeList();
                 ModelState.AddModelError("", ex.Message);
+                vm.DiscountTypeList = GetDiscountTypeList();
                 return View(vm);
             }
 
@@ -60,12 +101,9 @@ namespace RizzGamingBase.Controllers
             };
             return View(model);
         }
-
-
        
-
         [HttpPost]
-        public ActionResult Create(DiscountVm vm) 
+        public ActionResult CreateDiscount(DiscountVm vm , HttpPostedFileBase DiscountImage) 
         {
 
             if (!ModelState.IsValid) 
@@ -76,7 +114,11 @@ namespace RizzGamingBase.Controllers
 
             try
             {
-                DiscountActionExts.Create(vm);
+                vm.DiscountImage = DiscountImage.FileName;
+                DiscountActionExts.Create(vm, DiscountImage);
+
+                var result = new { success = true };
+                return Json(result);
             }
             catch (Exception ex)
             {
@@ -84,10 +126,14 @@ namespace RizzGamingBase.Controllers
         
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", User.Identity.Name);
         }
 
 
+
+
+
+        
         private IEnumerable<SelectListItem> GetDiscountTypeList()
         {
             return new List<SelectListItem>
@@ -103,16 +149,15 @@ namespace RizzGamingBase.Controllers
 
 
 
+        
 
 
 
-
-
-        public JsonResult GetDiscountEvent(int id)
+        public JsonResult GetDiscountEvent(int? id)
         {
             var db = new AppDbContext();
 
-            if (id != 0) {
+            if (id != null) {
                 var discountevent = db.Discounts
                                       .Where(d => d.DeveloperId == id)
                                       .Select(d => new DiscountEventVm
@@ -129,7 +174,6 @@ namespace RizzGamingBase.Controllers
             else
             {
                 var discountevent = db.Discounts
-                                      .Where(d => d.DeveloperId == id)
                                       .Select(d => new DiscountEventVm
                                       {
                                           Id = d.Id,
@@ -255,7 +299,7 @@ namespace RizzGamingBase.Controllers
         }
 
 
-        public JsonResult GetGames(int id, string keyword)
+        public JsonResult GetGames(int? id, string keyword)
         {
             var db = new AppDbContext();
 
