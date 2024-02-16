@@ -17,7 +17,7 @@ namespace RizzGamingBase.Models.Exts
         public static List<BonusProductsIndexVm> GetAll(AppDbContext context, string keyword = null)
         {
             var repo = new BonusProductsEFRepository(context);
-            var service = new BonusProductsServices(repo);
+            var service = new BonusProductsService(repo);
             var dto = service.GetAll();
 
             if (!string.IsNullOrEmpty(keyword))
@@ -43,10 +43,10 @@ namespace RizzGamingBase.Models.Exts
             return data;
         }
 
-        public static void CreateProduct(this BonusProductsCreateVm model, AppDbContext context , HttpPostedFileBase URL)
+        public static void CreateProduct(this BonusProductsCreateVm model, AppDbContext context, HttpPostedFileBase URL)
         {
             var repo = new BonusProductsEFRepository(context);
-            var service = new BonusProductsServices(repo);
+            var service = new BonusProductsService(repo);
 
             BonusProductsDto dto = new BonusProductsDto
             {
@@ -58,18 +58,58 @@ namespace RizzGamingBase.Models.Exts
             };
             service.Create(dto);
 
-            UploadFileHelper  uploadFileHelper = new UploadFileHelper();
+            UploadFileHelper uploadFileHelper = new UploadFileHelper();
             string[] allowExts = { ".jpg", ".jpeg", ".png", ".gif" };
 
-            uploadFileHelper.UploadFile(URL, "BonusProducts" , model.ProductTypeId, allowExts);
+            uploadFileHelper.UploadFile(URL, "BonusProducts", model.ProductTypeId, allowExts);
         }
 
         // todo 完成三層式編輯
         #region 三層式編輯
-        //public static void Edit(this BonusProductsVm model, AppDbContext context)
-        //{
-        //    var repo = new BonusProductsEFRepository(context);
-        //}
+        public static BonusProductsEditVm LoadProdct(this AppDbContext db, int id)//找到編輯欄位
+        {
+            //using (var db = new AppDbContext());//using會在連線字串完後自然釋放比上面更省效能也不用擔心資料外洩
+            var model = db.BonusProducts.Find(id);
+            if (model == null)
+            {
+                throw new InvalidOperationException("未取得產品");
+            }
+
+            return new BonusProductsEditVm
+            {
+                Id = model.Id,
+                ProductTypeId = model.ProductTypeId,
+                ProductTypeName = model.BonusProductType.Name,
+                Price = model.Price,
+                URL = model.URL,
+                Name = model.Name
+            };
+        }
+
+        public static void UpdateProduct(this AppDbContext db, BonusProductsEditVm model, HttpPostedFileBase URL)//修改
+        {
+            var findProduct = db.BonusProducts.Find(model.Id);
+            var uploadFileHelper = new UploadFileHelper();
+
+            if (findProduct == null)
+            {
+                throw new InvalidOperationException("未取得產品");
+            }
+
+            string[] imgAllowedExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+
+            if (URL != null)
+            {
+                uploadFileHelper.DeleteFile("BonusProducts", findProduct.ProductTypeId, findProduct.URL);
+                uploadFileHelper.UploadFile(URL, "BonusProducts", model.ProductTypeId, imgAllowedExtensions);
+            }
+            findProduct.ProductTypeId = model.ProductTypeId;
+            findProduct.Price = model.Price;
+            findProduct.URL = URL != null ? URL.FileName : findProduct.URL;
+            findProduct.Name = model.Name;
+
+            db.SaveChanges();
+        }
         #endregion
     }
 }

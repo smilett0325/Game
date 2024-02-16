@@ -8,11 +8,11 @@ using System.Web;
 
 namespace RizzGamingBase.Models.Services
 {
-    public class BonusProductsServices : IBonusProductsServices
+    public class BonusProductsService : IBonusProductsServices
     {
         private readonly IBonusProductsRepository _repo;
 
-        public BonusProductsServices(IBonusProductsRepository repo)
+        public BonusProductsService(IBonusProductsRepository repo)
         {
             _repo = repo;
         }

@@ -72,9 +72,61 @@ namespace RizzGamingBase.Controllers
 
 
         #region 單層編輯
+        #region 舊的程式
+        //public BonusProductsEditVm LoadProdct(int id)//找到編輯欄位
+        //{
+        //    //var model = new AppDbContext().BonusProducts.Find(id);
+        //    //using (var db = new AppDbContext());//using會在連線字串完後自然釋放比上面更省效能也不用擔心資料外洩
+        //    {
+        //        var model = db.BonusProducts.Find(id);
+        //        return new BonusProductsEditVm
+        //        {
+        //            Id = model.Id,
+        //            ProductTypeId = model.ProductTypeId,
+        //            ProductTypeName = model.BonusProductType.Name,
+        //            Price = model.Price,
+        //            URL = model.URL,
+        //            Name = model.Name
+        //        };
+        //    }
+
+        //}
+        //private void UpdateProduct(BonusProductsEditVm model, HttpPostedFileBase URL)//修改
+        //{
+        //    var findProduct = db.BonusProducts.Find(model.Id);
+        //    var uploadFileHelper = new UploadFileHelper();
+
+        //    if (findProduct != null)
+        //    {
+        //        string[] imgAllowedExtensions = { ".jpg", ".jpeg", ".png",".gif" };
+
+        //        if (URL != null)
+        //        {
+        //            uploadFileHelper.DeleteFile("BonusProducts", findProduct.ProductTypeId, findProduct.URL);
+        //            uploadFileHelper.UploadFile(URL, "BonusProducts", model.ProductTypeId,  imgAllowedExtensions);
+        //        }
+        //        findProduct.ProductTypeId = model.ProductTypeId;
+        //        findProduct.Price = model.Price;
+        //        findProduct.URL = URL != null ? URL.FileName : findProduct.URL ;
+        //        findProduct.Name = model.Name;
+
+        //        db.SaveChanges();
+
+        //    }
+        //    else
+        //    {
+        //        throw new InvalidOperationException("並未找到項目");
+        //    }
+        //}
+        #endregion
+        #endregion
+
+        //todo 三程式架構編輯
+        #region 三層編輯
         public ActionResult Edit(int id)
         {
-            BonusProductsEditVm model = LoadProdct(id);
+            //BonusProductsEditVm model = BonusProductExts.LoadProdct(db, id);//也是3層式的寫法，但比起下面的方式直接在控制器使用支料存取方法違反了分層原則
+            var model = db.LoadProdct(id);
             var productTypes = db.BonusProductTypes.Select(t => new SelectListItem
             {
                 Value = t.Id.ToString(),
@@ -94,7 +146,8 @@ namespace RizzGamingBase.Controllers
             }
             try
             {
-                UpdateProduct(model,URL);
+                //UpdateProduct(model,URL);
+                BonusProductExts.UpdateProduct(db, model, URL);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -104,94 +157,6 @@ namespace RizzGamingBase.Controllers
             return View(model);
         }
 
-        public BonusProductsEditVm LoadProdct(int id)//找到編輯欄位
-        {
-            //var model = new AppDbContext().BonusProducts.Find(id);
-            //using (var db = new AppDbContext());//using會在連線字串完後自然釋放比上面更省效能也不用擔心資料外洩
-            {
-                var model = db.BonusProducts.Find(id);
-                return new BonusProductsEditVm
-                {
-                    Id = model.Id,
-                    ProductTypeId = model.ProductTypeId,
-                    ProductTypeName = model.BonusProductType.Name,
-                    Price = model.Price,
-                    URL = model.URL,
-                    Name = model.Name
-                };
-            }
-
-        }
-        private void UpdateProduct(BonusProductsEditVm model, HttpPostedFileBase URL)//修改
-        {
-            var findProduct = db.BonusProducts.Find(model.Id);
-            var uploadFileHelper = new UploadFileHelper();
-
-            if (findProduct != null)
-            {
-                string[] imgAllowedExtensions = { ".jpg", ".jpeg", ".png",".gif" };
-
-                if (URL != null)
-                {
-                    uploadFileHelper.DeleteFile("BonusProducts", findProduct.ProductTypeId, findProduct.URL);
-                    uploadFileHelper.UploadFile(URL, "BonusProducts", model.ProductTypeId,  imgAllowedExtensions);
-                }
-                findProduct.ProductTypeId = model.ProductTypeId;
-                findProduct.Price = model.Price;
-                findProduct.URL = URL != null ? URL.FileName : findProduct.URL ;
-                findProduct.Name = model.Name;
-
-                db.SaveChanges();
-
-            }
-            else
-            {
-                throw new InvalidOperationException("並未找到項目");
-            }
-        }
-        #endregion
-
-        //todo 三程式架構編輯
-        #region 三層編輯
-        /*
-        public ActionResult Edit(int id)//編輯
-        {
-            BonusProductsVm model = LoadProdct(id);
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Edit(BonusProductsVm model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-
-            try
-            {
-                UpdateProduct(model);
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError(String.Empty, ex.Message);
-            }
-            return View(model);
-            //尚未實作View
-        }
-
-        public BonusProductsVm LoadProdct(int id)//找到編輯欄位
-        {
-            throw new NotImplementedException();
-        }
-
-        private void UpdateProduct(BonusProductsVm model)//修改
-        {
-            throw new NotImplementedException();
-        }
-        */
         #endregion
 
         #region 單層刪除
