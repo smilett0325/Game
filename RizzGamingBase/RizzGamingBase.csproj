@@ -173,20 +173,6 @@
     <Compile Include="Controllers\GameDataController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Models\Dtos\GameDataDto.cs" />
-    <Compile Include="Models\Entities\GameDataEntity.cs" />
-    <Compile Include="Models\Exts\SelectListExts.cs" />
-    <Compile Include="Models\Interfaces\ISelectListItem.cs" />
-    <Compile Include="Models\Services\GameDataService.cs" />
-    <Compile Include="Models\Exts\GameDataExts.cs" />
-    <Compile Include="Models\Repositories\EFRepositories\GameDataEFRepository.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Models\Interfaces\IGameDataRepository.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Dtos\BonusProductsDto.cs" />
-    <Compile Include="Models\Dtos\DiscountCreateDto.cs" />
-    <Compile Include="Models\Dtos\DiscountDto.cs" />
     <Compile Include="Models\EFModels\Admin.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\BanGame.cs" />
@@ -212,8 +198,23 @@
     <Compile Include="Models\EFModels\MemberTag.cs" />
     <Compile Include="Models\EFModels\Message.cs" />
     <Compile Include="Models\EFModels\Picture.cs" />
+    <Compile Include="Models\EFModels\sysdiagram.cs" />
     <Compile Include="Models\EFModels\Tag.cs" />
     <Compile Include="Models\EFModels\WishListe.cs" />
+    <Compile Include="Models\Entities\GameDataEntity.cs" />
+    <Compile Include="Models\Exts\SelectListExts.cs" />
+    <Compile Include="Models\Interfaces\ISelectListItem.cs" />
+    <Compile Include="Models\Services\GameDataService.cs" />
+    <Compile Include="Models\Exts\GameDataExts.cs" />
+    <Compile Include="Models\Repositories\EFRepositories\GameDataEFRepository.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\Interfaces\IGameDataRepository.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Dtos\BonusProductsDto.cs" />
+    <Compile Include="Models\Dtos\DiscountCreateDto.cs" />
+    <Compile Include="Models\Dtos\DiscountDto.cs" />
     <Compile Include="Models\Entities\BonusProductsEntity.cs" />
     <Compile Include="Models\Exts\BonusProductExts.cs" />
     <Compile Include="Models\Interfaces\IBonusProductsRepository.cs" />
@@ -5177,9 +5178,8 @@
     <Content Include="Views\BonusProducts\Edit.cshtml" />
     <Content Include="Views\BonusProducts\Index.cshtml" />
     <Content Include="Views\GameData\TChart.cshtml" />
-    <Content Include="Views\Member\Index.cshtml" />
-    <Content Include="Views\Member\Create.cshtml" />
-    <Content Include="Views\Member\Edit.cshtml" />
+    <Content Include="Views\Admin\MemberIndex.cshtml" />
+    <Content Include="Views\Admin\MemberReportList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -5260,6 +5260,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

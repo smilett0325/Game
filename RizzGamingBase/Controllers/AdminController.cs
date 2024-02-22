@@ -16,6 +16,17 @@ namespace RizzGamingBase.Controllers
             return View(db.Developers.ToList());
         }
 
+        public ActionResult MemberIndex()
+        {
+            return View(db.Members.ToList());
+        }
+
+        public ActionResult MemberReportList()
+        {
+            return View();
+        }
+
+
         [HttpGet]
         // GET: Admin/Delete/{developerId}
         public ActionResult Delete(int? developerId)

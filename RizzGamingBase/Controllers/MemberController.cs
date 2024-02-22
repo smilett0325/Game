@@ -11,25 +11,14 @@ namespace RizzGamingBase.Controllers
 {
     public class MemberController : Controller
     {
+        private readonly AppDbContext _db = new AppDbContext();
         // GET: Member
-        public ActionResult Index()
+        public ActionResult MemberIndex()
         {
-			var db = new AppDbContext();
-
-			return View(db.Members.ToList());
+			return View(_db.Members.ToList());
 		}
 
-		public ActionResult Create()
-		{
-			return View();
-		}
-
-		public ActionResult Edit()
-		{
-			return View();
-		}
-
-        public ActionResult ReportList()
+        public ActionResult MemberReportList()
         {
             return View();
         }

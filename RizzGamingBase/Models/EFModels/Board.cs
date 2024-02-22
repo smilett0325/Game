@@ -11,6 +11,7 @@ namespace RizzGamingBase.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Board()
         {
+            BanMembers = new HashSet<BanMember>();
             Messages = new HashSet<Message>();
             Pictures = new HashSet<Picture>();
         }
@@ -24,6 +25,9 @@ namespace RizzGamingBase.Models.EFModels
         public string Text { get; set; }
 
         public DateTime Time { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BanMember> BanMembers { get; set; }
 
         public virtual Member Member { get; set; }
 

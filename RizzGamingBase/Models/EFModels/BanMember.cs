@@ -14,8 +14,14 @@ namespace RizzGamingBase.Models.EFModels
 
         public int Member2Id { get; set; }
 
+        public int? BoardId { get; set; }
+
+        public int? MessageId { get; set; }
+
+        public int? CommentId { get; set; }
+
         [Required]
-        [StringLength(200)]
+        [StringLength(1000)]
         public string Content { get; set; }
 
         [Column(TypeName = "date")]
@@ -29,8 +35,14 @@ namespace RizzGamingBase.Models.EFModels
 
         public virtual Admin Admin { get; set; }
 
+        public virtual Board Board { get; set; }
+
+        public virtual Comment Comment { get; set; }
+
         public virtual Member Member { get; set; }
 
         public virtual Member Member1 { get; set; }
+
+        public virtual Message Message { get; set; }
     }
 }

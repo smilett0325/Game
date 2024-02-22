@@ -40,7 +40,7 @@ namespace RizzGamingBase.Models.EFModels
         public DateTime? BanTime { get; set; }
 
         public bool IsConfirmed { get; set; }
-        //
+
         [StringLength(500)]
         public string ConfirmCode { get; set; }
 

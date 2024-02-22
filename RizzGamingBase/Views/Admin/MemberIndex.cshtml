@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<RizzGamingBase.Models.EFModels.Member>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "MemberIndex";
 }
 
 <h2>Index</h2>
@@ -15,13 +15,7 @@
             @Html.DisplayNameFor(model => model.Account)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EncryptedPassword)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Mail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AvatarURL)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RegistrationDate)
@@ -39,9 +33,6 @@
             @Html.DisplayNameFor(model => model.Birthday)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NickName)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.IsConfirmed)
         </th>
         <th>
@@ -55,15 +46,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.Account)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.EncryptedPassword)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Mail)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.AvatarURL)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.RegistrationDate)
         </td>
@@ -79,9 +70,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Birthday)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.NickName)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.IsConfirmed)
         </td>
@@ -89,9 +80,9 @@
             @Html.DisplayFor(modelItem => item.ConfirmCode)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |*@
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
         </td>
     </tr>
 }
