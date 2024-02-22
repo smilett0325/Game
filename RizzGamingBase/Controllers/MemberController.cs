@@ -28,5 +28,10 @@ namespace RizzGamingBase.Controllers
 		{
 			return View();
 		}
-	}
+
+        public ActionResult ReportList()
+        {
+            return View();
+        }
+    }
 }
