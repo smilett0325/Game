@@ -172,6 +172,7 @@
     <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\GameDataController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Models\Dtos\BanMemberDto.cs" />
     <Compile Include="Models\Dtos\GameDataDto.cs" />
     <Compile Include="Models\EFModels\Admin.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />

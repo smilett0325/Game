@@ -20,7 +20,8 @@ namespace RizzGamingBase.Controllers
 
         public ActionResult MemberReportList()
         {
-            return View();
+			//id="`@{modelItem =>item.Id}`"
+			return View(_db.BanMembers.ToList());
         }
     }
 }
